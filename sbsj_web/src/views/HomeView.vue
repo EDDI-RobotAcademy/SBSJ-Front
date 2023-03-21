@@ -1,15 +1,14 @@
 <template>
-  <hello-world />
+  <main-form/>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
+import MainForm from '@/components/main/MainForm.vue';
   export default {
-    name: 'Home',
+    name: 'HomeView',
 
     components: {
-      HelloWorld,
+      MainForm
     },
   }
 </script>

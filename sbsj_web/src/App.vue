@@ -1,49 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
+    <Header/> <!-- 건호씨가 만든 상단 내비 바 자리-->
+    <v-content> <!-- 바디 -->
       <router-view/>
-    </v-main>
+    </v-content>
+    <Footer/>
   </v-app>
 </template>
 
 <script>
+// 헤더 자리는 내비 바 임포트해서 넣을 자리! 현재는 임의로 수업때 헤더 채워둠
+import Header from '@/views/layoutForm/Header.vue';
+import Footer from '@/views/layoutForm/Footer.vue';
 
 export default {
   name: 'App',
@@ -51,5 +19,9 @@ export default {
   data: () => ({
     //
   }),
+  components: {
+    Header,
+    Footer
+  }
 };
 </script>
