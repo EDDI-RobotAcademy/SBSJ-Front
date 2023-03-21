@@ -6,7 +6,7 @@
                 <button class="blur-btn btn btn-primary">맞춤 영양제 찾기</button>
             </div>
         </v-col>
-        <v-col v-else v-for="image in images" :key="image" cols="3">
+        <v-col v-else v-for="image in images" :key="image" cols="4">
             <div>
                 <v-img :src="image" aspect-ratio="1" class="grey lighten-2"/>
             </div>
@@ -29,13 +29,9 @@ export default {
         return {
             imageBlur: 'blur.jpg',
             images: [
-                require('@/assets/uploadImgs/citronTea.jpg'),
-                require('@/assets/uploadImgs/gingerTea.jpg'),
-                require('@/assets/uploadImgs/jujubeTea.jpg'),
-                require('@/assets/uploadImgs/pumpkinTea.jpg'),
-                require('@/assets/uploadImgs/redginsengTea.jpg'),
-                require('@/assets/uploadImgs/img3.jpg'),
                 require('@/assets/uploadImgs/img1.jpg'),
+                require('@/assets/uploadImgs/img2.jpg'),
+                require('@/assets/uploadImgs/img3.jpg'),
             ]
         }
     }
