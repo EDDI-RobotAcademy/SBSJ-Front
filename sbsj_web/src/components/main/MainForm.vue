@@ -1,46 +1,35 @@
 <template>
   <v-container>
     <div id="home">
-        <div class="row">
-            <div class="col-md elevation-1 ma-2 pa-2">
-                캐러셀<br>
-                캐러셀<br>
-                캐러셀<br>
-                캐러셀<br>
-                캐러셀<br>
-                캐러셀<br>
-            </div>
+      <div class="row">
+        <div class="col-md elevation-1 ma-2 pa-2">
+          <carousel-form/>
         </div>
-            <div class="row">
-            <div class="col-md elevation-1 ma-2 pa-2">
-                베스트셀러<br>
-                베스트셀러<br>
-                베스트셀러<br>
-                베스트셀러<br>
-                베스트셀러<br>
-                베스트셀러<br>
-            </div>
-            <div class="col-md elevation-1 ma-2 pa-2">
-                맞춤상품<br>
-                맞춤상품<br>
-                맞춤상품<br>
-                맞춤상품<br>
-                맞춤상품<br>
-                맞춤상품<br>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-md elevation-1 ma-2 pa-2">
+          <best-product-form/>
         </div>
-      <router-view/>
+        <div class="col-md elevation-1 ma-2 pa-2">
+          <recommend-product-form/>
+        </div>
+      </div>
     </div>
   </v-container>
 </template>
 
 <script>
+import CarouselForm from "@/components/main/CarouselForm.vue"
+import BestProductForm from '@/components/main/BestProductForm.vue';
+import RecommendProductForm from '@/components/main/RecommendProductForm.vue';
 
-  export default {
-    name: 'MainForm',
+export default {
+  name: 'MainForm',
+  components: {
+    CarouselForm,
+    BestProductForm,
+    RecommendProductForm
+  },
+}
 
-    components: {
-      
-    },
-  }
 </script>
