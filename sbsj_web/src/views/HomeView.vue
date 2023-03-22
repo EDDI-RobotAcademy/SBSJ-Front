@@ -1,15 +1,17 @@
 <template>
-  <hello-world />
+  <v-container>
+    <div id="home">
+      <nav>
+        <router-link to="/survey-page">설문페이지</router-link> |
+      </nav>
+    </div>
+  </v-container>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
-
-  export default {
-    name: 'Home',
-
-    components: {
-      HelloWorld,
-    },
-  }
+export default {
+  name: 'HomeView',
+  components: {
+  },
+}
 </script>
