@@ -1,13 +1,15 @@
 <template>
-  <v-footer inset padless class="justify-center pl-0">
+  <v-footer inset padless class="pl-0">
     <v-card flat class="text-center" width="100%">
+      <!-- SNS채널 아이콘들
       <v-card-text class="text-center mt-5 pt-5">
         <v-btn v-for="icon in icons" :key="icon" class="mx-3" icon>
           <v-icon size="24px">
             {{ icon }}
           </v-icon>
         </v-btn>
-      </v-card-text>
+      </v-card-text> -->
+      <v-divider color="light"></v-divider>
       <v-card-text>
         <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
           이용약관
@@ -27,7 +29,6 @@
         <br>
         <p class="caption">Copyright Team SBSJ All rights reserved.</p>
       </v-card-text>
-      
     </v-card>
   </v-footer>
 </template>
@@ -40,9 +41,9 @@ export default {
         icons: [
             "mdi-youtube",
             "mdi-twitter",
-            "mdi-instagram"
+            "mdi-instagram",
         ],
-    })
+    }),
 }
 
 </script>
