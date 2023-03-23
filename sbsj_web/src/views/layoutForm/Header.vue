@@ -2,6 +2,10 @@
     <nav>
     <v-app-bar color="dark" class="flex-grow-0" app dark>
         <v-app-bar-nav-icon v-on:click="activeSidebar"/>
+            <router-link :to="{ name: 'home' }">
+                <v-img class="mx-2" src="@/assets/logo.png"
+                        max-height="40" max-width="40" contain/>
+            </router-link>
             <transition name="sidebar-dropdown">
                 <div v-if="showSidebar" class="sidebar">
                     <div class="main__category-box" style="width: 700px;">
@@ -226,5 +230,4 @@ export default {
       transform: translateY(-300%);
   }
   
-</style>
 </style>
