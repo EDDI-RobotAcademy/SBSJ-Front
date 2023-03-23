@@ -1,6 +1,5 @@
 <template>
   <body>
-
   <div class="container">
     <div class="col-auto">
       <div class="container">
@@ -12,9 +11,9 @@
         <div class="col-auto row-auto">
           <label>성별을 알려주세요.</label>
           <div class="d-grid gap-2 d-md-block">
-            <button class="btn btn-primary btn-sm" type="button"> 남성 </button> 
+            <button class="btn btn-primary btn-sm" name=male type="button" @click="toggleActive($event.target.name)"> 남성 </button> 
             &nbsp;
-            <button class="btn btn-primary btn-sm" type="button"> 여성 </button>
+            <button class="btn btn-primary btn-sm" name=feMale type="button" @click="toggleActive($event.target.name)"> 여성 </button>
           </div>
          </div>
 
@@ -40,9 +39,9 @@
           <div class="form-group">
             <label for="question1">흡연을 하나요?</label>
             <div>
-              <button class="btn btn-outline-primary" type="button" @click="smoke(true)">Y</button>
+              <button class="btn btn-outline-primary" type="button" name="yesSmoke" @click="smoke(true)">Y</button>
               &nbsp;
-              <button class="btn btn-outline-primary" type="button" @click="smoke(false)">N</button>
+              <button class="btn btn-outline-primary" type="button" name="noSmoke" @click="smoke(false)">N</button>
             </div>
           </div>
         </div>
@@ -72,9 +71,9 @@
             <div class="form-group">
             <label for="question2">음주를 하나요?</label>
             <div>
-              <button class="btn btn-outline-primary" type="button" @click="drink(true)">Y</button>
+              <button class="btn btn-outline-primary" type="button" name="yesdrink" @click="drink(true)">Y</button>
               &nbsp;
-              <button class="btn btn-outline-primary" type="button" @click="drink(false)">N</button>
+              <button class="btn btn-outline-primary" type="button" name="nodrink" @click="drink(false)">N</button>
             </div>
           </div>
         </div>
@@ -106,9 +105,9 @@
       <div class="form-group">
         <label for="question3">야외활동을 많이 하는 편인가요?</label>
         <div>
-          <button class="btn btn-outline-primary" type="button" @click="exercise(true)">Y</button>
+          <button class="btn btn-outline-primary" type="button" name="yesexcercise" @click="exercise(true)">Y</button>
           &nbsp;
-          <button class="btn btn-outline-primary" type="button" @click="exercise(false)">N</button>
+          <button class="btn btn-outline-primary" type="button" name="noexcercise " @click="exercise(false)">N</button>
         </div>
       </div>
     </div>
@@ -134,14 +133,12 @@
 
         <br>
 
-        <div class="col-auto">
-          <div class="row-3" align="left">
-            <router-link :to="{ name: 'DetailSurveyPage' }" type="submit" align="left" class="btn btn-primary">상세 건강 페이지로 이동</router-link>
+          <div style="display: flex; width:100%;" >
+            <router-link :to="{ name: 'DetailSurveyPage' }" type="submit" align="left" class="btn btn-primary" style="width:50%; background-color:#5B1A7C; border-color: #5B1A7C;">상세 건강 페이지로 이동</router-link>
+            <div style="width: 100%; text-align: right;">
+              <button type="reset" align="right" class="btn btn-secondary">초기화</button>
+            </div>
           </div>
-          <div class="row-3" align="right">
-            <button type="reset"  align="right" class="btn btn-secondary">초기화</button>
-          </div>
-        </div>
 
       </form>
     </div>
@@ -155,12 +152,15 @@ export default {
   name: 'SurveyForm',
   data() {
     return {
+      male: false,
+      feMale: false,
       ExercisingFrequency: false,
       DrinkingFrequency: false,
       SmokingFrequency: false
     }
   },
   methods: {
+    
     smoke(isSmoke) {
       if(isSmoke === true) {
         this.SmokingFrequency = true

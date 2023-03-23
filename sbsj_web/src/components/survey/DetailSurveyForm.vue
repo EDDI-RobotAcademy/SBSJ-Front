@@ -1,61 +1,78 @@
 <template>
-  <v-container fill-height align-center justify-center>
+  <v-container >
+
+    
     <div class="container">
       <h1>PICK YOUR ENERGY</h1>
       <p>개선하고 싶은 부분을 순서대로 골라주세요.</p>
-      <p fon>각 항목 최대 3개까지 선택할 수 있어요.</p>
+      <p>최대 3개까지 선택할 수 있어요.</p>
     </div> 
     
-      <form>
-        <div class="row" style="margin-top: 50px;">
-          <p style="text-align: left; margin-left:320px;">주요장기 관련</p>
-          <div>
-            <div style="text-align: left; margin-left: 330px;">
-                <div>
-                  <div style="display: inline-block; text-align: left; margin-bottom: 10px;">
-                      <button class="btn btn-outline-primary" type="button" name="brain"  id="1" @click="toggleActive($event.target, $event.target.id)">뇌 건강</button>
-                  </div>
-                    <div style="display: inline-block; text-align: right; margin-left: 400px;">
-                        <button class="btn btn-outline-primary" type="button" name="tired" id="1" >활력/피로</button>
-                    </div>
-                </div>
-                <div>
-                  <div style="display: inline-block; text-align: left; margin-bottom: 10px;">
-                      <button class="btn btn-outline-primary" type="button" name="eye" id="2" @click="toggleActive($event.target, $event.target.id)">눈 건강</button>
-                  </div>
-                  <div style="display: inline-block; text-align: right; margin-left: 400px;">
-                    <button class="btn btn-outline-primary" type="button" >체지방 관리</button>
-                    </div>
-                </div>
-                <div>
-                  <div style="display: inline-block; text-align: left; margin-bottom: 10px;">
-                      <button class="btn btn-outline-primary" type="button" name="bone" id="3" @click="toggleActive($event.target, $event.target.id)">뼈 건강</button>
-                  </div>
-                  <div style="display: inline-block; text-align: right; margin-left: 400px;">
-                    <button class="btn btn-outline-primary" type="button" >콜레스테롤</button>
-                    </div>
-                <div>
-                  <div style="display: inline-block; text-align: left; margin-bottom: 10px;">
-                      <button class="btn btn-outline-primary" type="button" name="Liver" id="4" @click="toggleActive($event.target, $event.target.id)">위 건강</button>
-                  </div>
-                  <div style="display: inline-block; text-align: right; margin-left: 400px;">
-                    <button class="btn btn-outline-primary" type="button" >혈당 관리</button>
-                    </div>
-                <div>
-                  <div style="display: inline-block; text-align: left; margin-bottom: 10px;">
-                        <button class="btn btn-outline-primary" type="button" name="intestine" id="5" @click="toggleActive($event.target, $event.target.id)">장 건강</button>
-                  </div>
-                  <div style="display: inline-block; text-align: right; margin-left: 400px;">
-                    <button class="btn btn-outline-primary" type="button" >혈압 관리</button>
-                    </div>
-                </div>
-                  </div>
-                </div>
-            </div>
+    <div>
+          <div style="display: flex; justify-content: space-between; width:100%;">
+            <div style="text-align: center; width:50% ">주요장기 관련 </div>
+            <div style="text-align: center; width:50% ">건강검진 항목 관련 </div>
           </div>
       </div>
-            <div formcheck="radio"></div>
-      </form>
+      
+    <form>
+      <div style="margin-top: 30px; text-align: center; width: 100%; height: 100%;">
+            <div style=" width: 100%; height: 100%;" >
+
+              <div style="display: flex; margin-bottom: 17px;" >
+                <div style="text-align: center; width:50% "> 
+                  <button class="btn btn-outline-primary" type="button" name="brain" @click="toggleActive($event.target, $event.target.name)">뇌 건강</button>
+                  </div> 
+                  <div style="width:50%  ">
+                      <button class="btn btn-outline-primary" type="button" name="vitality" @click="toggleActive($event.target, $event.target.name)">활력/피로</button>
+                    </div>
+                  </div>
+                  
+                  <div style="display: flex; margin-bottom: 17px;">
+                      <div style="text-align: center; width:50% ">
+                        <button class="btn btn-outline-primary" type="button" name="eye" @click="toggleActive($event.target, $event.target.name)">눈 건강</button>
+                      </div>
+                      <div style="width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="fat" @click="toggleActive($event.target, $event.target.name)" >체지방 관리</button>
+                      </div>
+                  </div>
+
+                  <div style="display: flex; margin-bottom: 17px;">
+                    <div style="text-align: center; width:50% ">
+                      <button class="btn btn-outline-primary" type="button" name="bone" @click="toggleActive($event.target, $event.target.name)">뼈 건강</button>
+                      </div>
+                      <div style="width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="cholesterol" @click="toggleActive($event.target, $event.target.name)">콜레스테롤</button>
+                        </div>
+                  </div>
+
+                  <div style="display: flex; margin-bottom: 17px;">
+                      <div style="text-align: center; width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="Liver" @click="toggleActive($event.target, $event.target.name)">위 건강</button>
+                      </div>
+                      <div style="width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="sugar" @click="toggleActive($event.target, $event.target.name)">혈당 관리</button>
+                      </div>
+                    </div>
+                    
+
+                  <div style="display: flex; margin-bottom: 17px;">
+                      <div style="text-align: center; width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="intestine" @click="toggleActive($event.target, $event.target.name)">장 건강</button>
+                      </div>
+                      <div style="width:50% ">
+                          <button class="btn btn-outline-primary" type="button" name="pressure" @click="toggleActive($event.target, $event.target.name)" >혈압 관리</button>
+                      </div>
+                  </div>
+                      
+                      <div style="  text-align: right; width: 100%">
+                        <router-link :to="{ name: 'AfterCheckPage' }" type="submit" class="btn btn-primary" >넘어가기</router-link>
+                        
+                      </div>
+
+              </div>
+          </div>
+    </form>
         
   </v-container>
 </template>
@@ -66,7 +83,8 @@ export default {
   
   data() {
     return {
-      checkList: { brain: false, eye: false, bone: false, liver: false, intestine: false }
+      checkList: { brain: false, eye: false, bone: false, liver: false, 
+        intestine: false, vitality: false, fat: false, cholesterol: false, sugar: false, pressure: false }
     }
   },
   methods: {
@@ -93,7 +111,7 @@ export default {
                 this.checkList[name] = false;
             }
         }
-      }
+    }  
   }
 }
 </script>
@@ -109,6 +127,7 @@ p {
 h1 {
   text-align: center;
 }
+
 
 
 </style>
