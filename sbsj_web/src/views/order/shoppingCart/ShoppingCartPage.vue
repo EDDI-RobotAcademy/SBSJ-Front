@@ -8,7 +8,7 @@
 import ShoppingCartForm from '@/components/order/ShoppingCartForm.vue'
 
 export default {
-    name: 'ShoppingCartPage',
+    name: "ShoppingCartPage",
     components: { ShoppingCartForm },
 }
 </script>
