@@ -1,5 +1,5 @@
 <template>
-    <div class="container border border-2" style="margin-top: 100px;" >
+    <div class="container border border-2" style="margin-top: 100px; padding-inline: 20%;" >
       <detail-survey-form/>
     </div>
     </template>

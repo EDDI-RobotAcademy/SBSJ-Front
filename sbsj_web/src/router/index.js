@@ -5,6 +5,9 @@ import HomeView from '../views/HomeView.vue'
 import SurveyPage from '@/views/survey/SurveyPage'
 import DetailSurveyPage from '@/views/survey/DetailSurveyPage'
 import AfterCheckPage from '@/views/survey/AfterCheckPage'
+import FirstCheckPage from '@/views/survey/detailCheckList/FirstCheckPage'
+import SecondCheckPage from '@/views/survey/detailCheckList/SecondCheckPage'
+import ThirdCheckPage from '@/views/survey/detailCheckList/ThirdCheckPage'
 
 Vue.use(VueRouter)
 
@@ -29,6 +32,22 @@ const routes = [
     name: 'AfterCheckPage',
     component: AfterCheckPage
   },
+  {    
+    path: '/first-check-page',
+    name: 'FirstCheck',
+    component: FirstCheckPage
+  },
+  {    
+    path: '/second-check-page',
+    name: 'SecondCheck',
+    component: SecondCheckPage
+  },
+  {    
+    path: '/third-check-page',
+    name: 'ThirdCheck',
+    component: ThirdCheckPage
+  },
+  
 ]
 
 const router = new VueRouter({
