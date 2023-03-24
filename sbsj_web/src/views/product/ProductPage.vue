@@ -1,6 +1,8 @@
 <template>
     <section class="contents">
-        <div class="header"></div>
+        <div class="header">
+            <div class="header-content">header here</div>
+        </div>
         <div class="product-container">
             <div class="product-body">
                 <div class="product-main">
@@ -10,6 +12,7 @@
                         </div>
                         <div class="clear-fix"></div>
                         <jpa-product-list v-bind:products="products"></jpa-product-list>
+                        <div class="clear-fix"></div>
                     </div>
                 </div>
                 <div class="product-nav">
@@ -28,7 +31,7 @@ import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vu
   
   export default {
     name: "ProductPage",
-    components: [JpaProductList, ProductSearchFilter, ProductCategoryHeader],
+    components: {JpaProductList, ProductSearchFilter, ProductCategoryHeader},
     computed: {
         ...mapState([
             'products'
@@ -47,5 +50,65 @@ import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vu
   </script>
   
   <style>
-  
+    .clear-fix::after {
+        display: block;
+        visibility: hidden;
+        clear: both;
+        content: ".";
+        height: 0;
+    }
+    
+    .product-nav {
+        width: 190px;
+    }
+
+    .contents {
+        margin: auto;
+    }
+
+    .product-main {
+        width: 1080px;
+        float: right;
+        display: block;
+        padding-top: 20px;
+        background-color: orange;
+    }
+
+    .header {
+        height: 38px;
+        position: relative;
+        display: block;
+        border-bottom: 1px solid #eee;
+        background-color: aqua;
+        margin: auto;
+        width: 1300px;
+    }
+
+    .product-body {
+        width: 1300px;
+        margin: auto;
+        display: block;
+    }
+
+    .product-main-category-header {
+        display: block;
+        width: 100%;
+        float: left;
+        margin: 0;
+        padding: 0;
+        background-color: blueviolet;
+    }
+
+    .product-main-category-header::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .product-container {
+        width: 1300px;
+        margin: auto;
+        padding: 0;
+        display: block;
+    }
   </style>

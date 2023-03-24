@@ -1,6 +1,6 @@
 <template>
     <nav>
-    <v-app-bar color="dark" class="flex-grow-0" app dark>
+    <v-app-bar color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;">
         <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
@@ -11,7 +11,9 @@
                     <div class="main__category-box" style="width: 700px;">
                         <div class="main__category-list" style="width: 200px; background-color: black;">
                                 <li v-for="item in items" :key="item" class="hover-highlight" style="line-height: 44px; text-align: center;">
-                                    <p>{{ item.mainTitle }}</p>
+                                    <router-link :to="{ name: 'productPage'}">
+                                        <p>{{ item.mainTitle }}</p>
+                                    </router-link>
                                     <div class="second-category hidden">
                                         <div class="first-inline-category" style="background-color: aqua;">
                                             <ul style="position: absolute; padding-left: 0;">
@@ -20,7 +22,7 @@
                                                         <p>{{ subTitle.sub }}</p>
                                                     </a>
                                                     <div class="third-category hidden">
-                                                        <div class="second-inline-category" style="background-color: orange;">
+                                                        <div class="second-inline-category" style="background-color: yellowgreen;">
                                                             <ul style="position: absolute; padding-left: 0;">
                                                                 <li v-for="(content, index) in subTitle.contents" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
                                                                     <a href="#">
@@ -66,65 +68,57 @@
 
 
 <script>
+import router from '@/router';
+
 export default {
-  name: 'Header',
-  data() {
+    name: "Header",
+    data() {
         return {
             showSidebar: false,
             isTrue: false,
             items: [
-                { mainTitle: '베스트 상품', subTitles: [{sub: 'sub1', contents:['link1', 'link2', 'link3']}, 
-                {sub: 'sub2', contents: ['link4', 'link5', 'link6']}
-            ]},
-            { mainTitle: '추천 상품', subTitles: [{sub: 'sub21', contents:['link7', 'link8', 'link9']}, 
-                {sub: 'sub22', contents: ['link10', 'link11', 'link12']}
-            ]},
-            { mainTitle: '브랜드별 상품', subTitles: [{sub: 'sub31', contents:['link13', 'link14', 'link15']}, 
-                {sub: 'sub32', contents: ['link16', 'link17', 'link18']}
-            ]}
+                { mainTitle: "베스트 상품", subTitles: [{ sub: "sub1", contents: ["link1", "link2", "link3"] }, { sub: "sub2", contents: ["link4", "link5", "link6"] }
+                    ] },
+                { mainTitle: "추천 상품", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, { sub: "sub22", contents: ["link10", "link11", "link12"] }
+                    ] },
+                { mainTitle: "브랜드별 상품", subTitles: [{ sub: "sub31", contents: ["link13", "link14", "link15"] }, { sub: "sub32", contents: ["link16", "link17", "link18"] }
+                    ] }
             ],
-
-
             list: [1, 2, 3, 4, 5, 6],
-            search: '',
+            search: "",
+        };
+    },
+    methods: {
+        activeSidebar() {
+            if (this.showSidebar) {
+                return this.hide();
+            }
+            return this.show();
+        },
+        show() {
+            this.showSidebar = true;
+            setTimeout(() => document.addEventListener("click", this.hide), 0);
+        },
+        hide() {
+            this.showSidebar = false;
+            document.removeEventListener("click", this.hide);
+        },
+        resign() {
+            //
+        },
+        logout() {
+            //
         }
-  },
-  methods: {
-      activeSidebar () {
-          if (this.showSidebar) {
-              return this.hide()
-          }
-          return this.show()
-      },
-      show () {
-          this.showSidebar = true;
-          setTimeout(() => document.addEventListener('click',this.hide), 0);
-      },
-      hide () {
-          this.showSidebar = false;
-          document.removeEventListener('click',this.hide);
-      },
-      resign () {
-          //
-      },
-      logout () {
-          //
-      }
-  },
-  // computed: {
-  //     …mapState(["isAuthenticated"]),
-  // },
-  // mounted() {
-  //     if (localStorage.getItem("userInfo")) {
-  //         this.$store.state.isAuthenticated = true;
-  //     } else {
-  //         this.$store.state.isAuthenticated = false;
-  //     }
-  // }
-  }
+    },
+    components: { router }
+}
 </script>
 
 <style>
+    nav {
+        width: 1300px;
+    }
+
   .hover-highlight {
       padding-right: 0px;
       padding-left: 0px;
