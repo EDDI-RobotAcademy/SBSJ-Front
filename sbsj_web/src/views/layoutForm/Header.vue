@@ -1,7 +1,18 @@
 <template>
     <nav>
-    <v-app-bar color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;">
-        <v-app-bar-nav-icon v-on:click="activeSidebar"/>
+        <div class="header-main" style="height: 200px;
+                margin: auto;
+                display: flex; position: relative;
+                background-color: lightblue;
+                width: 1300px;
+                ">
+            <router-link :to="{ name: 'home' }" style="margin: auto; position: relative; width: auto;">
+                    <v-img class="mx-2" src="@/assets/logo.png"
+                            max-height="150" max-width="150" contain/>
+            </router-link>
+        </div>
+        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ position: isFixed }" align-center>
+            <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
                         max-height="40" max-width="40" contain/>
@@ -46,21 +57,51 @@
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
-            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
-                <span>회원 탈퇴</span>
+            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign" style="height: 64px;" class="mypage">
+                <span>My Page</span>
                 <v-icon right>mdi-login</v-icon>
+                <div class="mypage-hidden">
+                    <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
+                        <li class="mypage-hover-highlight">
+                            <a href="#">Test 4</a>
+                        </li>
+                        <li class="mypage-hover-highlight">
+                            <a href="#">Test 5</a>
+                        </li>
+                        <li class="mypage-hover-highlight">
+                            <a href="#">Test 6</a>
+                        </li>
+                    </ul>
+                </div>
             </v-btn>
-            <v-btn text color="grey" onclick="location.href='http://localhost:8080/sign-up'">
+            <v-btn v-if="isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-up'" style="height: 64px;">
                 <span>Sign Up</span>
                 <v-icon right>mdi-account-plus-outline</v-icon>
             </v-btn>
-            <v-btn v-if="isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-in'">
+            <v-btn v-if="isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-in'" style="height: 64px;">
                 <span>Sign In</span>
                 <v-icon right>mdi-login</v-icon>
             </v-btn>
-            <v-btn v-else text color="grey" v-on:click="logout">
+            <v-btn v-else text color="grey" v-on:click="logout" style="height: 64px;">
                 <span>Sign Out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
+            </v-btn>
+            <v-btn text color="grey" onclick="location.href='http://localhost:8080/shopping-cart'" class="shoppingCart" style="height: 64px;">
+                <span>Shopping Cart</span>
+                <v-icon right>mdi-cart-outline</v-icon>
+                <div class="shopping-cart-hidden">
+                    <ul class="shopping-cart-contents" style="padding-left: 0;  margin: 0;">
+                        <li class="shopping-cart-hover-highlight">
+                            <a href="#">Test 1</a>
+                        </li>
+                        <li class="shopping-cart-hover-highlight">
+                            <a href="#">Test 2</a>
+                        </li>
+                        <li class="shopping-cart-hover-highlight">
+                            <a href="#">Test 3</a>
+                        </li>
+                    </ul>
+                </div>
             </v-btn>
         </v-app-bar>    
     </nav>
@@ -74,6 +115,8 @@ export default {
     name: "Header",
     data() {
         return {
+            isAuthenticated: false,
+            scrollY: 0,
             showSidebar: false,
             isTrue: false,
             items: [
@@ -84,11 +127,12 @@ export default {
                 { mainTitle: "브랜드별 상품", subTitles: [{ sub: "sub31", contents: ["link13", "link14", "link15"] }, { sub: "sub32", contents: ["link16", "link17", "link18"] }
                     ] }
             ],
-            list: [1, 2, 3, 4, 5, 6],
-            search: "",
-        };
+        }
     },
     methods: {
+        updateScrollY() {
+            this.scrollY = window.scrollY;
+        },
         activeSidebar() {
             if (this.showSidebar) {
                 return this.hide();
@@ -110,14 +154,87 @@ export default {
             //
         }
     },
-    components: { router }
+    components: { router },
+    computed: {
+        isFixed() {
+      if (this.scrollY > 200) {
+        return 'fixed';
+      } else {
+        return 'static';
+      }
+    },
+        adjust() {
+        if (this.scrollY > 200) {
+            return '0px';
+      } else {
+            return '64px';
+      }
+    }
+        
+    },
+
+    mounted() {
+    window.addEventListener('scroll', this.updateScrollY);
+    },
+    beforeDestroy() {
+    window.removeEventListener('scroll', this.updateScrollY);
+    }
+  
 }
 </script>
 
 <style>
-    nav {
-        width: 1300px;
-    }
+  .shopping-cart-hover-highlight {
+    line-height: 40px;
+    width: 179px;
+    height: 40px;
+    text-align: center;
+  }
+
+
+  .shopping-cart-hidden {
+    display: none;
+    position: absolute;
+    top: 42px;
+    width: 179px;
+    background-color: aqua;
+    box-sizing: border-box;
+  }
+
+  .shoppingCart:hover .shopping-cart-hidden {
+    display: inline-block;
+  }
+
+  .shoppingCart .shopping-cart-hover-highlight:hover {
+    background-color: green;
+  }
+
+  .mypage-hover-highlight {
+    line-height: 40px;
+    width: 122px;
+    height: 40px;
+    text-align: center;
+  }
+
+
+  .mypage-hidden {
+    display: none;
+    position: absolute;
+    top: 42px;
+    width: 122px;
+    background-color: aqua;
+    box-sizing: border-box;
+  }
+
+  .mypage:hover .mypage-hidden {
+    display: inline-block;
+  }
+
+  .mypage .mypage-hover-highlight:hover {
+    background-color: green;
+  }
+
+
 
   .hover-highlight {
       padding-right: 0px;
@@ -200,17 +317,15 @@ export default {
   }
 
   .sidebar {
-  width: 200px;
-  height: auto;
-  position: absolute;
-  left: 0;
-  top: 65px; 
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 65px; 
   }
 
   .sidebar span {
       position: absolute;
-      /* margin-top: 12px;
-      margin-left: 30%; */
   }
 
 
