@@ -5,9 +5,8 @@
       <div style="margin-top: 75px;">
         <best-product-form/>
       </div>
-        <div class="col-md elevation-1 ma-3 pa-3">
-          <recommend-product-form/>
-        </div>
+      <div style="margin-top: 50px;">
+        <recommend-product-form/>
       </div>
     </div>
   </div>
