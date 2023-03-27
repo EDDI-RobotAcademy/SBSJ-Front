@@ -11,7 +11,7 @@
                             max-height="150" max-width="150" contain/>
             </router-link>
         </div>
-        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ position: isFixed }" align-center>
+        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center>
             <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
@@ -115,7 +115,8 @@ export default {
     name: "Header",
     data() {
         return {
-            isAuthenticated: false,
+            search: "",
+            isAuthenticated: true,
             scrollY: 0,
             showSidebar: false,
             isTrue: false,
@@ -156,18 +157,18 @@ export default {
     },
     components: { router },
     computed: {
-        isFixed() {
-      if (this.scrollY > 200) {
-        return 'fixed';
-      } else {
-        return 'static';
-      }
-    },
+        // isFixed() {
+        //     if (this.scrollY > 200) {
+        //         return 'fixed';
+        //     } else {
+        //         return 'fixed';
+        //     }
+        // },
         adjust() {
         if (this.scrollY > 200) {
             return '0px';
       } else {
-            return '64px';
+            return (200 - this.scrollY) + 'px';
       }
     }
         
