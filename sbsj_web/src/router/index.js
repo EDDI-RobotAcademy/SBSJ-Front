@@ -6,6 +6,7 @@ import ShoppingCart from "@/views/order/shoppingCart/ShoppingCartPage.vue"
 import ProductPage from "@/views/product/ProductPage.vue"
 import DetailProductPage from '@/views/product/DetailProductPage'
 
+import SignUpPage from "@/views/account/member/SignUpPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
     path: '/detail-product-page',
     name: 'DetailProductPage',
     component: DetailProductPage
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUpPage',
+    component: SignUpPage
   },
 ]
 

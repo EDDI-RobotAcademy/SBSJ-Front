@@ -6,19 +6,19 @@
           <v-img
               :src="require('@/assets/logo/logo-removebg.png')" width="400" height="200" class="mx-auto mb-6"/>
         </router-link>
-        <v-card width="580">
+        <v-card width="540">
           <v-card-text class="text-center px-12 py-16">
             <v-form @submit.prevent="onSubmit" ref="form">
               <div class="text-h4 font-weight-black mb-10">회원 가입</div>
 
               <div class="d-flex">
-                  <v-text-field v-model="membername" label="이름" 
-                  :rules="membername_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                  <v-text-field v-model="memberName" label="이름" 
+                  :rules="memberName_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="memberId" label="아이디" @change="memberIdValidation"
-                              :rules="memberId_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                              :rules="memberId_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
                        @click="checkDuplicatememberId"
@@ -29,17 +29,17 @@
 
               <div class="d-flex">
                 <v-text-field v-model="password" label="비밀번호" type="password"
-                              :rules="password_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                              :rules="password_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password"
-                              :rules="password_confirm_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                <v-text-field v-model="passwordConfirm" label="비밀번호 확인" type="password"
+                              :rules="passwordConfirm_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @change="emailValidation"
-                              :rules="email_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                              :rules="email_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-email" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
                        @click="checkDuplicateEmail"
@@ -51,12 +51,12 @@
               <div class="d-flex">
                   <v-text-field v-model="birthday" label="생년월일(8자리) ex)19001111" 
                   :disabled="false" :rules="birthday_rule"
-                                required outlined color="green" class="mb-2"/>
+                                required outlined color="green" prepend-icon="mdi-cake-variant" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @change="phoneNumberValidation"
-                              :rules="phoneNumber_rule" :disabled="false" required outlined color="green" class="mb-2"/>
+                              :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1" 
                        @click="checkDuplicatephoneNumber"
@@ -66,7 +66,7 @@
               </div>
 
               <v-btn type="submit" block x-large rounded
-                     class="mt-6" color="purple lighten-1" :disabled="(emailPass, memberIdPass, phoneNumberPass ) == false">
+                     class="mt-6" color="teal lighten-3" :disabled="(emailPass, memberIdPass, phoneNumberPass ) == false">
                 가입하기
               </v-btn>
 
@@ -85,10 +85,10 @@ export default {
   name: "SignUpForm",
   data () {
     return {
-      membername: "",
+      memberName: "",
       memberId: "",
       password: "",
-      password_confirm: "",
+      passwordConfirm: "",
       email: "",
       birthday: "",
       phoneNumber: "",
@@ -97,14 +97,14 @@ export default {
       memberIdPass: false,
       phoneNumberPass: false,
       
-      membername_rule:[
+      memberName_rule:[
         v => !!v || '이름을 입력해주세요.',
         v => {
         const replaceV = v.replace(/(\s*)/g, '')
         const pattern = /^[가-힣]{2,}$/
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
         }
-        ],
+      ],
       memberId_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
@@ -123,13 +123,12 @@ export default {
       ],
       password_rule: [
         v => !!v || '패스워드를 입력해주세요.',
-        v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
+        v => this.password === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
         v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
       ],
-      password_confirm_rule: [
+      passwordConfirm_rule: [
         v => !!v || '패스워드를 확인해주세요.',
-        v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
         v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
         v => v === this.password || '패스워드가 일치하지 않습니다.'
@@ -139,7 +138,7 @@ export default {
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
           const pattern = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/
-          return pattern.test(replaceV) || 'ex.19940612 형식으로 입력하세요.'
+          return pattern.test(replaceV) || 'ex)19001111 형식으로 입력하세요.'
         }
       ],
       phoneNumber_rule: [
@@ -155,8 +154,8 @@ export default {
   methods: {
     onSubmit () {
       if (this.$refs.form.validate()) {
-        const { membername, memberId, password, email, birthday, phoneNumber} = this
-        this.$emit("submit", { membername, memberId, password, email, birthday, phoneNumber })
+        const { memberName, memberId, password, email, birthday, phoneNumber} = this
+        this.$emit("submit", { memberName, memberId, password, email, birthday, phoneNumber })
       } else {
         alert('올바른 정보를 입력하세요!')
       }
@@ -240,7 +239,7 @@ export default {
                 alert("이미 가입된 번호입니다!")
                 this.phoneNumber = false
               }
-            })
+        })
       }
     },
   }
