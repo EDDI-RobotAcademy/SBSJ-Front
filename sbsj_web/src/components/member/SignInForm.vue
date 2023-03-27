@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
+  <div class="" style="font-family: 'Noto Sans KR', sans-serif">
     <v-container class="white" style="width: 1240px">
       <v-row justify="center">
         <v-col cols="auto" style="padding-bottom: 90px">
@@ -56,8 +56,7 @@
                     type="submit"
                     block
                     x-large
-                    rounded
-                    color="teal lighten-3"
+                    color="#97d9e1"
                     class="mt-6"
                     :disabled="false"
                 >로그인</v-btn><br/>
