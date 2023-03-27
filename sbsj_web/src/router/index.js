@@ -16,8 +16,7 @@ const routes = [
     path: '/shopping-cart',
     name: 'ShoppingCart',
     component: ShoppingCart
-  },
-  
+  }  
 ]
 
 const router = new VueRouter({
