@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 
 import ShoppingCart from "@/views/order/shoppingCart/ShoppingCartPage.vue"
 import ProductPage from "@/views/product/ProductPage.vue"
+import DetailProductPage from '@/views/product/DetailProductPage'
 
 Vue.use(VueRouter)
 
