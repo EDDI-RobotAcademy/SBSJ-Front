@@ -8,6 +8,7 @@ import DetailProductPage from '@/views/product/DetailProductPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
+import SearchMemberPasswordPage from "@/views/account/member/SearchMemberPasswordPage";
 import SearchMemberIdPage from "@/views/account/member/SearchMemberIdPage";
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
     path: '/sign-in',
     name: 'SignInPage',
     component: SignInPage
+  },
+  {
+    path: '/search-password',
+    name: 'SearchMemberPasswordPage',
+    component: SearchMemberPasswordPage
   },
   {
     path: '/search-id',
