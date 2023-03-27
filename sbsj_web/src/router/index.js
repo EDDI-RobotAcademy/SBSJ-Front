@@ -7,6 +7,7 @@ import ProductPage from "@/views/product/ProductPage.vue"
 import DetailProductPage from '@/views/product/DetailProductPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
+import SignInPage from "@/views/account/member/SignInPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
     path: '/sign-up',
     name: 'SignUpPage',
     component: SignUpPage
+  },
+  {
+    path: '/sign-in',
+    name: 'SignInPage',
+    component: SignInPage
   },
 ]
 
