@@ -12,6 +12,7 @@ import SearchMemberPasswordPage from "@/views/account/member/SearchMemberPasswor
 import SearchMemberIdPage from "@/views/account/member/SearchMemberIdPage";
 import SignAgreePage from "@/views/account/member/SignAgreePage";
 import AgreementPage from "@/views/information/AgreementPage";
+import PrivacyPolicyPage from "@/views/information/PrivacyPolicyPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -64,6 +65,11 @@ const routes = [
     path: '/agreement',
     name: 'AgreementPage',
     component: AgreementPage
+  },
+  {
+    path: '/privacy-policy',
+    name: 'PrivacyPolicyPage',
+    component: PrivacyPolicyPage
   },
 ]
 
