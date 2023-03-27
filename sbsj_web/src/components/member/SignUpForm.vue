@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-5" style="font-family: Arial">
+  <div class="" style="font-family: Arial">
     <v-row justify="center">
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
