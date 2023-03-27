@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <Header style="z-index: 9999;"/>
-    <v-content>
+    <Header/>
+    <v-main>
       <router-view/>
-    </v-content>
+    </v-main>
     <v-btn fab dark small fixed bottom right color="teal" @click="toTop">
-      <v-icon>{{ "mdi-menu-up" }}</v-icon>
+      <v-icon>mdi-menu-up</v-icon>
     </v-btn>
     <Footer/>
   </v-app>

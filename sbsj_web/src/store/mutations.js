@@ -1,9 +1,9 @@
 import {
-    REQUEST_PRODUCT_LIST_TO_SPRING,
-} from './mutation-types'
+    REQUEST_CART_LIST_FROM_SPRING,
+} from "./mutation-types"
 
-export default {
-    [REQUEST_PRODUCT_LIST_TO_SPRING] (state, passingData) {
-        state.products = passingData
-    }
+export default { 
+    [REQUEST_CART_LIST_FROM_SPRING](state, passingData) {
+        state.cartList = passingData
+    },
 }
