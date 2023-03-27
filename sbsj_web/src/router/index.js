@@ -8,6 +8,7 @@ import DetailProductPage from '@/views/product/DetailProductPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
+import SearchMemberIdPage from "@/views/account/member/SearchMemberIdPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +41,11 @@ const routes = [
     path: '/sign-in',
     name: 'SignInPage',
     component: SignInPage
+  },
+  {
+    path: '/search-id',
+    name: 'SearchMemberIdPage',
+    component: SearchMemberIdPage
   },
 ]
 
