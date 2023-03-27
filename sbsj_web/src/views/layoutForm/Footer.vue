@@ -9,7 +9,7 @@
           </v-icon>
         </v-btn>
       </v-card-text> -->
-      <v-divider color="light"></v-divider>
+      <v-divider class="mt-0" color="light"></v-divider>
       <v-card-text>
         <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
           이용약관
