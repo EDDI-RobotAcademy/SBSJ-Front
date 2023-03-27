@@ -11,19 +11,19 @@
       </v-card-text> -->
       <v-divider class="mt-0" color="light"></v-divider>
       <v-card-text>
-        <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
+        <router-link style="text-decoration: none; color: black;" :to="{ name: 'AgreementPage' }">
           이용약관
         </router-link>
         | 
-        <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
+        <router-link style="text-decoration: none; color: black;" :to="{ name: 'PrivacyPolicyPage' }">
           개인정보처리방침
         </router-link>
         |
-        <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
-          고객센터
+        <router-link style="text-decoration: none; color: black;" :to="{ name: 'InformationUsePage' }">
+          이용안내
         </router-link>
         |
-        <router-link style="text-decoration: none; color: black;" :to="{ name: '' }">
+        <router-link style="text-decoration: none; color: black;" :to="{ name: 'CompanyPage' }">
           사업자 정보 
         </router-link>
         <br>
