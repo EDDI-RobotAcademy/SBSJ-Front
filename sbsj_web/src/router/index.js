@@ -15,6 +15,7 @@ import AgreementPage from "@/views/information/AgreementPage";
 import CompanyPage from "@/views/information/CompanyPage";
 import PrivacyPolicyPage from "@/views/information/PrivacyPolicyPage";
 import InformationUsePage from "@/views/information/InformationUsePage";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,7 +33,7 @@ const routes = [
     path: '/product',
     name: 'productPage',
     component: ProductPage
-  }
+  },
   {
     path: '/detail-product-page',
     name: 'DetailProductPage',
