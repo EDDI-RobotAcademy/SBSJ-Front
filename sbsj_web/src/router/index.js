@@ -23,6 +23,11 @@ const routes = [
     name: 'productPage',
     component: ProductPage
   }
+  {
+    path: '/detail-product-page',
+    name: 'DetailProductPage',
+    component: DetailProductPage
+  },
 ]
 
 const router = new VueRouter({
