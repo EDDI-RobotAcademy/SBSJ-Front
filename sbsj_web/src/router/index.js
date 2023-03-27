@@ -10,6 +10,7 @@ import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
 import SearchMemberPasswordPage from "@/views/account/member/SearchMemberPasswordPage";
 import SearchMemberIdPage from "@/views/account/member/SearchMemberIdPage";
+import AgreementPage from "@/views/information/AgreementPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -52,6 +53,11 @@ const routes = [
     path: '/search-id',
     name: 'SearchMemberIdPage',
     component: SearchMemberIdPage
+  },
+  {
+    path: '/agreement',
+    name: 'AgreementPage',
+    component: AgreementPage
   },
 ]
 
