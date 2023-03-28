@@ -12,17 +12,15 @@
               <div class="text-h4 font-weight-black mb-10">회원 가입</div>
 
               <div class="d-flex">
-                  <v-text-field v-model="memberName" label="이름" 
-                  :rules="memberName_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                  <v-text-field v-model="name" label="이름" 
+                  :rules="name_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="memberId" label="아이디" @change="memberIdValidation"
-                              :rules="memberId_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                <v-text-field v-model="id" label="아이디" @input="idValidation"
+                              :rules="id_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
-                       @click="checkDuplicatememberId"
-                       :disabled="!memberIdPass">
                   아이디 <br/>중복 확인
                 </v-btn>
               </div>
@@ -85,8 +83,8 @@ export default {
   name: "SignUpForm",
   data () {
     return {
-      memberName: "",
-      memberId: "",
+      name: "",
+      id: "",
       password: "",
       passwordConfirm: "",
       email: "",
@@ -97,7 +95,7 @@ export default {
       memberIdPass: false,
       phoneNumberPass: false,
       
-      memberName_rule:[
+      name_rule: [
         v => !!v || '이름을 입력해주세요.',
         v => {
         const replaceV = v.replace(/(\s*)/g, '')
@@ -105,7 +103,7 @@ export default {
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
         }
       ],
-      memberId_rule:[
+      id_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
@@ -154,28 +152,28 @@ export default {
   methods: {
     onSubmit () {
       if (this.$refs.form.validate()) {
-        const { memberName, memberId, password, email, birthday, phoneNumber} = this
-        this.$emit("submit", { memberName, memberId, password, email, birthday, phoneNumber })
+        const { name, id, password, email, birthday, phoneNumber} = this
+        this.$emit("submit", { name, id, password, email, birthday, phoneNumber })
       } else {
         alert('올바른 정보를 입력하세요!')
       }
     },
-    memberIdValidation () {
-      const memberIdValid = this.memberId.match(
-          /^[a-zA-Z0-9]{5,11}$/
+    idValidation () {
+      const idValid = this.id.match(
+          /^[a-zA-Z0-9]{3,11}$/
       );
-      if (memberIdValid) {
         this.memberIdPass = true
+      if (idValid) {
       }
     },
-    checkDuplicatememberId () {
-      const memberId = this.memberId.match(
-        /^[a-zA-Z0-9]{5,11}$/
+    checkDuplicateId () {
+      const idValid = this.id.match(
+        /^[a-zA-Z0-9]{3,11}$/
       );
 
-      if (memberId) {
-        const {memberId} = this
-        axios.post(`http://localhost:7777/member/check-memberId/${memberId}`)
+      if (idValid) {
+        const {id} = this
+        axios.post(`http://localhost:7777/member/sign-up/check-id/${id}`)
             .then((res) => {
               if (res.data) {
                 alert("사용 가능한 아이디입니다.")

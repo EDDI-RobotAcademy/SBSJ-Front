@@ -17,10 +17,10 @@ export default {
   },
   methods: {
     onSubmit (payload) {
-      const { memberName, memberId, password, email, birthday, phoneNumber  } = payload;
+      const { name, id, password, email, birthday, phoneNumber  } = payload;
 
       axios.post("http://localhost:7777/member/sign-up", {
-        memberName, memberId, password, email, birthday, phoneNumber 
+        name, id, password, email, birthday, phoneNumber 
       })
           .then((res) => {
             alert("회원 가입 완료!" + res)
