@@ -1,17 +1,21 @@
 <template>
   <div class="container">
     <AgreementForm />
-    <div class="container">
-      <div class="checkbox-container">
-      <input type="checkbox" v-model="agreement" class="checkbox" />
-      <label for="checkbox" class="label">이용약관에 동의합니다.</label>
-      </div>
-    <br />
-    <button @click="moveToSignUp" :disabled="!agreement" class="button"
-    >회원가입 페이지로 이동</button>
-    </div>
-    </div>
+    <v-row justify="center">
+      <v-col cols="auto" style="padding-left: 600px; padding-bottom: 50px">
+          <div class="checkbox-container">
+            <input type="checkbox" v-model="agreement" class="checkbox" />
+            <label for="checkbox" class="label">이용약관에 동의합니다.</label>
+          </div>
+          <br>
+          <div style="padding-left: 25px;">
+            <button @click="moveToSignUp" class="button">회원가입 페이지로 이동</button>
+          </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
+
 <script>
 
 import AgreementForm from "@/components/information/AgreementForm.vue";
