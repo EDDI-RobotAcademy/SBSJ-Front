@@ -24,7 +24,7 @@ export default {
     };
   },
   mounted() {
-    if (this.$store.state.isAuthenticated != false) {
+    if (this.$store.state.isAuthenticated === true) {
       this.isLogin = true;
     } else {
       this.isLogin = false;
@@ -36,17 +36,17 @@ export default {
         const { id, password } = payload;
         axios.post("http://localhost:7777/member/sign-in", { id, password })
             .then((res) => {
-                this.$store.state.isAuthenticated = true;
-                this.$cookies.set("user", res.data, 3600);
-                localStorage.setItem("userInfo", JSON.stringify(res.data));
-                this.isLogin = true;
-                this.$router.push("/");
               if(res.data === '틀림') {
                   alert("아이디 혹은 비밀번호가 틀렸습니다.");
               } else if(res.data === '없음') {
                   alert("가입되지 않은 사용자입니다.");
               } else {
                   alert("로그인 성공!");
+                  this.$store.state.isAuthenticated = true;
+                  this.$cookies.set("userInfo", res.data, 3600);
+                  localStorage.setItem("userInfo", JSON.stringify(res.data));
+                  this.isLogin = true;
+                  this.$router.push("/");
               }
           })
           .catch((res) => {
@@ -57,8 +57,7 @@ export default {
       }
     },
   },
-};
-
+}
 
 </script>
 
