@@ -118,6 +118,10 @@
 import router from '@/router';
 import {mapState} from "vuex";
 import axios from "axios";
+import Vue from "vue";
+import cookies from "vue-cookies";
+
+Vue.use(cookies);
 
 export default {
     name: "Header",
@@ -165,6 +169,7 @@ export default {
                 .then(() => {
                     alert("회원탈퇴 완료");
                     localStorage.removeItem("userInfo");
+                    this.$cookies.remove("userInfo");
                     this.$store.state.isAuthenticated = false;
                 })
         },
@@ -179,6 +184,7 @@ export default {
                 .then(() => {
                     alert("로그아웃 완료");
                     localStorage.removeItem("userInfo");
+                    this.$cookies.remove("userInfo");
                     this.$store.state.isAuthenticated = false;
                 })
         }
