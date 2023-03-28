@@ -1,5 +1,5 @@
 <template>
-  <div class="" style="font-family: Arial">
+  <div class="grey lighten-5" style="font-family: Arial">
     <v-row justify="center">
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
@@ -12,17 +12,17 @@
               <div class="text-h4 font-weight-black mb-10">회원 가입</div>
 
               <div class="d-flex">
-                  <v-text-field v-model="memberName" label="이름" 
-                  :rules="memberName_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                  <v-text-field v-model="name" label="이름" 
+                  :rules="name_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="memberId" label="아이디" @change="memberIdValidation"
-                              :rules="memberId_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                <v-text-field v-model="id" label="아이디" @input="idValidation"
+                              :rules="id_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
-                       @click="checkDuplicatememberId"
-                       :disabled="!memberIdPass">
+                       @click="checkDuplicateId"
+                       :disabled="!this.ruleCheckList['id']">
                   아이디 <br/>중복 확인
                 </v-btn>
               </div>
@@ -43,7 +43,7 @@
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
                        @click="checkDuplicateEmail"
-                       :disabled="!emailPass">
+                       :disabled="!this.ruleCheckList['email']">
                   이메일 <br/>중복 확인
                 </v-btn>
               </div>
@@ -59,14 +59,14 @@
                               :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1" 
-                       @click="checkDuplicatephoneNumber"
-                       :disabled="!phoneNumberPass">
+                       @click="checkDuplicatePhoneNumber"
+                       :disabled="!this.ruleCheckList['phoneNumber']">
                   휴대폰번호 <br/>중복 확인
                 </v-btn>
               </div>
 
               <v-btn type="submit" block x-large rounded
-                     class="mt-6" color="teal lighten-3" :disabled="(emailPass, memberIdPass, phoneNumberPass ) == false">
+                     class="mt-6" color="teal lighten-3">
                 가입하기
               </v-btn>
 
@@ -85,19 +85,18 @@ export default {
   name: "SignUpForm",
   data () {
     return {
-      memberName: "",
-      memberId: "",
+      name: "",
+      id: "",
       password: "",
       passwordConfirm: "",
       email: "",
       birthday: "",
       phoneNumber: "",
       
-      emailPass: false,
-      memberIdPass: false,
-      phoneNumberPass: false,
+      dupliCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
+      ruleCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
       
-      memberName_rule:[
+      name_rule: [
         v => !!v || '이름을 입력해주세요.',
         v => {
         const replaceV = v.replace(/(\s*)/g, '')
@@ -105,12 +104,12 @@ export default {
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
         }
       ],
-      memberId_rule:[
+      id_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
-          const pattern = /^[a-zA-Z][0-9a-zA-Z]{5,11}$/
-          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 6~12자 아이디를 입력해주세요'
+          const pattern = /^[a-zA-Z][0-9a-zA-Z]{3,11}$/
+          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 4~12자 아이디를 입력해주세요'
         }
       ],
       email_rule: [
@@ -124,12 +123,12 @@ export default {
       password_rule: [
         v => !!v || '패스워드를 입력해주세요.',
         v => this.password === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
       ],
       passwordConfirm_rule: [
         v => !!v || '패스워드를 확인해주세요.',
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
         v => v === this.password || '패스워드가 일치하지 않습니다.'
       ],
@@ -153,36 +152,53 @@ export default {
   },
   methods: {
     onSubmit () {
+      if(!this.dupliCheckList['id']) {
+        alert("아이디 중복 확인을 해주세요!");
+        return;
+      }
+      if(!this.dupliCheckList['email']) {
+        alert("이메일 중복 확인을 해주세요!");
+        return;
+      }
+      if(!this.dupliCheckList['phoneNumber']) {
+        alert("휴대폰 번호 중복 확인을 해주세요!");
+        return;
+      }
+
       if (this.$refs.form.validate()) {
-        const { memberName, memberId, password, email, birthday, phoneNumber} = this
-        this.$emit("submit", { memberName, memberId, password, email, birthday, phoneNumber })
+        const { name, id, password, email, birthday, phoneNumber} = this
+        this.$emit("submit", { name, id, password, email, birthday, phoneNumber })
       } else {
         alert('올바른 정보를 입력하세요!')
       }
     },
-    memberIdValidation () {
-      const memberIdValid = this.memberId.match(
-          /^[a-zA-Z0-9]{5,11}$/
+    idValidation () {
+      const idValid = this.id.match(
+          /^[a-zA-Z0-9]{3,11}$/
       );
-      if (memberIdValid) {
-        this.memberIdPass = true
+      if (idValid) {
+        this.ruleCheckList['id'] = true
+        this.dupliCheckList['id'] = false
       }
     },
-    checkDuplicatememberId () {
-      const memberId = this.memberId.match(
-        /^[a-zA-Z0-9]{5,11}$/
+    checkDuplicateId () {
+      const idValid = this.id.match(
+        /^[a-zA-Z0-9]{3,11}$/
       );
 
-      if (memberId) {
-        const {memberId} = this
-        axios.post(`http://localhost:7777/member/check-memberId/${memberId}`)
+      if (idValid) {
+        const {id} = this
+        axios.post(`http://localhost:7777/member/sign-up/check-id/${id}`)
             .then((res) => {
               if (res.data) {
-                alert("사용 가능한 아이디입니다.")
-                this.memberIdPass = true
+                alert("사용 가능한 아이디입니다. "+ res.data)
+                this.dupliCheckList['id'] = true
+                this.ruleCheckList['id'] = false
+
               } else {
                 alert("중복된 아이디입니다!")
-                this.memberIdPass = false
+                this.dupliCheckList['id'] = false
+                this.ruleCheckList['id'] = true
               }
             })
       }
@@ -193,7 +209,8 @@ export default {
       );
 
       if (emailValid) {
-        this.emailPass = true
+        this.ruleCheckList['email'] = true
+        this.dupliCheckList['email'] = false
       }
     },
     checkDuplicateEmail () {
@@ -203,14 +220,16 @@ export default {
 
       if (emailValid) {
         const {email} = this
-        axios.post(`http://localhost:7777/member/check-email/${email}`)
+        axios.post(`http://localhost:7777/member/sign-up/check-email/${email}`)
             .then((res) => {
               if (res.data) {
                 alert("사용 가능한 이메일입니다.")
-                this.emailPass = true
+                this.dupliCheckList['email'] = true
+                this.ruleCheckList['email'] = false
               } else {
                 alert("중복된 이메일입니다!")
-                this.emailPass = false
+                this.dupliCheckList['email'] = false
+                this.ruleCheckList['email'] = true
               }
             })
       }
@@ -220,24 +239,27 @@ export default {
         /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/
       );
       if (phoneNumberValid) {
-        this.phoneNumberPass = true
+        this.ruleCheckList['phoneNumber'] = true
+        this.dupliCheckList['phoneNumber'] = false
       }
     },
-    checkDuplicatephoneNumber () {
+    checkDuplicatePhoneNumber () {
       const phoneNumberValid = this.phoneNumber.match(
         /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/
       );
 
       if (phoneNumberValid) {
         const {phoneNumber} = this
-        axios.post(`http://localhost:7777/member/check-phoneNumber/${phoneNumber}`)
+        axios.post(`http://localhost:7777/member/sign-up/check-phoneNumber/${phoneNumber}`)
             .then((res) => {
               if (res.data) {
                 alert("사용 가능한 번호입니다.")
-                this.phoneNumber = true
+                this.dupliCheckList['phoneNumber'] = true
+                this.ruleCheckList['phoneNumber'] = false
               } else {
                 alert("이미 가입된 번호입니다!")
-                this.phoneNumber = false
+                this.dupliCheckList['phoneNumber'] = false
+                this.ruleCheckList['phoneNumber'] = true
               }
         })
       }

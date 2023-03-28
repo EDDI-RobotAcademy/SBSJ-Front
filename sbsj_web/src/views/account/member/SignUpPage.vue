@@ -17,17 +17,18 @@ export default {
   },
   methods: {
     onSubmit (payload) {
-      const { memberName, memberId, password, email, birthday, phoneNumber  } = payload;
+      const { name, id, password, email, birthday, phoneNumber  } = payload;
 
       axios.post("http://localhost:7777/member/sign-up", {
-        memberName, memberId, password, email, birthday, phoneNumber 
+        name, id, password, email, birthday, phoneNumber 
       })
           .then((res) => {
-            alert("회원 가입 완료!" + res)
+            alert("회원 가입 완료!")
             this.$router.push("/sign-in")
           })
           .catch((res) => {
-            alert(res.response.data.message)
+            // alert("회원 가입 실패!\n다시 시도해주세요!"+ res.response.data.message)
+            alert("회원 가입 실패!\n다시 시도해주세요!"+ res.data)
           })
     }
   }

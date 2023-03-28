@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <div class="header-main" style="height: 200px;
+        <!-- <div class="header-main" style="height: 200px;
                 margin: auto;
                 display: flex; position: relative;
                 background-color: lightblue;
@@ -11,7 +11,8 @@
                             max-height="150" max-width="150" contain/>
             </router-link>
         </div>
-        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center>
+        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center> -->
+        <v-app-bar color="white" class="flex-grow-0" width="auto" app dark>
             <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
@@ -52,12 +53,14 @@
                     </div>
                 </div>
             </transition>
-            <v-toolbar-title class="text--darken-4">
-                <span>Pick Your Energy</span>
-            </v-toolbar-title>
+            <router-link :to="{ name: 'home' }" style="color: black; text-decoration: none;">
+                <v-toolbar-title class="text--darken-4">
+                    <span>Pick Your Energy</span>
+                </v-toolbar-title>
+            </router-link>
             <v-spacer></v-spacer>
             <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
-            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign" style="height: 64px;" class="mypage">
+            <v-btn v-if="this.isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
                 <span>My Page</span>
                 <v-icon right>mdi-login</v-icon>
                 <div class="mypage-hidden">
@@ -69,16 +72,19 @@
                             <a href="#">Test 5</a>
                         </li>
                         <li class="mypage-hover-highlight">
-                            <a href="#">Test 6</a>
+                            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
+                                <span>회원 탈퇴</span>
+                                <v-icon right>mdi-login</v-icon>
+                            </v-btn>
                         </li>
                     </ul>
                 </div>
             </v-btn>
-            <v-btn v-if="isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-up'" style="height: 64px;">
+            <v-btn v-if="this.isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/agree-pass'" style="height: 64px;">
                 <span>Sign Up</span>
                 <v-icon right>mdi-account-plus-outline</v-icon>
             </v-btn>
-            <v-btn v-if="isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-in'" style="height: 64px;">
+            <v-btn v-if="this.isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-in'" style="height: 64px;">
                 <span>Sign In</span>
                 <v-icon right>mdi-login</v-icon>
             </v-btn>
@@ -110,13 +116,18 @@
 
 <script>
 import router from '@/router';
+import {mapState} from "vuex";
+import axios from "axios";
+import Vue from "vue";
+import cookies from "vue-cookies";
+
+Vue.use(cookies);
 
 export default {
     name: "Header",
     data() {
         return {
             search: "",
-            isAuthenticated: true,
             scrollY: 0,
             showSidebar: false,
             isTrue: false,
@@ -148,11 +159,34 @@ export default {
             this.showSidebar = false;
             document.removeEventListener("click", this.hide);
         },
-        resign() {
-            //
+        resign () {
+            let token = localStorage.getItem("userInfo")
+            const length = token.length
+            console.log('token: ' + token + ', length: ' + length)
+            token = token.substr(1, length - 2)
+            console.log('token: ' + token)
+            axios.post("http://localhost:7777/member/resign", token)
+                .then(() => {
+                    alert("회원탈퇴 완료");
+                    localStorage.removeItem("userInfo");
+                    this.$cookies.remove("userInfo");
+                    this.$store.state.isAuthenticated = false;
+                })
         },
-        logout() {
-            //
+        logout () {
+            console.log('getItem: ' + localStorage.getItem("userInfo"))
+            let token = localStorage.getItem("userInfo")
+            const length = token.length
+            console.log('token: ' + token + ', length: ' + length)
+            token = token.substr(1, length - 2)
+            console.log('token: ' + token + ', length: ' + token.length)
+            axios.post("http://localhost:7777/member/logout", token)
+                .then(() => {
+                    alert("로그아웃 완료");
+                    localStorage.removeItem("userInfo");
+                    this.$cookies.remove("userInfo");
+                    this.$store.state.isAuthenticated = false;
+                })
         }
     },
     components: { router },
@@ -164,21 +198,28 @@ export default {
         //         return 'fixed';
         //     }
         // },
+        ...mapState(["isAuthenticated"]),
         adjust() {
         if (this.scrollY > 200) {
             return '0px';
-      } else {
-            return (200 - this.scrollY) + 'px';
-      }
+        } else {
+                return (200 - this.scrollY) + 'px';
+        }
     }
         
     },
 
     mounted() {
-    window.addEventListener('scroll', this.updateScrollY);
+        window.addEventListener('scroll', this.updateScrollY);
+
+        if (localStorage.getItem("userInfo")) {
+            this.$store.state.isAuthenticated = true;
+        } else {
+            this.$store.state.isAuthenticated = false;
+        }
     },
     beforeDestroy() {
-    window.removeEventListener('scroll', this.updateScrollY);
+        window.removeEventListener('scroll', this.updateScrollY);
     }
   
 }

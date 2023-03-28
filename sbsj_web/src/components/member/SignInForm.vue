@@ -1,5 +1,5 @@
 <template>
-  <div class="" style="font-family: 'Noto Sans KR', sans-serif">
+  <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
     <v-container class="white" style="width: 1240px">
       <v-row justify="center">
         <v-col cols="auto" style="padding-bottom: 90px">
@@ -28,10 +28,10 @@
 
                 <div class="d-flex">
                   <v-text-field
-                      type="memberId"
-                      v-model="memberId"
+                      type="id"
+                      v-model="id"
                       label="아이디"
-                      :rules="memberId_rule"
+                      :rules="id_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
                       color="orange"
@@ -56,7 +56,8 @@
                     type="submit"
                     block
                     x-large
-                    color="#97d9e1"
+                    rounded
+                    color="teal lighten-3"
                     class="mt-6"
                     :disabled="false"
                 >로그인</v-btn><br/>
@@ -69,21 +70,19 @@
                     <v-col>
                       <router-link
                           class="text-decoration-none purple--text ml-5 mr-5"
-                          to="/search-id"
-                      >ID 찾기</router-link>
+                          to="/search-id">ID 찾기</router-link>
                     </v-col>
                     <v-col>
                       <router-link
                           class="text-decoration-none purple--text ml-5 mr-5"
-                          to="/search-password"
-                      >PW 찾기</router-link>
+                          to="/search-password">PW 찾기</router-link>
                     </v-col>
                   </v-row> 
                 </div>    
               </v-form>
               <br>
               <br>
-              <div class="btn back" onclick="history.go(-1);return false;">뒤로가기</div>
+              <div class="btn back" onclick="history.go(-1); return false;">뒤로가기</div>
             </v-card-text>
           </v-card>
         </v-col>
@@ -99,35 +98,33 @@ export default {
   name: "SignInForm",
   data() {
     return {
-      memberId: "",
+      id: "",
       password: "",
-      memberId_rule:[
+      id_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
-          const pattern = /^[a-zA-Z0-9]{5,11}$/
-          return pattern.test(replaceV) || '아이디는 6~12자 형식입니다.'
+          const pattern = /^[a-zA-Z0-9]{3,11}$/
+          return pattern.test(replaceV) || '아이디는 4~12자 형식입니다.'
         }
       ],
       password_rule: [
         v => !!v || '패스워드를 입력해주세요.',
         v => this.password === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-        v => !(v && v.length < 6) || '패스워드는 6자 이상입니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상입니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 미만입니다.',
       ],
     };
   },
   methods: {
     onSubmit() {
-      const { memberId, password } = this;
-      this.$emit("submit", { memberId, password });
+      const { id, password } = this;
+      this.$emit("submit", { id, password });
     },
   },
   
 };
 document.querySelectorAll('.button').forEach(button => button.innerHTML = '<div><span>' + button.textContent.trim().split('').join('</span><span>') + '</span></div>');
-
-
 
 </script>
 
