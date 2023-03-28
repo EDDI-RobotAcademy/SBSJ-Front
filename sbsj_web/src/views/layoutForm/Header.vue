@@ -60,7 +60,7 @@
             </router-link>
             <v-spacer></v-spacer>
             <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
-            <v-btn v-if="this.isAuthenticated == true" text color="grey" v-on:click="resign" style="height: 64px;" class="mypage">
+            <v-btn v-if="this.isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
                 <span>My Page</span>
                 <v-icon right>mdi-login</v-icon>
                 <div class="mypage-hidden">
