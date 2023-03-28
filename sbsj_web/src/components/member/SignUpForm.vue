@@ -43,7 +43,7 @@
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
                        @click="checkDuplicateEmail"
-                       :disabled="!emailPass">
+                       :disabled="!this.ruleCheckList['email']">
                   이메일 <br/>중복 확인
                 </v-btn>
               </div>
@@ -93,9 +93,9 @@ export default {
       birthday: "",
       phoneNumber: "",
       
-      emailPass: false,
       phoneNumberPass: false,
       dupliCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
+      ruleCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
       
       name_rule: [
         v => !!v || '이름을 입력해주세요.',
@@ -207,14 +207,16 @@ export default {
 
       if (emailValid) {
         const {email} = this
-        axios.post(`http://localhost:7777/member/check-email/${email}`)
+        axios.post(`http://localhost:7777/member/sign-up/check-email/${email}`)
             .then((res) => {
               if (res.data) {
                 alert("사용 가능한 이메일입니다.")
-                this.emailPass = true
+                this.dupliCheckList['email'] = true
+                this.ruleCheckList['email'] = false
               } else {
                 alert("중복된 이메일입니다!")
-                this.emailPass = false
+                this.dupliCheckList['email'] = false
+                this.ruleCheckList['email'] = true
               }
             })
       }
