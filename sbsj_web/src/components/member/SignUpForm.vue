@@ -59,14 +59,14 @@
                               :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1" 
-                       @click="checkDuplicatephoneNumber"
-                       :disabled="!phoneNumberPass">
+                       @click="checkDuplicatePhoneNumber"
+                       :disabled="!this.ruleCheckList['phoneNumber']">
                   휴대폰번호 <br/>중복 확인
                 </v-btn>
               </div>
 
               <v-btn type="submit" block x-large rounded
-                     class="mt-6" color="teal lighten-3" :disabled="(emailPass, memberIdPass, phoneNumberPass ) == false">
+                     class="mt-6" color="teal lighten-3">
                 가입하기
               </v-btn>
 
@@ -93,7 +93,6 @@ export default {
       birthday: "",
       phoneNumber: "",
       
-      phoneNumberPass: false,
       dupliCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
       ruleCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
       
@@ -197,7 +196,8 @@ export default {
       );
 
       if (emailValid) {
-        this.emailPass = true
+        this.ruleCheckList['email'] = true
+        this.dupliCheckList['email'] = false
       }
     },
     checkDuplicateEmail () {
@@ -226,24 +226,27 @@ export default {
         /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/
       );
       if (phoneNumberValid) {
-        this.phoneNumberPass = true
+        this.ruleCheckList['phoneNumber'] = true
+        this.dupliCheckList['phoneNumber'] = false
       }
     },
-    checkDuplicatephoneNumber () {
+    checkDuplicatePhoneNumber () {
       const phoneNumberValid = this.phoneNumber.match(
         /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/
       );
 
       if (phoneNumberValid) {
         const {phoneNumber} = this
-        axios.post(`http://localhost:7777/member/check-phoneNumber/${phoneNumber}`)
+        axios.post(`http://localhost:7777/member/sign-up/check-phoneNumber/${phoneNumber}`)
             .then((res) => {
               if (res.data) {
                 alert("사용 가능한 번호입니다.")
-                this.phoneNumber = true
+                this.dupliCheckList['phoneNumber'] = true
+                this.ruleCheckList['phoneNumber'] = false
               } else {
                 alert("이미 가입된 번호입니다!")
-                this.phoneNumber = false
+                this.dupliCheckList['phoneNumber'] = false
+                this.ruleCheckList['phoneNumber'] = true
               }
         })
       }
