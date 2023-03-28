@@ -152,6 +152,19 @@ export default {
   },
   methods: {
     onSubmit () {
+      if(!this.dupliCheckList['id']) {
+        alert("아이디 중복 확인을 해주세요!");
+        return;
+      }
+      if(!this.dupliCheckList['email']) {
+        alert("이메일 중복 확인을 해주세요!");
+        return;
+      }
+      if(!this.dupliCheckList['phoneNumber']) {
+        alert("휴대폰 번호 중복 확인을 해주세요!");
+        return;
+      }
+
       if (this.$refs.form.validate()) {
         const { name, id, password, email, birthday, phoneNumber} = this
         this.$emit("submit", { name, id, password, email, birthday, phoneNumber })
