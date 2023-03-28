@@ -6,7 +6,7 @@
                 <button class="blur-btn btn btn-primary">맞춤 영양제 찾기</button>
             </div>
         </v-col>
-        <v-col v-else v-for="image in images" :key="image" cols="3">
+        <v-col v-else v-for="(image, index) in images" :key="index" cols="3">
             <v-card style="height: 450px;">
                 <v-img :src="image.imagePath" aspect-ratio="1" class="grey lighten-2"/>
                 <v-card-title style="font-size: 15px;">
