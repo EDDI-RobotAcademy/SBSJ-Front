@@ -33,9 +33,8 @@ export default {
   methods: {
     onSubmit(payload) {
       if (!this.isLogin) {
-        const { memberId, password } = payload;
-        axios
-            .post("http://localhost:7777/member/sign-in", { memberId, password })
+        const { id, password } = payload;
+        axios.post("http://localhost:7777/member/sign-in", { id, password })
             .then((res) => {
               if (res.data) {
                 alert("로그인 성공!");
