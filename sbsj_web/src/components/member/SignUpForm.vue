@@ -1,5 +1,5 @@
 <template>
-  <div class="" style="font-family: Arial">
+  <div class="grey lighten-5" style="font-family: Arial">
     <v-row justify="center">
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
@@ -21,6 +21,8 @@
                               :rules="id_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
+                       @click="checkDuplicateId"
+                       :disabled="!this.ruleCheckList['id']">
                   아이디 <br/>중복 확인
                 </v-btn>
               </div>
@@ -92,8 +94,8 @@ export default {
       phoneNumber: "",
       
       emailPass: false,
-      memberIdPass: false,
       phoneNumberPass: false,
+      dupliCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
       
       name_rule: [
         v => !!v || '이름을 입력해주세요.',
@@ -162,8 +164,9 @@ export default {
       const idValid = this.id.match(
           /^[a-zA-Z0-9]{3,11}$/
       );
-        this.memberIdPass = true
       if (idValid) {
+        this.ruleCheckList['id'] = true
+        this.dupliCheckList['id'] = false
       }
     },
     checkDuplicateId () {
@@ -176,11 +179,14 @@ export default {
         axios.post(`http://localhost:7777/member/sign-up/check-id/${id}`)
             .then((res) => {
               if (res.data) {
-                alert("사용 가능한 아이디입니다.")
-                this.memberIdPass = true
+                alert("사용 가능한 아이디입니다. "+ res.data)
+                this.dupliCheckList['id'] = true
+                this.ruleCheckList['id'] = false
+
               } else {
                 alert("중복된 아이디입니다!")
-                this.memberIdPass = false
+                this.dupliCheckList['id'] = false
+                this.ruleCheckList['id'] = true
               }
             })
       }
