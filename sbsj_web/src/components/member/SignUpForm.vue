@@ -108,8 +108,8 @@ export default {
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
-          const pattern = /^[a-zA-Z][0-9a-zA-Z]{5,11}$/
-          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 6~12자 아이디를 입력해주세요'
+          const pattern = /^[a-zA-Z][0-9a-zA-Z]{3,11}$/
+          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 4~12자 아이디를 입력해주세요'
         }
       ],
       email_rule: [
@@ -123,12 +123,12 @@ export default {
       password_rule: [
         v => !!v || '패스워드를 입력해주세요.',
         v => this.password === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
       ],
       passwordConfirm_rule: [
         v => !!v || '패스워드를 확인해주세요.',
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
         v => v === this.password || '패스워드가 일치하지 않습니다.'
       ],
