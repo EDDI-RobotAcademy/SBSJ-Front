@@ -1,16 +1,20 @@
-// import Vue from 'vue'
-// import Vuex from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-// import state from "@/store/states"
-// import actions from "@/store/actions"
-// import mutations from "@/store/mutations"
-// import getters from "@/store/getters"
+import accountModule from '@/store/account/AccountModule.js'
+import boardModule from "@/store/board/BoardModule.js"
+import productModule from "@/store/product/ProductModule.js"
+import orderModule from "@/store/order/OrderModule.js"
 
-// Vue.use(Vuex)
+Vue.use(Vuex)
 
-// export default new Vuex.Store({
-//   state,
-//   actions,
-//   mutations,
-//   getters,
-// })
+const store = new Vuex.Store({
+  modules: {
+    accountModule: accountModule,
+    boardModule: boardModule,
+    productModule: productModule,
+    orderModule: orderModule,
+  },
+})
+
+export default store
