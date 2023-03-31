@@ -23,6 +23,12 @@ export default {
                 return res.data
             })
     },
+    reqSignUpCheckEmailToSpring({}, email) {
+        return axiosInst.post(`/member/sign-up/check-email/${email}`)
+            .then((res) => {
+                return res.data;
+            })
+    },
     reqSignInToSpring({ commit }, payload) {
         const { id, password } = payload;
         return axiosInst.post("/member/sign-in", { id, password })

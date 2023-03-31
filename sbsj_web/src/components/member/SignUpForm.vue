@@ -38,7 +38,7 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @change="emailValidation"
+                <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @input="emailValidation"
                               :rules="email_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-email" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
@@ -155,6 +155,7 @@ export default {
   methods: {
     ...mapActions(accountModule, [
       'reqSignUpCheckIdToSpring', 
+      'reqSignUpCheckEmailToSpring',
     ]),
 
     onSubmit () {
@@ -225,19 +226,20 @@ export default {
       );
 
       if (emailValid) {
-        const {email} = this
-        axios.post(`http://localhost:7777/member/sign-up/check-email/${email}`)
-            .then((res) => {
-              if (res.data) {
-                alert("사용 가능한 이메일입니다.")
-                this.dupliCheckList['email'] = true
-                this.ruleCheckList['email'] = false
-              } else {
-                alert("중복된 이메일입니다!")
-                this.dupliCheckList['email'] = false
-                this.ruleCheckList['email'] = true
-              }
-            })
+        const {email} = this;
+
+        (async () => {
+          let isEmail = await this.reqSignUpCheckEmailToSpring(email);
+          if (!isEmail) {
+            alert("사용 가능한 이메일입니다.")
+            this.dupliCheckList['email'] = true
+            this.ruleCheckList['email'] = false
+          } else if(isEmail == true) {
+            alert("중복된 이메일입니다!")
+            this.dupliCheckList['email'] = false
+            this.ruleCheckList['email'] = true
+          }
+        })()
       }
     },
     phoneNumberValidation () {
