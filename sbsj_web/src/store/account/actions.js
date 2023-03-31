@@ -62,3 +62,8 @@ export default {
                 alert("로그인에 실패했습니다.\n다시 시도해주세요.");
             })
     },
+    commitIsAuthenticated({ commit }, payload) {
+        commit(COMMIT_IS_AUTHENTICATED, payload);
+    },
+
+}
