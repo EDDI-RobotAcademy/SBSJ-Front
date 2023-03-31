@@ -1,5 +1,5 @@
 <template>
-    <div class="" style="font-family: 'Noto Sans KR', sans-serif">
+    <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
       <v-container class="white" style="width: 1240px">
         <v-row justify="center">
           <v-col cols="auto" style="padding-bottom: 90px">
@@ -40,7 +40,8 @@
                   <v-btn
                       block
                       x-large
-                      color="#97d9e1"
+                      rounded
+                      color="teal lighten-3"
                       class="mt-6"
                       @click="findAccountmemberId, findAccountPhone"
                       :disabled="false"
@@ -109,7 +110,7 @@
 import axios from "axios";
 
 export default {
-  name: "SearchMemberPasswordForm",
+  name: "SearchPasswordForm",
   data() {
     return {
       memberId: "",

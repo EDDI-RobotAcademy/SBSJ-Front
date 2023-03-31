@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import mutations from "@/store/order/mutations";
-import orderstates from "@/store/order/orderstates"
+import state from "@/store/order/orderStates"
 import actions from "@/store/order/actions";
 
 Vue.use(Vuex)
@@ -10,7 +10,7 @@ Vue.use(Vuex)
 const OrderModule = {
     namespaced: true,
     mutations,   
-    orderstates,
+    state,
     actions,
 }
 
