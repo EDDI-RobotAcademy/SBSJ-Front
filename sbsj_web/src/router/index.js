@@ -35,9 +35,10 @@ const routes = [
     component: ProductPage
   },
   {
-    path: '/detail-product-page',
+    path: '/detail-product-page/:product',
     name: 'DetailProductPage',
-    component: DetailProductPage
+    component: DetailProductPage,
+    props: true
   },
   {
     path: '/sign-up',
