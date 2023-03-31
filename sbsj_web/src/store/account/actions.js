@@ -17,6 +17,12 @@ export default {
                 alert("회원 가입 실패!\n다시 시도해주세요!"+ res.data);
             })
     },
+    reqSignUpCheckIdToSpring({}, id) {
+        return axiosInst.post(`/member/sign-up/check-id/${id}`)
+            .then((res) => {
+                return res.data
+            })
+    },
     reqSignInToSpring({ commit }, payload) {
         const { id, password } = payload;
         return axiosInst.post("/member/sign-in", { id, password })
