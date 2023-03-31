@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import mutations from "@/store/board/mutations";
-import productstates from "@/store/product/productstates"
+import state from "@/store/product/productStates"
 import actions from "@/store/product/actions";
 
 Vue.use(Vuex)
@@ -10,7 +10,7 @@ Vue.use(Vuex)
 const ProductModule = {
     namespaced: true,
     mutations,   
-    productstates,
+    state,
     actions,
 }
 
