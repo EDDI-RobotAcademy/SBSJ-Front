@@ -1,5 +1,5 @@
 <template>
-    <div class="" style="font-family: 'Noto Sans KR', sans-serif">
+    <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
       <v-container class="white" style="width: 1240px">
         <v-row justify="center">
           <v-col cols="auto" style="padding-bottom: 90px">
@@ -18,9 +18,9 @@
   
                   <div class="d-flex">
                     <v-text-field
-                        v-model="memberName"
+                        v-model="name"
                         label="이름"
-                        :rules="memberName_rule"
+                        :rules="name_rule"
                         clearable
                         prepend-icon="mdi-account-outline"
                         color="orange"
@@ -39,9 +39,10 @@
                   <v-btn
                       block
                       x-large
-                      color="#97d9e1"
+                      rounded
+                      color="teal lighten-3"
                       class="mt-6"
-                      @click="findAccountmemberName(), findAccountPhone()"
+                      @click="findAccountname(), findAccountPhone()"
                       :disabled="false"
                   >ID 찾기</v-btn>
                 </v-form>
@@ -68,15 +69,15 @@
 import axios from "axios";
 
 export default {
-  name: "SearchMemberIdForm",
+  name: "SearchIdForm",
   data() {
     return {
-      memberName: "",
+      name: "",
       phoneNumber: "",
       isPass: false,
       matchingId: null,
       
-      memberName_rule:[
+      name_rule:[
         v => !!v || '가입한 이름을 입력해주세요.',
         v => {
         const replaceV = v.replace(/(\s*)/g, '')
@@ -92,18 +93,18 @@ export default {
           return pattern.test(replaceV) || '010-1234-5678 형식의 번호를 입력해주세요.'
         }
       ],
-    };
+    }
   },
   methods: {
-    findAccountmemberName() {
-      const { memberName } = this;
+    findAccountName() {
+      const { name } = this;
       axios
-          .post("http://localhost:7777/member/memberNameMatch", { memberName })
+          .post("http://localhost:7777/member/name-match", { name })
           .then((res) => {
             if (res.data) {
               alert("인증이 완료되었습니다.");
               this.isPass = true;
-              this.matchingId(memberName, this.phoneNumber);
+              this.matchingId(name, this.phoneNumber);
             } else {
               alert("해당이름으로 가입된 정보가 없습니다.");
               this.isPass = false;
@@ -117,12 +118,12 @@ export default {
     findAccountPhone() {
       const { phoneNumber } = this;
       axios
-          .post("http://localhost:7777/member/phoneNumberMatch", { phoneNumber })
+          .post("http://localhost:7777/member/phoneNumber-match", { phoneNumber })
           .then((res) => {
             if (res.data) {
               alert("인증이 완료되었습니다.");
               this.isPass = true;
-              this.matchingId(this.memberName, phoneNumber);
+              this.matchingId(this.name, phoneNumber);
             } else {
               alert("입력한 휴대폰번호로 가입된 정보가 없습니다.");
               this.isPass = false;
@@ -133,9 +134,9 @@ export default {
           alert("요청에 실패했습니다. 다시 시도해주세요.");
         });
       },
-      findmatchingId(memberName, phoneNumber) {
+      findmatchingId(name, phoneNumber) {
       axios
-        .post("http://localhost:7777/member/findMatchingId", { memberName, phoneNumber })
+        .post("http://localhost:7777/member/findMatchingId", { name, phoneNumber })
         .then((res) => {
           if (res.data) {
             this.matchingId = res.data;
