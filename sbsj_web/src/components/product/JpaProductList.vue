@@ -9,7 +9,7 @@
                         class="mx-auto transition-swing"
                         style="border-radius: 20px"
                     >
-                        <router-link :to="{ name: 'DetailProductPage', params: {product: product}}" class="baby-product-link">
+                        <router-link :to="{ name: 'DetailProductPage', params: {product: {productId: product.productId, productTitle: product.title, productThumbnail: product.thumbnail, productWish: product.wish, productPrice: product.price}}}" class="baby-product-link">
                             <dl class="baby-product-wrap">
                                 <dt class="image">
                                     <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
