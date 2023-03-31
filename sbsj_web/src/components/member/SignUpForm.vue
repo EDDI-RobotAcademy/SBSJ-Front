@@ -38,7 +38,7 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @change="emailValidation"
+                <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @input="emailValidation"
                               :rules="email_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-email" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
@@ -55,7 +55,7 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @change="phoneNumberValidation"
+                <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @input="phoneNumberValidation"
                               :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1" 
@@ -79,7 +79,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapActions } from 'vuex';
+
+const accountModule = 'accountModule';
 
 export default {
   name: "SignUpForm",
@@ -151,6 +153,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions(accountModule, [
+      'reqSignUpCheckIdToSpring', 
+      'reqSignUpCheckEmailToSpring',
+      'reqSignUpCheckPhoneNumberToSpring'
+    ]),
+
     onSubmit () {
       if(!this.dupliCheckList['id']) {
         alert("아이디 중복 확인을 해주세요!");
@@ -187,20 +195,20 @@ export default {
       );
 
       if (idValid) {
-        const {id} = this
-        axios.post(`http://localhost:7777/member/sign-up/check-id/${id}`)
-            .then((res) => {
-              if (res.data) {
-                alert("사용 가능한 아이디입니다. "+ res.data)
-                this.dupliCheckList['id'] = true
-                this.ruleCheckList['id'] = false
+        const {id} = this;
 
-              } else {
-                alert("중복된 아이디입니다!")
-                this.dupliCheckList['id'] = false
-                this.ruleCheckList['id'] = true
-              }
-            })
+        (async () => {
+          let isId = await this.reqSignUpCheckIdToSpring(id);
+          if (!isId) {
+            alert("사용 가능한 아이디입니다.");
+            this.dupliCheckList['id'] = true;
+            this.ruleCheckList['id'] = false;
+          } else if(isId == true) {
+            alert("중복된 아이디입니다!");
+            this.dupliCheckList['id'] = false;
+            this.ruleCheckList['id'] = true;
+          }
+        })()
       }
     },
     emailValidation () {
@@ -219,19 +227,20 @@ export default {
       );
 
       if (emailValid) {
-        const {email} = this
-        axios.post(`http://localhost:7777/member/sign-up/check-email/${email}`)
-            .then((res) => {
-              if (res.data) {
-                alert("사용 가능한 이메일입니다.")
-                this.dupliCheckList['email'] = true
-                this.ruleCheckList['email'] = false
-              } else {
-                alert("중복된 이메일입니다!")
-                this.dupliCheckList['email'] = false
-                this.ruleCheckList['email'] = true
-              }
-            })
+        const {email} = this;
+
+        (async () => {
+          let isEmail = await this.reqSignUpCheckEmailToSpring(email);
+          if (!isEmail) {
+            alert("사용 가능한 이메일입니다.")
+            this.dupliCheckList['email'] = true
+            this.ruleCheckList['email'] = false
+          } else if(isEmail == true) {
+            alert("중복된 이메일입니다!")
+            this.dupliCheckList['email'] = false
+            this.ruleCheckList['email'] = true
+          }
+        })()
       }
     },
     phoneNumberValidation () {
@@ -249,19 +258,20 @@ export default {
       );
 
       if (phoneNumberValid) {
-        const {phoneNumber} = this
-        axios.post(`http://localhost:7777/member/sign-up/check-phoneNumber/${phoneNumber}`)
-            .then((res) => {
-              if (res.data) {
-                alert("사용 가능한 번호입니다.")
-                this.dupliCheckList['phoneNumber'] = true
-                this.ruleCheckList['phoneNumber'] = false
-              } else {
-                alert("이미 가입된 번호입니다!")
-                this.dupliCheckList['phoneNumber'] = false
-                this.ruleCheckList['phoneNumber'] = true
-              }
-        })
+        const {phoneNumber} = this;
+        
+        (async () => {
+          let isPhoneNumber = await this.reqSignUpCheckPhoneNumberToSpring(phoneNumber);
+          if (!isPhoneNumber) {
+            alert("사용 가능한 번호입니다.");
+            this.dupliCheckList['phoneNumber'] = true;
+            this.ruleCheckList['phoneNumber'] = false;
+          } else if(isPhoneNumber == true) {
+            alert("이미 가입된 번호입니다!");
+            this.dupliCheckList['phoneNumber'] = false;
+            this.ruleCheckList['phoneNumber'] = true;
+          }
+        })()
       }
     },
   }

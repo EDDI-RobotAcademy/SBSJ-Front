@@ -16,10 +16,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="carousel-indicators">
+		<!-- <div class="carousel-indicators">
 			<button type="button" data-bs-target="#mainTopCarousel" data-bs-slide-to="0" class="indicator active" aria-current="true" aria-label="Slide 1"></button>
 			<button type="button" data-bs-target="#mainTopCarousel" data-bs-slide-to="1" class="indicator" aria-label="Slide 2"></button>
-		</div>
+		</div> -->
 		<button class="carousel-control-prev" type="button" data-bs-target="#mainTopCarousel" data-bs-slide="prev" @click="pass">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Previous</span>
@@ -40,19 +40,19 @@ export default {
 			let carousel1 = document.getElementsByClassName("carousel-item")[0];
 			let carousel2 = document.getElementsByClassName("carousel-item")[1];
 
-			let indicator1 = document.getElementsByClassName("indicator")[0];
-			let indicator2 = document.getElementsByClassName("indicator")[1];
+			// let indicator1 = document.getElementsByClassName("indicator")[0];
+			// let indicator2 = document.getElementsByClassName("indicator")[1];
 
 			if(carousel1.classList.contains("active")) {
 				carousel1.classList.remove("active");
 				carousel2.classList.add("active");
-				indicator1.classList.remove("active");
-				indicator2.classList.add("active");
+				// indicator1.classList.remove("active");
+				// indicator2.classList.add("active");
 			} else {
 				carousel1.classList.add("active");
 				carousel2.classList.remove("active");
-				indicator1.classList.add("active");
-				indicator2.classList.remove("active");
+				// indicator1.classList.add("active");
+				// indicator2.classList.remove("active");
 			}
 		}
 	}
