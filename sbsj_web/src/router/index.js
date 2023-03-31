@@ -8,7 +8,7 @@ import DetailProductPage from '@/views/product/DetailProductPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
-import SearchMemberPasswordPage from "@/views/account/member/SearchMemberPasswordPage";
+import SearchPasswordPage from "@/views/account/member/SearchPasswordPage";
 import SearchIdPage from "@/views/account/member/SearchIdPage";
 import SignAgreePage from "@/views/account/member/SignAgreePage";
 import AgreementPage from "@/views/information/AgreementPage";
@@ -51,8 +51,8 @@ const routes = [
   },
   {
     path: '/search-password',
-    name: 'SearchMemberPasswordPage',
-    component: SearchMemberPasswordPage
+    name: 'SearchPasswordPage',
+    component: SearchPasswordPage
   },
   {
     path: '/search-id',
