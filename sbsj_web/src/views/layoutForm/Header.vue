@@ -13,7 +13,7 @@
         </div>
         <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center> -->
         <v-app-bar color="white" class="flex-grow-0" width="auto" app dark>
-            <v-app-bar-nav-icon v-on:click="activeSidebar"/>
+            <v-app-bar-nav-icon v-on:click="activeSidebar" style="color: black;"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
                         max-height="40" max-width="40" contain/>
@@ -22,7 +22,7 @@
                 <div v-if="showSidebar" class="sidebar">
                     <div class="main__category-box" style="width: 700px;">
                         <div class="main__category-list" style="width: 200px; background-color: black;">
-                                <li v-for="item in items" :key="item" class="hover-highlight" style="line-height: 44px; text-align: center;">
+                                <li v-for="(item, index) in items" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center;">
                                     <router-link :to="{ name: 'productPage'}">
                                         <p>{{ item.mainTitle }}</p>
                                     </router-link>

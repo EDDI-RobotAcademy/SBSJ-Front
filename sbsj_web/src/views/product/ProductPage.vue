@@ -11,7 +11,7 @@
                             <product-category-header></product-category-header>
                         </div>
                         <div class="clear-fix"></div>
-                        <jpa-product-list v-bind:products="products"></jpa-product-list>
+                        <jpa-product-list :products="products"></jpa-product-list>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
@@ -28,22 +28,36 @@ import { mapActions, mapState } from 'vuex';
 import JpaProductList from '@/components/product/JpaProductList.vue';
 import ProductSearchFilter from '@/components/product/JpaSearchFilter.vue';
 import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vue';
+
+// temp
+import axios from 'axios';
   
   export default {
     name: "ProductPage",
     components: {JpaProductList, ProductSearchFilter, ProductCategoryHeader},
-    computed: {
-        ...mapState([
-            'products'
-            ]),
+    data() {
+        return {
+            products: [],
+        }
     },
+    // computed: {
+    //     ...mapState([
+    //         'products'
+    //         ]),
+    // },
     mounted () {
-        this.requestProductListtoSpring()
+        // this.requestProductListtoSpring()
+        console.log("mounted()");
+        axios.get('http://localhost:7777/product/default')
+            .then((res) => this.products = res.data)
+            .catch((res) => {
+              alert(res.response.data.message);
+            });
     },
     methods: {
-        ...mapActions([
-            'requestProductListtoSpring'
-        ])
+        // ...mapActions([
+        //     'requestProductListtoSpring'
+        // ])
     }
   }
   
@@ -71,7 +85,7 @@ import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vu
         float: right;
         display: block;
         padding-top: 20px;
-        background-color: orange;
+        background-color: none;
     }
 
     .header {
