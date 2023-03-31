@@ -17,3 +17,29 @@ export default {
                 alert("회원 가입 실패!\n다시 시도해주세요!"+ res.data);
             })
     },
+    reqSignInToSpring({ commit }, payload) {
+        const { id, password } = payload;
+        return axiosInst.post("/member/sign-in", { id, password })
+            .then((res) => {
+                (async () => {
+                    let returnData = JSON.stringify(res.data);
+                    console.log("1이건 뭔데: "+ returnData);
+                    let token = JSON.stringify(res.data.token);
+                    console.log("2얘는 token: "+ token);
+                    
+                    if(token == JSON.stringify("incorrect")) {
+                        alert("아이디 혹은 비밀번호가 틀렸습니다.");
+                    } else if(token == JSON.stringify("no")) {
+                        alert("가입되지 않은 사용자입니다.");
+                    } else if((token != JSON.stringify("incorrect")) && (token != JSON.stringify("no"))) {
+                        alert("로그인 성공!");
+                        localStorage.setItem("userInfo", JSON.stringify(res.data));
+                        commit(COMMIT_IS_AUTHENTICATED, true);
+                        router.push("/");
+                    }
+                })()
+            })
+            .catch(() => {
+                alert("로그인에 실패했습니다.\n다시 시도해주세요.");
+            })
+    },
