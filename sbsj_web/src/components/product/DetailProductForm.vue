@@ -133,7 +133,12 @@
                             </div>
                             <div style="width:100%; height:12%; display: flex; ">
                                 <div style=" width:50%; display:flex; justify-content:center; align-items:center; ">
-                                    <button type="button" class="btn btn-primary btn-lg" style="font-weight: bold;">장바구니</button>
+                                    <button type="button" 
+                                        class="btn btn-primary btn-lg" 
+                                        style="font-weight: bold;"
+                                        @click="toCart"
+                                    >
+                                    장바구니</button>
                                 </div>
                                 <div style="width:50%; display:flex; justify-content:center; align-items:center; ">
                                     <button type="button" class="btn btn-dark btn-lg" style="font-weight: bold;">바로구매</button>
@@ -172,14 +177,25 @@
 
 
 <script >
+import { mapActions } from "vuex";
+const orderModule = 'orderModule'
+
 export default {
     name: "DetailProductForm",
     data() {
         return {
-            showIcon:true
+            showIcon:true,
+
+            // 테스트용 (나중에 지울것)
+            memberNo: 1,
+            productId: 1,
+            count: 1,
         };
     },
 	methods: {
+        ...mapActions(orderModule, [
+            'reqAddCartToSpring',
+        ]),
 		pass() {
 			let carousel1 = document.getElementsByClassName("carousel-item")[0];
 			let carousel2 = document.getElementsByClassName("carousel-item")[1];
@@ -205,7 +221,20 @@ export default {
             } else {
                 this.showIcon = true
             }
-        }
+        },
+        toCart() {
+            //let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            //let memberNo = await userInfo.memberNo;
+            
+            const { memberNo, productId, count } = this
+
+            console.log(memberNo + ', ' + productId +', '+ count)
+            this.reqAddCartToSpring(memberNo, productId, count)
+            
+
+            this.$router.push({ name:'ShoppingCart' })
+        },
+        
 
 	}
 }
