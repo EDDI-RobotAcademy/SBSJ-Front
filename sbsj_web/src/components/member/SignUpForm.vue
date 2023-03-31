@@ -55,7 +55,7 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @change="phoneNumberValidation"
+                <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @input="phoneNumberValidation"
                               :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1" 
@@ -156,6 +156,7 @@ export default {
     ...mapActions(accountModule, [
       'reqSignUpCheckIdToSpring', 
       'reqSignUpCheckEmailToSpring',
+      'reqSignUpCheckPhoneNumberToSpring'
     ]),
 
     onSubmit () {
@@ -257,19 +258,20 @@ export default {
       );
 
       if (phoneNumberValid) {
-        const {phoneNumber} = this
-        axios.post(`http://localhost:7777/member/sign-up/check-phoneNumber/${phoneNumber}`)
-            .then((res) => {
-              if (res.data) {
-                alert("사용 가능한 번호입니다.")
-                this.dupliCheckList['phoneNumber'] = true
-                this.ruleCheckList['phoneNumber'] = false
-              } else {
-                alert("이미 가입된 번호입니다!")
-                this.dupliCheckList['phoneNumber'] = false
-                this.ruleCheckList['phoneNumber'] = true
-              }
-        })
+        const {phoneNumber} = this;
+        
+        (async () => {
+          let isPhoneNumber = await this.reqSignUpCheckPhoneNumberToSpring(phoneNumber);
+          if (!isPhoneNumber) {
+            alert("사용 가능한 번호입니다.");
+            this.dupliCheckList['phoneNumber'] = true;
+            this.ruleCheckList['phoneNumber'] = false;
+          } else if(isPhoneNumber == true) {
+            alert("이미 가입된 번호입니다!");
+            this.dupliCheckList['phoneNumber'] = false;
+            this.ruleCheckList['phoneNumber'] = true;
+          }
+        })()
       }
     },
   }

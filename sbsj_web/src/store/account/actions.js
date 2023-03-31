@@ -29,6 +29,13 @@ export default {
                 return res.data;
             })
     },
+    reqSignUpCheckPhoneNumberToSpring({}, phoneNumber) {
+        return axiosInst.post(`/member/sign-up/check-phoneNumber/${phoneNumber}`)
+            .then((res) => {
+                return res.data;
+            })
+    },
+
     reqSignInToSpring({ commit }, payload) {
         const { id, password } = payload;
         return axiosInst.post("/member/sign-in", { id, password })
