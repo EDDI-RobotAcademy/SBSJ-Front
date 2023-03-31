@@ -62,6 +62,25 @@ export default {
                 alert("로그인에 실패했습니다.\n다시 시도해주세요.");
             })
     },
+    async reqSignOutToSpring({ commit }, token) {
+        return await axiosInst.post("/member/logout", token)
+            .then(() => {
+                alert("로그아웃 완료");
+                localStorage.removeItem("userInfo");
+
+                commit(COMMIT_IS_AUTHENTICATED, false);
+            })
+    },
+    reqResignToSpring({ commit }, token) {
+        return axiosInst.post("/member/resign", token)
+            .then(() => {
+                alert("회원탈퇴 완료");
+                localStorage.removeItem("userInfo");
+                // this.$cookies.remove("userInfo");
+                
+                commit(COMMIT_IS_AUTHENTICATED, false);
+            })
+    },
     commitIsAuthenticated({ commit }, payload) {
         commit(COMMIT_IS_AUTHENTICATED, payload);
     },

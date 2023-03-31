@@ -13,7 +13,7 @@
         </div>
         <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center> -->
         <v-app-bar color="white" class="flex-grow-0" width="auto" app dark>
-            <v-app-bar-nav-icon v-on:click="activeSidebar" style="color: black;"/>
+            <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
                         max-height="40" max-width="40" contain/>
@@ -22,33 +22,33 @@
                 <div v-if="showSidebar" class="sidebar">
                     <div class="main__category-box" style="width: 700px;">
                         <div class="main__category-list" style="width: 200px; background-color: black;">
-                                <li v-for="(item, index) in items" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center;">
-                                    <router-link :to="{ name: 'productPage'}">
-                                        <p>{{ item.mainTitle }}</p>
-                                    </router-link>
-                                    <div class="second-category hidden">
-                                        <div class="first-inline-category" style="background-color: aqua;">
-                                            <ul style="position: absolute; padding-left: 0;">
-                                                <li v-for="(subTitle, index) in item.subTitles" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
-                                                    <a href="#">
-                                                        <p>{{ subTitle.sub }}</p>
-                                                    </a>
-                                                    <div class="third-category hidden">
-                                                        <div class="second-inline-category" style="background-color: yellowgreen;">
-                                                            <ul style="position: absolute; padding-left: 0;">
-                                                                <li v-for="(content, index) in subTitle.contents" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
-                                                                    <a href="#">
-                                                                        <p>{{ content }}</p>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                            <li v-for="item in items" :key="item" class="hover-highlight" style="line-height: 44px; text-align: center;">
+                                <router-link :to="{ name: 'productPage'}">
+                                    <p>{{ item.mainTitle }}</p>
+                                </router-link>
+                                <div class="second-category hidden">
+                                    <div class="first-inline-category" style="background-color: aqua;">
+                                        <ul style="position: absolute; padding-left: 0;">
+                                            <li v-for="(subTitle, index) in item.subTitles" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                                <a href="#">
+                                                    <p>{{ subTitle.sub }}</p>
+                                                </a>
+                                                <div class="third-category hidden">
+                                                    <div class="second-inline-category" style="background-color: yellowgreen;">
+                                                        <ul style="position: absolute; padding-left: 0;">
+                                                            <li v-for="(content, index) in subTitle.contents" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                                                <a href="#">
+                                                                    <p>{{ content }}</p>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             </router-link>
             <v-spacer></v-spacer>
             <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
-            <v-btn v-if="this.isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
+            <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
                 <span>My Page</span>
                 <v-icon right>mdi-login</v-icon>
                 <div class="mypage-hidden">
@@ -80,20 +80,27 @@
                     </ul>
                 </div>
             </v-btn>
-            <v-btn v-if="this.isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/agree-pass'" style="height: 64px;">
-                <span>Sign Up</span>
-                <v-icon right>mdi-account-plus-outline</v-icon>
-            </v-btn>
-            <v-btn v-if="this.isAuthenticated == false" text color="grey" onclick="location.href='http://localhost:8080/sign-in'" style="height: 64px;">
-                <span>Sign In</span>
-                <v-icon right>mdi-login</v-icon>
-            </v-btn>
-            <v-btn v-else text color="grey" v-on:click="logout" style="height: 64px;">
+            <router-link :to="{ name: 'SignAgreePage' }" style="text-decoration: none;">
+                <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
+                    <span>Sign Up</span>
+                    <v-icon right>mdi-account-plus-outline</v-icon>
+                </v-btn>
+            </router-link>
+            <router-link :to="{ name: 'SignInPage' }" style="text-decoration: none;">
+                <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
+                    <span>Sign In</span>
+                    <v-icon right>mdi-login</v-icon>
+                </v-btn>
+            </router-link>
+            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="logout" style="height: 64px;">
                 <span>Sign Out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
             </v-btn>
-            <v-btn text color="grey" onclick="location.href='http://localhost:8080/shopping-cart'" class="shoppingCart" style="height: 64px;">
-                <span>Shopping Cart</span>
+            
+            <v-btn text color="grey" class="shoppingCart" style="height: 64px;">
+                <router-link :to="{ name: 'ShoppingCart'}" style="color: grey; text-decoration: none;">
+                    <span>Shopping Cart</span>
+                </router-link>
                 <v-icon right>mdi-cart-outline</v-icon>
                 <div class="shopping-cart-hidden">
                     <ul class="shopping-cart-contents" style="padding-left: 0;  margin: 0;">
@@ -115,13 +122,9 @@
 
 
 <script>
-import router from '@/router';
-import {mapState} from "vuex";
-import axios from "axios";
-import Vue from "vue";
-import cookies from "vue-cookies";
+import { mapActions, mapState } from "vuex";
 
-Vue.use(cookies);
+const accountModule = 'accountModule';
 
 export default {
     name: "Header",
@@ -142,6 +145,8 @@ export default {
         }
     },
     methods: {
+        ...mapActions(accountModule, ['commitIsAuthenticated', 'reqSignOutToSpring', 'reqResignToSpring']),
+
         updateScrollY() {
             this.scrollY = window.scrollY;
         },
@@ -159,226 +164,195 @@ export default {
             this.showSidebar = false;
             document.removeEventListener("click", this.hide);
         },
-        resign () {
-            let token = localStorage.getItem("userInfo")
-            const length = token.length
-            console.log('token: ' + token + ', length: ' + length)
-            token = token.substr(1, length - 2)
-            console.log('token: ' + token)
-            axios.post("http://localhost:7777/member/resign", token)
-                .then(() => {
-                    alert("회원탈퇴 완료");
-                    localStorage.removeItem("userInfo");
-                    this.$cookies.remove("userInfo");
-                    this.$store.state.isAuthenticated = false;
-                })
+        async resign () {
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            let token = await userInfo.token;
+            
+            this.reqResignToSpring(token);
         },
-        logout () {
-            console.log('getItem: ' + localStorage.getItem("userInfo"))
-            let token = localStorage.getItem("userInfo")
-            const length = token.length
-            console.log('token: ' + token + ', length: ' + length)
-            token = token.substr(1, length - 2)
-            console.log('token: ' + token + ', length: ' + token.length)
-            axios.post("http://localhost:7777/member/logout", token)
-                .then(() => {
-                    alert("로그아웃 완료");
-                    localStorage.removeItem("userInfo");
-                    this.$cookies.remove("userInfo");
-                    this.$store.state.isAuthenticated = false;
-                })
-        }
-    },
-    components: { router },
-    computed: {
-        // isFixed() {
-        //     if (this.scrollY > 200) {
-        //         return 'fixed';
-        //     } else {
-        //         return 'fixed';
-        //     }
-        // },
-        ...mapState(["isAuthenticated"]),
-        adjust() {
-        if (this.scrollY > 200) {
-            return '0px';
-        } else {
-                return (200 - this.scrollY) + 'px';
-        }
-    }
-        
-    },
+        async logout () {
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            let token = await userInfo.token;
 
+            await this.reqSignOutToSpring(token);
+        }
+    },
+    computed: {
+        ...mapState("accountModule", ["isAuthenticated"]),
+        
+        adjust() {
+            if (this.scrollY > 200) {
+                return '0px';
+            } else {
+                return (200 - this.scrollY) + 'px';
+            }
+        },
+    },
     mounted() {
         window.addEventListener('scroll', this.updateScrollY);
 
         if (localStorage.getItem("userInfo")) {
-            this.$store.state.isAuthenticated = true;
+            this.commitIsAuthenticated(true);
         } else {
-            this.$store.state.isAuthenticated = false;
+            this.commitIsAuthenticated(false);
         }
     },
     beforeDestroy() {
         window.removeEventListener('scroll', this.updateScrollY);
-    }
-  
+    },
 }
 </script>
 
 <style>
-  .shopping-cart-hover-highlight {
+.shopping-cart-hover-highlight {
     line-height: 40px;
     width: 179px;
     height: 40px;
     text-align: center;
-  }
+}
 
 
-  .shopping-cart-hidden {
+.shopping-cart-hidden {
     display: none;
     position: absolute;
     top: 42px;
     width: 179px;
     background-color: aqua;
     box-sizing: border-box;
-  }
+}
 
-  .shoppingCart:hover .shopping-cart-hidden {
+.shoppingCart:hover .shopping-cart-hidden {
     display: inline-block;
-  }
+}
 
-  .shoppingCart .shopping-cart-hover-highlight:hover {
+.shoppingCart .shopping-cart-hover-highlight:hover {
     background-color: green;
-  }
+}
 
-  .mypage-hover-highlight {
+.mypage-hover-highlight {
     line-height: 40px;
     width: 122px;
     height: 40px;
     text-align: center;
-  }
+}
 
 
-  .mypage-hidden {
+.mypage-hidden {
     display: none;
     position: absolute;
     top: 42px;
     width: 122px;
     background-color: aqua;
     box-sizing: border-box;
-  }
+}
 
-  .mypage:hover .mypage-hidden {
+.mypage:hover .mypage-hidden {
     display: inline-block;
-  }
+}
 
-  .mypage .mypage-hover-highlight:hover {
+.mypage .mypage-hover-highlight:hover {
     background-color: green;
-  }
+}
 
+.hover-highlight {
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 44px;
+    width: 200px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
 
+.second-category .hover-highlight:hover {
+    background-color: lightgreen;
+}
 
-  .hover-highlight {
-      padding-right: 0px;
-      padding-left: 0px;
-      height: 44px;
-      width: 200px;
-      text-decoration: none;
-      box-sizing: border-box;
-  }
+.third-category .hover-highlight:hover {
+    background-color: lightgreen;
+}
 
-  .second-category .hover-highlight:hover {
-      background-color: lightgreen;
-  }
+.second-category .first-inline-category {
+    border-right: 2px;
+    border-color: black;
+    border-style: solid;
+    border-bottom: none;
+    border-top: none;
+    border-left: none;
+}
 
-  .third-category .hover-highlight:hover {
-      background-color: lightgreen;
-  }
+.second-category > div {
+    width: 250px;
+    display: inline-block;
+    height: 399px;
+    position: relative;
+}
 
-  .second-category .first-inline-category {
-      border-right: 2px;
-      border-color: black;
-      border-style: solid;
-      border-bottom: none;
-      border-top: none;
-      border-left: none;
-  }
+.third-category > div {
+    width: 250px;
+    display: inline-block;
+    height: 399px;
+    position: relative;
+}
 
-  .second-category > div {
-      width: 250px;
-      display: inline-block;
-      height: 399px;
-      position: relative;
-  }
+.hover-highlight:hover {
+    background-color: lightgray;
+    cursor: pointer;
+    color: white;
+}
 
-  .third-category > div {
-      width: 250px;
-      display: inline-block;
-      height: 399px;
-      position: relative;
-  }
+li {
+    padding: 0;
+    list-style-type: none;
+    margin: auto;
+}
 
-  .hover-highlight:hover {
-      background-color: lightgray;
-      cursor: pointer;
-      color: white;
-  }
+.hover-highlight:hover > .second-category {
+    display: inline-block;
+    background-color: lightgray;
+    width: 250px;
+    height: 399px;
+    position: absolute;
+    left: 200px;
+    top: 0px;
+}
 
-  li {
-      padding: 0;
-      list-style-type: none;
-      margin: auto;
-  }
+.hover-highlight:hover > .third-category {
+    display: inline-block;
+    background-color: lightgray;
+    width: 250px;
+    height: 399px;
+    position: absolute;
+    left: 250px;
+    top: 0px;
+}
 
-  .hover-highlight:hover > .second-category {
-      display: inline-block;
-      background-color: lightgray;
-      width: 250px;
-      height: 399px;
-      position: absolute;
-      left: 200px;
-      top: 0px;
-  }
+.sidebar .hidden {
+    display: none;
+}
 
-  .hover-highlight:hover > .third-category {
-      display: inline-block;
-      background-color: lightgray;
-      width: 250px;
-      height: 399px;
-      position: absolute;
-      left: 250px;
-      top: 0px;
-  }
+.second-category > .hidden {
+    display: none;
+}
 
-  .sidebar .hidden {
-      display: none;
-  }
-
-  .second-category > .hidden {
-      display: none;
-  }
-
-  .sidebar {
+.sidebar {
     width: 200px;
     height: auto;
     position: absolute;
     left: 0;
     top: 65px; 
-  }
+}
 
-  .sidebar span {
-      position: absolute;
-  }
+.sidebar span {
+    position: absolute;
+}
 
+.sidebar-dropdown-enter-active,
+.sidebar-dropdown-leave-active {
+    transition: all 0.2s ease; 
+}
+.sidebar-dropdown-enter,
+.sidebar-dropdown-leave-to {
+    transform: translateY(-300%);
+}
 
-
-  .sidebar-dropdown-enter-active,
-  .sidebar-dropdown-leave-active {
-  transition: all 0.2s ease;
-  }
-  .sidebar-dropdown-enter,
-  .sidebar-dropdown-leave-to {
-      transform: translateY(-300%);
-  }
-  
 </style>
