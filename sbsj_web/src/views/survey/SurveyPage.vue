@@ -2,17 +2,17 @@
   <div style="padding-inline: 10%;">
     <survey-form/>
   </div>
-  </template>
+</template>
 
 <script>
+
 import SurveyForm from '@/components/survey/SurveyForm.vue'
 
 export default {
-  components: { SurveyForm },
   name: "SurveyPage",
-  computed: {
-  },
-  }
+  components: { SurveyForm },
+}
+
 </script>
 
 <style>

@@ -47,11 +47,11 @@ export default {
   async mounted() {
     if (this.isAuthenticated === true) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      let memberNo = userInfo.memberNo;
+      let memberId = userInfo.memberId;
 
-      console.log("ProfilePage mounted: "+ memberNo);
-      await this.reqMyPageMemberInfoToSpring(memberNo);
-      await this.reqMyPageDeliveryListToSpring(memberNo);
+      console.log("ProfilePage mounted: "+ memberId);
+      await this.reqMyPageMemberInfoToSpring(memberId);
+      await this.reqMyPageDeliveryListToSpring(memberId);
     } else {
       alert("로그인 상태가 아닙니다.");
       router.push("/sign-in");

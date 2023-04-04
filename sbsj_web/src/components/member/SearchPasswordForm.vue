@@ -18,9 +18,9 @@
 
                   <div class="d-flex">
                     <v-text-field
-                        v-model="memberId"
+                        v-model="userId"
                         label="아이디"
-                        :rules="memberId_rule"
+                        :rules="userId_rule"
                         clearable
                         prepend-icon="mdi-account-outline"
                         color="orange"
@@ -43,7 +43,7 @@
                       rounded
                       color="teal lighten-3"
                       class="mt-6"
-                      @click="findAccountmemberId, findAccountPhone"
+                      @click="findAccountUserId, findAccountPhone"
                       :disabled="false"
                   >PW 찾기</v-btn>
                 </v-form>
@@ -113,17 +113,18 @@ export default {
   name: "SearchPasswordForm",
   data() {
     return {
-      memberId: "",
+      userId: "",
       phoneNumber: "",
       isPass: false,
       password: "",
       passwordConfirm: "",
-      memberId_rule:[
+
+      userId_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
-          const pattern = /^[a-zA-Z][0-9a-zA-Z]{5,11}$/
-          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 6~12자 아이디를 입력해주세요'
+          const pattern = /^[a-zA-Z][0-9a-zA-Z]{3,11}$/
+          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 4~12자 아이디를 입력해주세요'
         }
       ],
       phoneNumber_rule: [
@@ -137,23 +138,23 @@ export default {
       password_rule: [
         v => !!v || '패스워드를 입력해주세요.',
         v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
       ],
       passwordConfirm_rule: [
         v => !!v || '패스워드를 확인해주세요.',
         v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-        v => !(v && v.length < 6) || '패스워드는 6자 이상 입력해야 합니다.',
+        v => !(v && v.length < 4) || '패스워드는 4자 이상 입력해야 합니다.',
         v => !(v && v.length > 12) || '패스워드는 12자 이상 입력할 수 없습니다.',
         v => v === this.password || '패스워드가 일치하지 않습니다.'
       ],
     };
   },
   methods: {
-    findAccountmemberId() {
-      const { memberId } = this;
+    findAccountUserId() {
+      const { userId } = this;
       axios
-          .post("http://localhost:7777/member/memberIdMatch", { memberId })
+          .post("http://localhost:7777/member/UserIdMatch", { userId })
           .then((res) => {
             if (res.data) {
               alert("인증이 완료되었습니다.");
@@ -187,18 +188,17 @@ export default {
         });
     },
     resetPw() {
-      const { memberId, password } = this;
-      axios
-          .post("http://localhost:7777/member/applyNewPassword/", {
-            memberId, password
+      const { userId, password } = this;
+      axios.post("http://localhost:7777/member/applyNewPassword/", {
+            userId, password
           })
           .then(() => {
             alert("비밀번호가 변경되었습니다.");
           })
           .catch((error) => {
-          console.error(error);
-          alert("요청에 실패했습니다. 다시 시도해주세요.");
-        });
+            console.error(error);
+            alert("요청에 실패했습니다. 다시 시도해주세요.");
+          });
     },
   },
 }

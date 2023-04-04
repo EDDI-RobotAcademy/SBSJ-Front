@@ -29,9 +29,9 @@
                 <div class="d-flex">
                   <v-text-field
                       type="id"
-                      v-model="id"
+                      v-model="userId"
                       label="아이디"
-                      :rules="id_rule"
+                      :rules="userId_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
                       color="orange"
@@ -70,7 +70,7 @@
                     <v-col>
                       <router-link
                           class="text-decoration-none purple--text ml-5 mr-5"
-                          to="/search-id">ID 찾기</router-link>
+                          to="/search-userId">ID 찾기</router-link>
                     </v-col>
                     <v-col>
                       <router-link
@@ -98,9 +98,9 @@ export default {
   name: "SignInForm",
   data() {
     return {
-      id: "",
+      userId: "",
       password: "",
-      id_rule:[
+      userId_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
@@ -118,8 +118,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      const { id, password } = this;
-      this.$emit("submit", { id, password });
+      const { userId, password } = this;
+      this.$emit("submit", { userId, password });
     },
   },
   

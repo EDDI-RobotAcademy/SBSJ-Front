@@ -17,12 +17,12 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="id" label="아이디" @input="idValidation"
-                              :rules="id_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                <v-text-field v-model="userId" label="아이디" @input="userIdValidation"
+                              :rules="userId_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
-                       @click="checkDuplicateId"
-                       :disabled="!this.ruleCheckList['id']">
+                       @click="checkDuplicateUserId"
+                       :disabled="!this.ruleCheckList['userId']">
                   아이디 <br/>중복 확인
                 </v-btn>
               </div>
@@ -88,15 +88,15 @@ export default {
   data () {
     return {
       name: "",
-      id: "",
+      userId: "",
       password: "",
       passwordConfirm: "",
       email: "",
       birthday: "",
       phoneNumber: "",
       
-      dupliCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
-      ruleCheckList: { 'id': false, 'email': false, 'phoneNumber': false },
+      dupliCheckList: { 'userId': false, 'email': false, 'phoneNumber': false },
+      ruleCheckList: { 'userId': false, 'email': false, 'phoneNumber': false },
       
       name_rule: [
         v => !!v || '이름을 입력해주세요.',
@@ -106,7 +106,7 @@ export default {
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
         }
       ],
-      id_rule:[
+      userId_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
@@ -154,13 +154,13 @@ export default {
   },
   methods: {
     ...mapActions(accountModule, [
-      'reqSignUpCheckIdToSpring', 
+      'reqSignUpCheckUserIdToSpring', 
       'reqSignUpCheckEmailToSpring',
       'reqSignUpCheckPhoneNumberToSpring'
     ]),
 
     onSubmit () {
-      if(!this.dupliCheckList['id']) {
+      if(!this.dupliCheckList['userId']) {
         alert("아이디 중복 확인을 해주세요!");
         return;
       }
@@ -174,39 +174,39 @@ export default {
       }
 
       if (this.$refs.form.validate()) {
-        const { name, id, password, email, birthday, phoneNumber} = this
-        this.$emit("submit", { name, id, password, email, birthday, phoneNumber })
+        const { name, userId, password, email, birthday, phoneNumber} = this
+        this.$emit("submit", { name, userId, password, email, birthday, phoneNumber })
       } else {
         alert('올바른 정보를 입력하세요!')
       }
     },
-    idValidation () {
-      const idValid = this.id.match(
+    userIdValidation () {
+      const userIdValid = this.userId.match(
           /^[a-zA-Z0-9]{3,11}$/
       );
-      if (idValid) {
-        this.ruleCheckList['id'] = true
-        this.dupliCheckList['id'] = false
+      if (userIdValid) {
+        this.ruleCheckList['userId'] = true
+        this.dupliCheckList['userId'] = false
       }
     },
-    checkDuplicateId () {
-      const idValid = this.id.match(
+    checkDuplicateUserId () {
+      const userIdValid = this.userId.match(
         /^[a-zA-Z0-9]{3,11}$/
       );
 
-      if (idValid) {
-        const {id} = this;
+      if (userIdValid) {
+        const {userId} = this;
 
         (async () => {
-          let isId = await this.reqSignUpCheckIdToSpring(id);
-          if (!isId) {
+          let isUserId = await this.reqSignUpCheckUserIdToSpring(userId);
+          if (!isUserId) {
             alert("사용 가능한 아이디입니다.");
-            this.dupliCheckList['id'] = true;
-            this.ruleCheckList['id'] = false;
-          } else if(isId == true) {
+            this.dupliCheckList['userId'] = true;
+            this.ruleCheckList['userId'] = false;
+          } else if(isUserId == true) {
             alert("중복된 아이디입니다!");
-            this.dupliCheckList['id'] = false;
-            this.ruleCheckList['id'] = true;
+            this.dupliCheckList['userId'] = false;
+            this.ruleCheckList['userId'] = true;
           }
         })()
       }

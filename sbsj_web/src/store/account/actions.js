@@ -8,8 +8,8 @@ import router from '@/router';
 
 export default {
     reqSignUpToSpring({}, payload) {
-        const { name, id, password, email, birthday, phoneNumber } = payload;
-        return axiosInst.post("/member/sign-up", { name, id, password, email, birthday, phoneNumber })
+        const { name, userId, password, email, birthday, phoneNumber } = payload;
+        return axiosInst.post("/member/sign-up", { name, userId, password, email, birthday, phoneNumber })
             .then(() => {
                 alert("회원 가입 완료!");
                 router.push("/sign-in");
@@ -18,15 +18,14 @@ export default {
                 alert("회원 가입 실패!\n다시 시도해주세요!"+ res.data);
             })
     },
-    reqSignUpCheckIdToSpring({}, id) {
-        return axiosInst.post(`/member/sign-up/check-id/${id}`)
+    reqSignUpCheckUserIdToSpring({}, userId) {
+        return axiosInst.post(`/member/sign-up/check-userId/${userId}`)
             .then((res) => {
                 return res.data
             })
     },
-    async reqSignUpCheckEmailToSpring({}, payload) {
-        let email = JSON.stringify(payload);
-        return await axiosInst.post("/member/sign-up/check-email", email)
+    async reqSignUpCheckEmailToSpring({}, email) {
+        return await axiosInst.post(`/member/sign-up/check-email/${email}`)
             .then((res) => {
                 return res.data;
             })
@@ -39,8 +38,8 @@ export default {
     },
 
     reqSignInToSpring({ commit }, payload) {
-        const { id, password } = payload;
-        return axiosInst.post("/member/sign-in", { id, password })
+        const { userId, password } = payload;
+        return axiosInst.post("/member/sign-in", { userId, password })
             .then((res) => {
                 (async () => {
                     let returnData = JSON.stringify(res.data);
@@ -56,7 +55,7 @@ export default {
                         alert("로그인 성공!");
                         localStorage.setItem("userInfo", JSON.stringify(res.data));
                         commit(COMMIT_IS_AUTHENTICATED, true);
-                        router.push("/");
+                        router.push({ name: 'home' });
                     }
                 })()
             })
@@ -87,9 +86,9 @@ export default {
     },
 
     async reqMyPageCheckPasswordToSpring({}, payload) {
-        const { memberNo, password } = payload
+        const { memberId, password } = payload
 
-        return await axiosInst.post("/member/mypage/check-password", { memberNo, password })
+        return await axiosInst.post("/member/mypage/check-password", { memberId, password })
             .then((res) => {
                 if(res.data == false) {
                     alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
@@ -102,8 +101,8 @@ export default {
             })
     },
 
-    reqMyPageMemberInfoToSpring({ commit }, memberNo) {
-        return axiosInst.post(`/member/mypage/memberInfo/${memberNo}`)
+    reqMyPageMemberInfoToSpring({ commit }, memberId) {
+        return axiosInst.post(`/member/mypage/memberInfo/${memberId}`)
             .then((res) => {
                 commit(REQUEST_MY_PAGE_MEMBER_INFO, res.data);
             })
@@ -112,8 +111,8 @@ export default {
             })
     },
     reqMyPageUpdateMemberInfoToSpring({ }, payload) {
-        const { memberNo, name, birthday, email, phoneNumber, newPassword } = payload
-        return axiosInst.post(`/member/mypage/memberInfo/update/${memberNo}`, 
+        const { memberId, name, birthday, email, phoneNumber, newPassword } = payload
+        return axiosInst.post(`/member/mypage/memberInfo/update/${memberId}`, 
                { name, birthday, email, phoneNumber, newPassword })
             .then((res) => {
                 alert("회원 정보를 성공적으로 수정하였습니다.");

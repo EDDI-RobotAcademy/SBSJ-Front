@@ -83,9 +83,9 @@ export default {
             } else {
                 if(this.$refs.password.validate()) {
                     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-                    let memberNo = userInfo.memberNo;
+                    let memberId = userInfo.memberId;
                     let password = this.password;
-                    let checkPassword = await this.reqMyPageCheckPasswordToSpring({ memberNo, password })
+                    let checkPassword = await this.reqMyPageCheckPasswordToSpring({ memberId, password })
                     
                     if(checkPassword) {
                         if(password == this.newPassword) {

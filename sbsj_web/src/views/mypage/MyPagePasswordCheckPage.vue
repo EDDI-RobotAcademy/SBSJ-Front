@@ -20,10 +20,10 @@ export default {
       console.log("이거는 비밀번호 체크: "+ password)
       
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      let memberNo = userInfo.memberNo;
+      let memberId = userInfo.memberId;
       
       (async () => {
-        let checkPassword = await this.reqMyPageCheckPasswordToSpring({ memberNo, password })
+        let checkPassword = await this.reqMyPageCheckPasswordToSpring({ memberId, password })
         console.log("체크 페이지에서 보는 "+ checkPassword);
   
         if(checkPassword) {

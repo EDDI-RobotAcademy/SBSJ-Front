@@ -118,14 +118,14 @@ export default {
             if(this.$refs.form.validate()) {
                 if(this.streetPass) {
                     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-                    let memberNo = userInfo.memberNo;
+                    let memberId = userInfo.memberId;
 
                     let checkedDefaultAddress = document.getElementsByClassName("form-check-input")[0].checked;
                     let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
 
                     const { addressName, addressType, recipientName, phoneNumber, 
                             city, street, addressDetail, zipcode } = this
-                    this.$emit("submit", { memberNo, addressName, addressType, recipientName, phoneNumber, 
+                    this.$emit("submit", { memberId, addressName, addressType, recipientName, phoneNumber, 
                                            city, street, addressDetail, zipcode, defaultAddress });
 
                     this.addressName = '';

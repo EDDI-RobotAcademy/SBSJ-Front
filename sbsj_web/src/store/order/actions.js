@@ -11,8 +11,7 @@ export default {
     reqDeleteCartItemFromSpring({}, payload) {
         const selectCartItemId = payload
 
-        return axiosInst.post("/cart/deleteCartItem",
-            { selectCartItemId })
+        return axiosInst.post("/cart/deleteCartItem", { selectCartItemId })
             .then(() => {
                 alert("장바구니에서 삭제되었습니다.")
             })
@@ -23,17 +22,16 @@ export default {
 
     // 장바구니에 추가
     reqAddCartToSpring({}, payload) {
-        const { memberNo, productId, count } = payload;
-        console.log(memberNo + ', ' + productId +', '+ count)
+        const { memberId, productId, count } = payload;
+        console.log(memberId + ', ' + productId +', '+ count)
 
-        return axiosInst.post("/cart/addCartItem",
-        { memberNo, productId, count })
-        .then(() => {
-            alert("장바구니에 추가되었습니다.")
-        })
-        .catch(() => {
-            alert("문제가 발생하여 장바구니에 추가되지 않았습니다.")
-        });
+        return axiosInst.post("/cart/addCartItem", { memberId, productId, count })
+            .then(() => {
+                alert("장바구니에 추가되었습니다.")
+            })
+            .catch(() => {
+                alert("문제가 발생하여 장바구니에 추가되지 않았습니다.")
+            });
     },
 
     // 장바구니 목록
@@ -60,8 +58,8 @@ export default {
     //         })
     // },
 
-    reqMyPageDeliveryListToSpring({ commit }, memberNo) {
-        return axiosInst.get(`/delivery/list/${memberNo}`)
+    reqMyPageDeliveryListToSpring({ commit }, memberId) {
+        return axiosInst.get(`/delivery/list/${memberId}`)
             .then((res) => {
                 commit(REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING, res.data);
             })
@@ -71,12 +69,12 @@ export default {
     },
 
     reqMyPageRegisterDeliveryToSpring({}, payload) {
-        const { memberNo, addressName, addressType, recipientName, phoneNumber, 
+        const { memberId, addressName, addressType, recipientName, phoneNumber, 
                 city, street, addressDetail, zipcode, defaultAddress } = payload
-        console.log(memberNo, addressName, addressType, recipientName, phoneNumber, 
+        console.log(memberId, addressName, addressType, recipientName, phoneNumber, 
                     city, street, addressDetail, zipcode, defaultAddress);
         return axiosInst.post("/delivery/register/", 
-               { memberNo, addressName, addressType, recipientName, phoneNumber, 
+               { memberId, addressName, addressType, recipientName, phoneNumber, 
                  city, street, addressDetail, zipcode, defaultAddress })
             .then(() => {
                 alert("배송지 등록 완료!")

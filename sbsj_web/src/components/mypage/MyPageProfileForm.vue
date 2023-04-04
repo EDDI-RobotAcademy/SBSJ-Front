@@ -10,8 +10,8 @@
               <v-divider class="mb-8" style="border-width: 1px; border-color: black"></v-divider>
               <v-row>
                 <v-col class="text-h5">
-                  <v-text-field v-model="member.id" label="아이디" readonly
-                    :rules="id_rule" :disabled="true" required outlined color="green" prepend-icon="mdi-account-outline"/>
+                  <v-text-field v-model="member.userId" label="아이디" readonly
+                    :rules="userId_rule" :disabled="true" required outlined color="green" prepend-icon="mdi-account-outline"/>
                 </v-col>
               </v-row>
               <v-row>
@@ -200,9 +200,9 @@ export default {
           let newPassword = this.newPassword;
 
           let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-          let memberNo = userInfo.memberNo;
+          let memberId = userInfo.memberId;
 
-          let successUpdate = await this.reqMyPageUpdateMemberInfoToSpring({ memberNo, name, birthday, email, phoneNumber, newPassword })
+          let successUpdate = await this.reqMyPageUpdateMemberInfoToSpring({ memberId, name, birthday, email, phoneNumber, newPassword })
           console.log("회원 정보 수정 잘 됐나? "+ successUpdate.data)
           if(successUpdate.data) {
             let token = userInfo.token;
@@ -251,7 +251,7 @@ export default {
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
         }
       ],
-      id_rule:[
+      userId_rule:[
         v => !!v || '아이디를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
