@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import MyPagePasswordModifyForm from '@/components/member/mypage/MyPagePasswordModifyForm.vue'
+import router from '@/router';
 import { mapActions, mapState } from 'vuex';
 
 const accountModule = 'accountModule';
@@ -112,11 +114,39 @@ export default {
             return;
           }
         }
+        
+        let formCheck = await this.formValidation(id);
+
+        if(Boolean(formCheck)) {
+          text.getElementsByTagName("input")[0].readOnly = true;
+          this.modifyMode[id] = false;
+          element.innerText = "수정";
+          alert("수정 완료!");
+        } else if(Boolean(formCheck) == false) {
+          alert(id + ', 형식에 맞게 입력해주세요!')
         }
       } else {
         text.getElementsByTagName("input")[0].readOnly = false;
         element.innerText = "수정 완료";
         this.modifyMode[id] = true;
+      }
+    },
+    async formValidation(id) {
+      if(id == "name"){ 
+        if(!this.$refs.name.validate()) { return null;}
+        else { return true; }
+      }
+      if(id == "birthday"){ 
+        if(!this.$refs.birthday.validate()) { return null;}
+        else { return true; }
+      }
+      if(id == "email"){ 
+        if(!this.$refs.email.validate()) { return null;}
+        else { return true; }
+      }
+      if(id == "phoneNumber"){ 
+        if(!this.$refs.phoneNumber.validate()) { return null;}
+        else { return true; }
       }
     },
     async emailValidation() {
@@ -136,9 +166,66 @@ export default {
     passwordConfirm(newPassword) {
       this.newPassword = newPassword;
     },
+    async onSubmit() {
+      if(this.modifyMode["name"]) {
+        alert("이름 수정을 완료해주세요.");
+        return;
+      }
+      if(this.modifyMode["birthday"]) {
+        alert("생년월일 수정을 완료해주세요.");
+        return;
+      }
+      if(this.modifyMode["email"]) {
+        alert("이메일 수정을 완료해주세요.");
+        return;
+      }
+      if(this.modifyMode["phoneNumber"]) {
+        alert("전화번호 수정을 완료해주세요.");
+        return;
+      }
+
+      if(this.member.name == this.oldName
+         && this.member.birthday == this.oldBirthday
+         && this.member.email == this.oldEmail
+         && this.member.phoneNumber == this.oldPhoneNumber
+         && this.newPassword == '') {
+        alert("변경 사항이 없습니다.");
+        return;
+      }
+
+      if(this.$refs.form.validate()) {
+        let modifyCheck = confirm("지금 이대로 수정하시겠습니까?");
+        if(modifyCheck) {
+          const { name, birthday, email, phoneNumber } = this.member;
+          let newPassword = this.newPassword;
+
+          let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+          let memberNo = userInfo.memberNo;
+
+          let successUpdate = await this.reqMyPageUpdateMemberInfoToSpring({ memberNo, name, birthday, email, phoneNumber, newPassword })
+          console.log("회원 정보 수정 잘 됐나? "+ successUpdate.data)
+          if(successUpdate.data) {
+            let token = userInfo.token;
+
+            this.reqSignOutToSpring(token);
+            router.push({ name: 'SignInPage' })
+          } else {
+            alert("회원 정보를 수정하는 데 실패하였습니다.\n다시 시도해주세요.")
+          }
+        }
+      } else {
+        alert('형식에 맞게 입력해주세요!')
+      }
+    },
   },
   computed: {
     ...mapState(accountModule, ['member'])
+  },
+  created() {
+    this.oldName = this.member.name;
+    this.oldBirthday = this.member.birthday;
+    this.oldEmail = this.member.email;
+    this.oldPhoneNumber = this.member.phoneNumber;
   },
   mounted() {
     document.getElementsByClassName("w-100")[0].getElementsByTagName("span")[0].id = "name";
@@ -149,13 +236,43 @@ export default {
   data() {
     return {
       newPassword: '',
+      oldName: '',
+      oldBirthday: '',
+      oldEmail: '',
+      oldPhoneNumber: '',
+      
       modifyMode: { name: false, birthday: false, email: false, phoneNumber: false},
+
+      name_rule: [
+        v => !!v || '이름을 입력해주세요.',
+        v => {
+        const replaceV = v.replace(/(\s*)/g, '')
+        const pattern = /^[가-힣]{2,}$/
+        return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
+        }
+      ],
+      id_rule:[
+        v => !!v || '아이디를 입력해주세요.',
+        v => {
+          const replaceV = v.replace(/(\s*)/g, '')
+          const pattern = /^[a-zA-Z][0-9a-zA-Z]{3,11}$/
+          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 4~12자 아이디를 입력해주세요'
+        }
+      ],
       email_rule: [
         v => !!v || '이메일을 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
           const pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
           return pattern.test(replaceV) || '이메일 형식으로 입력하세요.'
+        }
+      ],
+      birthday_rule: [
+        v => !!v || '생년월일 8자리를 입력해주세요.',
+        v => {
+          const replaceV = v.replace(/(\s*)/g, '')
+          const pattern = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/
+          return pattern.test(replaceV) || 'ex)19001111 형식으로 입력하세요.'
         }
       ],
       phoneNumber_rule: [

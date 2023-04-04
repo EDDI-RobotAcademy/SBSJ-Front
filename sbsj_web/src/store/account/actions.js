@@ -111,4 +111,18 @@ export default {
                 alert('문제 발생!')
             })
     },
+    reqMyPageUpdateMemberInfoToSpring({ }, payload) {
+        const { memberNo, name, birthday, email, phoneNumber, newPassword } = payload
+        return axiosInst.post(`/member/mypage/memberInfo/update/${memberNo}`, 
+               { name, birthday, email, phoneNumber, newPassword })
+            .then((res) => {
+                alert("회원 정보를 성공적으로 수정하였습니다.");
+                return res;
+            })
+            .catch(() => {
+                alert('문제 발생!');
+            })
+    },
+    
+
 }
