@@ -24,8 +24,9 @@ export default {
                 return res.data
             })
     },
-    reqSignUpCheckEmailToSpring({}, email) {
-        return axiosInst.post(`/member/sign-up/check-email/${email}`)
+    async reqSignUpCheckEmailToSpring({}, payload) {
+        let email = JSON.stringify(payload);
+        return await axiosInst.post("/member/sign-up/check-email", email)
             .then((res) => {
                 return res.data;
             })
@@ -77,7 +78,6 @@ export default {
             .then(() => {
                 alert("회원탈퇴 완료");
                 localStorage.removeItem("userInfo");
-                // this.$cookies.remove("userInfo");
                 
                 commit(COMMIT_IS_AUTHENTICATED, false);
             })

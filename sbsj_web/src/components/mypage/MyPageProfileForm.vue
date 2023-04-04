@@ -82,12 +82,57 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 const accountModule = 'accountModule';
 
 export default {
   name: "MyPageProfileForm",
   components: { MyPagePasswordModifyForm },
   methods: {
+    ...mapActions(accountModule, 
+      ['reqSignUpCheckEmailToSpring', 'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 'reqSignOutToSpring']),
+
+    async modify(element, index) {
+      let text = document.getElementsByClassName("v-text-fields")[index];
+      var id = await element.id;
+      var mode = this.modifyMode[id];
+      if(Boolean(mode)) {
+        if(id == "email") {
+          let isEmail = await this.emailValidation();
+          if(isEmail) {
+            alert("중복된 이메일 입니다.");
+            return;
+          }
+        }
+        if(id == "phoneNumber") {
+          let isPhoneNumber = await this.phoneNumberValidation();
+          if(isPhoneNumber) {
+            alert("중복된 전화번호 입니다.");
+            return;
+          }
+        }
+        }
+      } else {
+        text.getElementsByTagName("input")[0].readOnly = false;
+        element.innerText = "수정 완료";
+        this.modifyMode[id] = true;
+      }
+    },
+    async emailValidation() {
+      const email = this.member.email;
+      if(email == this.oldEmail) {
+        return false;
+      }
+      return await this.reqSignUpCheckEmailToSpring(email);
+    },
+    async phoneNumberValidation() {
+      const phoneNumber = this.member.phoneNumber;
+      if(phoneNumber == this.oldPhoneNumber) {
+        return false;
+      }
+      return await this.reqSignUpCheckPhoneNumberToSpring(phoneNumber);
+    },
     passwordConfirm(newPassword) {
       this.newPassword = newPassword;
     },
@@ -104,6 +149,23 @@ export default {
   data() {
     return {
       newPassword: '',
+      modifyMode: { name: false, birthday: false, email: false, phoneNumber: false},
+      email_rule: [
+        v => !!v || '이메일을 입력해주세요.',
+        v => {
+          const replaceV = v.replace(/(\s*)/g, '')
+          const pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
+          return pattern.test(replaceV) || '이메일 형식으로 입력하세요.'
+        }
+      ],
+      phoneNumber_rule: [
+        v => !!v || '전화번호를 입력 해주세요.',
+        v => {
+          const replaceV = v.replace(/(\s*)/g, '')
+          const pattern = /^(010|011|016|017|018|019)-[0-9]{3,4}-[0-9]{4}$/
+          return pattern.test(replaceV) || '010-1234-5678 형식의 번호를 입력해주세요.'
+        }
+      ]
     };
   },
 }
