@@ -186,16 +186,11 @@ export default {
     data() {
         return {
             showIcon:true,
-
-            // 테스트용 (나중에 수정할 것)
-            memberNo: 1,
-            productId: 1,
-            count: 1,
         };
     },
     props: {
-        product: {
-            type: Object,
+        productId: {
+            type: Number,
             required: true,
         },
     },

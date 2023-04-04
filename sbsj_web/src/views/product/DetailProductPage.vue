@@ -1,6 +1,6 @@
 <template>
     <div>
-      <detail-product-form :product="product"></detail-product-form>
+      <detail-product-form :productId="productId"></detail-product-form>
     </div>
 </template>
 
@@ -12,13 +12,13 @@ import DetailProductForm from '@/components/product/DetailProductForm.vue'
     components: { DetailProductForm },
     name: "DetailProductPage",
     props: {
-      product: {
-        type: Object,
+      productId: {
+        type: Number,
         required: true,
       }
     },
     mounted() {
-      console.log(this.product)
+      console.log(this.productId)
     }
 }
 </script>

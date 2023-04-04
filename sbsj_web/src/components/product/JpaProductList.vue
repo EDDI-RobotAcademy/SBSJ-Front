@@ -1,6 +1,6 @@
 <template>
     <ul class="baby-product-list">
-        <li v-for="(product, index) in products" :keys="index" class="baby-product">
+        <li v-for="(product, index) in products" :key="index" class="baby-product">
 
             <v-hover>
                 <template  v-slot="{ hover }">
@@ -9,7 +9,7 @@
                         class="mx-auto transition-swing"
                         style="border-radius: 20px"
                     >
-                        <router-link :to="{ name: 'DetailProductPage', params: {product: {productId: product.productId, productTitle: product.title, productThumbnail: product.thumbnail, productWish: product.wish, productPrice: product.price}}}" class="baby-product-link">
+                        <router-link :to="{ name: 'DetailProductPage', params: {productId: product.productId}}" class="baby-product-link">
                             <dl class="baby-product-wrap">
                                 <dt class="image">
                                     <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
@@ -19,7 +19,7 @@
                                     <div class="badge">
                                         <v-icon class="icon-wish">mdi-heart-outline</v-icon>
                                         <span class="total-wish">
-                                            330
+                                            {{ product.wish }}
                                         </span>
                                     </div>
                                     <div class="name">
