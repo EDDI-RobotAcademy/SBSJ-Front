@@ -85,4 +85,20 @@ export default {
         commit(COMMIT_IS_AUTHENTICATED, payload);
     },
 
+    async reqMyPageCheckPasswordToSpring({}, payload) {
+        const { memberNo, password } = payload
+
+        return await axiosInst.post("/member/mypage/check-password", { memberNo, password })
+            .then((res) => {
+                if(res.data == false) {
+                    alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
+                }
+                return res.data;
+            })
+            .catch((res) => {
+                alert("문제 발생!");
+                return res.data;
+            })
+    },
+
 }
