@@ -1,11 +1,17 @@
 <template>
     <div class="mt-10 mx-5">
         <div v-if="!deliveryList || (Array.isArray(deliveryList) && deliveryList.length === 0)">
+            <div class="d-flex justify-end mb-5">
+                <my-page-register-address-form @submit="onSubmit"/>
+            </div>
             <div class="d-flex justify-center">
                 <h1 class="mt-10">아무것도 없음</h1>
             </div>
         </div>
         <div v-else>
+            <div class="d-flex justify-end mb-5">
+                <my-page-register-address-form @submit="onSubmit"/>
+            </div>
             <v-card v-for="delivery in deliveryList" :key="delivery.addressId" class="mb-5 rounded-xl">
                 <v-card-title style="font-size: 20px;">
                     <strong>[{{ delivery.addressType }}]&nbsp;{{ delivery.addressName }}</strong> <br>
@@ -29,12 +35,14 @@
 </template>
   
 <script>
+import MyPageRegisterAddressForm from "@/components/member/mypage/MyPageRegisterAddressForm.vue"
 import {mapActions, mapState} from "vuex";
 
 const orderModule = 'orderModule'
 
 export default {
     name: "MyPageDeliveryForm",
+    components: { MyPageRegisterAddressForm },
     data(){
         return{
         
@@ -45,6 +53,13 @@ export default {
     },
     mounted() {
         // 로그인 체크
+    },
+    methods:{
+        ...mapActions(orderModule, ['reqMyPageRegisterDeliveryToSpring']),
+
+        onSubmit(payload) {
+            this.reqMyPageRegisterDeliveryToSpring(payload);
+        }
     },
 }
 </script>
