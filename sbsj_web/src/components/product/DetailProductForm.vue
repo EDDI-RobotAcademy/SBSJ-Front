@@ -136,7 +136,7 @@
                                     <button type="button" 
                                         class="btn btn-primary btn-lg" 
                                         style="font-weight: bold;"
-                                        @click="toCart"
+                                        @click="addToCart"
                                     >
                                     장바구니</button>
                                 </div>
@@ -178,6 +178,7 @@
 
 <script >
 import { mapActions } from "vuex";
+
 const orderModule = 'orderModule'
 
 export default {
@@ -186,11 +187,17 @@ export default {
         return {
             showIcon:true,
 
-            // 테스트용 (나중에 지울것)
+            // 테스트용 (나중에 수정할 것)
             memberNo: 1,
             productId: 1,
             count: 1,
         };
+    },
+    props: {
+        product: {
+            type: Object,
+            required: true,
+        },
     },
 	methods: {
         ...mapActions(orderModule, [
@@ -222,17 +229,19 @@ export default {
                 this.showIcon = true
             }
         },
-        toCart() {
+        addToCart() {
             //let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             //let memberNo = await userInfo.memberNo;
-            
             const { memberNo, productId, count } = this
-
             console.log(memberNo + ', ' + productId +', '+ count)
-            this.reqAddCartToSpring(memberNo, productId, count)
-            
 
-            this.$router.push({ name:'ShoppingCart' })
+            this.reqAddCartToSpring({memberNo, productId, count})
+            
+            let goToCartMessage = confirm("장바구니로 이동하시겠습니까?")
+            if(goToCartMessage) {
+                this.$router.push({ name:'ShoppingCart' })
+            }
+            
         },
         
 

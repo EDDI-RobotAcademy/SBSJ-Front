@@ -1,5 +1,5 @@
 import {
-    
+    REQUEST_CART_ITEM_TO_SPRING
 } from "./mutation-types";
 
 import axiosInst from "@/utility/axiosObject";
@@ -10,7 +10,7 @@ export default {
     reqDeleteCartItemFromSpring({}, payload) {
         const selectCartItemId = payload
 
-        return axiosInst.post(`http://localhost:7777/cart/deleteCartItem`,
+        return axiosInst.post("/cart/deleteCartItem",
             { selectCartItemId })
             .then(() => {
                 alert("장바구니에서 삭제되었습니다.")
@@ -35,11 +35,29 @@ export default {
         });
     },
 
+    // 장바구니 목록
+    reqCartItemListToSpring({commit}, token) {
+        return axiosInst.post("/cart/list",{headers: { Token: token },
+            }).then((res) => {
+                commit(REQUEST_CART_ITEM_LIST_TO_SPRING, res.data)
+            })
+    },
+
     // 장바구니에 든 상품 수량 변경
     reqCartItemCountChangeToSpring({commit}, payload) {
-        return axiosInst.post("http://localhost:7777/cart/changeCartItemCount", payload)
+        return axiosInst.post("/cart/changeCartItemCount", payload)
             .then((res) => {
-                commit(RESPONSE_MY_REQUEST, res.data);
-            });
+                commit(RESPONSE_MY_REQUEST, res.data)
+            })
     },
+
+    // // 디비 정보 받아오기?
+    // reqCartItemToSpring({commit}, cartItemId) {
+    //     return axiosInst.get(`/cart/${cartItemId}`)
+    //         .then((res) => {
+    //             commit(REQUEST_CART_ITEM_TO_SPRING, res.data)
+    //         })
+    // },
+
+
 }
