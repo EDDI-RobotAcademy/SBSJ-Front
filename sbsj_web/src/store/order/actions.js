@@ -1,8 +1,10 @@
 import {
-    REQUEST_CART_ITEM_TO_SPRING
+    REQUEST_CART_ITEM_TO_SPRING,
+    REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING,
 } from "./mutation-types";
 
 import axiosInst from "@/utility/axiosObject";
+import router from '@/router';
 
 export default { 
 
@@ -58,6 +60,16 @@ export default {
     //             commit(REQUEST_CART_ITEM_TO_SPRING, res.data)
     //         })
     // },
+
+    reqMyPageDeliveryListToSpring({ commit }, memberNo) {
+        return axiosInst.get(`/delivery/list/${memberNo}`)
+            .then((res) => {
+                commit(REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING, res.data);
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
 
 
 }
