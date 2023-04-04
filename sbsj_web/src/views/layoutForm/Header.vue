@@ -61,8 +61,10 @@
             <v-spacer></v-spacer>
             <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
             <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
-                <span>My Page</span>
-                <v-icon right>mdi-login</v-icon>
+                <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
+                    <span>My Page</span>
+                    <v-icon right>mdi-login</v-icon>
+                </router-link>
                 <div class="mypage-hidden">
                     <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
                         <li class="mypage-hover-highlight">
@@ -98,7 +100,7 @@
             </v-btn>
             
             <v-btn text color="grey" class="shoppingCart" style="height: 64px;">
-                <router-link :to="{ name: 'ShoppingCart'}" style="color: grey; text-decoration: none;">
+                <router-link :to="{ name: 'ShoppingCartPage'}" style="color: grey; text-decoration: none;">
                     <span>Shopping Cart</span>
                 </router-link>
                 <v-icon right>mdi-cart-outline</v-icon>
