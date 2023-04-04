@@ -1,7 +1,5 @@
-export default {
-    orders: [],
-    order: {},
-
-    cartList: [],
-    
+export default { 
+    cartItems: [],
+    cartItem: {},
+    resMyRequest: "",
 }

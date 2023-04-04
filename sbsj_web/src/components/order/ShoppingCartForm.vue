@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <div class="grey lighten-4">
         <v-row class="white">
             <v-col cols="auto">
@@ -14,11 +14,11 @@
             
             <!-- 장바구니 상품 리스트-->
             
-            <div class="item-info-no" v-if="!cartList || (Array.isArray(cartList) && cartList.length === 0)">
+            <div class="item-info-no" v-if="!cartItems || (Array.isArray(cartItems) && cartItems.length === 0)">
                 <div class="d-flex justify-center">
                     <v-icon x-large>mdi-cart-variant</v-icon>
                 </div>
-                <p align="center" class="mt-3 mb-5"> 장바구니에 담긴 상품이 없습니다.</p>
+                <p align="center" class="mt-3 mb-5">장바구니에 담긴 상품이 없습니다.</p>
                 <div class="d-flex justify-center mb-10">
                     <v-btn color="white" elevation="1" @click="backHome">메인으로 가기</v-btn>
                 </div>
@@ -26,15 +26,15 @@
             
             <div> <!-- 주석 해제할 때 v-else 넣어야 함 -->
                 <v-row>
-                    <v-col class="itemCheck ms-8 mt-16">
-                        <input type="checkbox"
-                            v-model="allSelected" 
-                            value="all" 
+                    <v-col class="itemCheck ms-8 mt-14">
+                        <v-checkbox
+                            class="allCheckbox"
+                            @change="allSelect" 
+                            label="전체 선택" 
                         />
-                        <label for="all">&nbsp;전체 선택</label>
                     </v-col>
-                    <v-col cols="auto" class="mt-14 me-8" justify="right">
-                        <v-btn text @click="btnDeleteCartItem">
+                    <v-col cols="auto" class="mt-16 me-8" justify="right">
+                        <v-btn text @click="deleteCartItemBtn">
                             <v-icon>mdi-delete-outline</v-icon>
                             선택 삭제
                         </v-btn>
@@ -43,31 +43,29 @@
                 <div class="item-info-yes"> 
                     <v-row>
                         <v-col>
-                            <v-card class="ms-8 pa-5" max-width="720" flat outlined> <!-- 추후 수정~ v-for="(item, index) in cartList" :key="index" -->
+                            <v-card class="ms-8 pa-5" 
+                                max-width="720" flat outlined> <!-- v-for="(cartItem, index) in cartItems" :key="index"-->
                                 <v-list-item three-line>
                                     <v-list-item-content class="ms-1">
                                         <div class="itemCheck" align="left">
-                                           <input
-                                                type="checkbox"
-                                                :id="item"
-                                                :value="item"
-                                                v-model="selectList"
-                                                :key="index"
-                                            />
-                                            <!-- @change="selectItem(item.product.price, item.count)" --> 
+                                           <v-checkbox
+                                                class="itemCheckbox"
+                                                v-model="checkedValues"
+                                                value="1"
+                                            /> <!-- 디비 불러올 때 value 수정을 염두에 둘 것 -->
                                         </div>
-                                        <v-list-item-title class="item-name headline" @click="productViewBtn(item)">
-                                            상품명 상품명 상품명 <!-- {{ item.product.name }} -->
+                                        <v-list-item-title class="item-name headline" @click="productView()">
+                                            <a>상품명</a> <!-- {{ cartItem.product.productName }}-->
                                         </v-list-item-title>
-                                        <v-list-item-subtitle class="item-brand" @click="productViewBtn(item)">
-                                            브랜드 브랜드 브랜드 <!-- {{ item.product.brand }} -->
+                                        <v-list-item-subtitle class="item-brand" @click="productView()">
+                                            <a>브랜드 브랜드 브랜드</a> <!-- {{ cartItem.product.brand }} -->
                                         </v-list-item-subtitle>
 
                                         <v-spacer></v-spacer>
 
                                         <v-list-item-title>
                                             <div class="mt-5 text-h6">
-                                                10,000원 <!--{{  getCurrencyFormat(item.count * item.product.price) }} 원 -->
+                                                10,000원 <!--{{  getCurrencyFormat(cartItem.count * cartItem.product.price) }} 원 -->
                                             </div>
                                         </v-list-item-title>
 
@@ -81,7 +79,7 @@
                                             max-height="200"
                                             contain
                                         /> <!-- 현재는 테스트용 코드. 디비에 저장된 상품 썸네일 가져오는 방식으로 변경해야함 
-                                            :src="require(`@/assets/product/uploadImg/${item.product.productInfo.thumbnailFileName}`)" -->
+                                            :src="require(`@/assets/product/uploadImg/${cartItem.product.thumbnail}`)" -->
                                     </v-list-item-avatar>
                                 </v-list-item>
 
@@ -92,17 +90,17 @@
                                             x-small
                                             elevation="0"
                                             color="white"
-                                            @click="qtyDecrease(item)"
+                                            @click="qtyDecrease(cartItem)"
                                         >
                                             <v-icon>mdi-minus</v-icon>
                                         </v-btn>
-                                        수량<!--{{  item.count }}-->
+                                        수량<!--{{  cartItem.count }}-->
                                         <v-btn
                                             class="plusBtn ms-1"
                                             x-small
                                             elevation="0"
                                             color="white"
-                                            @click="qtyIncrease(item)"
+                                            @click="qtyIncrease(cartItem)"
                                         >
                                             <v-icon>mdi-plus</v-icon>
                                         </v-btn>
@@ -114,14 +112,14 @@
                                         class="me-2" 
                                         outlined 
                                         color="teal"
-                                        @click="btnDirectPurchase(item, index)"
+                                        @click="btnDirectPurchase(cartItem, index)"
                                     >
                                     구매
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-col>
-
+                        
                         <!-- 금액 합계 부분-->
 
                         <v-col cols="5">
@@ -145,7 +143,7 @@
                                         </p>
                                     </div>
                                     <v-divider color="black"></v-divider>
-                                    <div class="total-price">
+                                    <div>
                                         <span class="text--primary">총 결제 금액</span>
                                         <p class="display-1 text--primary">
                                             33,000원
@@ -158,7 +156,7 @@
                                     <v-btn 
                                         block
                                         color="teal" 
-                                        @click="btnSelectPurchase"
+                                        
                                     >
                                         구매하기
                                     </v-btn>
@@ -174,7 +172,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
+
+const orderModule = 'orderModule'
 
 export default {
     name: "ShoppingCartForm",
@@ -184,77 +184,82 @@ export default {
             // 임의로 넣은 테스트용 이미지임!!! 디비 불러오고나면 삭제할 것
 
             totalPrice: 0,
-            selectList: [],
+            checkedValues: [], // 체크박스 v-model에 작성되어 있음
 
-            //async
-            orderListCheck: false,
-
-            //바로 구매
-            directTotalPrice: 0,
-            directTmpOrderNo: [],
-            directCartList: [],
-
-            //주문 페이지 전달
-            selectTotalPrice: 0,
+            allChecked: false, // 전체선택 관련 메서드 allSelect에서 쓰임
 
             //카트 아이템 삭제
-            selectCartItemNo: []
-
+            selectCartItemId: [],
         }
     },
     computed: {
-        ...mapState([
-        'cartList'
+        ...mapState(orderModule, [
+            'cartItems',
         ]),
-        allSelected: {
-            //getter
-            get: function() {
-                return this.cartList.length === this.selectList.length;
-            },
-            //setter
-            set: function(e) {
-                this.selectList = e ? this.cartList : [];
-            }
-        },
     },
     methods: {
+        ...mapActions(orderModule, [
+            'reqCartItemCountChangeToSpring'
+        ]),
+
         backHome () {
             this.$router.push({ name:'home' })
         },
-        /*
-        productViewBtn(item){
+
+        allSelect () {
+            const { allChecked } = this
+            if(allChecked == false) {
+                this.checkedValues = []
+                this.checkedValues.push("1", "2") // push 안에 각 value 작성
+                this.allChecked = true
+            } else {
+                while(this.checkedValues.length > 0) {
+                    this.checkedValues.pop()
+                }
+                this.allChecked = false
+            }
+        },
+        
+        productView(){
             alert("상품 상세 페이지로 이동합니다.")
-            this.$router.push({ name: 'ProductDetailPage', params: { productNo: item.product.productNo }})
+            this.$router.push({ name: 'DetailProductPage'})
+            // 상품 상세 페이지가 구체화되면 name 뒤에 , params: { productNo: cartItem.product.productId } 추가하여 수정
+            // 그렇게 되면 메서드 () 안에 item이나 product 넣어야 할 지도 생각해야 함
         },
 
-        ...mapActions([
-            'reqCartItemCountChangeToSpring'
-        ]),
+        deleteCartItemBtn(){
+            let deleteCartMessage = confirm("선택한 상품을 삭제하시겠습니까?")
+            if(deleteCartMessage){
+                for (let i = 0; i < this.checkedValues.length; i++) {
+                    this.selectCartItemId[i] = this.checkedValues[i].cartItemId
+                }
+                this.$emit('deleteCartItem', this.selectCartItemId)
+            }
+        },
+
+        selectItem(price, count){
+            console.log("가격과 수량: " + price + count)
+            console.log("선택한 상품 목록: " + this.checkedValues)
+            this.totalPrice = this.totalPrice + (price * count)
+        },
 
         getCurrencyFormat(value) {
             // 가격을 n,000 원 단위 포맷으로 가공
             return this.$currencyFormat(value);
         },
 
-        selectItem(price, count){
-            console.log("가격과 수량: " + price + count)
-            console.log("선택한 상품 목록: " + this.selectList)
-            this.totalPrice = this.totalPrice + (price * count)
-        },
-
-        async qtyDecrease(item) {
-            if (item.count > 1) {
-                item.count--
+        async qtyDecrease(cartItem) {
+            if (cartItem.count > 1) {
+                cartItem.count--
             } else {
-                item.count = 1
+                cartItem.count = 1
             }
             var payload =  {
-                'itemNo': item.itemNo, 
-                'count': item.count, 
-                'selectedProductAmount': item.product.price * item.count
+                'cartItemId': cartItem.cartItemId, 
+                'count': cartItem.count
             }
             await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.$store.state.resMyRequest;
+            this.res = this.$store.state.orderModule.resMyRequest;
 
             if (this.res === 1) {
                 console.log("수량 변경 성공");
@@ -263,16 +268,15 @@ export default {
             }
         },
 
-        async qtyIncrease(item) {
-            item.count++
+        async qtyIncrease(cartItem) {
+            cartItem.count++
             
             var payload =  {
-                'itemNo':item.itemNo, 
-                'count':item.count, 
-                'selectedProductAmount': item.product.price * item.count
+                'cartItemId':cartItem.cartItemId, 
+                'count':cartItem.count
             }
             await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.$store.state.resMyRequest;
+            this.res = this.$store.state.orderModule.resMyRequest;
 
             if (this.res === 1) {
                 console.log("수량 변경 성공");
@@ -281,15 +285,7 @@ export default {
             }
         },
 
-        btnDeleteCartItem(){
-            let deleteCartMessage = confirm("선택한 상품을 삭제하시겠습니까?")
-            if(deleteCartMessage){
-                for (let i = 0; i < this.selectList.length; i++) {
-                    this.selectCartItemNo[i] = this.selectList[i].itemNo
-                }
-                this.$emit('deleteCartItem', this.selectCartItemNo)
-            }
-        },
+        /*
 
         async btnDirectPurchase(item, index){
             // 바로 구매 (낱개 구매)
@@ -298,9 +294,9 @@ export default {
             this.directCartList = this.cartList[index]
             this.quantity = this.cartList[index].count
             this.cartNo = this.cartList[index].cart.cartNo
-            this.cartItemNo =  this.cartList[index].itemNo
+            this.cartitemId =  this.cartList[index].itemId
             this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
-                { orderSave: { directOrderCheck:true ,cartInfoCheck:true, tmpCartItemOrderNo: this.cartItemNo, cartNo: this.cartNo,
+                { orderSave: { directOrderCheck:true ,cartInfoCheck:true, tmpCartItemOrderNo: this.cartitemId, cartNo: this.cartNo,
                                     product:this.directCartList.product , quantity: this.quantity, totalPrice: this.directTotalPrice }})
             alert ("주문 페이지로 이동합니다.")
             this.orderListCheck = true
@@ -312,11 +308,11 @@ export default {
 
         async btnSelectPurchase() {
             // 선택 상품 구매 (여러개 구매 or 전체 구매 가능)
-            for (let i = 0; i < this.selectList.length; i++) {
-                this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
+            for (let i = 0; i < this.checkedValues.length; i++) {
+                this.selectTotalPrice = this.selectTotalPrice + (this.checkedValues[i].product.price * this.checkedValues[i].count)
             }
             this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
-                { orderSave: { directOrderCheck:false, cartOrderCheck:true, selectList: this.selectList, totalPrice: this.selectTotalPrice }})
+                { orderSave: { directOrderCheck:false, cartOrderCheck:true, checkedValues: this.checkedValues, totalPrice: this.selectTotalPrice }})
             alert ("주문 페이지로 이동합니다.")
             this.orderListCheck = true
             if(this.orderListCheck) {
@@ -326,14 +322,8 @@ export default {
         },
         
     },    
-    
-    beforeUpdate() {
-        this.totalPrice = 0
-        for (let i = 0; i < this.selectList.length; i++) {
-        this.totalPrice = this.totalPrice + this.selectList[i].product.price * this.selectList[i].count
-        }
-    },
     */
+   
 }
 }
 </script>
@@ -348,9 +338,6 @@ export default {
     .item-info-yes {
         height: 100vh;
         margin-bottom: 0;
-    }
-    .itemCheck {
-        accent-color: teal;
     }
 
 </style>
