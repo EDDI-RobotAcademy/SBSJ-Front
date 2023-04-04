@@ -226,11 +226,11 @@ export default {
         },
         addToCart() {
             //let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            //let memberNo = await userInfo.memberNo;
-            const { memberNo, productId, count } = this
-            console.log(memberNo + ', ' + productId +', '+ count)
+            //let memberId = await userInfo.memberId;
+            const { memberId, productId, count } = this
+            console.log(memberId + ', ' + productId +', '+ count)
 
-            this.reqAddCartToSpring({memberNo, productId, count})
+            this.reqAddCartToSpring({memberId, productId, count})
             
             let goToCartMessage = confirm("장바구니로 이동하시겠습니까?")
             if(goToCartMessage) {

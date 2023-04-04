@@ -14,10 +14,13 @@
   </template>
 
 <script>
+
 import AfterCheckForm from '@/components/survey/AfterCheckForm.vue'
+
 export default {
     components: { AfterCheckForm },
 }
+
 </script>
 
 <style>

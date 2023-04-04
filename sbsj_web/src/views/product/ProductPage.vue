@@ -23,7 +23,8 @@
     </section>
   </template>
   
-  <script>
+<script>
+
 import { mapActions, mapState } from 'vuex';
 import JpaProductList from '@/components/product/JpaProductList.vue';
 import ProductSearchFilter from '@/components/product/JpaSearchFilter.vue';
