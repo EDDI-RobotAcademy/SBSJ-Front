@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sign-agree-form></sign-agree-form>
+    <sign-agree-form/>
   </div>
 </template>
 

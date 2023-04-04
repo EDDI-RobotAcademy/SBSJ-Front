@@ -1,6 +1,6 @@
 <template>
   <div>
-    <search-password-form></search-password-form>
+    <search-password-form/>
   </div>
 </template>
 

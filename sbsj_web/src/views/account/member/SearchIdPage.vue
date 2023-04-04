@@ -1,6 +1,6 @@
 <template>
   <div>
-    <search-id-form></search-id-form>
+    <search-id-form/>
   </div>
 </template>
 
