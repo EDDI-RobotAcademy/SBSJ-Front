@@ -60,7 +60,7 @@
                 </v-col>
               </v-row>
 
-              <my-page-password-modify-form @passwordConfirm="passwordConfirm"/>
+              <my-page-password-modify-form @passwordConfirm="passwordConfirm"/> 
               <br><br>
 
               <v-btn type="submit"
@@ -87,6 +87,11 @@ const accountModule = 'accountModule';
 export default {
   name: "MyPageProfileForm",
   components: { MyPagePasswordModifyForm },
+  methods: {
+    passwordConfirm(newPassword) {
+      this.newPassword = newPassword;
+    },
+  },
   computed: {
     ...mapState(accountModule, ['member'])
   },
@@ -96,6 +101,9 @@ export default {
     document.getElementsByClassName("w-100")[2].getElementsByTagName("span")[0].id = "email";
     document.getElementsByClassName("w-100")[3].getElementsByTagName("span")[0].id = "phoneNumber";
   },
+  data() {
+    return {
+      newPassword: '',
     };
   },
 }
