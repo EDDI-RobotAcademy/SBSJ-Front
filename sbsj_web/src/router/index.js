@@ -85,6 +85,12 @@ const routes = [
     name: 'InformationUsePage',
     component: InformationUsePage
   },
+
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage
+  },
 ]
 
 const router = new VueRouter({

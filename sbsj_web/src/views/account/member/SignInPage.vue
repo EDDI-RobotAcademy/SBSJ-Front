@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 import SignInForm from "@/components/member/SignInForm.vue";
 import { mapActions, mapState } from 'vuex';
 
@@ -24,12 +23,13 @@ export default {
   computed: {
     ...mapState(accountModule, ['isAuthenticated']),
   },
-  mounted() {
+  updated() {
+    console.log("signin updated");
     if (this.isAuthenticated === true) {
-        this.isLogin = true;
-      } else {
-        this.isLogin = false;
-      }
+      this.isLogin = true;
+    } else {
+      this.isLogin = false;
+    }
   },
   methods: {
     ...mapActions(accountModule, ['reqSignInToSpring']),
