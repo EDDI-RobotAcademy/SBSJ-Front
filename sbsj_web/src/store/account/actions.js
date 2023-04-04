@@ -1,5 +1,6 @@
 import {
     COMMIT_IS_AUTHENTICATED,
+    REQUEST_MY_PAGE_MEMBER_INFO
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject.js';
@@ -101,4 +102,13 @@ export default {
             })
     },
 
+    reqMyPageMemberInfoToSpring({ commit }, memberNo) {
+        return axiosInst.post(`/member/mypage/memberInfo/${memberNo}`)
+            .then((res) => {
+                commit(REQUEST_MY_PAGE_MEMBER_INFO, res.data);
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
 }
