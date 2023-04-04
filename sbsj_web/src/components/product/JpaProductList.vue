@@ -1,6 +1,6 @@
 <template>
     <ul class="baby-product-list">
-        <li v-for="(product, index) in products" :keys="index" class="baby-product">
+        <li v-for="(product, index) in products" :key="index" class="baby-product">
 
             <v-hover>
                 <template  v-slot="{ hover }">
