@@ -7,8 +7,8 @@
 
 <script>
 
-import MyPageTabsForm from "@/components/member/mypage/MyPageTabsForm.vue";
-import MyPageProfileSection from '@/components/member/mypage/MyPageProfileSection.vue';
+import MyPageTabsForm from "@/components/mypage/MyPageTabsForm.vue";
+import MyPageProfileSection from '@/components/mypage/MyPageProfileSection.vue';
 
 export default {
     name: "MyPage",

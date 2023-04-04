@@ -58,7 +58,7 @@ export default {
   computed: {
     componentLoader() {
       const tab = this.currentTab;
-      return () => import(`@/components/member/mypage/${tab}`);
+      return () => import(`@/components/mypage/${tab}`);
     },
   },
   methods: {},
