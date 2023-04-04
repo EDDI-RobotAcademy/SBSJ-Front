@@ -71,5 +71,21 @@ export default {
             })
     },
 
+    reqMyPageRegisterDeliveryToSpring({}, payload) {
+        const { memberNo, addressName, addressType, recipientName, phoneNumber, 
+                city, street, addressDetail, zipcode, defaultAddress } = payload
+        console.log(memberNo, addressName, addressType, recipientName, phoneNumber, 
+                    city, street, addressDetail, zipcode, defaultAddress);
+        return axiosInst.post("/delivery/register/", 
+               { memberNo, addressName, addressType, recipientName, phoneNumber, 
+                 city, street, addressDetail, zipcode, defaultAddress })
+            .then(() => {
+                alert("배송지 등록 완료!")
+                router.push({ name: 'MyPage' })
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
 
 }

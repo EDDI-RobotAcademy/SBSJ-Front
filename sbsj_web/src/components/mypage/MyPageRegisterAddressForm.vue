@@ -114,6 +114,35 @@ export default {
         }
     },
     methods: {
+        onSubmit() {
+            if(this.$refs.form.validate()) {
+                if(this.streetPass) {
+                    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                    let memberNo = userInfo.memberNo;
+
+                    let checkedDefaultAddress = document.getElementsByClassName("form-check-input")[0].checked;
+                    let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
+
+                    const { addressName, addressType, recipientName, phoneNumber, 
+                            city, street, addressDetail, zipcode } = this
+                    this.$emit("submit", { memberNo, addressName, addressType, recipientName, phoneNumber, 
+                                           city, street, addressDetail, zipcode, defaultAddress });
+
+                    this.addressName = '';
+                    this.addressType = '';
+                    this.recipientName = '';
+                    this.phoneNumber = '';
+                    this.city = '';
+                    this.street = '';
+                    this.addressDetail = '';
+                    this.zipcode = '';
+                    checkedDefaultAddress = false;
+                    this.dialog = false;
+                }
+            } else {
+                alert('형식에 맞게 입력해주세요!')
+            }
+        },
         btnCancel() {
             let checkedDefaultAddress = document.getElementsByClassName("form-check-input")[0].checked;
 
