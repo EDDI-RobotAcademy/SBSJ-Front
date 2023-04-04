@@ -89,16 +89,16 @@ const routes = [
     component: InformationUsePage
   },
 
-  // {
-  //   path: '/mypage',
-  //   name: 'MyPage',
-  //   component: MyPage
-  // },
-  // {
-  //   path: '/mypage/check-password',
-  //   name: 'MyPagePasswordCheckPage',
-  //   component: MyPagePasswordCheckPage
-  // },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage
+  },
+  {
+    path: '/mypage/check-password',
+    name: 'MyPagePasswordCheckPage',
+    component: MyPagePasswordCheckPage
+  },
   
 ]
 
