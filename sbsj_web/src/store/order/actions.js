@@ -4,7 +4,6 @@ import {
 } from "./mutation-types";
 
 import axiosInst from "@/utility/axiosObject";
-import router from '@/router';
 
 export default { 
 
@@ -81,7 +80,6 @@ export default {
                  city, street, addressDetail, zipcode, defaultAddress })
             .then(() => {
                 alert("배송지 등록 완료!")
-                router.push({ name: 'MyPage' })
             })
             .catch(() => {
                 alert('문제 발생!')

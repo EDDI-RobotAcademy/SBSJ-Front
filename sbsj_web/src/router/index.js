@@ -16,8 +16,8 @@ import CompanyPage from "@/views/information/CompanyPage";
 import PrivacyPolicyPage from "@/views/information/PrivacyPolicyPage";
 import InformationUsePage from "@/views/information/InformationUsePage";
 
-// import MyPage from '@/views/account/member/mypage/MyPage';
-// import MyPagePasswordCheckPage from "@/views/account/member/mypage/MyPagePasswordCheckPage";
+import MyPage from '@/views/mypage/MyPage';
+import MyPagePasswordCheckPage from "@/views/mypage/MyPagePasswordCheckPage";
 
 Vue.use(VueRouter)
 
@@ -89,16 +89,16 @@ const routes = [
     component: InformationUsePage
   },
 
-  // {
-  //   path: '/mypage',
-  //   name: 'MyPage',
-  //   component: MyPage
-  // },
-  // {
-  //   path: '/mypage/check-password',
-  //   name: 'MyPagePasswordCheckPage',
-  //   component: MyPagePasswordCheckPage
-  // },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage
+  },
+  {
+    path: '/mypage/check-password',
+    name: 'MyPagePasswordCheckPage',
+    component: MyPagePasswordCheckPage
+  },
   
 ]
 

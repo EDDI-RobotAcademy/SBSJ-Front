@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MyPagePasswordCheckForm from "@/components/member/mypage/MyPagePasswordCheckForm.vue"
+import MyPagePasswordCheckForm from "@/components/mypage/MyPagePasswordCheckForm.vue"
 import router from '@/router';
 import { mapActions } from 'vuex';
 

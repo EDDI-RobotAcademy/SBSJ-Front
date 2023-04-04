@@ -35,7 +35,7 @@
 </template>
   
 <script>
-import MyPageRegisterAddressForm from "@/components/member/mypage/MyPageRegisterAddressForm.vue"
+import MyPageRegisterAddressForm from "@/components/mypage/MyPageRegisterAddressForm.vue"
 import {mapActions, mapState} from "vuex";
 
 const orderModule = 'orderModule'

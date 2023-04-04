@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import MyPagePasswordModifyForm from '@/components/member/mypage/MyPagePasswordModifyForm.vue'
+import MyPagePasswordModifyForm from '@/components/mypage/MyPagePasswordModifyForm.vue'
 import router from '@/router';
 import { mapActions, mapState } from 'vuex';
 
