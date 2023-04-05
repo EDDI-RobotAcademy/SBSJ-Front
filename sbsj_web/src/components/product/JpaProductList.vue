@@ -9,7 +9,7 @@
                         class="mx-auto transition-swing"
                         style="border-radius: 20px"
                     >
-                        <router-link :to="{ name: 'DetailProductPage', params: {product: {productId: product.productId, productTitle: product.title, productThumbnail: product.thumbnail, productWish: product.wish, productPrice: product.price}}}" class="baby-product-link">
+                        <router-link :to="{ name: 'DetailProductPage', params: {productId: product.productId}}" class="baby-product-link">
                             <dl class="baby-product-wrap">
                                 <dt class="image">
                                     <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
@@ -19,7 +19,7 @@
                                     <div class="badge">
                                         <v-icon class="icon-wish">mdi-heart-outline</v-icon>
                                         <span class="total-wish">
-                                            330
+                                            {{ product.wish }}
                                         </span>
                                     </div>
                                     <div class="name">

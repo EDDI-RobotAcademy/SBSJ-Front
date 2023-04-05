@@ -49,7 +49,7 @@
                 <v-card width="460" v-if="isPass">
                   <v-card-text>
                     <div class="text-h4 font-weight-black mb-10">ID 찾기 결과</div>
-                      <div v-if="matchingId">{{ matchingId }}</div>
+                      <div v-if="matchingUserId">{{ matchingUserId }}</div>
                       <div v-else>입력한 정보와 일치하는 아이디가 없습니다.</div>
                   </v-card-text>
                 </v-card>
@@ -75,7 +75,7 @@ export default {
       name: "",
       phoneNumber: "",
       isPass: false,
-      matchingId: null,
+      matchingUserId: null,
       
       name_rule:[
         v => !!v || '가입한 이름을 입력해주세요.',
@@ -104,7 +104,7 @@ export default {
             if (res.data) {
               alert("인증이 완료되었습니다.");
               this.isPass = true;
-              this.matchingId(name, this.phoneNumber);
+              this.matchingUserId(name, this.phoneNumber);
             } else {
               alert("해당이름으로 가입된 정보가 없습니다.");
               this.isPass = false;
@@ -123,7 +123,7 @@ export default {
             if (res.data) {
               alert("인증이 완료되었습니다.");
               this.isPass = true;
-              this.matchingId(this.name, phoneNumber);
+              this.matchingUserId(this.name, phoneNumber);
             } else {
               alert("입력한 휴대폰번호로 가입된 정보가 없습니다.");
               this.isPass = false;
@@ -134,14 +134,14 @@ export default {
           alert("요청에 실패했습니다. 다시 시도해주세요.");
         });
       },
-      findmatchingId(name, phoneNumber) {
+      findMatchingUserId(name, phoneNumber) {
       axios
-        .post("http://localhost:7777/member/findMatchingId", { name, phoneNumber })
+        .post("http://localhost:7777/member/findMatchingUserId", { name, phoneNumber })
         .then((res) => {
           if (res.data) {
-            this.matchingId = res.data;
+            this.matchingUserId = res.data;
           } else {
-            this.matchingId = "";
+            this.matchingUserId = "";
           }
         })
         .catch((error) => {

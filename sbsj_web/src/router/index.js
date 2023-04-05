@@ -2,19 +2,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-import ShoppingCart from "@/views/order/shoppingCart/ShoppingCartPage.vue"
+import ShoppingCartPage from "@/views/order/shoppingCart/ShoppingCartPage.vue"
 import ProductPage from "@/views/product/ProductPage.vue"
 import DetailProductPage from '@/views/product/DetailProductPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
 import SearchPasswordPage from "@/views/account/member/SearchPasswordPage";
-import SearchIdPage from "@/views/account/member/SearchIdPage";
+import SearchUserIdPage from "@/views/account/member/SearchUserIdPage";
 import SignAgreePage from "@/views/account/member/SignAgreePage";
 import AgreementPage from "@/views/information/AgreementPage";
 import CompanyPage from "@/views/information/CompanyPage";
 import PrivacyPolicyPage from "@/views/information/PrivacyPolicyPage";
 import InformationUsePage from "@/views/information/InformationUsePage";
+
+import MyPage from '@/views/mypage/MyPage';
+import MyPagePasswordCheckPage from "@/views/mypage/MyPagePasswordCheckPage";
 
 Vue.use(VueRouter)
 
@@ -26,8 +29,8 @@ const routes = [
   },
   {
     path: '/shopping-cart',
-    name: 'ShoppingCart',
-    component: ShoppingCart
+    name: 'ShoppingCartPage',
+    component: ShoppingCartPage
   },
   {
     path: '/product',
@@ -35,7 +38,7 @@ const routes = [
     component: ProductPage
   },
   {
-    path: '/detail-product-page/:product',
+    path: '/detail-product-page/:productId',
     name: 'DetailProductPage',
     component: DetailProductPage,
     props: true
@@ -51,14 +54,14 @@ const routes = [
     component: SignInPage
   },
   {
+    path: '/search-id',
+    name: 'SearchUserIdPage',
+    component: SearchUserIdPage
+  },
+  {
     path: '/search-password',
     name: 'SearchPasswordPage',
     component: SearchPasswordPage
-  },
-  {
-    path: '/search-id',
-    name: 'SearchIdPage',
-    component: SearchIdPage
   },
   {
     path: '/agree-pass',
@@ -85,6 +88,18 @@ const routes = [
     name: 'InformationUsePage',
     component: InformationUsePage
   },
+
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage
+  },
+  {
+    path: '/mypage/check-password',
+    name: 'MyPagePasswordCheckPage',
+    component: MyPagePasswordCheckPage
+  },
+  
 ]
 
 const router = new VueRouter({

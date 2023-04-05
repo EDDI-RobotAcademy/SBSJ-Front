@@ -4,11 +4,11 @@ import {
 } from './mutation-types'
 
 export default {
-[REQUEST_PRODUCT_LIST_TO_SPRING] (state, passingData) {
-    state.products = passingData
-},
+    [REQUEST_PRODUCT_LIST_TO_SPRING] (state, passingData) {
+        state.products = passingData
+    },
 
-[REQUEST_PRODUCT_TO_SPRING] (state, passingData) {
-    state.product = passingData
-},
+    [REQUEST_PRODUCT_TO_SPRING] (state, passingData) {
+        state.product = passingData
+    },
 }

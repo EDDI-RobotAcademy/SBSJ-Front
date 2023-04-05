@@ -3,12 +3,13 @@
 </template>
 
 <script>
-import MainForm from '@/components/main/MainForm.vue';
-  export default {
-    name: 'HomeView',
 
-    components: {
-      MainForm
-    },
-  }
+import MainForm from '@/components/main/MainForm.vue';
+
+export default {
+  name: 'HomeView',
+  components: {
+    MainForm
+  },
+}
 </script>

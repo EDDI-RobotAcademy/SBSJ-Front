@@ -1,6 +1,4 @@
 export default {
     products: [],
     product: {},
-    
-
 }

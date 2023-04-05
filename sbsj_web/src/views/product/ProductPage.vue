@@ -23,41 +23,31 @@
     </section>
   </template>
   
-  <script>
+<script>
+
 import { mapActions, mapState } from 'vuex';
 import JpaProductList from '@/components/product/JpaProductList.vue';
 import ProductSearchFilter from '@/components/product/JpaSearchFilter.vue';
 import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vue';
 
-// temp
-import axios from 'axios';
-  
+const productModule = 'productModule'
   export default {
     name: "ProductPage",
     components: {JpaProductList, ProductSearchFilter, ProductCategoryHeader},
-    data() {
-        return {
-            products: [],
-        }
+
+    computed: {
+        ...mapState(productModule, [
+            'products'
+            ])
     },
-    // computed: {
-    //     ...mapState([
-    //         'products'
-    //         ]),
-    // },
     mounted () {
-        // this.requestProductListtoSpring()
-        console.log("mounted()");
-        axios.get('http://localhost:7777/product/default')
-            .then((res) => this.products = res.data)
-            .catch((res) => {
-              alert(res.response.data.message);
-            });
-    },
+        this.requestProductListToSpring()
+        },
+
     methods: {
-        // ...mapActions([
-        //     'requestProductListtoSpring'
-        // ])
+        ...mapActions(productModule, [
+            'requestProductListToSpring'
+        ])
     }
   }
   
