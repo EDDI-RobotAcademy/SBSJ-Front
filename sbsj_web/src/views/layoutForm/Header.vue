@@ -168,13 +168,12 @@ export default {
         },
         async resign () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            let token = await userInfo.token;
             
-            this.reqResignToSpring(token);
+            this.reqResignToSpring(userInfo);
         },
         async logout () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            let token = await userInfo.token;
+            let token = { "token": userInfo["token"] }
 
             await this.reqSignOutToSpring(token);
         }
