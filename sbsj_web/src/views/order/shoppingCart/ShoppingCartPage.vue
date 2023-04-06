@@ -26,8 +26,11 @@ export default {
     },
     mounted () { 
         if(this.isAuthenticated === true) {
-            let token = localStorage.getItem('userInfo')
-            this.reqCartItemListToSpring(token)
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+            console.log(userInfo);
+
+            this.reqCartItemListToSpring(userInfo);
         }
     },    
 }

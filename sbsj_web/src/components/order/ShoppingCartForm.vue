@@ -197,6 +197,13 @@ export default {
         ...mapState(orderModule, [
             'cartItems',
         ]),
+        isEmptyCart() {
+            return this.cartItems.length === 0;
+        }
+        // 값이 true이면 없는 것이고, false이면 있는 것
+    },
+    created() {
+        console.log("isEmptyCart: ", this.isEmptyCart);
     },
     methods: {
         ...mapActions(orderModule, [
