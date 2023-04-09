@@ -119,7 +119,21 @@ export default {
     },
     methods: {
         ...mapActions(orderModule, ['reqMyPageDeleteDeliveryToSpring',
+                                    'reqMyPageModifyDeliveryToSpring',
                                     'reqMyPageCheckDefaultAddressToSpring']),
+
+        async onSubmit() {
+            if(this.$refs.form.validate()) {
+                let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                let memberId = userInfo.memberId;
+                let addressId = this.delivery.addressId;
+
+                let checkedDefaultAddress = document.getElementsByClassName("form-check-input")[0].checked;
+                let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
+                
+                const { addressName, addressType, recipientName, phoneNumber, 
+                        city, street, addressDetail, zipcode } = this.localDelivery;
+                
                 if(defaultAddress === "기본 배송지" && this.delivery.defaultAddress === "") {
                     let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring(defaultAddress);
                     if(checkDefaultAddress) {
@@ -129,6 +143,17 @@ export default {
                         }
                     }
                 }
+
+                await this.reqMyPageModifyDeliveryToSpring(
+                    { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
+                      city, street, addressDetail, zipcode, defaultAddress });
+                
+                this.dialog = false;
+                // window.location.reload(true);
+            } else {
+                alert('형식에 맞게 입력해주세요!')
+            }
+        },
         btnCancel() {
             this.dialog = false;
         },

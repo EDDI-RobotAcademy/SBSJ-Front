@@ -99,6 +99,18 @@ export default {
                 alert("문제 발생!")
             })
     },
+    reqMyPageModifyDeliveryToSpring({}, payload) {
+        const { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
+                city, street, addressDetail, zipcode, defaultAddress } = payload
+        return axiosInst.post("/delivery/modify", 
+                { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
+                  city, street, addressDetail, zipcode, defaultAddress })
+            .then(() => {
+                alert("배송지 수정 완료!")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
     }
-
+    
 }
