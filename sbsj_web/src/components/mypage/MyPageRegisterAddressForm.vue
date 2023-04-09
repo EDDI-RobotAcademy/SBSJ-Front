@@ -78,6 +78,10 @@
 
 <script>
 
+import { mapActions } from 'vuex'
+
+const orderModule = 'orderModule'
+
 export default {
     name: "MyPageRegisterAddressForm",
     data() {
@@ -114,7 +118,9 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+        ...mapActions(orderModule, ['reqMyPageCheckDefaultAddressToSpring']),
+
+        async onSubmit() {
             if(this.$refs.form.validate()) {
                 if(this.streetPass) {
                     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -124,10 +130,21 @@ export default {
                     let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
 
                     const { addressName, addressType, recipientName, phoneNumber, 
-                            city, street, addressDetail, zipcode } = this
+                            city, street, addressDetail, zipcode } = this;
+
+                    if(defaultAddress === "기본 배송지") {
+                        let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring(defaultAddress);
+                        if(checkDefaultAddress) {
+                            let changeDefaultAddress = confirm("기본 배송지가 이미 설정되어있습니다.\n이 배송지를 기본 배송지로 설정하시겠습니까?");
+                            if(!changeDefaultAddress) {
+                                defaultAddress = "";
+                            }
+                        }
+                    }
+                    
                     this.$emit("submit", { memberId, addressName, addressType, recipientName, phoneNumber, 
                                            city, street, addressDetail, zipcode, defaultAddress });
-
+                    
                     this.addressName = '';
                     this.addressType = '';
                     this.recipientName = '';
