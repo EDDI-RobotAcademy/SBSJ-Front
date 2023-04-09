@@ -19,6 +19,24 @@ import InformationUsePage from "@/views/information/InformationUsePage";
 import MyPage from '@/views/mypage/MyPage';
 import MyPagePasswordCheckPage from "@/views/mypage/MyPagePasswordCheckPage";
 
+import SurveyPage from '@/views/survey/SurveyPage'
+import DetailSurveyPage from '@/views/survey/DetailSurveyPage'
+import AfterCheckPage from '@/views/survey/AfterCheckPage'
+import FirstCheckPage from '@/views/survey/commonCheckList/FirstCheckPage'
+import SecondCheckPage from '@/views/survey/commonCheckList/SecondCheckPage'
+import ThirdCheckPage from '@/views/survey/commonCheckList/ThirdCheckPage'
+import FourthCheckPage from '@/views/survey/commonCheckList/FourthCheckPage'
+import FifthCheckPage from '@/views/survey/commonCheckList/FifthCheckPage'
+import SixthCheckPage from '@/views/survey/commonCheckList/SixthCheckPage'
+
+import FirstBonePage from '@/views/survey/detailCheckList/boneList/FirstBonePage'
+import SecondBonePage from '@/views/survey/detailCheckList/boneList/SecondBonePage'
+import FirstBrainPage from '@/views/survey/detailCheckList/brainList/FirstBrainPage'
+import FirstEyePage from '@/views/survey/detailCheckList/eyeList/FirstEyePage'
+import FirstIntestinePage from '@/views/survey/detailCheckList/intestineList/FirstIntestinePage'
+import FirstLiverPage from '@/views/survey/detailCheckList/liverList/FirstLiverPage'
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -98,6 +116,81 @@ const routes = [
     path: '/mypage/check-password',
     name: 'MyPagePasswordCheckPage',
     component: MyPagePasswordCheckPage
+  },
+  {
+    path: '/survey-page',
+    name: 'SurveyPage',
+    component: SurveyPage
+  },
+  {    
+    path: '/detail-survey-page',
+    name: 'DetailSurveyPage',
+    component: DetailSurveyPage
+  },
+  {    
+    path: '/after-check-page',
+    name: 'AfterCheckPage',
+    component: AfterCheckPage
+  },
+  {    
+    path: '/first-check-page',
+    name: 'FirstCheck',
+    component: FirstCheckPage
+  },
+  {    
+    path: '/second-check-page',
+    name: 'SecondCheck',
+    component: SecondCheckPage
+  },
+  {    
+    path: '/third-check-page',
+    name: 'ThirdCheck',
+    component: ThirdCheckPage
+  },
+  {    
+    path: '/fourth-check-page',
+    name: 'FourthCheck',
+    component: FourthCheckPage
+  },
+  {    
+    path: '/Fifth-check-page',
+    name: 'FifthCheck',
+    component: FifthCheckPage
+  },
+  {    
+    path: '/Sixth-check-page',
+    name: 'SixthCheck',
+    component: SixthCheckPage
+  },
+  {    
+    path: '/First-bone-page',
+    name: 'FirstBone',
+    component: FirstBonePage,
+  },
+  {    
+    path: '/Second-bone-page',
+    name: 'SecondBone',
+    component: SecondBonePage,
+  },
+  {    
+    path: '/First-brain-page',
+    name: 'FirstBrain',
+    component: FirstBrainPage
+  },
+  {    
+    path: '/First-eye-page',
+    name: 'FirstEye',
+    component: FirstEyePage
+  },
+  {    
+    path: '/First-intestine-page',
+    name: 'FirstIntestine',
+    component: FirstIntestinePage
+  },
+  {    
+    path: '/First-liver-page',
+    name: 'FirstLiver',
+    component: FirstLiverPage
   },
   
 ]

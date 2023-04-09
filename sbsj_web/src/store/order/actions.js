@@ -77,5 +77,14 @@ export default {
                 alert('문제 발생!')
             })
     },
+    reqMyPageDeleteDeliveryToSpring({}, addressId) {
+        return axiosInst.get(`/delivery/delete/${addressId}`)
+            .then((res) => {
+                alert(addressId +", 배송지 삭제 완료! "+ res.data);
+            })
+            .catch((res) => {
+                alert("문제 발생! "+ res.data);
+            })
+    }
 
 }

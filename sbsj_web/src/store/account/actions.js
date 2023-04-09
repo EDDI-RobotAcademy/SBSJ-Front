@@ -72,8 +72,8 @@ export default {
                 commit(COMMIT_IS_AUTHENTICATED, false);
             })
     },
-    reqResignToSpring({ commit }, token) {
-        return axiosInst.post("/member/resign", token)
+    reqResignToSpring({ commit }, userInfo) {
+        return axiosInst.post("/member/resign", userInfo)
             .then(() => {
                 alert("회원탈퇴 완료");
                 localStorage.removeItem("userInfo");
