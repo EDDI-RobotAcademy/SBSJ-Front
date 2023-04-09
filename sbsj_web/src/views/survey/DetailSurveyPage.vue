@@ -1,18 +1,15 @@
 <template>
-  <div class="container border border-2" style="margin-top: 100px; padding-inline: 20%;" >
+  <div>
     <detail-survey-form/>
   </div>
-</template>
+  </template>
 
 <script>
-
 import DetailSurveyForm from '@/components/survey/DetailSurveyForm.vue'
-
 export default {
-  components: { DetailSurveyForm },
-
+components: { DetailSurveyForm },
+name : "DetailSurveyPagm",
 }
-
 </script>
 
 <style>
