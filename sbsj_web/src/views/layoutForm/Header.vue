@@ -173,9 +173,8 @@ export default {
         },
         async logout () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            let token = { "token": userInfo["token"] }
 
-            await this.reqSignOutToSpring(token);
+            await this.reqSignOutToSpring(userInfo);
         }
     },
     computed: {
