@@ -71,9 +71,7 @@ export default {
     reqMyPageRegisterDeliveryToSpring({}, payload) {
         const { memberId, addressName, addressType, recipientName, phoneNumber, 
                 city, street, addressDetail, zipcode, defaultAddress } = payload
-        console.log(memberId, addressName, addressType, recipientName, phoneNumber, 
-                    city, street, addressDetail, zipcode, defaultAddress);
-        return axiosInst.post("/delivery/register/", 
+        return axiosInst.post("/delivery/register", 
                { memberId, addressName, addressType, recipientName, phoneNumber, 
                  city, street, addressDetail, zipcode, defaultAddress })
             .then(() => {
@@ -91,6 +89,16 @@ export default {
             .catch((res) => {
                 alert("문제 발생! "+ res.data);
             })
+    },
+    reqMyPageCheckDefaultAddressToSpring({}, defaultAddress) {
+        return axiosInst.get(`/delivery/register/check-defaultAddress/${defaultAddress}`)
+            .then((res) => {
+                return res.data
+            })
+            .catch(() => {
+                alert("문제 발생!")
+            })
+    },
     }
 
 }

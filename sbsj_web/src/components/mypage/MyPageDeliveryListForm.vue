@@ -61,9 +61,9 @@ export default {
         ...mapActions(orderModule, ['reqMyPageRegisterDeliveryToSpring',
                                     'reqMyPageDeliveryListToSpring']),
 
-        onSubmit(payload) {
-            this.reqMyPageRegisterDeliveryToSpring(payload);
-            window.location.reload(true);
+        async onSubmit(payload) {
+            await this.reqMyPageRegisterDeliveryToSpring(payload);
+            // window.location.reload(true);
         }
     },
 }
