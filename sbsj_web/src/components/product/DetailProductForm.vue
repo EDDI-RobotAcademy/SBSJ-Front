@@ -225,16 +225,16 @@ export default {
             }
         },
         addToCart() {
-            //let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            //let memberId = await userInfo.memberId;
-            const { memberId, productId, count } = this
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            const memberId = userInfo.memberId;
+            const { productId, count } = this
             console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
             
             let goToCartMessage = confirm("장바구니로 이동하시겠습니까?")
             if(goToCartMessage) {
-                this.$router.push({ name:'ShoppingCart' })
+                this.$router.push({ name:'ShoppingCartPage' })
             }
             
         },

@@ -21,8 +21,14 @@ export default {
     },
     methods:{
         ...mapActions(orderModule, [
-            'reqCartItemListToSpring'
+            'reqCartItemListToSpring',
+            'reqDeleteCartItemFromSpring'
         ]),
+        deleteCartItem(payload){
+            const selectCartItemId = payload
+            this.reqDeleteCartItemFromSpring(selectCartItemId)
+            this.$router.go(this.$router.currentRoute)
+        }
     },
     mounted () { 
         if(this.isAuthenticated === true) {

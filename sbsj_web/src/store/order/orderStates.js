@@ -1,7 +1,7 @@
 export default { 
     cartItems: [],
     cartItem: {},
-    resMyRequest: "",
+    resCountRequest: "",
 
     deliveryList: [],
 }

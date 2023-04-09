@@ -1,11 +1,24 @@
 import {
+    REQUEST_CART_ITEM_TO_SPRING,
     REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING,
-    REQUEST_CART_ITEM_LIST_TO_SPRING
 } from "./mutation-types";
 
 import axiosInst from "@/utility/axiosObject";
 
 export default { 
+
+    // 장바구니에서 삭제
+    reqDeleteCartItemFromSpring({}, payload) {
+        const selectCartItemId = payload
+
+        return axiosInst.post("/cart/deleteCartItem", { selectCartItemId })
+            .then(() => {
+                alert("장바구니에서 삭제되었습니다.")
+            })
+            .catch(() => {
+                alert("문제가 발생하여 삭제되지 않았습니다.")
+            });
+    },
 
     // 장바구니에 추가
     reqAddCartToSpring({}, payload) {
@@ -21,25 +34,10 @@ export default {
             });
     },
 
-    // 장바구니에서 삭제
-    reqDeleteCartItemFromSpring({}, payload) {
-        const selectCartItemId = payload
-
-        return axiosInst.post("/cart/deleteCartItem", { selectCartItemId })
-            .then(() => {
-                alert("장바구니에서 삭제되었습니다.")
-            })
-            .catch(() => {
-                alert("문제가 발생하여 삭제되지 않았습니다.")
-            });
-    },
-
-
-    // 장바구니 목록 조회
-    reqCartItemListToSpring({commit}, userInfo) {
-        console.log(userInfo)
-        return axiosInst.post("/cart/list",userInfo
-            ).then((res) => {
+    // 장바구니 목록
+    reqCartItemListToSpring({commit}, token) {
+        return axiosInst.post("/cart/list",{headers: { Token: token },
+            }).then((res) => {
                 commit(REQUEST_CART_ITEM_LIST_TO_SPRING, res.data)
             })
     },
@@ -51,6 +49,14 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data)
             })
     },
+
+    // // 디비 정보 받아오기?
+    // reqCartItemToSpring({commit}, cartItemId) {
+    //     return axiosInst.get(`/cart/${cartItemId}`)
+    //         .then((res) => {
+    //             commit(REQUEST_CART_ITEM_TO_SPRING, res.data)
+    //         })
+    // },
 
     reqMyPageDeliveryListToSpring({ commit }, memberId) {
         return axiosInst.get(`/delivery/list/${memberId}`)
