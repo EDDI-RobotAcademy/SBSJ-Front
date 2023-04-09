@@ -3,6 +3,7 @@
         <v-dialog v-model="dialog" persistent max-width="800" max-height="1000">
             <template v-slot:activator="{on}">
                 <v-btn class="w-10 me-2" v-on="on">수정</v-btn>
+                <v-btn class="w-10" @click="deleteDelivery()">삭제</v-btn>
             </template>
 
             <v-form @submit.prevent="onSubmit" ref="form">
@@ -76,6 +77,10 @@
 
 <script>
 
+import { mapActions } from 'vuex';
+
+const orderModule = 'orderModule';
+
 export default {
     name: "MyPageDeliveryModifyForm",
     props: {
@@ -112,8 +117,17 @@ export default {
     created() {
         this.localDelivery = this.delivery;
     },
+    methods: {
+        ...mapActions(orderModule, ['reqMyPageDeleteDeliveryToSpring',
         btnCancel() {
             this.dialog = false;
+        },
+        async deleteDelivery() {
+            let checkDelete = confirm("이 배송지를 삭제하시겠습니까?");
+            if(checkDelete) {
+                await this.reqMyPageDeleteDeliveryToSpring(this.delivery.addressId);
+                // window.location.reload(true);
+            }
         },
         callDaumAddressApi () {
             new window.daum.Postcode({
