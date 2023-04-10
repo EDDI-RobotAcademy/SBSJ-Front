@@ -63,8 +63,8 @@ export default {
                 alert("로그인에 실패했습니다.\n다시 시도해주세요.");
             })
     },
-    async reqSignOutToSpring({ commit }, token) {
-        return await axiosInst.post("/member/logout", token)
+    async reqSignOutToSpring({ commit }, userInfo) {
+        return await axiosInst.post("/member/logout", userInfo)
             .then(() => {
                 alert("로그아웃 완료");
                 localStorage.removeItem("userInfo");

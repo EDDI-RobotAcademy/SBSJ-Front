@@ -1,5 +1,5 @@
 import {
-    REQUEST_CART_ITEM_TO_SPRING,
+    REQUEST_CART_ITEM_LIST_TO_SPRING,
     REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING,
 } from "./mutation-types";
 
@@ -35,9 +35,11 @@ export default {
     },
 
     // 장바구니 목록
-    reqCartItemListToSpring({commit}, token) {
-        return axiosInst.post("/cart/list",{headers: { Token: token },
-            }).then((res) => {
+    reqCartItemListToSpring({commit}, userInfo) {
+        console.log(userInfo)
+        return axiosInst.post("/cart/list", userInfo
+            ).then((res) => {
+                console.log("res.data: " + res.data.cartItemId)
                 commit(REQUEST_CART_ITEM_LIST_TO_SPRING, res.data)
             })
     },
@@ -71,9 +73,7 @@ export default {
     reqMyPageRegisterDeliveryToSpring({}, payload) {
         const { memberId, addressName, addressType, recipientName, phoneNumber, 
                 city, street, addressDetail, zipcode, defaultAddress } = payload
-        console.log(memberId, addressName, addressType, recipientName, phoneNumber, 
-                    city, street, addressDetail, zipcode, defaultAddress);
-        return axiosInst.post("/delivery/register/", 
+        return axiosInst.post("/delivery/register", 
                { memberId, addressName, addressType, recipientName, phoneNumber, 
                  city, street, addressDetail, zipcode, defaultAddress })
             .then(() => {
@@ -91,6 +91,28 @@ export default {
             .catch((res) => {
                 alert("문제 발생! "+ res.data);
             })
+    },
+    reqMyPageCheckDefaultAddressToSpring({}, defaultAddress) {
+        return axiosInst.get(`/delivery/register/check-defaultAddress/${defaultAddress}`)
+            .then((res) => {
+                return res.data
+            })
+            .catch(() => {
+                alert("문제 발생!")
+            })
+    },
+    reqMyPageModifyDeliveryToSpring({}, payload) {
+        const { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
+                city, street, addressDetail, zipcode, defaultAddress } = payload
+        return axiosInst.post("/delivery/modify", 
+                { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
+                  city, street, addressDetail, zipcode, defaultAddress })
+            .then(() => {
+                alert("배송지 수정 완료!")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
     }
-
+    
 }

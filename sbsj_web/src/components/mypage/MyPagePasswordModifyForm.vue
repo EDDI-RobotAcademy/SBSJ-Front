@@ -4,9 +4,12 @@
             <template v-slot:activator="{on}">
                 <v-btn color="#c7d6cd" dark v-on="on">비밀번호 수정</v-btn>
             </template>
-
+            
             <v-card height="550" class="rounded-xl">
-                <v-card-title class="headline d-flex justify-center" style="padding: 50px 0 25px 0;">
+                <div class="d-flex justify-end">
+                    <v-icon class="mt-6 me-6 mb-0 pb-0" @click="btnCancel()">mdi-close</v-icon>
+                </div>
+                <v-card-title class="headline d-flex justify-center" style="padding: 15px 0 25px 0;">
                     비밀번호 수정
                 </v-card-title>
                 <br>

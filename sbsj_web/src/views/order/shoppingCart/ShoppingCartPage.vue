@@ -21,13 +21,22 @@ export default {
     },
     methods:{
         ...mapActions(orderModule, [
-            'reqCartItemListToSpring'
+            'reqCartItemListToSpring',
+            'reqDeleteCartItemFromSpring'
         ]),
+        deleteCartItem(payload){
+            const selectCartItemId = payload
+            this.reqDeleteCartItemFromSpring(selectCartItemId)
+            this.$router.go(this.$router.currentRoute)
+        }
     },
-    mounted () { 
+    async mounted () { 
         if(this.isAuthenticated === true) {
-            let token = localStorage.getItem('userInfo')
-            this.reqCartItemListToSpring(token)
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+            console.log(userInfo);
+
+            await this.reqCartItemListToSpring(userInfo);
         }
     },    
 }
