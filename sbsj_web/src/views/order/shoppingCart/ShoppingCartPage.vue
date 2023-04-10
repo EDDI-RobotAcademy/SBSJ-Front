@@ -30,13 +30,13 @@ export default {
             this.$router.go(this.$router.currentRoute)
         }
     },
-    mounted () { 
+    async mounted () { 
         if(this.isAuthenticated === true) {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
             console.log(userInfo);
 
-            this.reqCartItemListToSpring(userInfo);
+            await this.reqCartItemListToSpring(userInfo);
         }
     },    
 }
