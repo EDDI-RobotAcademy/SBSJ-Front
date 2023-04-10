@@ -22,21 +22,21 @@
                 <div v-if="showSidebar" class="sidebar">
                     <div class="main__category-box" style="width: 700px;">
                         <div class="main__category-list" style="width: 200px; background-color: black;">
-                            <li v-for="item in items" :key="item" class="hover-highlight" style="line-height: 44px; text-align: center;">
+                            <li v-for="(item, index1) in items" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center;">
                                 <router-link :to="{ name: 'productPage'}">
                                     <p>{{ item.mainTitle }}</p>
                                 </router-link>
                                 <div class="second-category hidden">
                                     <div class="first-inline-category" style="background-color: aqua;">
                                         <ul style="position: absolute; padding-left: 0;">
-                                            <li v-for="(subTitle, index) in item.subTitles" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                            <li v-for="(subTitle, index1) in item.subTitles" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
                                                 <a href="#">
                                                     <p>{{ subTitle.sub }}</p>
                                                 </a>
                                                 <div class="third-category hidden">
                                                     <div class="second-inline-category" style="background-color: yellowgreen;">
                                                         <ul style="position: absolute; padding-left: 0;">
-                                                            <li v-for="(content, index) in subTitle.contents" :key="index" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                                            <li v-for="(content, index3) in subTitle.contents" :key="index3" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
                                                                 <a href="#">
                                                                     <p>{{ content }}</p>
                                                                 </a>
