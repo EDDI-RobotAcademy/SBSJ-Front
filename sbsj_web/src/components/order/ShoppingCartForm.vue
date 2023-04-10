@@ -196,6 +196,9 @@ export default {
             'resCountRequest'
         ]),
     },
+    created() {
+        console.log("cartItems: " + JSON.stringify(this.cartItems));
+    },
     mounted() {
         console.log("cartItems: " + JSON.stringify(this.cartItems));
         console.log("첫번째 카트아이템: " + this.cartItems[0]);
