@@ -8,7 +8,7 @@
 import DetailSurveyForm from '@/components/survey/DetailSurveyForm.vue'
 export default {
 components: { DetailSurveyForm },
-name : "DetailSurveyPagm",
+name : "DetailSurveyPage",
 }
 </script>
 

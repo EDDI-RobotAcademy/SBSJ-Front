@@ -75,8 +75,8 @@
           <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100px; padding-inline: 25%; text-align: center; margin-top: 5%;">
               <div style="width:100%; display:flex; padding-inline: 20%;">
                   <div style="width:40%; display:flex;">
-                      <router-link :to="{ name: 'DetailSurveyPaga' }" type="submit" class="btn btn-primary" 
-                      style="border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
+                      <router-link :to="{ name: 'DetailSurveyPage' }" type="submit" class="btn btn-primary" 
+                      style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                           <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                       </svg>
@@ -85,7 +85,7 @@
               
                   <div style="width:100%;">
                       <router-link :to="{ name: 'SecondBone' }" type="submit" class="btn btn-primary" 
-                      style="display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; color:white; display:flex; justify-content:center; align-items:center;">다음</router-link>
+                      style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; color:white; display:flex; justify-content:center; align-items:center;">다음</router-link>
                   </div>
               </div>
           </div>

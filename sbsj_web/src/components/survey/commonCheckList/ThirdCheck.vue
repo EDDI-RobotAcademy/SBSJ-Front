@@ -2,13 +2,13 @@
     <body>
       <div style="padding-inline: 10%; margin-top:3%;">
 
-        <div class="container">
+        <div>
           <div style="width: 100%; text-align: right;">
-              <router-link :to="{ name: 'SurveyPage' }" style="color: #5B1A7C;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                </svg>
-              </router-link>
+            <a href="#" style="color: #5B1A7C;" @click.prevent="showConfirmation">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+              </svg>
+            </a>
           </div>
         </div>
   
@@ -68,12 +68,12 @@
   
             <div class="input-group mb-3" style="margin-top: 10%;">
                 <span class="input-group-text" id="inputGroup-sizing-default">몸무게</span>
-                <input type="number" class="form-control" placeholder="kg단위로 입력해주세요." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" v-model="weight" @input="checkWeight">
+                <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="kg단위로 입력해주세요." v-model="weight" @input="checkWeight">
             </div>
 
             <div class="input-group mb-3" style="margin-top: 10%;">
                 <span class="input-group-text" id="inputGroup-sizing-default">키</span>
-                <input type="number" class="form-control" placeholder="cm단위로 입력해주세요." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" v-model="height" @input="checkheight">
+                <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="cm단위로 입력해주세요."  v-model="height" @input="checkheight">
             </div>  
   
             <div style="margin-top:20%; border-bottom: 1px solid #5B1A7C; opacity: 0.2;"></div>
@@ -113,18 +113,27 @@
       };
     },
     methods: {
+      showConfirmation() {
+        if (confirm('설문을 종료하시겠습니까?')) {
+        this.$router.push({ name: 'SurveyPage' })
+        }
+      },
       checkWeight() {
-        if (this.weight.length > 2) {
-          if (parseInt(this.weight) >= 200) {
-            alert("200kg 미만 숫자만 입력 가능합니다.");
+        if (this.weight.length > 3) {
+          const weightNum = parseInt(this.weight);
+          if (weightNum >= 30 && weightNum < 200) {
+          } else {
+            alert("200 미만 숫자만 입력 가능합니다.");
             this.weight = "";
           }
         }
       },
       checkheight() {
-        if (this.height.length > 2) {
-          if (parseInt(this.height) >= 200) {
-            alert("300cm 미만 숫자만 입력 가능합니다.");
+        if (this.height.length > 3) {
+          const heightNum = parseInt(this.height);
+          if (heightNum >= 30 && heightNum < 300) {
+          } else {
+            alert("300 미만 숫자만 입력 가능합니다.");
             this.height = "";
           }
         }
@@ -140,5 +149,9 @@
   </script>
   
   <style>
-  
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
   </style>

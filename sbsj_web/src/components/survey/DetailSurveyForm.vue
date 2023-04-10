@@ -65,25 +65,25 @@
                 
                 <div style="width:50%;">
                   <label>
-                    <input type="radio" value="brain" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">뇌 건강
+                    <input type="radio" name="body" value="brain" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">뇌 건강
                   </label>
                 </div> 
 
                 <div style="width:50%">
                   <label>
-                    <input type="radio" value="eye" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">눈 건강
+                    <input type="radio" name="body" value="eye" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">눈 건강
                   </label>
                 </div>
 
                 <div style="width:50%;">
                   <label>
-                    <input type="radio" value="bone" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">뼈 건강
+                    <input type="radio" name="body" value="bone" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">뼈 건강
                   </label>
                 </div>
 
                 <div style="width:50%">
                   <label>
-                    <input type="radio" value="liver" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">위 건강
+                    <input type="radio" name="body" value="liver" @click="toggleActive($event.target, $event.target.value)" v-model="selectedButton">간 건강
                   </label>
                 </div>
 
@@ -101,15 +101,15 @@
               <div style="width:100%; display:flex; padding-inline: 20%;">
                 <div style="width:50%; display:flex; ">
                     <router-link :to="{ name: 'SixthCheck' }" type="submit" class="btn btn-primary" 
-                    style="border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
+                    style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                     </svg>이전</router-link>
                 </div>
 
                 <div v-if="selectedButton !== ''" style="width:100%;">
-                  <router-link :to="{ name: 'FirstBone' }" type="submit" class="btn btn-primary"
-                    style="display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">다음
+                  <router-link :to="{ name: getNextPage() }" type="submit" class="btn btn-primary" :disabled="!isNextButtonEnabled" @click="next"
+                    style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">다음
                   </router-link>
                 </div>
               </div>
@@ -121,24 +121,42 @@
 </template>
 
 <script>
+
 export default {
   name: 'DetailSurveyForm',
   
   data() {
     return {
       selectedButton: '',
-    }
+    };
   },
   methods: {
-    toggleActive(target, name) {
-      if (this.selectedButton === name) {
-        alert("이미 선택된 항목입니다.");
-        return;
+    toggleActive(target, value) {
+      this.selectedButton = value;
+    },
+    getNextPage() {
+      switch (this.selectedButton) {
+        case 'brain':
+          return 'FirstBrain';
+        case 'eye':
+          return 'FirstEye';
+        case 'bone':
+          return 'FirstBone';
+        case 'liver':
+          return 'FirstLiver';
+        case 'intestine':
+          return 'FirstIntestine';
+        default:
+          return '';
       }
-      this.selectedButton = name;
-    }
-  }  
-}
+    },
+  },
+  computed: {
+    isNextButtonEnabled() {
+      return this.selectedButton !== '';
+    },
+  },
+};
 </script>
 
 <style scoped>
