@@ -20,4 +20,12 @@ export default {
                 commit(REQUEST_PRODUCT_TO_SPRING, res.data)
             })
     },
+    async requestProductListToSpringWithOption({commit}, option) {
+        return await axiosInst.get(`/category/${option}`)
+            .then((res) => {
+                commit(REQUEST_PRODUCT_LIST_TO_SPRING_WITH_OPTION, res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
 }
