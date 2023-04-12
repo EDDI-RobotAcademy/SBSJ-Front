@@ -20,23 +20,17 @@ export default {
     methods:{
         ...mapActions(orderModule, [
             'reqCartItemListToSpring',
-            'reqDeleteCartItemFromSpring'
         ]),
-        deleteCartItem(payload){
-            const selectCartItemId = payload
-            this.reqDeleteCartItemFromSpring(selectCartItemId)
-            this.$router.go(this.$router.currentRoute)
-        }
     },
     async created () {
         console.log("CartPage created()");
-        if(this.isAuthenticated === true) {
+        //if(this.isAuthenticated === true) {
             console.log("CartPage created2()");
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             console.log("CartPage created3() userInfo: " + userInfo.token);
             
             await this.reqCartItemListToSpring(userInfo);
-        }
+       // }
     },
 }
 </script>
