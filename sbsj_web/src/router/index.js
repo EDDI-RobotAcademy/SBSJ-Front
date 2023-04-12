@@ -153,42 +153,42 @@ const routes = [
     component: FourthCheckPage
   },
   {    
-    path: '/Fifth-check-page',
+    path: '/fifth-check-page',
     name: 'FifthCheck',
     component: FifthCheckPage
   },
   {    
-    path: '/Sixth-check-page',
+    path: '/sixth-check-page',
     name: 'SixthCheck',
     component: SixthCheckPage
   },
   {    
-    path: '/First-bone-page',
+    path: '/first-bone-page',
     name: 'FirstBone',
     component: FirstBonePage,
   },
   {    
-    path: '/Second-bone-page',
+    path: '/second-bone-page',
     name: 'SecondBone',
     component: SecondBonePage,
   },
   {    
-    path: '/First-brain-page',
+    path: '/first-brain-page',
     name: 'FirstBrain',
     component: FirstBrainPage
   },
   {    
-    path: '/First-eye-page',
+    path: '/first-eye-page',
     name: 'FirstEye',
     component: FirstEyePage
   },
   {    
-    path: '/First-intestine-page',
+    path: '/first-intestine-page',
     name: 'FirstIntestine',
     component: FirstIntestinePage
   },
   {    
-    path: '/First-liver-page',
+    path: '/first-liver-page',
     name: 'FirstLiver',
     component: FirstLiverPage
   },

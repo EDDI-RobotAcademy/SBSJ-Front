@@ -2,13 +2,13 @@
   <body>
     <div style="padding-inline: 10%; margin-top:3%;">
 
-      <div class="container">
+      <div>
         <div style="width: 100%; text-align: right;">
-            <router-link :to="{ name: 'SurveyPage' }" style="color: #5B1A7C;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-              </svg>
-            </router-link>
+          <a href="#" style="color: #5B1A7C;" @click.prevent="showConfirmation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -69,15 +69,15 @@
             <div class="form-group" style="margin-top:10%; margin-left:20%; width:80%;">
               <label>하루 기준 몇 갑(개비)을 피우시나요?</label>
                 <div class="form-check" style="margin-top:5%;">
-                  <input class="form-check-input" id="SmokingAmount1" type="radio" value="5개비 이하" v-model="SmokingAmount">
+                  <input class="form-check-input" id="SmokingAmount1" type="radio" value="5개비 이하" v-model="SmokingAmount" @click="saveSmokingAmount('5개비 이하')">
                   <label class="form-check-label" for="SmokingAmount1">5개비 이하</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" id="SmokingAmount2" type="radio" value="10개비 이하" v-model="SmokingAmount">
+                  <input class="form-check-input" id="SmokingAmount2" type="radio" value="10개비 이하" v-model="SmokingAmount" @click="saveSmokingAmount('10개비 이하')">
                   <label class="form-check-label" for="SmokingAmount2">10개비 이하</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" id="SmokingAmount3" type="radio" value="1갑 이상" v-model="SmokingAmount">
+                  <input class="form-check-input" id="SmokingAmount3" type="radio" value="1갑 이상" v-model="SmokingAmount" @click="saveSmokingAmount('1갑 이상')">
                   <label class="form-check-label" for="SmokingAmount3">1갑 이상</label>
                 </div>
             </div>
@@ -115,17 +115,38 @@ export default {
         SmokingFrequency: false,
         SmokingAmount: '',
       }
-    },
-    methods : {
-      smokeChecked(isSmoke) {
-      if(isSmoke === true) {
-        this.SmokingFrequency = true
-      } else {
-        this.SmokingFrequency = false
+  },
+    mounted() {
+      if (localStorage.getItem("SmokingFrequency") !== null) {
+        this.SmokingFrequency = JSON.parse(localStorage.getItem("SmokingFrequency"));
+      }
+      if (localStorage.getItem("SmokingAmount") !== null) {
+        this.SmokingAmount = localStorage.getItem("SmokingAmount");
       }
     },
+
+  methods : {
+      showConfirmation() {
+        if (confirm('설문을 종료하시겠습니까?')) {
+        this.$router.push({ name: 'SurveyPage' })
+        }
+      },      
+      smokeChecked(isSmoke) {
+        if (isSmoke === true) {
+          this.SmokingFrequency = true;
+          localStorage.setItem("SmokingFrequency", true);
+          } else {
+            this.SmokingFrequency = false;
+            localStorage.setItem("SmokingFrequency", false);
+          }
+      },
+      saveSmokingAmount(value) {
+        this.SmokingAmount = value;
+        localStorage.setItem("SmokingAmount", value);
+      },
+
     }
-  }
+}
 </script>
 
 <style>
