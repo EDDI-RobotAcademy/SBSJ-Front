@@ -2,13 +2,13 @@
   <body>
     <div style="padding-inline: 10%; margin-top:3%;">
 
-      <div class="container">
+      <div>
         <div style="width: 100%; text-align: right;">
-            <router-link :to="{ name: 'SurveyPage' }" style="color: #5B1A7C;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-              </svg>
-            </router-link>
+          <a href="#" style="color: #5B1A7C;" @click.prevent="showConfirmation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -67,40 +67,38 @@
                 <div class="form-group" style="margin-top:10%; margin-left:20%; width:80%;">
                   <label>일주일 기준 얼마나 마시나요?</label>
                     <div class="form-check" style="margin-top:5%;">
-                      <input class="form-check-input" id="DrinkingAmount1" type="radio" value="1 ~ 2일" v-model="DrinkingAmount">
+                      <input class="form-check-input" id="DrinkingAmount1" type="radio" value="1 ~ 2일" v-model="DrinkingAmount" @click="saveDrinkingAmount('1 ~ 2일')">
                       <label class="form-check-label" for="DrinkingAmount1">1 ~ 2일</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" id="DrinkingAmount2" type="radio" value="3 ~ 4일" v-model="DrinkingAmount">
+                      <input class="form-check-input" id="DrinkingAmount2" type="radio" value="3 ~ 4일" v-model="DrinkingAmount" @click="saveDrinkingAmount('3 ~ 4일')">
                       <label class="form-check-label" for="DrinkingAmount2">3 ~ 4일</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" id="DrinkingAmount3" type="radio" value="5일 이상" v-model="DrinkingAmount">
+                      <input class="form-check-input" id="DrinkingAmount3" type="radio" value="5일 이상" v-model="DrinkingAmount" @click="saveDrinkingAmount('5일 이상')">
                       <label class="form-check-label" for="DrinkingAmount3">5일 이상</label>
                     </div>
                 </div>
             </div>
 
             <div style="width:80%; margin-left:10%; margin-top:20%; border-bottom: 1px solid #5B1A7C; opacity: 0.2;"></div>
-
         </form>
 
-              <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100px; padding-inline: 25%; text-align: center;">
-                <div style="width:100%; display:flex; padding-inline: 20%;">
-                  <div style="width:40%; display:flex; ">
-                    <router-link :to="{ name: 'FourthCheck' }" type="submit" class="btn btn-primary" 
-                    style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                    </svg>
-                    이전</router-link>
-                  </div>
-                  <div style="width:100%;">
-                      <router-link v-if="DrinkingAmount" :to="{ name: 'SixthCheck' }" type="submit" class="btn btn-primary" 
-                      style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">다음</router-link>
-                  </div>
-                </div>
+          <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100px; padding-inline: 25%; text-align: center;">
+            <div style="width:100%; display:flex; padding-inline: 20%;">
+              <div style="width:40%; display:flex; ">
+                <router-link :to="{ name: 'FourthCheck' }" type="submit" class="btn btn-primary" 
+                style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>이전</router-link>
               </div>
+              <div style="width:100%;">
+                  <router-link v-if="DrinkingAmount" :to="{ name: 'SixthCheck' }" type="submit" class="btn btn-primary" 
+                  style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">다음</router-link>
+              </div>
+            </div>
+          </div>
     </div>
 </body>
 
@@ -115,14 +113,33 @@ export default {
         DrinkingAmount: '',
       }
     },
-    methods : {
-      drinkChecked(isDrink) {
-      if(isDrink === true) {
-        this.DrinkingFrequency = true
-      } else {
-        this.DrinkingFrequency = false
+    mounted() {
+      if (localStorage.getItem("DrinkingFrequency") !== null) {
+        this.DrinkingFrequency = JSON.parse(localStorage.getItem("DrinkingFrequency"));
+      }
+      if (localStorage.getItem("DrinkingAmount") !== null) {
+        this.DrinkingAmount = localStorage.getItem("DrinkingAmount");
       }
     },
+    methods : {
+        showConfirmation() {
+          if (confirm('설문을 종료하시겠습니까?')) {
+          this.$router.push({ name: 'SurveyPage' })
+          }
+        },
+        drinkChecked(isDrink) {
+        if(isDrink === true) {
+          this.DrinkingFrequency = true;
+          localStorage.setItem("DrinkingFrequency", true);
+        } else {
+          this.DrinkingFrequency = false;
+          localStorage.setItem("DrinkingFrequency", true);
+        }
+      },
+      saveDrinkingAmount(value) {
+          this.DrinkingAmount = value;
+          localStorage.setItem("DrinkingAmount", value);
+      },
     }
   }
 </script>
