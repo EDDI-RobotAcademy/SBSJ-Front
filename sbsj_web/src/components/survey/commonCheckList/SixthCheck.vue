@@ -95,7 +95,7 @@
                 </svg>이전</router-link>
               </div>
               <div style="width:100%;">
-                  <router-link v-if="ExercisingAmount" :to="{ name: 'DetailSurveyPaga' }" type="submit" class="btn btn-primary" 
+                  <router-link v-if="ExercisingAmount" :to="{ name: 'DetailSurveyPage' }" type="submit" class="btn btn-primary" 
                   style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">상세 설문 페이지 이동</router-link>
               </div>
             </div>
