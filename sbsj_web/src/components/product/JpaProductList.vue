@@ -1,43 +1,40 @@
 <template>
     <ul class="baby-product-list">
-        <li v-for="(product, index) in products" :key="index" class="baby-product">
-
-            <v-hover>
-                <template  v-slot="{ hover }">
+        <li v-for="(product, index) in products" :key="index" class="baby-product mb-5">
                     <div
-                        :class="`elevation-${hover ? 24 : 3}`"
-                        class="mx-auto transition-swing"
-                        style="border-radius: 20px"
+                        class="mx-auto transition-swing baby-product-hover elevation-2"
+                        style="border-radius: 20px;"
                     >
-                        <router-link :to="{ name: 'DetailProductPage', params: {productId: product.productId}}" class="baby-product-link" />
-                        <dl class="baby-product-wrap">
-                            <dt class="image">
-                                <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
-                                    cover class="grey lighten-2" style="border-radius: 20px"/>
-                            </dt>
-                            <dd class="descriptions" >
-                                <div class="badge">
-                                    <v-icon class="icon-wish">mdi-heart-outline</v-icon>
-                                    <span class="total-wish">
-                                        {{ product.wish }}
-                                    </span>
-                                </div>
-                                <div class="name">
-                                    <span class="name-text" style="text-decoration: none;">
-                                        {{ product.title }}
-                                    </span>
-                                </div>
-                                <div class="price-area">
-                                    <div class="price-wrap">
-                                        <div class="price">
-                                            <span class="price-text">
-                                                {{ new Intl.NumberFormat().format(product.price) }}원
-                                            </span>
+                        <router-link :to="{ name: 'DetailProductPage', params: {productId: product.productId} }" class="baby-product-link">
+                            <dl class="baby-product-wrap">
+                                <dt class="image">
+                                    <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
+                                        cover class="grey lighten-2" style="border-radius: 20px"/>
+                                </dt>
+                                <dd class="descriptions" >
+                                    <div class="badge">
+                                        <v-icon class="icon-wish">mdi-heart-outline</v-icon>
+                                        <span class="total-wish">
+                                            {{ product.wish }}
+                                        </span>
+                                    </div>
+                                    <div class="name">
+                                        <span class="name-text" style="text-decoration: none;">
+                                            {{ product.title }}
+                                        </span>
+                                    </div>
+                                    <div class="price-area">
+                                        <div class="price-wrap">
+                                            <div class="price">
+                                                <span class="price-text">
+                                                    {{ new Intl.NumberFormat().format(product.price) }}원
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </dd>
-                        </dl>        
+                                </dd>
+                            </dl>
+                        </router-link>        
                         <div class="other-info">
                             <v-btn class="directive-btn" rounded style="margin-right: 10px;">
                                 <span class="directive-btn-text">바로구매</span>
@@ -48,8 +45,6 @@
                             </v-btn>
                         </div>
                     </div>
-                </template>
-            </v-hover>
         </li>
     </ul>
 </template>
@@ -77,22 +72,22 @@ export default {
             'reqAddCartToSpring',
         ]),
         addToCart(product) { // 객체를 매개변수로 전달
-            if(this.isAuthenticated === true) {
+            //if(this.isAuthenticated === true) {
                 let userInfo = JSON.parse(localStorage.getItem("userInfo"));
                 const memberId = userInfo.memberId;
                 const productId = product.productId;
                 const count = 1
 
-                this.reqAddCartToSpring( { memberId, productId, count } )
+                this.reqAddCartToSpring({ memberId, productId, count })
 
                 let goToCartMessage = confirm("장바구니로 이동하시겠습니까?")
                 if(goToCartMessage) {
                     this.$router.push({ name:'ShoppingCartPage' })
                 }
-            } else {
-                alert("로그인 후 사용가능합니다.")
-                this.$router.push({ name: 'SignInPage' })
-            }
+            // } else {
+            //     alert("로그인 후 사용가능합니다.")
+            //     this.$router.push({ name: 'SignInPage' })
+            // }
         }
     }
 }
@@ -195,6 +190,10 @@ export default {
     .image {
         width: 234px;
         height: 234px;
+    }
+    .baby-product-hover:hover {
+        box-shadow: 0 30px 50px rgba(42, 39, 39, 0.4);
+        transform: translateY(-2px);
     }
 </style>
   
