@@ -1,24 +1,12 @@
 import {
     REQUEST_CART_ITEM_LIST_TO_SPRING,
     REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING,
+    RESPONSE_COUNT_REQUEST,
 } from "./mutation-types";
 
 import axiosInst from "@/utility/axiosObject";
 
 export default { 
-
-    // 장바구니에서 삭제
-    reqDeleteCartItemFromSpring({}, payload) {
-        const selectCartItemId = payload
-
-        return axiosInst.post("/cart/deleteCartItem", { selectCartItemId })
-            .then(() => {
-                alert("장바구니에서 삭제되었습니다.")
-            })
-            .catch(() => {
-                alert("문제가 발생하여 삭제되지 않았습니다.")
-            });
-    },
 
     // 장바구니에 추가
     reqAddCartToSpring({}, payload) {
@@ -34,7 +22,7 @@ export default {
             });
     },
 
-    // 장바구니 목록
+    // 장바구니 목록 조회
     async reqCartItemListToSpring({commit}, userInfo) {
         console.log("reqCartItemListToSpring userInfo: " + userInfo.token);
         return await axiosInst.post("/cart/list", userInfo)
@@ -48,17 +36,27 @@ export default {
     reqCartItemCountChangeToSpring({commit}, payload) {
         return axiosInst.post("/cart/changeCartItemCount", payload)
             .then((res) => {
-                commit(RESPONSE_MY_REQUEST, res.data)
+                commit(RESPONSE_COUNT_REQUEST, res.data)
             })
     },
 
-    // // 디비 정보 받아오기?
-    // reqCartItemToSpring({commit}, cartItemId) {
-    //     return axiosInst.get(`/cart/${cartItemId}`)
-    //         .then((res) => {
-    //             commit(REQUEST_CART_ITEM_TO_SPRING, res.data)
-    //         })
-    // },
+    // 장바구니에서 삭제
+    async reqDeleteCartItemFromSpring({}, payload) {
+        console.log("아이디: " + payload.selectCartItemId)
+
+        if (!payload.selectCartItemId || payload.selectCartItemId.length === 0) {
+            alert("선택된 아이템이 없습니다.");
+            return;
+        }
+
+        await axiosInst.post("/cart/deleteCartItem", {
+            selectCartItemId: payload.selectCartItemId,
+        }).then(() => {
+            alert("장바구니에서 삭제되었습니다.")
+        }).catch(() => {
+            alert("문제가 발생하여 삭제되지 않았습니다.")
+        });
+    },
 
     reqMyPageDeliveryListToSpring({ commit }, memberId) {
         return axiosInst.get(`/delivery/list/${memberId}`)
