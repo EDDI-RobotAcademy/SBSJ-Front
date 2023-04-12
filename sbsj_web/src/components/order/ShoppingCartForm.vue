@@ -43,7 +43,7 @@
                 <div class="item-info-yes"> 
                     <v-row>
                         <v-col>
-                            <v-card class="ms-8 pa-5" v-for="(cartItem, index) in cartItems" :key="index"
+                            <v-card class="ms-8 mb-3 pa-5" v-for="(cartItem, index) in cartItems" :key="index"
                                 max-width="720" flat outlined>
                                 <v-list-item three-line>
                                     <v-list-item-content class="ms-1">
@@ -62,7 +62,7 @@
 
                                         <v-list-item-title>
                                             <div class="mt-5 text-h6">
-                                                {{  cartItem.count * cartItem.price }}원
+                                                {{  new Intl.NumberFormat().format(cartItem.count * cartItem.price) }}원
                                             </div>
                                         </v-list-item-title>
 
@@ -126,7 +126,7 @@
                                     <div class="product-price">
                                         <span class="text--primary">상품 금액</span>
                                         <p class="text-h6 text--primary">
-                                            {{ this.totalPrice }} 원
+                                            {{ new Intl.NumberFormat().format(this.totalPrice) }} 원
                                         </p>
                                     </div>
                                     <div class="delivery-fee">
@@ -140,8 +140,8 @@
                                     <div>
                                         <span class="text--primary">총 결제 금액</span>
                                         <div class="display-1 text--primary">
-                                            <p v-if="this.totalPrice > 49999"> {{ this.totalPrice }} 원</p>
-                                            <p v-else> {{ this.totalPrice + 3000 }} 원</p>
+                                            <p v-if="this.totalPrice > 49999"> {{ new Intl.NumberFormat().format(this.totalPrice) }} 원</p>
+                                            <p v-else> {{ new Intl.NumberFormat().format(this.totalPrice + 3000) }} 원</p>
                                         </div>
                                     </div>
                                 </v-card-text>
@@ -236,7 +236,8 @@ export default {
                 console.log("selectCartItemId: " + selectCartItemId)
 
                 await this.reqDeleteCartItemFromSpring({ selectCartItemId })
-                this.$router.go(this.$router.currentRoute)
+                window.location.reload(true);
+                //this.$router.go(this.$router.currentRoute)
             }
         },
 
