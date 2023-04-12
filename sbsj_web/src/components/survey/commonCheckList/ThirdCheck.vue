@@ -62,18 +62,18 @@
             <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="20" height="20" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
                 <div style="font-size: small;">
-                몸무게와 키는 고객님의 정확한 BMI체질량지수 계산 및 영양성분 추천에 필요합니다.
+                몸무게와 키는 고객님의 정확한 BMI체질량지수 계산 및 영양성분 추천에 필요합니다. (30 ~ 300 사이의 값만 입력이 가능합니다.)
                 </div>
             </div>
   
             <div class="input-group mb-3" style="margin-top: 10%;">
                 <span class="input-group-text" id="inputGroup-sizing-default">몸무게</span>
-                <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="kg단위로 입력해주세요." v-model="weight" @input="checkWeight">
+                <input type="number" min="30" max="300" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="kg단위로 입력해주세요." v-model="weight" @input="checkWeight">
             </div>
 
             <div class="input-group mb-3" style="margin-top: 10%;">
                 <span class="input-group-text" id="inputGroup-sizing-default">키</span>
-                <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="cm단위로 입력해주세요."  v-model="height" @input="checkheight">
+                <input type="number" min="30" max="300" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control" placeholder="cm단위로 입력해주세요."  v-model="height" @input="checkheight">
             </div>  
   
             <div style="margin-top:20%; border-bottom: 1px solid #5B1A7C; opacity: 0.2;"></div>
@@ -103,49 +103,65 @@
   </template>
   
   <script>
-  export default {
-    name: "ThirdCheck",
+export default {
+  name: "ThirdCheck",
     data() {
-      return {
-        weight: "",
-        hegiht: "",
-        next: false
-      };
+        return {
+          weight: localStorage.getItem("weight") || "",
+          height: localStorage.getItem("height") || "",
+          next: false,
+        };
+      },
+    created() {
+    this.updateNextStatus();
     },
     methods: {
-      showConfirmation() {
-        if (confirm('설문을 종료하시겠습니까?')) {
-        this.$router.push({ name: 'SurveyPage' })
-        }
-      },
-      checkWeight() {
-        if (this.weight.length > 3) {
-          const weightNum = parseInt(this.weight);
-          if (weightNum >= 30 && weightNum < 200) {
-          } else {
-            alert("200 미만 숫자만 입력 가능합니다.");
-            this.weight = "";
-          }
-        }
-      },
-      checkheight() {
-        if (this.height.length > 3) {
-          const heightNum = parseInt(this.height);
-          if (heightNum >= 30 && heightNum < 300) {
-          } else {
-            alert("300 미만 숫자만 입력 가능합니다.");
-            this.height = "";
-          }
-        }
-        this.next = true;
-      },
-      nextPage() {
-        if(this.next){
-          router.push({ name: 'FourthCheck' })
-        }
+    showConfirmation() {
+      if (confirm('설문을 종료하시겠습니까?')) {
+      this.$router.push({ name: 'SurveyPage' })
       }
     },
+    checkWeight() {
+      if (this.weight < 0) {
+        this.weight = "";
+        alert("음수 값을 입력할 수 없습니다.");
+      } else if (this.weight > 300) {
+        this.weight = "";
+        alert("300 미만 숫자만 입력 가능합니다.");
+      } else {
+      localStorage.setItem("weight", this.weight);
+      }
+      this.updateNextStatus();
+    },
+    checkheight() {
+        if (this.height < 0) {
+        this.height = "";
+        alert("음수 값을 입력할 수 없습니다."); 
+        } else if (this.height > 300) {
+        this.height = "";
+        alert("300 미만 숫자만 입력 가능합니다.");
+        } else {
+        localStorage.setItem("height", this.height);
+        this.next = true;
+      }
+      this.updateNextStatus();
+    },
+    updateNextStatus() {
+      if (this.weight >= 30 && this.height >= 30) {
+        this.next = true;
+      } else {
+        this.next = false;
+      }
+    },
+    nextPage() {
+    if (this.next && this.height >= 30 && this.weight >= 30) {
+      this.$router.push({ name: "FourthCheck" });
+    } else {
+      alert("30이상 300미만부터 측정이 가능합니다.");
+    }
+    },
   }
+} 
   </script>
   
   <style>

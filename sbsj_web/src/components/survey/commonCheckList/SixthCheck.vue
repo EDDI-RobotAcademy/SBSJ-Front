@@ -57,7 +57,7 @@
             <div style="padding-inline: 30%; margin-top:8%; font-size: larger; display:flex; justify-content:center; align-items:center;">
               <div class="form-group">
                 <div>
-                  <button class="btn btn-primary" type="button" name="yesExercise" @click="exerciseChecked(true)" style="background-color:#5B1A7C; border-color: #5B1A7C;">네</button>
+                  <button class="btn btn-primary" type="button" name="yesExercise" @click="exerciseChecked(true)" style="background-color:#5B1A7C; border-color: #5B1A7C;" checked>네</button>
                   &nbsp;
                   <button class="btn btn-primary" type="button" name="noExercise" @click="exerciseChecked(false); ExercisingAmount= true;" style="background-color:#5B1A7C; border-color: #5B1A7C;">아니요</button>
                 </div>
@@ -68,15 +68,15 @@
             <div class="form-group" style="margin-top:10%; margin-left:15%; width:80%;">
               <label>야외활동 횟수</label>
                 <div class="form-check" style="margin-top:5%;">
-                  <input class="form-check-input" id="ExercisingAmount1" type="radio" value="5개비 이하" v-model="ExercisingAmount">
+                  <input class="form-check-input" id="ExercisingAmount1" type="radio" value="주 1~2회" v-model="ExercisingAmount" @click="saveExercisingAmount('주 1~2회')">
                   <label class="form-check-label" for="ExercisingAmount1">주 1~2회</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" id="ExercisingAmount2" type="radio" value="10개비 이하" v-model="ExercisingAmount">
+                  <input class="form-check-input" id="ExercisingAmount2" type="radio" value="주 3~4회" v-model="ExercisingAmount" @click="saveExercisingAmount('주 3~4회')">
                   <label class="form-check-label" for="ExercisingAmount2">주 3~4회</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" id="ExercisingAmount3" type="radio" value="1갑 이상" v-model="ExercisingAmount">
+                  <input class="form-check-input" id="ExercisingAmount3" type="radio" value="주 5회이상" v-model="ExercisingAmount" @click="saveExercisingAmount('주 5회이상')">
                   <label class="form-check-label" for="ExercisingAmount3">주 5회이상</label>
                 </div>
             </div>
@@ -85,19 +85,19 @@
             <div style="width:80%; margin-left:10%; margin-top:20%; border-bottom: 1px solid #5B1A7C; opacity: 0.2;"></div>
         </form>
 
-        <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100px; padding-inline: 25%; text-align: center;">
+          <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100px; padding-inline: 25%; text-align: center;">
             <div style="width:100%; display:flex; padding-inline: 20%;">
-                <div style="width:40%; display:flex; ">
-                    <router-link :to="{ name: 'FifthCheck' }" type="submit" class="btn btn-primary" 
-                    style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                    </svg>이전</router-link>
-                </div>
-                <div style="font-weight:bold; width:100%;" v-if="ExercisingAmount">
-                    <router-link :to="{ name: 'DetailSurveyPage' }" type="submit" class="btn btn-primary" 
-                    style="display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">상세 설문 페이지 이동</router-link>
-                </div>
+              <div style="width:40%; display:flex; ">
+                <router-link :to="{ name: 'FifthCheck' }" type="submit" class="btn btn-primary" 
+                style="font-weight:bold; border-color: white; height:100%; background-color: white; color: #5B1A7C; display:flex; justify-content:center; align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>이전</router-link>
+              </div>
+              <div style="width:100%;">
+                  <router-link v-if="ExercisingAmount" :to="{ name: 'DetailSurveyPaga' }" type="submit" class="btn btn-primary" 
+                  style="font-weight:bold; display:flex; height:100%; background-color:#5B1A7C; border-color: #5B1A7C; display:flex; justify-content:center; align-items:center; color:white;">상세 설문 페이지 이동</router-link>
+              </div>
             </div>
         </div>
 
@@ -112,7 +112,15 @@
     data() {
       return {
         ExercisingFrequency: false,
-        ExercisingAmount: ''
+        ExercisingAmount: '',
+      }
+    },
+    mounted() {
+      if (localStorage.getItem("ExercisingFrequency") !== null) {
+        this.ExercisingFrequency = JSON.parse(localStorage.getItem("ExercisingFrequency"));
+      }
+      if (localStorage.getItem("ExercisingAmount") !== null) {
+        this.ExercisingAmount = localStorage.getItem("ExercisingAmount");
       }
     },
     methods: {
@@ -124,10 +132,16 @@
       exerciseChecked(isExercise) {
         if (isExercise === true) {
           this.ExercisingFrequency = true;
+          localStorage.setItem("ExercisingFrequency", true);
         } else {
           this.ExercisingFrequency = false;
+          localStorage.setItem("ExercisingFrequency", true);
         }
-      }
+      },
+      saveExercisingAmount(value) {
+          this.ExercisingAmount = value;
+          localStorage.setItem("ExercisingAmount", value);
+      },
     }
   }
 </script>

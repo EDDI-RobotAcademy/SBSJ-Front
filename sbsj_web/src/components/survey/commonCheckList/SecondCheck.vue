@@ -69,7 +69,7 @@
 
                 <div style=" margin-top:8%; font-size: larger;">
                     <div>
-                        <select class="form-select" aria-label="Default select example" v-model="selectedOption">
+                        <select class="form-select" aria-label="Default select example" v-model="selectedOption"  @change="saveOption">
                             <option disabled value="">선택해주세요</option>
                             <option value="one">19세 이하</option>
                             <option value="two">20 ~ 29세</option>
@@ -113,12 +113,21 @@
         selectedOption: "",
       };
     },
-    methods: {
-    showConfirmation() {
-      if (confirm('설문을 종료하시겠습니까?')) {
-        this.$router.push({ name: 'SurveyPage' })
-      }
+    mounted() {
+        const option = localStorage.getItem('ageOption');
+        if (option) {
+        this.selectedOption = option;
+        }
     },
+    methods: {
+        showConfirmation() {
+        if (confirm('설문을 종료하시겠습니까?')) {
+            this.$router.push({ name: 'SurveyPage' })
+        }
+        },
+        saveOption() {
+        localStorage.setItem('ageOption', this.selectedOption);
+        }
     }
   };
   </script>

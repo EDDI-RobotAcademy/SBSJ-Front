@@ -113,8 +113,17 @@ export default {
   data() {
     return {
       next: false
-      
     }
+  },
+  mounted() {
+    // 페이지 로드 시 localStorage에서 gender 값을 읽어와서 체크박스 상태 업데이트
+    const gender = localStorage.getItem('gender');
+    if(gender === 'male') {
+      document.getElementsByClassName("form-check-input")[0].checked = true;
+    } else if (gender === 'female') {
+      document.getElementsByClassName("form-check-input")[1].checked = true;
+    }
+    this.next = true;
   },
   methods: {
     showConfirmation() {
@@ -126,15 +135,17 @@ export default {
       if(gender === 'male') {
         document.getElementsByClassName("form-check-input")[0].checked = true
         document.getElementsByClassName("form-check-input")[1].checked = false
+        localStorage.setItem('gender', 'male');
       } else {
         document.getElementsByClassName("form-check-input")[1].checked = true
         document.getElementsByClassName("form-check-input")[0].checked = false
+        localStorage.setItem('gender', 'female');
       }
       this.next = true;
     },
     nextPage() {
       if(this.next){
-        router.push({ name: 'SecondCheck' })
+        this.$router.push({ name: 'SecondCheck' })
       }
     }
   },
