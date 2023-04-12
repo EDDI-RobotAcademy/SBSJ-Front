@@ -1,5 +1,5 @@
 import {
-    REQUEST_CART_ITEM_TO_SPRING,
+    REQUEST_CART_ITEM_LIST_TO_SPRING,
     REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING,
 } from "./mutation-types";
 
@@ -35,9 +35,11 @@ export default {
     },
 
     // 장바구니 목록
-    reqCartItemListToSpring({commit}, token) {
-        return axiosInst.post("/cart/list",{headers: { Token: token },
-            }).then((res) => {
+    async reqCartItemListToSpring({commit}, userInfo) {
+        console.log("reqCartItemListToSpring userInfo: " + userInfo.token);
+        return await axiosInst.post("/cart/list", userInfo)
+            .then((res) => {
+                console.log("res.data: " + res.data.cartItemId)
                 commit(REQUEST_CART_ITEM_LIST_TO_SPRING, res.data)
             })
     },

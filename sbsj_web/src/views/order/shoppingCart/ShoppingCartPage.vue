@@ -15,9 +15,7 @@ export default {
     name: "ShoppingCartPage",
     components: { ShoppingCartForm },
     computed: {
-        ...mapState(accountModule, {
-            isAuthenticated: state => state.isAuthenticated
-        }),
+        ...mapState(accountModule, ['isAuthenticated']),
     },
     methods:{
         ...mapActions(orderModule, [
@@ -30,15 +28,16 @@ export default {
             this.$router.go(this.$router.currentRoute)
         }
     },
-    mounted () { 
+    async created () {
+        console.log("CartPage created()");
         if(this.isAuthenticated === true) {
+            console.log("CartPage created2()");
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-            console.log(userInfo);
-
-            this.reqCartItemListToSpring(userInfo);
+            console.log("CartPage created3() userInfo: " + userInfo.token);
+            
+            await this.reqCartItemListToSpring(userInfo);
         }
-    },    
+    },
 }
 </script>
 

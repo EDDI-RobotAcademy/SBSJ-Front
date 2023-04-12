@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+    <v-container fluid>
     <div class="grey lighten-4">
         <v-row class="white">
             <v-col cols="auto">
@@ -162,7 +162,7 @@
             </div>
         </div>
     </div>
-  </v-container>
+    </v-container>
 </template>
 
 <script>
@@ -195,6 +195,9 @@ export default {
             'cartItems',
             'resCountRequest'
         ]),
+    },
+    created() {
+        console.log("cartItems: " + JSON.stringify(this.cartItems));
     },
     mounted() {
         console.log("cartItems: " + JSON.stringify(this.cartItems));
@@ -254,12 +257,13 @@ export default {
             } else {
                 cartItem.count = 1
             }
+            
             var payload =  {
                 'cartItemId': cartItem.cartItemId, 
                 'count': cartItem.count
             }
             await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.$store.state.orderModule.resCountRequest;
+            this.res = this.resCountRequest;
 
             if (this.res === 1) {
                 console.log("수량 변경 성공");
@@ -276,7 +280,7 @@ export default {
                 'count':cartItem.count
             }
             await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.$store.state.orderModule.resCountRequest;
+            this.res = this.resCountRequest;
 
             if (this.res === 1) {
                 console.log("수량 변경 성공");
