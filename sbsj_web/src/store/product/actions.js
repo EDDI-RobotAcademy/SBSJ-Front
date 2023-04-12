@@ -6,7 +6,7 @@ import axiosInst from '@/utility/axiosObject'
 
 export default {
     async requestProductListToSpring({commit}) {
-        return await axiosInst.get('/product/default')
+        return await axiosInst.get('/category/default')
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
