@@ -24,13 +24,13 @@ export default {
     },
     async created () {
         console.log("CartPage created()");
-        if(this.isAuthenticated === true) {
+        //if(this.isAuthenticated === true) {
             console.log("CartPage created2()");
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             console.log("CartPage created3() userInfo: " + userInfo.token);
             
             await this.reqCartItemListToSpring(userInfo);
-        }
+       // }
     },
 }
 </script>
