@@ -23,7 +23,7 @@
                     <div class="main__category-box" style="width: 700px;">
                         <div class="main__category-list" style="width: 200px; background-color: black;">
                             <li v-for="(item, index1) in items" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center;">
-                                <router-link :to="{ name: 'productPage'}">
+                                <router-link :to="{ name: item.url }">
                                     <p>{{ item.mainTitle }}</p>
                                 </router-link>
                                 <div class="second-category hidden">
@@ -137,12 +137,14 @@ export default {
             showSidebar: false,
             isTrue: false,
             items: [
-                { mainTitle: "베스트 상품", subTitles: [{ sub: "sub1", contents: ["link1", "link2", "link3"] }, { sub: "sub2", contents: ["link4", "link5", "link6"] }
-                    ] },
-                { mainTitle: "추천 상품", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, { sub: "sub22", contents: ["link10", "link11", "link12"] }
-                    ] },
-                { mainTitle: "브랜드별 상품", subTitles: [{ sub: "sub31", contents: ["link13", "link14", "link15"] }, { sub: "sub32", contents: ["link16", "link17", "link18"] }
-                    ] }
+                { mainTitle: "상품", subTitles: [{ sub: "sub1", contents: ["link1", "link2", "link3"] }, 
+                    { sub: "sub2", contents: ["link4", "link5", "link6"] }], url: 'ProductPage'},
+                { mainTitle: "리뷰", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 
+                    { sub: "sub22", contents: ["link10", "link11", "link12"] }], url: 'ReviewListPage' },
+                // { mainTitle: "추천 상품", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 
+                //     { sub: "sub22", contents: ["link10", "link11", "link12"] }], url: 'ReviewListPage' },
+                { mainTitle: "커뮤니티", subTitles: [{ sub: "sub31", contents: ["link13", "link14", "link15"] }, 
+                    { sub: "sub32", contents: ["link16", "link17", "link18"] }], url: 'QnaBoardListPage' }
             ],
         }
     },
