@@ -12,7 +12,7 @@
             </router-link>
         </div>
         <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center> -->
-        <v-app-bar color="white" class="flex-grow-0" width="auto" app dark>
+        <v-app-bar color="white" class="flex-grow-0" width="auto" elevation="4" app>
             <v-app-bar-nav-icon v-on:click="activeSidebar"/>
             <router-link :to="{ name: 'home' }">
                 <v-img class="mx-2" src="@/assets/logo.png"
