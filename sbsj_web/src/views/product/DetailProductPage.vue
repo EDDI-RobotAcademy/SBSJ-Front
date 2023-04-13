@@ -1,28 +1,37 @@
 <template>
-    <div>
-      <detail-product-form :productId="productId"></detail-product-form>
-    </div>
+  <div>
+    <detail-product-form :productId="productId"/>
+  </div>
 </template>
 
 <script>
 
 import DetailProductForm from '@/components/product/DetailProductForm.vue'
+import { mapActions, mapState } from 'vuex';
 
-  export default {
-    components: { DetailProductForm },
-    name: "DetailProductPage",
-    props: {
+const productModule = 'productModule'
+
+export default {
+  components: { DetailProductForm },
+  name: "DetailProductPage",
+  props: {
       productId: {
         type: Number,
         required: true,
       }
-    },
-    mounted() {
-      console.log(this.productId)
-    }
+  },
+  methods: {
+    ...mapActions(productModule, [
+      'requestProductToSpring'
+    ])
+  },
+  async created() {
+    await console.log('DetailProductPage productId: ' + this.productId )
+  }
 }
+
 </script>
 
-<style>
+<style>   
 
 </style>

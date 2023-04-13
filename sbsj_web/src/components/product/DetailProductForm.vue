@@ -11,7 +11,7 @@
                             <div>
 
                                 <div>
-                                    <img src="@/assets/boneImgs/PERNIT.jpg" alt="비타민 사진" class="img-fluid">
+                                    <img :src="require(`@/assets/productImgs/${product.thumbnail}`)" alt="메인 사진">
                                 </div>
 
                                 <div id="carouselDetail" class="carousel slide" data-bs-ride="carousel">
@@ -44,8 +44,8 @@
 
                     <div style=" width:100%; padding-inline:3%;  height:600px;">    
                         <div style=" height:100%; ">
-                            <div style=" height:10%; display:flex; justify-content:flex-start; align-items:center; font-weight: bold; font-size:xx-large; ">남유네 유산균 & 비타민</div>
-                             <P style="font-size: medium; opacity: 0.8; ">건조한 외부환경에서도 촉촉한 피부 보습 유지를 위한 히알루론산 건강기능식품</P> 
+                            <div style=" height:10%; display:flex; justify-content:flex-start; align-items:center; font-weight: bold; font-size:xx-large; ">{{product.productName }}</div>
+                             <P style="font-size: medium; opacity: 0.8; ">{{ product.productSubName }}</P>
 
                             <div style="border-bottom: 2px solid "></div><br>
 
@@ -56,7 +56,7 @@
                                 </div>
                                 <div style=" width:40%; margin-left:5%;  margin-top:1%;">
                                     <div class="text-decoration-line-through" style=" font-size:medium; display:flex; justify-content:start; align-items:center; opacity: 0.4; color:red; ">56,000</div>
-                                    <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">36,000원</div>
+                                    <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{product.price}}</div>
                                 </div>
                                 <div style=" width:100%; display:flex; ">
                                     <div style=" width:40%; font-size:x-small; display:flex; justify-content:center; align-items:center;">
@@ -163,12 +163,12 @@
                 </div>
 
                 <div div style=" width:100%; display:flex; justify-content:center; align-items:center;">
-                    <img src="@/assets/boneImgs/Point.jpg" alt="비타민 사진" class="img-fluid">
+                    <img src="@/assets/boneImgs/Point.jpg" alt="배너 사진">
                 </div>
 
                 <div style="width:100%; display:flex; justify-content:center; align-items:center;">
                     <div style="width:50%;">
-                        <img src="@/assets/boneImgs/PERNIT 상세.jpg" alt="비타민 사진" class="img-fluid">
+                        <img :src="require(`@/assets/productImgs/${product.detail}`)" alt="비타민 사진">
                     </div>
                 </div>
             </div>
@@ -177,9 +177,10 @@
 
 
 <script >
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const orderModule = 'orderModule'
+const productModule = 'productModule'
 
 export default {
     name: "DetailProductForm",
@@ -198,6 +199,10 @@ export default {
         ...mapActions(orderModule, [
             'reqAddCartToSpring',
         ]),
+        ...mapActions(productModule, [
+        'requestProductToSpring'
+        ]),
+
 		pass() {
 			let carousel1 = document.getElementsByClassName("carousel-item")[0];
 			let carousel2 = document.getElementsByClassName("carousel-item")[1];
@@ -236,11 +241,17 @@ export default {
             if(goToCartMessage) {
                 this.$router.push({ name:'ShoppingCartPage' })
             }
-            
         },
-        
-
-	}
+	},
+    computed: {
+        ...mapState(productModule, [
+        'product'
+        ]),
+    },
+    created() {
+        console.log('DetailProductPage productId: ' + this.productId )
+        this.requestProductToSpring(this.productId);
+    },
 }
 </script>
 
