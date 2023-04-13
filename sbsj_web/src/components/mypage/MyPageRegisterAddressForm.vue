@@ -133,7 +133,7 @@ export default {
                             city, street, addressDetail, zipcode } = this;
 
                     if(defaultAddress === "기본 배송지") {
-                        let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring(defaultAddress);
+                        let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring({ memberId, defaultAddress });
                         if(checkDefaultAddress) {
                             let changeDefaultAddress = confirm("기본 배송지가 이미 설정되어있습니다.\n이 배송지를 기본 배송지로 설정하시겠습니까?");
                             if(!changeDefaultAddress) {
