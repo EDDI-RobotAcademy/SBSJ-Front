@@ -70,9 +70,11 @@
                         <li class="mypage-hover-highlight">
                             <a href="#">Test 4</a>
                         </li>
-                        <li class="mypage-hover-highlight">
-                            <a href="#">Test 5</a>
-                        </li>
+                        <router-link :to="{ name: 'SurveyPage' }" style="color: grey; text-decoration: none;">
+                            <li class="mypage-hover-highlight">
+                                <a href="#">설문 조사</a>
+                            </li>
+                        </router-link>
                         <li class="mypage-hover-highlight">
                             <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
                                 <span>회원 탈퇴</span>
