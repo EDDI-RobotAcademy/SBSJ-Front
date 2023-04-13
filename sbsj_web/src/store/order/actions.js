@@ -90,13 +90,14 @@ export default {
                 alert("문제 발생! "+ res.data);
             })
     },
-    reqMyPageCheckDefaultAddressToSpring({}, defaultAddress) {
-        return axiosInst.get(`/delivery/register/check-defaultAddress/${defaultAddress}`)
+    reqMyPageCheckDefaultAddressToSpring({}, payload) {
+        const { memberId, defaultAddress } = payload;
+        return axiosInst.get(`/delivery/register/check-defaultAddress/${memberId}/${defaultAddress}`)
             .then((res) => {
                 return res.data
             })
             .catch(() => {
-                alert("문제 발생!")
+                alert("기본 배송지 체크 문제 발생!")
             })
     },
     reqMyPageModifyDeliveryToSpring({}, payload) {
