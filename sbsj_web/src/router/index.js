@@ -52,7 +52,7 @@ const routes = [
   },
   {
     path: '/product',
-    name: 'productPage',
+    name: 'ProductPage',
     component: ProductPage
   },
   {
