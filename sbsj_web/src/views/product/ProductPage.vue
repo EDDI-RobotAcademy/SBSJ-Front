@@ -32,7 +32,7 @@ import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vu
 
 const productModule = 'productModule'
   export default {
-    name: "ProductPage",
+    name: "productPage",
     components: {JpaProductList, ProductSearchFilter, ProductCategoryHeader},
 
     computed: {
