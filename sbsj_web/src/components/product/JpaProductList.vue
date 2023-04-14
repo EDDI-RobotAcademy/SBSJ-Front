@@ -180,7 +180,7 @@ export default {
         box-sizing: border-box;
         width: 234px;
         cursor: pointer;
-        height: 410px;
+        height: 365px;
     }
     .baby-product-wrap {
         width: 234px;
