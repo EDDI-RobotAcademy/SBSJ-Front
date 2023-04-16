@@ -9,7 +9,7 @@
               <!-- <div>
                 <p>{{ product.name }}</p>
                 <v-img
-                    :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
+                    :src="require(`@/assets/productImg/${product.productInfo.thumbnailFileName}`)"
                     max-width="200"
                     max-height="150"
                     contain
@@ -59,8 +59,8 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn type="submit" width="200px" large rounded
-                      class="mt-1" color="#c7d6cd"
-                      :disabled="this.OrderPass == false">
+                      class="mt-1" color="primary" @click="submit"
+                      >
                       리뷰 등록
                 </v-btn>
                 <v-spacer></v-spacer>
@@ -75,6 +75,9 @@
 
 <script>
 import {mapActions, mapState} from "vuex";
+
+const productModule = 'productModule';
+
 export default {
   name: "ReviewRegisterForm",
   data() {
@@ -96,13 +99,10 @@ export default {
       type: Object,
       required: true,
     },
-    orderInfo : {
-      type: Object,
-      required: true,
-    },
+    
   },
   methods: {
-    ...mapActions([
+    ...mapActions(productModule, [
       'reqRegisterReviewToSpring',
       'reqRegisterReviewWithImageToSpring'
     ]),
@@ -123,30 +123,29 @@ export default {
     },
     async submit() {
       if (this.image.length > 0) {
-        let formData = new FormData()
-        formData.append('image', this.image);
+        let formData = new FormData();
+        formData.append('imageFileList', this.image);
         let fileInfo = {
-          memberId: this.resMember.id,
-          productId: this.product.productId,
+          memberId: '1L', // 수정된 부분
+          productId: '2L', // 수정된 부분
           starRate: this.starRate,
           context: this.context,
-          orderId: this.orderInfo.orderId
-        }
-        formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
-        await this.reqRegisterReviewWithImageToSpring(formData)
+        };
+        formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}));
+        await this.reqRegisterReviewWithImageToSpring(formData);
       } else {
-        const {starRate, context} = this
-        const memberId = this.resMember.id
-        const productId = this.product.producId
-        const orderId = this.orderInfo.orderID
-        await this.reqRegisterReviewToSpring({memberId, productId, starRate, context , orderId})
+        const {starRate, context} = this;
+        const memberId = '1'; // 수정된 부분
+        const productId = '2'; // 수정된 부분
+        await this.reqRegisterReviewToSpring({memberId, productId, starRate, context});
       }
-      this.$router.go(this.$router.currentRoute)
+      this.$router.go(this.$router.currentRoute);
     },
   },
   computed: {
     ...mapState([
-      'resMember'
+      'member',
+      
     ])
   },
 }
