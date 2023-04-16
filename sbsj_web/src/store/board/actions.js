@@ -37,5 +37,14 @@ export default {
                 alert("requestQnaBoardToSpring 문제 발생!")
             })
     },
+    requestQnaBoardDeleteToSpring({}, qnaBoardId) {
+        return axiosInst.get(`/qna/delete/${qnaBoardId}`)
+            .then(() => {
+                alert("삭제 성공")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
     }
 }
