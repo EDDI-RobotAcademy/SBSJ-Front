@@ -19,8 +19,9 @@ export default {
                 console.log(err);
             })
     },
-    async requestProductToSpring ({ commit }, productId) {
-        return await axiosInst.get(`/product/detail-product-page/${productId}`)
+    async requestProductToSpring ({ commit }, payload) {
+        const { memberId, productId } = payload;
+        return await axiosInst.get(`/product/detail-product-page/${productId}/${memberId}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_TO_SPRING, res.data)
             })

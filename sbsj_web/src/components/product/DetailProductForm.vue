@@ -180,9 +180,9 @@ export default {
         };
     },
     props: {
-        productId: {
-            type: Number,
-            required: true,
+        product: {
+            type: Object,
+            required: true
         },
     },
 	methods: {
