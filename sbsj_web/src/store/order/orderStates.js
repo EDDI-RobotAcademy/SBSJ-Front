@@ -4,4 +4,6 @@ export default {
     resCountRequest: "",
 
     deliveryList: [],
+
+    orderList: [],
 }

@@ -15,7 +15,7 @@
             <v-row>
 
                 <!-- 주문자 이름 번호 배송지 정보 -->
-                <v-col cols="6">
+                <v-col cols="7">
                     <v-card class="ms-8 mb-5 pa-5" max-width="800" flat outlined>
                         <v-list-item three-line>
                             <v-list-item-content>
@@ -173,46 +173,82 @@
                                         <v-divider class="mt-3" color="black"></v-divider>    
                                     </div>
                                 </v-list-item-title>
-                                <v-row> <!-- v-for 들어가야 하는 자리 -->
-                                    <v-col cols="2">
-                                        <v-list-item-avatar class="d-flex justify-start" tile size="100">
-                                            <v-img
-                                                :src="require(`@/assets/productImgs/${thumbnailName}`)"
-                                                aspect-ratio="1"
-                                                max-width="100"
-                                                max-height="100"
-                                                contain
-                                            />
-                                        </v-list-item-avatar>
-                                    </v-col>
-                                    <v-col>
-                                        <v-card-text>
-                                            <div><h6><strong>일단먹어봐암튼먹으면좋은효과최고영양제</strong></h6></div>
-                                            <p></p>
-                                            <div><h6><strong>10,000</strong>원</h6></div>
-                                            <p></p>
-                                            <div><h6><strong>3</strong>개</h6></div>
-                                        </v-card-text>
-                                    </v-col>
-                                </v-row>
+                                <div v-if="orderList.orderSave.directOrderCheck">
+                                    <v-row v-for="(orderItem, index) in orderList" :key="index">
+                                        <v-col cols="3">
+                                            <v-list-item-avatar class="d-flex justify-start" tile size="100">
+                                                <v-img
+                                                    :src="require(`@/assets/productImgs/${orderItem.thumbnail}`)"
+                                                    aspect-ratio="1"
+                                                    max-width="100"
+                                                    max-height="100"
+                                                    contain
+                                                />
+                                            </v-list-item-avatar>
+                                        </v-col>
+                                        <v-col>
+                                            <v-card-text>
+                                                <div><h5><strong>{{ orderItem.product.productName }}</strong></h5></div>
+                                                <p></p>
+                                                <div><h6><strong>{{ orderItem.count }}</strong>개</h6></div>
+                                                <p></p>
+                                                <div><h6><strong>{{ new Intl.NumberFormat().format(orderItem.totalPrice) }}</strong>원</h6></div>
+                                            </v-card-text>
+                                        </v-col>
+                                    </v-row>
+                                </div>
+                                <div v-else>
+                                    <v-row v-for="(orderItem, index) in orderList.orderSave.selectItems" :key="index">
+                                        <v-col cols="3">
+                                            <v-list-item-avatar class="d-flex justify-start" tile size="100">
+                                                <v-img
+                                                    :src="require(`@/assets/productImgs/${orderItem.thumbnail}`)"
+                                                    aspect-ratio="1"
+                                                    max-width="100"
+                                                    max-height="100"
+                                                    contain
+                                                />
+                                            </v-list-item-avatar>
+                                        </v-col>
+                                        <v-col>
+                                            <v-card-text>
+                                                <div><h5><strong>{{ orderItem.product.productName }}</strong></h5></div>
+                                                <p></p>
+                                                <div><h6><strong>{{ orderItem.count }}</strong>개</h6></div>
+                                                <p></p>
+                                                <div><h6><strong>{{ new Intl.NumberFormat().format(orderItem.price * orderItem.count) }}</strong>원</h6></div>
+                                            </v-card-text>
+                                        </v-col>
+                                    </v-row>
+                                </div>
                                 <v-divider class="my-3" color="black"></v-divider>
-                                <v-row class="mb-2">
+                                <v-row>
                                     <v-col>
-                                        <div class="mb-3">상품금액</div>
+                                        <div class="mb-3">상품 금액</div>
                                         <div>배송비</div>
                                     </v-col>
                                     <v-col>
-                                        <div class="d-flex justify-end mb-3"><strong>30,000</strong>원</div>
-                                        <div class="d-flex justify-end"><strong>3,000</strong>원</div>
+                                        <div class="d-flex justify-end mb-3"><strong>{{ new Intl.NumberFormat().format(orderList.orderSave.totalPrice) }}</strong>원</div>
+                                        <div class="d-flex justify-end">
+                                            <p v-if="orderList.orderSave.totalPrice > 49999"><strong>0</strong>원</p>
+                                            <p v-else><strong>3,000</strong>원</p>
+                                        </div>
                                     </v-col>
                                 </v-row>
-                                <v-divider class="mt-0" color="black"></v-divider>
+                                <v-divider class="mt-0 mb-1" color="black"></v-divider>
                                 <v-row>
                                     <v-col>
-                                        <div class="text-h6 mb-3">총 결제금액</div>
+                                        <div class="text-h5 mb-3">결제 총액</div>
                                     </v-col>
                                     <v-col>
-                                        <div class="d-flex justify-end text-h6"><strong>33,000</strong>원</div>
+                                        <div class="d-flex justify-end text-h5">
+                                            <p v-if="orderList.orderSave.totalPrice > 49999">
+                                                <strong>{{ new Intl.NumberFormat().format(orderList.orderSave.totalPrice) }}</strong>원
+                                            </p>
+                                            <p v-else>
+                                                <strong>{{ new Intl.NumberFormat().format(orderList.orderSave.totalPrice + 3000) }}</strong>원
+                                            </p>
+                                        </div>
                                     </v-col>
                                 </v-row>
                                 <v-btn block color="teal">
@@ -240,13 +276,12 @@ export default {
       return {
         dialog: false,
         imageName: "카카오페이_CI_combination_with_BG.png",
-        thumbnailName: "나우푸드 실리마린.jpg",
       }
     },
     computed: {
-        ...mapState(orderModule, {
-            
-        }),
+        ...mapState(orderModule, [
+            'orderList',
+        ]),
     },
     methods: {
         ...mapActions(orderModule, [
