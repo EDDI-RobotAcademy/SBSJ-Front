@@ -54,10 +54,19 @@
                                 <div style=" width:40%; font-size:x-small; display:flex; justify-content:center; align-items:center;">
                                     <button type="button" class="btn btn-outline-primary" style="font-size: x-small; --bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .6rem;">쿠폰다운</button>
                                 </div>
+                                <div style="width: 57%; display:flex; justify-content:end; align-items:center; ">
+                                    <div style="width:30%;">
+                                        <div v-if="!this.checkedWish" @click="changeIcon">
+                                            <v-icon x-large>mdi-heart-outline</v-icon>
+                                        </div>
+                                        <div v-else @click="changeIcon">
+                                            <v-icon x-large color="red">mdi-heart</v-icon>
                                         </div>
                                     </div>
+                                    <button class="wishCountDiv">{{ product.wishCount }}</button>
                                 </div>
-                            </div><br>  
+                            </div>
+                        </div><br>  
 
                         <div style="border-bottom: 2px solid;"></div>
                         <div style=" width:100%; height:7%;">
@@ -164,8 +173,10 @@ const productModule = 'productModule';
 export default {
     name: "DetailProductForm",
     data() {
-        return {
-            showIcon:true,
+        return {            
+            checkedWish: false,
+            thumbnail: '',
+            detail: ''
         };
     },
     props: {
@@ -179,7 +190,7 @@ export default {
             'reqAddCartToSpring',
         ]),
         ...mapActions(productModule, [
-        'requestProductToSpring'
+            'reqAddWishToSpring', 'reqDeleteWishToSpring', 'requestProductToSpring'
         ]),
 
 		pass() {
@@ -201,11 +212,25 @@ export default {
 				indicator2.classList.remove("active");
 			}
 		},
-        changeIcon() {
-            if(this.showIcon === true) {
-                this.showIcon = false
+        async changeIcon() {
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            let memberId = userInfo.memberId;
+            let productId = this.product.productId;
+
+            let wishCount = document.getElementsByClassName("wishCountDiv")[0];
+            let getWishCount;
+            if(this.checkedWish === true) {
+                this.checkedWish = false
+                getWishCount = await this.reqDeleteWishToSpring({ memberId, productId });
+                await this.requestProductToSpring({ memberId, productId });
             } else {
-                this.showIcon = true
+                this.checkedWish = true
+                getWishCount = await this.reqAddWishToSpring({ memberId, productId });
+                await this.requestProductToSpring({ memberId, productId });
+            }
+
+            if(getWishCount != -1) {
+                wishCount.innerText = getWishCount;
             }
         },
         addToCart() {
@@ -222,15 +247,13 @@ export default {
             }
         },
 	},
-    computed: {
-        ...mapState(productModule, [
-        'product'
-        ]),
-    },
-    created() {
-        console.log('DetailProductPage productId: ' + this.productId )
-        this.requestProductToSpring(this.productId);
-    },
+    updated() {
+        if(this.product.wishId == null) {
+            this.checkedWish = false;
+        } else if(this.product.wishId != null) {
+            this.checkedWish = true;
+        }
+    }
 }
 </script>
 
