@@ -4,7 +4,8 @@ import {
     REQUEST_PRODUCT_TO_SPRING,
     REQUEST_PRODUCT_OPTION_LIST_TO_SPRING,
 
-    REQUEST_WISH_LIST_TO_SPRING
+    REQUEST_WISH_LIST_TO_SPRING,
+    REQUEST_READ_REVIEW_FROM_SPRING,
 } from './mutation-types'
 
 export default {
@@ -24,5 +25,8 @@ export default {
 
     [REQUEST_WISH_LIST_TO_SPRING] (state, passingData) {
         state.wishList = passingData;
-    }
+    },
+    [REQUEST_READ_REVIEW_FROM_SPRING](state, passingData) {
+        state.reviews = passingData
+    },
 }

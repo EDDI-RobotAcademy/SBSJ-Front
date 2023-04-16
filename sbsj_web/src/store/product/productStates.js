@@ -3,5 +3,7 @@ export default {
     product: {},
     productOptions: [],
     
-    wishList: []
+    wishList: [],
+    reviews: [],
+    review:[],
 }
