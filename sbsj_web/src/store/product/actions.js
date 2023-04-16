@@ -4,7 +4,8 @@ import {
     REQUEST_PRODUCT_LIST_TO_SPRING_WITH_OPTION,
     REQUEST_PRODUCT_OPTION_LIST_TO_SPRING,
 
-    REQUEST_WISH_LIST_TO_SPRING
+    REQUEST_WISH_LIST_TO_SPRING,
+    REQUEST_READ_REVIEW_FROM_SPRING,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject'
@@ -102,6 +103,35 @@ export default {
             .catch(() => {
                 console.log("찜 삭제 실패...");
             })
-    }
+    },
+    async reqRegisterReviewToSpring(_, payload) {
+        return axiosInst.post('/review/register', payload)
+            .then(() => {
+            })
+            .catch((error) => {
+                console.log(error.message);
+                alert('에러가 발생했습니다: ' + error.message);
+            })
+    },
+    async reqRegisterReviewWithImageToSpring(_, payload) {
+        return axiosInst.post('/review/register', payload, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error.message);
+                alert('에러가 발생했습니다: ' + error.message);
+            })
+    },
+    async reqReadReviewFromSpring({commit}, productId) {
+        return axiosInst.post(`/review/read/${productId}`)
+            .then((res) => {
+                commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
+            })
+    },
 
 }
