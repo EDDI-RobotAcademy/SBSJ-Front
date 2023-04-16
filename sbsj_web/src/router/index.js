@@ -42,6 +42,7 @@ import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
 import ReviewListPage from '@/views/review/ReviewListPage';
 
 import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
+import QnaBoardReadPage from "@/views/board/qna/QnaBoardReadPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -221,6 +222,16 @@ const routes = [
     path: '/qna/list',
     name: 'QnaBoardListPage',
     component: QnaBoardListPage
+  },
+  {
+    path: '/qna/read/:qnaBoardId',
+    name: 'QnaBoardReadPage',
+    components: { 
+      default: QnaBoardReadPage
+    },
+    props: {
+      default: true
+    }
   },
   
 ]
