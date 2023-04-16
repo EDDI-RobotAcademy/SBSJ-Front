@@ -1,5 +1,5 @@
 <template>
-  <review-register-form/>
+  <ReviewRegisterForm :product="product" />
 </template>
 
 <script>
@@ -13,6 +13,14 @@ export default {
         ReviewRegisterForm
  
   },
+  data() {
+  return {
+    product: {
+      productId: '12345',
+      // 기타 필요한 상품 정보
+    },
+  };
+},
 }
 </script>
 
