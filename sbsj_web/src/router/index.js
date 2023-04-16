@@ -41,8 +41,10 @@ import OrderInfoPage from "@/views/order/OrderInfoPage.vue"
 import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
 import ReviewListPage from '@/views/review/ReviewListPage';
 
+import QnaBoardRegisterPage from "@/views/board/qna/QnaBoardRegisterPage";
 import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
 import QnaBoardReadPage from "@/views/board/qna/QnaBoardReadPage";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -217,6 +219,11 @@ const routes = [
     path: '/review-list',
     name: 'ReviewListPage',
     component: ReviewListPage
+  },
+  {
+    path: '/qna/register',
+    name: 'QnaBoardRegisterPage',
+    component: QnaBoardRegisterPage
   },
   {
     path: '/qna/list',

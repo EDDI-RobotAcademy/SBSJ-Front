@@ -6,6 +6,17 @@ import {
 import axiosInst from '@/utility/axiosObject.js'
 
 export default {
+    requestCreateQnaBoardToSpring({ }, payload) {
+        const { title, content, writer, password, privateCheck } = payload;
+        return axiosInst.post('/qna/register', { title, content, writer, password, privateCheck })
+            .then((res) => {
+                alert('게시물 등록 성공!');
+                return res.data
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
     requestQnaBoardListToSpring({ commit }) {
         return axiosInst.get('/qna/list')
             .then((res) => {
