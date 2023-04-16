@@ -1,50 +1,50 @@
 <template>
     <ul class="baby-product-list">
         <li v-for="(product, index) in products" :key="index" class="baby-product mb-5">
-                    <div
-                        class="mx-auto transition-swing baby-product-hover elevation-2"
-                        style="border-radius: 20px;"
-                    >
-                        <router-link :to="{ name: 'DetailProductPage', params: {productId: product.productId} }" class="baby-product-link">
-                            <dl class="baby-product-wrap">
-                                <dt class="image">
-                                    <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
-                                        cover class="grey lighten-2" style="border-radius: 20px"/>
-                                </dt>
-                                <dd class="descriptions" >
-                                    <div class="badge">
-                                        <v-icon class="icon-wish">mdi-heart-outline</v-icon>
-                                        <span class="total-wish">
-                                            {{ product.wish }}
+            <div
+                class="mx-auto transition-swing baby-product-hover elevation-2"
+                style="border-radius: 20px;"
+            >
+                <router-link :to="{ name: 'DetailProductPage', params: { productId: product.productId.toString() } }" class="baby-product-link">
+                    <dl class="baby-product-wrap">
+                        <dt class="image">
+                            <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
+                                cover class="grey lighten-2" style="border-radius: 20px; width: 234px; height: 234px;"/>
+                        </dt>
+                        <dd class="descriptions" >
+                            <div class="badge">
+                                <v-icon class="icon-wish">mdi-heart-outline</v-icon>
+                                <span class="total-wish">
+                                    {{ product.wish }}
+                                </span>
+                            </div>
+                            <div class="name">
+                                <span class="name-text" style="text-decoration: none;">
+                                    {{ product.title }}
+                                </span>
+                            </div>
+                            <div class="price-area">
+                                <div class="price-wrap">
+                                    <div class="price">
+                                        <span class="price-text">
+                                            {{ new Intl.NumberFormat().format(product.price) }}원
                                         </span>
                                     </div>
-                                    <div class="name">
-                                        <span class="name-text" style="text-decoration: none;">
-                                            {{ product.title }}
-                                        </span>
-                                    </div>
-                                    <div class="price-area">
-                                        <div class="price-wrap">
-                                            <div class="price">
-                                                <span class="price-text">
-                                                    {{ new Intl.NumberFormat().format(product.price) }}원
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </router-link>        
-                        <div class="other-info">
-                            <v-btn class="directive-btn" rounded style="margin-right: 10px;">
-                                <span class="directive-btn-text">바로구매</span>
-                            </v-btn>
-                            <v-btn class="directive-btn" @click="addToCart(product)" rounded>
-                                <span class="directive-btn-text">장바구니</span>
-                                <v-icon>mdi-cart</v-icon>
-                            </v-btn>
-                        </div>
-                    </div>
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                </router-link>        
+                <div class="other-info">
+                    <v-btn class="directive-btn" rounded style="margin-right: 10px;">
+                        <span class="directive-btn-text">바로구매</span>
+                    </v-btn>
+                    <v-btn class="directive-btn" @click="addToCart(product)" rounded>
+                        <span class="directive-btn-text">장바구니</span>
+                        <v-icon>mdi-cart</v-icon>
+                    </v-btn>
+                </div>
+            </div>
         </li>
     </ul>
 </template>
