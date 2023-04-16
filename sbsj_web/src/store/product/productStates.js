@@ -1,5 +1,7 @@
 export default {
     products: [],
     product: {},
-    productOptions: []
+    productOptions: [],
+    
+    wishList: []
 }

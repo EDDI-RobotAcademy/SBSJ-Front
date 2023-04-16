@@ -2,7 +2,9 @@ import {
     REQUEST_PRODUCT_LIST_TO_SPRING,
     REQUEST_PRODUCT_TO_SPRING,
     REQUEST_PRODUCT_LIST_TO_SPRING_WITH_OPTION,
-    REQUEST_PRODUCT_OPTION_LIST_TO_SPRING
+    REQUEST_PRODUCT_OPTION_LIST_TO_SPRING,
+
+    REQUEST_WISH_LIST_TO_SPRING
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject'
@@ -54,5 +56,20 @@ export default {
         } catch {
             console.log("error");
         }
+    },
+
+    reqMyPageWishListToSpring({ commit }, memberId) {
+        return axiosInst.get(`/wish/list/${memberId}`)
+            .then((res) => {
+                if(res.data === "") {
+                    alert("리뷰가 하나도 없습니다.");
+                    return;
+                }
+                commit(REQUEST_WISH_LIST_TO_SPRING, res.data);
+            })
+            .catch(() => {
+                alert("리뷰 리스트 가져오기 실패");
+            })
+    },
     }
 }
