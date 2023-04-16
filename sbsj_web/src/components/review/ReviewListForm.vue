@@ -1,21 +1,18 @@
 <template>
-    <div>
-        <tr>
-            <th width="1400"><h3>이상품에 대한 리뷰 목록입니다.</h3></th>
-            <th>
-                <router-link style="text-decoration: none; color: black;" :to="{ name: 'ReviewRegisterPage' }">
-                리뷰 등록하기
-                </router-link>
-            </th>
-        </tr>
-        <!-- <v-row no-gutters class="mb-4">
-        <v-col cols="6" class="mt-8">
+  <div class="review-wrap">
+    <div class="review-header">
+      <v-row no-gutters>
+        <v-col cols="8">
+          <div class="review-title">
+            <h1>상품 리뷰</h1>
+          </div>
           <p>총 {{ reviews.length }}개의 상품 후기가 있습니다.</p>
         </v-col>
-        <v-col cols="6">
-          <p style="font-size: 20px" v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">리뷰 평점 {{ 0 }}</p>
-          <p style="font-size: 20px" v-else>리뷰 평점 {{ starRateAverage }}</p>
-          <v-rating
+        <v-col cols="4">
+          <div class="rating-section">
+            <p style="font-size: 20px" v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">리뷰 평점 {{ 0 }}</p>
+            <p style="font-size: 20px" v-else>리뷰 평점 {{ starRateAverage }}</p>
+            <v-rating
               :value="starRateAverage"
               background-color="grey"
               color="yellow darken-1"
@@ -23,71 +20,109 @@
               dense
               readonly
               x-large
-          ></v-rating>
+            ></v-rating>
+          </div>
         </v-col>
-      </v-row> -->
-      <table>
-        <tr>
-          <th align="center" width="300">리뷰사진</th>  
-          <th align="center" width="200">리뷰고유ID</th>
-          <th align="center" width="640">본문내용</th>
-          <th align="center" width="300">등록일자</th>
-          <th align="center" width="300">수정일자</th>
-        </tr>
-        <tr v-if="!reviews || (Array.isArray(reviews) && boards.length === 0)">
-          <td colspan="4">
-              현재 등록된 리뷰가 없습니다!
-          </td>
-        </tr>
-        <tr v-else v-for="review in reviews" :key="review.reviewId">
-          <td align="center">
-            <v-col v-for="(imagePath, idx) in reviewImages" :key="idx" cols="12">
-            <v-img :src="require(`@/assets/uploadImgs/${imagePath.reviewImagePath}`)" aspect-ratio="1" class="grey lighten-2">
-                <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                    <v-progress-circular indeterminate color="grey lighten-5"/>
-                    </v-row>
-                </template>
-            </v-img>
-            </v-col>
-          </td> 
-          <td align="center">
-            {{ review.reviewId }}
-          </td>
-          <td align="center">
-              {{ review.context }}
-          </td>
-          <td align="center">
-            {{ review.createDate }}
-          </td>
-          <td align="center">
-            {{ review.updateDate }}
-          </td>
-        </tr>
-        <th>
-            <router-link style="text-decoration: none; color: black;" :to="{ name: 'ReviewRegisterPage' }">
-                리뷰 등록하기
-            </router-link>
-        </th>
-      </table>
-      
+      </v-row>
+      <v-divider></v-divider>
     </div>
-    
-  </template>
-  
-  <script>
-  
-  export default {
-      name: "ReviewList",
-      props: {
-          reviews: {
-              type: Array
-          }
+    <div class="review-register-btn">
+      <v-btn color="primary" to="/review">리뷰 등록하러가기</v-btn>
+    </div>
+    <div class="review-container">
+      <paginate tag="ul" name="reviews" :list="reviews" :per="3">
+        <li v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">
+          <p class="mb-7">작성된 리뷰가 없습니다.</p>
+          <v-divider width="1070px"></v-divider>
+        </li>
+        <li v-for="(review, idx) in paginated('reviews')" :key="idx" v-else>
+          <review-context-form
+              :review="review"/>
+        </li>
+      </paginate>
+      <paginate-links for="reviews" :simple="{
+          next: 'Next »',
+          prev: '« Back'
+        }"></paginate-links>
+    </div>
+          
+  </div>
+</template>
+
+<script>
+
+import ReviewContextForm from "@/components/review/ReviewContextForm";
+import { mapActions, mapState } from "vuex";
+
+export default {
+  name: "ReviewListForm",
+  components: { ReviewContextForm },
+  data() {
+    return {
+      paginate: ["reviews"],
+    };
+  },
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    ...mapActions("productModule", ["reqReadReviewFromSpring"]),
+  },
+  created() {
+    const productId = this.product.Id;
+    this.reqReadReviewFromSpring(productId);
+  },
+  computed: {
+    ...mapState("productModule", ["reviews"]),
+    starRateAverage() {
+      if (this.reviews && this.reviews.length) {
+        const starRateAverage = this.reviews[0].starRateAverage;
+        return parseFloat(starRateAverage.toFixed(1));
       }
-  }
-  
-  </script>
-  
-  <style>
-  
-  </style>
+      return 0;
+    }
+  },
+};
+</script>
+
+
+<style scoped>
+* {
+  list-style: none;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.review-wrap {
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.review-title {
+  padding-bottom: 18px;
+}
+
+.rating-section {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.review-container {
+  margin-top: 30px;
+}
+.review-register-btn {
+  text-align: right;
+}
+
+</style>
