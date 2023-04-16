@@ -46,5 +46,15 @@ export default {
                 alert('문제 발생!')
             })
     },
+    requestQnaBoardModifyToSpring({}, payload) {
+        const { qnaBoardId, title, content } = payload
+        console.log("수정: "+ qnaBoardId +", "+ title +", "+ content)
+        return axiosInst.post(`/qna/modify/${qnaBoardId}`, { title, content })
+            .then(() => {
+                alert("수정 성공")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
     }
 }
