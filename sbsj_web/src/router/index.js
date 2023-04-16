@@ -44,6 +44,7 @@ import ReviewListPage from '@/views/review/ReviewListPage';
 import QnaBoardRegisterPage from "@/views/board/qna/QnaBoardRegisterPage";
 import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
 import QnaBoardReadPage from "@/views/board/qna/QnaBoardReadPage";
+import QnaBoardModifyPage from "@/views/board/qna/QnaBoardModifyPage";
 
 Vue.use(VueRouter)
 
@@ -240,6 +241,16 @@ const routes = [
       default: true
     }
   },
+  {
+    path: '/qna/modify/:qnaBoardId',
+    name: 'QnaBoardModifyPage',
+    components: { 
+      default: QnaBoardModifyPage
+    },
+    props: {
+      default: true
+    }
+  }
   
 ]
 
