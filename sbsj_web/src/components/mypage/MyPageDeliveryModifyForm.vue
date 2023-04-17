@@ -149,7 +149,7 @@ export default {
                       city, street, addressDetail, zipcode, defaultAddress });
                 
                 this.dialog = false;
-                // window.location.reload(true);
+                window.location.reload(true);
             } else {
                 alert('형식에 맞게 입력해주세요!')
             }
