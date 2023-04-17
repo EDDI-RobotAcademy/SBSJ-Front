@@ -17,13 +17,13 @@
                         ></v-checkbox>
                     </v-col>
                     <v-col cols="2">
-                        <router-link :to="{ name: 'DetailProductPage', params: { productId: wish.productId.toString() } }" class="baby-product-link">
+                        <router-link :to="{ name: 'ProductReadPage', params: { productId: wish.productId.toString() } }" class="baby-product-link">
                             <v-img :src="require(`@/assets/productImgs/${wish.thumbnail}`)" 
                                 cover class="grey lighten-2" style="border-radius: 20px;"/>
                         </router-link>
                     </v-col>
                     <v-col>
-                        <router-link :to="{ name: 'DetailProductPage', params: { productId: wish.productId.toString() } }"
+                        <router-link :to="{ name: 'ProductReadPage', params: { productId: wish.productId.toString() } }"
                             class="baby-product-link" style="text-decoration: none; color: black">
                             <v-card-title style="font-size: 20px; padding-top:40px;">
                                 {{ wish.productName }}
