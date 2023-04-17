@@ -16,12 +16,12 @@
 </template>
     
 <script>
+
 import FirstBrain from '@/components/survey/detailCheckList/brainList/FirstBrain.vue'
   
 export default {
-    components: { FirstBrain },
     name: "FirstBrainPage",
-    component: {FirstBrain},
+    components: { FirstBrain },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {

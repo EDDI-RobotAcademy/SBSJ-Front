@@ -19,9 +19,8 @@
 import SecondBone from '@/components/survey/detailCheckList/boneList/SecondBone.vue'
   
 export default {
-    components: { SecondBone },
     name: "SecondBonePage",
-    component: {SecondBone},
+    components: { SecondBone },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {

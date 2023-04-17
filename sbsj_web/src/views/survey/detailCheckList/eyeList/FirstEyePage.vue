@@ -16,12 +16,12 @@
 </template>
     
 <script>
+
 import FirstEye from '@/components/survey/detailCheckList/eyeList/FirstEye.vue'
   
 export default {
-    components: { FirstEye },
     name: "FirstEyePage",
-    component: {FirstEye},
+    components: { FirstEye },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {

@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-        
+    <div class="container">
         <div style="display: flex;">
             <div style="display: flex; width:100%; height:50px; justify-content:center; border-bottom: 5px solid #5B1A7C;">
                 <div style="display:flex; ">
@@ -32,7 +31,6 @@
             </div>
         </div>
 
-
         <div style="padding-inline: 20%;">
             <div >
                 <div style="margin-top:10%; height:100%; width:100%; text-align: center; font-size:large; display:flex; justify-content:center; align-items:center;">
@@ -41,7 +39,6 @@
                 </div>
             </div>
         </div>
-
     
         <div class="wrapper">
             <ul class="list-group" style="width:60%; ">
@@ -90,19 +87,18 @@
                 </div>
             </div>
         </div>
-
-        
-  </div>
+    </div>
 </template>
 
 <script>
 
 export default {
-
+    name: 'AfterCheckForm'
 }
 </script>
 
 <style>
+
 .wrapper {
   padding-inline: 10%;
   margin-top: 3%;
@@ -112,6 +108,5 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 
 </style>

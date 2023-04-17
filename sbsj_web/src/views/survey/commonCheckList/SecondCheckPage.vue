@@ -1,20 +1,18 @@
 <template>
-    <div>
-      <second-check/>
-    </div>
-  </template>
+  <div>
+    <second-check/>
+  </div>
+</template>
   
-  <script>
-  
-  import SecondCheck from '@/components/survey/commonCheckList/SecondCheck.vue'
-  
-  export default {
-    components: { SecondCheck },
-    name: "SecondCheckPage",
-    computed: {
-    },
-    }
-  </script>
-  
-  <style>
-  </style>
+<script>
+
+import SecondCheck from '@/components/survey/commonCheckList/SecondCheck.vue'
+
+export default {
+  name: "SecondCheckPage",
+  components: { SecondCheck },
+}
+</script>
+
+<style>
+</style>

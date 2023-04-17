@@ -16,12 +16,12 @@
 </template>
     
 <script>
+
 import FirstIntestine from '@/components/survey/detailCheckList/intestineList/FirstIntestine.vue'
   
 export default {
-    components: { FirstIntestine },
     name: "FirstIntestinePage",
-    component: {FirstIntestine},
+    components: { FirstIntestine },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {

@@ -16,12 +16,12 @@
 </template>
     
 <script>
+
 import FirstLiver from '@/components/survey/detailCheckList/liverList/FirstLiver.vue'
   
 export default {
-    components: { FirstLiver },
     name: "FirstLiverPage",
-    component: {FirstLiver},
+    components: { FirstLiver },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {
