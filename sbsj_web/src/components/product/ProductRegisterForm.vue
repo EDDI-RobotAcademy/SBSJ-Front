@@ -24,8 +24,8 @@
         <td>
             <div>
                 <select v-model="selectedOption">
-                <option value="">Select an option</option>
-                <option v-for="productOption in productOptions" :value="productOption">{{ productOption }}</option>
+                  <option value="">Select an option</option>
+                  <option v-for="(productOption, index) in productOptions" :key="index" :value="productOption">{{ productOption }}</option>
                 </select>
                 <v-btn @click="addItem">Add Selection</v-btn>
                 <ul>
