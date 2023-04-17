@@ -64,7 +64,7 @@ export default {
 
         async onSubmit(payload) {
             await this.reqMyPageRegisterDeliveryToSpring(payload);
-            // window.location.reload(true);
+            window.location.reload(true);
         }
     },
 }
