@@ -22,7 +22,8 @@
                 
                 <v-card-text style="font-size: 18px;">
                     <div class="mb-1">수령인: {{ delivery.recipientName }}</div>
-                    <div class="mb-1">{{ delivery.city }} {{ delivery.street }} {{ delivery.addressDetail }} {{ delivery.zipcode }}</div>
+                    <div class="mb-1">{{ delivery.road }} {{ delivery.addressDetail }}</div>
+                    <div class="mb-1">{{ delivery.zipcode }}</div>
                     <div class="mb-1">{{ delivery.phoneNumber }}</div>
                 </v-card-text>
                 <v-card-actions class="ms-2 pb-5 pt-0">

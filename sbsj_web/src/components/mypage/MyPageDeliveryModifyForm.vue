@@ -34,11 +34,7 @@
                         </div>
 
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.city" label="도시" :disabled="true" required/>
-                        </div>
-
-                        <div class="d-flex">
-                            <v-text-field v-model="localDelivery.street" label="기본 주소" :disabled="true" required/>
+                            <v-text-field v-model="localDelivery.road" label="도로명" :disabled="true" required/>
                         </div>
 
                         <div class="d-flex">
@@ -132,7 +128,7 @@ export default {
                 let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
                 
                 const { addressName, addressType, recipientName, phoneNumber, 
-                        city, street, addressDetail, zipcode } = this.localDelivery;
+                        road, addressDetail, zipcode } = this.localDelivery;
                 
                 if(defaultAddress === "기본 배송지" && this.delivery.defaultAddress === "") {
                     let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring({ memberId, defaultAddress });
@@ -146,7 +142,7 @@ export default {
 
                 await this.reqMyPageModifyDeliveryToSpring(
                     { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
-                      city, street, addressDetail, zipcode, defaultAddress });
+                      road, addressDetail, zipcode, defaultAddress });
                 
                 this.dialog = false;
                 window.location.reload(true);
@@ -167,30 +163,29 @@ export default {
         callDaumAddressApi () {
             new window.daum.Postcode({
                 oncomplete: (data) => {
-                let fullRoadAddr = data.roadAddress;
-                let extraRoadAddr = '';
+                    let fullRoadAddr = data.roadAddress;
+                    let extraRoadAddr = '';
 
-                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                    extraRoadAddr += data.bname;
-                }
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
 
-                if (data.buildingName !== '' && data.apartment === 'Y') {
-                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
 
-                if (extraRoadAddr !== '') {
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
+                    if (extraRoadAddr !== '') {
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
 
-                if (fullRoadAddr !== '') {
-                    fullRoadAddr += extraRoadAddr;
-                }
+                    if (fullRoadAddr !== '') {
+                        fullRoadAddr += extraRoadAddr;
+                    }
 
-                this.localDelivery.city = data.sido;
-                this.localDelivery.zipcode = data.zonecode;
-                this.localDelivery.street = data.sigungu + ' ' + fullRoadAddr;
-
-                this.streetPass = true
+                    this.road = data.roadAddress;
+                    this.zipcode = data.zonecode;
+                    
+                    this.streetPass = true
                 }
             }).open()
         }

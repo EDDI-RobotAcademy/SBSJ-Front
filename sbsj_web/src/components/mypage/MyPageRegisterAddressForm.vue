@@ -33,11 +33,7 @@
                         </div>
 
                         <div class="d-flex">
-                            <v-text-field v-model="city" label="도시" :disabled="true" required/>
-                        </div>
-
-                        <div class="d-flex">
-                            <v-text-field v-model="street" label="기본 주소" :disabled="true" required/>
+                            <v-text-field v-model="road" label="도로명 주소" :disabled="true" required/>
                         </div>
 
                         <div class="d-flex">
@@ -92,8 +88,7 @@ export default {
             addressType: '',
             recipientName: '',
             phoneNumber: '',
-            city: '',
-            street: '',
+            road: '',
             addressDetail: '',
             zipcode: '',
             streetPass: false,
@@ -130,7 +125,7 @@ export default {
                     let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
 
                     const { addressName, addressType, recipientName, phoneNumber, 
-                            city, street, addressDetail, zipcode } = this;
+                            road, addressDetail, zipcode } = this;
 
                     if(defaultAddress === "기본 배송지") {
                         let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring({ memberId, defaultAddress });
@@ -143,14 +138,13 @@ export default {
                     }
                     
                     this.$emit("submit", { memberId, addressName, addressType, recipientName, phoneNumber, 
-                                           city, street, addressDetail, zipcode, defaultAddress });
+                                           road, addressDetail, zipcode, defaultAddress });
                     
                     this.addressName = '';
                     this.addressType = '';
                     this.recipientName = '';
                     this.phoneNumber = '';
-                    this.city = '';
-                    this.street = '';
+                    this.road = '';
                     this.addressDetail = '';
                     this.zipcode = '';
                     checkedDefaultAddress = false;
@@ -167,8 +161,7 @@ export default {
             this.addressType = '';
             this.recipientName = '';
             this.phoneNumber = '';
-            this.city = '';
-            this.street = '';
+            this.road = '';
             this.addressDetail = '';
             this.zipcode = '';
             checkedDefaultAddress = false;
@@ -177,30 +170,29 @@ export default {
         callDaumAddressApi () {
             new window.daum.Postcode({
                 oncomplete: (data) => {
-                let fullRoadAddr = data.roadAddress;
-                let extraRoadAddr = '';
+                    let fullRoadAddr = data.roadAddress;
+                    let extraRoadAddr = '';
 
-                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                    extraRoadAddr += data.bname;
-                }
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
 
-                if (data.buildingName !== '' && data.apartment === 'Y') {
-                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
 
-                if (extraRoadAddr !== '') {
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
+                    if (extraRoadAddr !== '') {
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
 
-                if (fullRoadAddr !== '') {
-                    fullRoadAddr += extraRoadAddr;
-                }
+                    if (fullRoadAddr !== '') {
+                        fullRoadAddr += extraRoadAddr;
+                    }
 
-                this.city = data.sido;
-                this.zipcode = data.zonecode;
-                this.street = data.sigungu + ' ' + fullRoadAddr;
-
-                this.streetPass = true
+                    this.road = data.roadAddress;
+                    this.zipcode = data.zonecode;
+                    
+                    this.streetPass = true
                 }
             }).open()
         }
