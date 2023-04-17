@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 
 import ShoppingCartPage from "@/views/order/shoppingCart/ShoppingCartPage.vue"
 import ProductListPage from "@/views/product/ProductListPage.vue"
-import DetailProductPage from '@/views/product/DetailProductPage'
+import ProductReadPage from '@/views/product/ProductReadPage'
 import ProductRegisterPage from '@/views/product/ProductRegisterPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
@@ -65,9 +65,9 @@ const routes = [
     component: ProductListPage
   },
   {
-    path: '/detail-product-page/:productId',
-    name: 'DetailProductPage',
-    component: DetailProductPage,
+    path: '/product/read/:productId',
+    name: 'ProductReadPage',
+    component: ProductReadPage,
     props: true
   },
   {

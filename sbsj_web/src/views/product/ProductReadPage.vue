@@ -1,19 +1,19 @@
 <template>
   <div class="container">
-    <detail-product-form :product="product"/>
+    <product-read-form :product="product"/>
   </div>
 </template>
 
 <script>
 
-import DetailProductForm from '@/components/product/DetailProductForm.vue'
+import ProductReadForm from '@/components/product/ProductReadForm.vue'
 import { mapActions, mapState } from 'vuex';
 
 const productModule = 'productModule';
 
 export default {
-  components: { DetailProductForm },
-  name: "DetailProductPage",
+  components: { ProductReadForm },
+  name: "ProductReadPage",
   props: {
     productId: {
       type: String,
