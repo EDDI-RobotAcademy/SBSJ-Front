@@ -185,9 +185,7 @@ export default {
         },
     },
 	methods: {
-        ...mapActions(orderModule, [
-            'reqAddCartToSpring',
-        ]),
+        ...mapActions(orderModule, ['reqAddCartToSpring']),
         ...mapActions(productModule, [
             'reqSetWishToSpring', 'requestProductToSpring'
         ]),
@@ -241,7 +239,8 @@ export default {
         addToCart() {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             const memberId = userInfo.memberId;
-            const { productId, count } = this
+            const productId = this.product.productId;
+            const count = 1
             console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
