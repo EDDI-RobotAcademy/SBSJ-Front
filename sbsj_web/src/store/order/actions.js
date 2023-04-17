@@ -70,10 +70,10 @@ export default {
 
     reqMyPageRegisterDeliveryToSpring({}, payload) {
         const { memberId, addressName, addressType, recipientName, phoneNumber, 
-                city, street, addressDetail, zipcode, defaultAddress } = payload
+                road, addressDetail, zipcode, defaultAddress } = payload
         return axiosInst.post("/delivery/register", 
                { memberId, addressName, addressType, recipientName, phoneNumber, 
-                 city, street, addressDetail, zipcode, defaultAddress })
+                 road, addressDetail, zipcode, defaultAddress })
             .then(() => {
                 alert("배송지 등록 완료!")
             })
@@ -102,10 +102,11 @@ export default {
     },
     reqMyPageModifyDeliveryToSpring({}, payload) {
         const { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
-                city, street, addressDetail, zipcode, defaultAddress } = payload
+                road, addressDetail, zipcode, defaultAddress } = payload
+        
         return axiosInst.post("/delivery/modify", 
                 { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
-                  city, street, addressDetail, zipcode, defaultAddress })
+                  road, addressDetail, zipcode, defaultAddress })
             .then(() => {
                 alert("배송지 수정 완료!")
             })
