@@ -16,12 +16,12 @@
 </template>
     
 <script>
+
 import FirstBone from '@/components/survey/detailCheckList/boneList/FirstBone.vue'
 
 export default {
-    components: { FirstBone },
     name: "FirstBonePage",
-    component: {FirstBone},
+    components: { FirstBone },
     methods: {
         showConfirmation() {
             if (confirm('설문을 종료하시겠습니까?')) {
