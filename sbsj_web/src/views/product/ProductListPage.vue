@@ -22,7 +22,6 @@
         </div>
     </section>
   </template>
-  
 <script>
 
 import { mapActions, mapState } from 'vuex';
@@ -32,7 +31,7 @@ import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vu
 
 const productModule = 'productModule'
   export default {
-    name: "productPage",
+    name: "ProductListPage",
     components: {JpaProductList, ProductSearchFilter, ProductCategoryHeader},
 
     computed: {
@@ -42,7 +41,7 @@ const productModule = 'productModule'
     },
     mounted () {
         this.requestProductListToSpring()
-        },
+    },
 
     methods: {
         ...mapActions(productModule, [

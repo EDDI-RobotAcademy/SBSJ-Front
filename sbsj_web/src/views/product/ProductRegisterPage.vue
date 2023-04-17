@@ -9,6 +9,7 @@
   import ProductRegisterForm from '@/components/product/ProductRegisterForm'
   import { mapActions } from 'vuex'
   const productModule = 'productModule'
+  
   export default {
       components: { ProductRegisterForm },
       name: "ProductRegisterPage",
@@ -19,7 +20,7 @@
           async onSubmit (payload) {
               await this.requestCreateProductToSpring(payload)
               await this.$router.push({
-                  name: 'productPage',
+                  name: 'ProductListPage',
               })
           }
       }
