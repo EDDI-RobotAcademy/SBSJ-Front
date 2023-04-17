@@ -213,6 +213,14 @@ export default {
 		},
         async changeIcon() {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            if(userInfo == null) {
+                let loginCheck = confirm("찜은 로그인 한 회원만 가능한 기능입니다.\n로그인 하시겠습니까?");
+                if(loginCheck) {
+                    this.$router.push({ name: 'SignInPage' });
+                }
+                return;
+            }
+            
             let memberId = userInfo.memberId;
             let productId = this.product.productId;
 
