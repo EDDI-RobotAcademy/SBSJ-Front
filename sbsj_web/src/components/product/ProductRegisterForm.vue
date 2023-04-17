@@ -68,7 +68,7 @@ const productModule = 'productModule'
   
   
   export default {
-    name: 'productRegisterForm',
+    name: 'ProductRegisterForm',
     data() {
         return {
             productName: '상품네임을 입력하세요.',
