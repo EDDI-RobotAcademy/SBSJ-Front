@@ -140,7 +140,7 @@ export default {
             isTrue: false,
             items: [
                 { mainTitle: "상품", subTitles: [{ sub: "sub1", contents: ["link1", "link2", "link3"] }, 
-                    { sub: "sub2", contents: ["link4", "link5", "link6"] }], url: 'ProductPage'},
+                    { sub: "sub2", contents: ["link4", "link5", "link6"] }], url: 'ProductListPage'},
                 { mainTitle: "리뷰", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 
                     { sub: "sub22", contents: ["link10", "link11", "link12"] }], url: 'ReviewListPage' },
                 // { mainTitle: "추천 상품", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 

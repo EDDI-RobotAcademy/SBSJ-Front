@@ -53,7 +53,7 @@
 
     <div>
       <button type="submit">등록</button>
-      <router-link :to="{ name: 'productPage' }">
+      <router-link :to="{ name: 'ProductListPage' }">
         취소
       </router-link>
     </div>
