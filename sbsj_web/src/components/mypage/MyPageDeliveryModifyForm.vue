@@ -149,7 +149,7 @@ export default {
                       city, street, addressDetail, zipcode, defaultAddress });
                 
                 this.dialog = false;
-                // window.location.reload(true);
+                window.location.reload(true);
             } else {
                 alert('형식에 맞게 입력해주세요!')
             }
@@ -161,7 +161,7 @@ export default {
             let checkDelete = confirm("이 배송지를 삭제하시겠습니까?");
             if(checkDelete) {
                 await this.reqMyPageDeleteDeliveryToSpring(this.delivery.addressId);
-                // window.location.reload(true);
+                window.location.reload(true);
             }
         },
         callDaumAddressApi () {
