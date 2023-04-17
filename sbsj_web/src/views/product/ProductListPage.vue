@@ -8,7 +8,7 @@
                 <div class="product-main">
                     <div class="product-list">
                         <div class="product-main-category-header">
-                            <product-category-header></product-category-header>
+                            <product-category-header/>
                         </div>
                         <div class="clear-fix"></div>
                         <product-list-form :products="products"/>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="product-nav">
-                    <product-search-filter></product-search-filter>
+                    <product-list-filter/>
                 </div>
             </div>
         </div>
@@ -25,8 +25,8 @@
 <script>
 
 import { mapActions, mapState } from 'vuex';
-import ProductSearchFilter from '@/components/product/JpaSearchFilter.vue';
 import ProductListForm from '@/components/product/ProductListForm.vue';
+import ProductListFilter from '@/components/product/ProductListFilter.vue';
 import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vue';
 
 const productModule = 'productModule'

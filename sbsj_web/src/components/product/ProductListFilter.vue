@@ -6,7 +6,7 @@
 
 
 export default {
-  name: 'JpaSearchFilter',
+  name: 'ProductListFilter',
   props: {
       
   }
