@@ -7,7 +7,10 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import {formatDate} from '@/utility/filter.js'
+
 Vue.use(BootstrapVue)
+Vue.filter('formatDate', formatDate)
 
 Vue.config.productionTip = false
 

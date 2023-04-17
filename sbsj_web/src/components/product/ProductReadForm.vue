@@ -170,7 +170,7 @@ const orderModule = 'orderModule';
 const productModule = 'productModule';
 
 export default {
-    name: "DetailProductForm",
+    name: "ProductReadForm",
     data() {
         return {            
             checkedWish: false,

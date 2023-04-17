@@ -5,7 +5,7 @@
                 class="mx-auto transition-swing baby-product-hover elevation-2"
                 style="border-radius: 20px;"
             >
-                <router-link :to="{ name: 'DetailProductPage', params: { productId: product.productId.toString() } }" class="baby-product-link">
+                <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }" class="baby-product-link">
                     <dl class="baby-product-wrap">
                         <dt class="image">
                             <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
@@ -15,7 +15,7 @@
                             <div class="badge">
                                 <v-icon class="icon-wish">mdi-heart-outline</v-icon>
                                 <span class="total-wish">
-                                    {{ product.wish }}
+                                    {{ product.wishCount }}
                                 </span>
                             </div>
                             <div class="name">
@@ -56,7 +56,7 @@ const orderModule = 'orderModule'
 const accountModule = 'accountModule'
   
 export default {
-    name: 'JpaProductList',
+    name: 'ProductListForm',
     props: {
         products: {
             type: Array
