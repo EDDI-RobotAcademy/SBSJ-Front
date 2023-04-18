@@ -1,6 +1,6 @@
 <template>
     <ul class="baby-product-list">
-        <li v-for="(product, index) in products" :key="index" class="baby-product mb-5">
+        <li v-for="(product, index) in products" v-if="index < bindViewCount" class="baby-product mb-5">
             <div
                 class="mx-auto transition-swing baby-product-hover elevation-2"
                 style="border-radius: 20px;"
@@ -59,13 +59,35 @@ export default {
     name: 'ProductListForm',
     props: {
         products: {
-            type: Array
+            type: Array,
+            required: true
         },
+        viewCount: {
+            type: Number,
+            required: true
+        },
+        orderBy: {
+            type: String,
+            required: true
+        }
+    },
+    mounted() {
+        console.log("??")
     },
     computed: {
         ...mapState(accountModule, {
             isAuthenticated: state => state.isAuthenticated
         }),
+        bindViewCount: {
+            get() {
+                return this.viewCount
+            }
+        },
+        bindOrderBy: {
+            get() {
+                return this.orderBy
+            }
+        }
     },
     methods: {
         ...mapActions(orderModule, [
@@ -88,7 +110,8 @@ export default {
             //     alert("로그인 후 사용가능합니다.")
             //     this.$router.push({ name: 'SignInPage' })
             // }
-        }
+        },
+        
     }
 }
   
