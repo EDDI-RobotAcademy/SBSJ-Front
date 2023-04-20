@@ -6,7 +6,7 @@
 </template> 
 
 <script>
-import QnaBoardRegisterForm from '@/components/board/QnaBoardRegisterForm.vue'
+import QnaBoardRegisterForm from '@/components/board/qnaBoard/QnaBoardRegisterForm.vue'
 import { mapState, mapActions } from 'vuex'
 
 const boardModule = 'boardModule'
