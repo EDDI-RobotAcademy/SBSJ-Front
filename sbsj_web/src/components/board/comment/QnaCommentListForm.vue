@@ -11,6 +11,7 @@
                 <v-text-field v-model="qnaComment.comment" label="댓글 수정" v-show="commentModify === index"></v-text-field>
                 <button v-if="commentModify !== index" @click="startModify(index)">수정 | </button>
                 <button v-if="commentModify === index" @click="saveComment(qnaComment)">수정 완료 | </button>
+                <button @click="deleteComment(qnaComment)">삭제</button>
                 </div>
             </v-card-text>
         </v-container>
@@ -50,6 +51,17 @@ export default {
                     alert("질문 게시글의 댓글 " + qnaCommentId + "번 수정 실패")
                 })
         },
+        async deleteComment(payload) {
+            const { qnaCommentId } = payload;
+            await axios.delete(`http://localhost:7777/qna/read/${qnaCommentId}`)
+                .then(() => {
+                    alert('댓글 삭제 완료');
+                    location.reload();
+                })
+                .catch(() => {
+                    alert('댓글 삭제 실패');
+                });
+        }
     },
 }
 </script>

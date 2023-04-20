@@ -56,7 +56,6 @@ export default {
             .catch(() => {
                 alert('문제 발생!')
             })
-    }
     },
     requestQnaCommentListFromSpring({commit}, qnaBoardId ){
         return axiosInst.get(`/qna/read/comments/${qnaBoardId}`)
@@ -73,5 +72,14 @@ export default {
         .catch(() =>{
             alert('댓글 등록 실패.')
         })
+    },
+    requestQnaCommentDeleteToSpring({}, { qnaCommentId }) {
+        return axios.delete(`http://localhost:7777/qna/read/${qnaCommentId}`)
+            .then(() => {
+                alert('댓글 삭제 완료');
+            })
+            .catch(() => {
+                alert('댓글 삭제 실패');
+            });
     },
 }
