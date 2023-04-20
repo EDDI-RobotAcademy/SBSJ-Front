@@ -3,7 +3,7 @@ export default {
     board: {},
 
     qnaBoards: [],
-    qnaBoard: {}
+    qnaBoard: {},
 
     qnaComments: [],
     qnaComment: {},

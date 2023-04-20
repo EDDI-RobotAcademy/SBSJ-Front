@@ -1,14 +1,15 @@
 import {
     REQUEST_QNA_BOARD_LIST_TO_SPRING,
     REQUEST_QNA_BOARD_TO_SPRING,
+    REQUEST_QNA_COMMENT_LIST_FROM_SPRING,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject.js'
 
 export default {
     requestCreateQnaBoardToSpring({ }, payload) {
-        const { title, content, writer, password, privateCheck } = payload;
-        return axiosInst.post('/qna/register', { title, content, writer, password, privateCheck })
+        const { title, content, inquiryType, writer, password, privateCheck } = payload;
+        return axiosInst.post('/qna/register', { title, content, inquiryType, writer, password, privateCheck })
             .then((res) => {
                 alert('게시물 등록 성공!');
                 return res.data

@@ -10,6 +10,17 @@
             <td><input type="text" v-model="writer"/></td>
         </tr>
         <tr>
+            <td>문의유형</td>
+            <td>
+                <select v-model="inquiryType">
+                    <option>배송 문의</option>
+                    <option>상품 문의</option>
+                    <option>환불 문의</option>
+                    <option>기타 문의</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td>본문</td>
             <td><textarea cols="70" rows="20" v-model="content"/></td>
         </tr>
@@ -35,7 +46,6 @@
             <button class="btn btn-outline-danger">취소</button>
         </router-link>
     </div>
-
   </form>
 </template>
 
@@ -47,6 +57,7 @@ export default {
             title: '문의사항',
             writer: '누구세요?',
             content: '내용을 입력하세요.',
+            inquiryType: "",
             privateCheck: false,
             password: ''
         }
@@ -63,7 +74,7 @@ export default {
                     password.length >= minLength && hasLowerCase && hasNumber && hasSpecialChar;
         },
         onSubmit() {
-            const { title, writer, content, password, privateCheck } = this;
+            const { title, writer, content, password, privateCheck, inquiryType } = this;
             if (!title || !writer || !content) {
                 alert("모든 입력란에 입력해주세요");
                 return;
@@ -73,7 +84,7 @@ export default {
                 alert("비밀번호는 8 자 이상 15 자 미만, 하나 이상의 숫자 및 소문자와 특수 문자를 모두 포함해야합니다.");
                 return;
             }
-            this.$emit('submit', { title, writer, content, password, privateCheck })
+            this.$emit('submit', { title, writer, inquiryType, content, password, privateCheck })
         }
     }
 }
