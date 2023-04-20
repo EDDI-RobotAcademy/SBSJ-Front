@@ -8,10 +8,10 @@
                 <div class="product-main">
                     <div class="product-list">
                         <div class="product-main-category-header">
-                            <product-category-header :selected-title="selectedTitle" @priceDesc="priceDesc" @priceAsc="priceAsc" @wishCountDesc="wishCountDesc"/>
+                            <product-category-header :selected-title="selectedTitle" @priceDesc="priceDesc" @priceAsc="priceAsc" @wishCountDesc="wishCountDesc" @viewCount="viewCount"/>
                         </div>
                         <div class="clear-fix"></div>
-                        <product-list-form :products="showProducts"/>
+                        <product-list-form :products="showProducts" :viewCount="bindViewCount" :orderBy="bindOrderBy"/>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
@@ -38,7 +38,9 @@ const productModule = 'productModule'
         return {
             category: 'TOTAL',
             temp: [],
-            productTitle: ''
+            productTitle: '',
+            defaultViewCount: 2,
+            defaultOrderBy: 'Default'
         }
     },
 
@@ -47,6 +49,7 @@ const productModule = 'productModule'
         await this.requestProductListToSpring();
         this.temp = this.products
         this.productTitle = this.category
+        this.defaultOrderBy = 'Default'
         console.log(this.productTitle)
         },
 
@@ -67,6 +70,22 @@ const productModule = 'productModule'
             },
             set(value) {
                 this.productTitle = value
+            }
+        },
+        bindViewCount: {
+            get() {
+                return parseInt(this.defaultViewCount)
+            },
+            set(value) {
+                this.defaultViewCount = value
+            }
+        },
+        bindOrderBy: {
+            get() {
+                return this.defaultOrderBy
+            },
+            set(value) {
+                this.defaultOrderBy = value
             }
         },
         ...mapState(productModule, ['products']),
@@ -100,6 +119,10 @@ const productModule = 'productModule'
         wishCountDesc() {
             console.log("wishCountDesc in View page")
             this.temp.sort((a, b) => b.wishCount - a.wishCount)
+        },
+        viewCount(value) {
+            console.log("select viewCount is: " + value) 
+            this.bindViewCount = value
         }
     }
   }
