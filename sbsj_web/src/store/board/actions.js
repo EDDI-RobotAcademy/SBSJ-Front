@@ -57,4 +57,21 @@ export default {
                 alert('문제 발생!')
             })
     }
+    },
+    requestQnaCommentListFromSpring({commit}, qnaBoardId ){
+        return axiosInst.get(`/qna/read/comments/${qnaBoardId}`)
+        .then((res) => {
+            commit(REQUEST_QNA_COMMENT_LIST_FROM_SPRING, res.data)
+        })
+    },
+    requestQnaCommentRegisterToSpring({}, payload) {
+        const { writer, comment, qnaBoardId} = payload
+        return axiosInst.post(`http://localhost:7777/qna/read/register`, { writer, comment, qnaBoardId })
+        .then(() => {
+            alert('댓글 등록을 완료하였습니다.')
+        })
+        .catch(() =>{
+            alert('댓글 등록 실패.')
+        })
+    },
 }

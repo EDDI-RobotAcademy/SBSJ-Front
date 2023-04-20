@@ -10,4 +10,7 @@ export default {
     [REQUEST_QNA_BOARD_TO_SPRING] (state, passingData) {
         state.qnaBoard = passingData
     },
+    [REQUEST_QNA_COMMENT_LIST_FROM_SPRING] (state, passingData) {
+        state.qnaComments = passingData
+    },
 }
