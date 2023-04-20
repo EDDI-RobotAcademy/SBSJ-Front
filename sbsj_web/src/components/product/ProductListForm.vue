@@ -1,6 +1,6 @@
 <template>
     <ul class="baby-product-list">
-        <li v-for="(product, index) in products" v-if="index < bindViewCount" class="baby-product mb-5">
+        <li v-for="(product, index) in products" :key="index" class="baby-product mb-5">
             <div
                 class="mx-auto transition-swing baby-product-hover elevation-2"
                 style="border-radius: 20px;"
@@ -71,9 +71,6 @@ export default {
             required: true
         }
     },
-    mounted() {
-        console.log("??")
-    },
     computed: {
         ...mapState(accountModule, {
             isAuthenticated: state => state.isAuthenticated
@@ -110,8 +107,7 @@ export default {
             //     alert("로그인 후 사용가능합니다.")
             //     this.$router.push({ name: 'SignInPage' })
             // }
-        },
-        
+        }
     }
 }
   
