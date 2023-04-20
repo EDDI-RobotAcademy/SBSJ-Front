@@ -6,4 +6,6 @@ export default {
     deliveryList: [],
 
     orderList: [],
+    orderDeliveryList: [],
+
 }
