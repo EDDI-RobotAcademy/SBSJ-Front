@@ -376,7 +376,6 @@ export default {
             this.sendInfo = sendInfo;
             console.log(sendInfo)
         },
-
         cardPay() {
             const totalPrice = this.orderList.orderSave.totalPrice;
             const deliveryFee = totalPrice < 50000 ? 3000 : 0;
@@ -439,7 +438,6 @@ export default {
                 }
             });
         },
-        
         kakaoPay() {
             const totalPrice = this.orderList.orderSave.totalPrice;
             const deliveryFee = totalPrice < 50000 ? 3000 : 0;
@@ -462,6 +460,7 @@ export default {
             }
             
             IMP.request_pay({
+
                 pg: "kakaopay.TC0ONETIME",
                 pay_method: "card",
                 merchant_uid: this.merchant_uid + this.randomNumber,
@@ -472,6 +471,7 @@ export default {
                 buyer_tel: this.member.phoneNumber,
                 buyer_addr: this.defaultDelivery.road + this.defaultDelivery.addressDetail,
                 buyer_postcode: this.defaultDelivery.zipcode
+
             }, rsp => { // callback
                 if (rsp.success) {
                     // 결제 성공 시
