@@ -19,6 +19,10 @@
           </div>
         </div>
       </div>
+  </div>
+</template>
+
+<script>
 import FreeBoardReadForm from '@/components/board/freeBoard/FreeBoardReadForm.vue'
 import { mapActions, mapState } from 'vuex'
 
@@ -51,6 +55,7 @@ export default {
             await this.requestFreeBoardDeleteToSpring(this.freeBoardId);
             await this.$router.push({ name: 'FreeBoardListPage' })
         },
+    },
     async created() {
         await this.requestFreeBoardToSpring(this.freeBoardId);
     }
