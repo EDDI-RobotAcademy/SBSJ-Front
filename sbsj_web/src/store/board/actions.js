@@ -83,6 +83,17 @@ export default {
                 alert('댓글 삭제 실패');
             });
     },
+    requestCreateFreeBoardToSpring({ }, payload) {
+        const { title, content, writer } = payload;
+        return axiosInst.post('/free/register', { title, content, writer })
+            .then((res) => {
+                alert('게시물 등록 성공!');
+                return res.data
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
     requestFreeBoardToSpring({ commit }, freeBoardId) {
         console.log("requestFreeBoardToSpring: "+ freeBoardId)
         return axiosInst.get(`/free/read/${freeBoardId}`)

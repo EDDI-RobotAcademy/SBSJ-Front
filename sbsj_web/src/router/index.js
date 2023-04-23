@@ -47,6 +47,7 @@ import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
 import QnaBoardReadPage from "@/views/board/qna/QnaBoardReadPage";
 import QnaBoardModifyPage from "@/views/board/qna/QnaBoardModifyPage";
 
+import FreeBoardRegisterPage from "@/views/board/free/FreeBoardRegisterPage";
 import FreeBoardReadPage from "@/views/board/free/FreeBoardReadPage";
 import FreeBoardModifyPage from "@/views/board/free/FreeBoardModifyPage";
 Vue.use(VueRouter)
@@ -258,7 +259,12 @@ const routes = [
     props: {
       default: true
     }
-  }
+  },
+  {
+    path: '/free/register',
+    name: 'FreeBoardRegisterPage',
+    component: FreeBoardRegisterPage
+  },
   {
     path: '/free/read/:freeBoardId',
     name: 'FreeBoardReadPage',

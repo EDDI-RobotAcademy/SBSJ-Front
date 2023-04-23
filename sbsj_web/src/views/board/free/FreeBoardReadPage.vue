@@ -32,6 +32,13 @@ export default {
         enteredPassword: ''
       };
     },                        
+    components : { FreeBoardReadForm, FreeCommentListForm, FreeCommentRegisterForm },
+    props: {
+        freeBoardId: {
+            type: String,
+            required: true
+        }
+    },
     computed: {
         ...mapState(boardModule, ['freeBoard', 'freeComments'])
     },
@@ -40,6 +47,10 @@ export default {
             'requestFreeBoardToSpring',
             'requestFreeBoardDeleteToSpring',
         ]),
+        async onDelete() {
+            await this.requestFreeBoardDeleteToSpring(this.freeBoardId);
+            await this.$router.push({ name: 'FreeBoardListPage' })
+        },
     async created() {
         await this.requestFreeBoardToSpring(this.freeBoardId);
     }
