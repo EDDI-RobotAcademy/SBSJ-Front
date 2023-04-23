@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import FreeCommentListForm from '@/components/board/comment/FreeCommentListForm.vue'
-import FreeCommentRegisterForm from '@/components/board/comment/FreeCommentRegisterForm.vue'
+// import FreeCommentListForm from '@/components/board/comment/FreeCommentListForm.vue'
+// import FreeCommentRegisterForm from '@/components/board/comment/FreeCommentRegisterForm.vue'
 import FreeBoardReadForm from '@/components/board/freeBoard/FreeBoardReadForm.vue'
 import { mapActions, mapState } from 'vuex'
 
@@ -38,7 +38,7 @@ export default {
         enteredPassword: ''
       };
     },                        
-    components : { FreeBoardReadForm, FreeCommentListForm, FreeCommentRegisterForm },
+    components : { FreeBoardReadForm, },
     props: {
         freeBoardId: {
             type: String,
