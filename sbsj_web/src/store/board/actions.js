@@ -94,6 +94,16 @@ export default {
                 alert('문제 발생!')
             })
     },
+    requestFreeBoardListToSpring({ commit }) {
+        return axiosInst.get('/free/list')
+            .then((res) => {
+                const freeBoards = res.data;
+                commit(REQUEST_FREE_BOARD_LIST_TO_SPRING, freeBoards);
+            })
+            .catch((res) => {
+                alert("문제 발생! " + res.data);
+            });
+    },
     requestFreeBoardToSpring({ commit }, freeBoardId) {
         console.log("requestFreeBoardToSpring: "+ freeBoardId)
         return axiosInst.get(`/free/read/${freeBoardId}`)
