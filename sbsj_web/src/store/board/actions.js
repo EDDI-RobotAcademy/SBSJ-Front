@@ -92,4 +92,15 @@ export default {
                 alert('문제 발생!')
             })
     },
+    requestFreeBoardModifyToSpring({}, payload) {
+        const { freeBoardId, title, content } = payload
+        console.log("수정: "+ freeBoardId +", "+ title +", "+ content)
+        return axiosInst.post(`/free/modify/${freeBoardId}`, { title, content })
+            .then(() => {
+                alert("수정 성공")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
 }

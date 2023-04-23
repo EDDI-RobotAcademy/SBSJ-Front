@@ -47,6 +47,7 @@ import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
 import QnaBoardReadPage from "@/views/board/qna/QnaBoardReadPage";
 import QnaBoardModifyPage from "@/views/board/qna/QnaBoardModifyPage";
 
+import FreeBoardModifyPage from "@/views/board/free/FreeBoardModifyPage";
 Vue.use(VueRouter)
 
 const routes = [
@@ -257,6 +258,16 @@ const routes = [
       default: true
     }
   }
+  {
+    path: '/free/modify/:freeBoardId',
+    name: 'FreeBoardModifyPage',
+    components: { 
+      default: FreeBoardModifyPage
+    },
+    props: {
+      default: true
+    }
+  },
   
 ]
 
