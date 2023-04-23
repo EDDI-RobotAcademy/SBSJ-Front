@@ -112,6 +112,26 @@ export default {
         return axiosInst.post(`/review/read/${productId}`)
             .then((res) => {
                 commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
+    async reqModifyReviewWithImageToSpring({},formData) {
+        console.log('리뷰 등록 요청 데이터:', formData);
+        return axiosInst.put('/review/modifyWithImg', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((res) => {
+            console.log(res.data);
+            alert('리뷰수정완료.')
+        })
+        .catch((error) => {
+            console.log(error.message);
+            alert('에러가 발생했습니다: ' + error.message);
+        });
+    },
+    async reqDeleteReviewToSpring({}, productReviewId) {
+        return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
+            .then(() => {
+                alert('리뷰삭제완료.')
             })
     },
 
