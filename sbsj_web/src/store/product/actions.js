@@ -85,33 +85,44 @@ export default {
             })
     },
     
-    async reqRegisterReviewToSpring(_, payload) {
+    async reqRegisterReviewToSpring({}, payload) {
+        console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
         return axiosInst.post('/review/register', payload)
             .then(() => {
+                alert('리뷰등록완료.')
             })
             .catch((error) => {
                 console.log(error.message);
                 alert('에러가 발생했습니다: ' + error.message);
             })
     },
-    async reqRegisterReviewWithImageToSpring(_, payload) {
-        return axiosInst.post('/review/register', payload, {
+    async reqRegisterReviewWithImageToSpring({},formData) {
+        return axiosInst.post('/review/registerWithImg', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then((res) => {
+        .then((res) => {
+            console.log(res.data);
+            alert('리뷰등록완료.')
+        })
+        .catch((error) => {
+            console.log(error.message);
+            alert('에러가 발생했습니다: ' + error.message);
+        });
+    },
+    async reqModifyReviewToSpring({}, payload) {
+        console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
+        return axiosInst.put('/review/modify', payload)
+            .then(() => {
                 console.log(res.data);
+                alert('리뷰수정완료.')
             })
             .catch((error) => {
                 console.log(error.message);
                 alert('에러가 발생했습니다: ' + error.message);
             })
     },
-    async reqReadReviewFromSpring({commit}, productId) {
-        return axiosInst.post(`/review/read/${productId}`)
-            .then((res) => {
-                commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
     async reqModifyReviewWithImageToSpring({},formData) {
         console.log('리뷰 등록 요청 데이터:', formData);
         return axiosInst.put('/review/modifyWithImg', formData, {
