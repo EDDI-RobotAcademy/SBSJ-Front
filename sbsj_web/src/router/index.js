@@ -40,6 +40,7 @@ import FirstLiverPage from '@/views/survey/detailCheckList/liverList/FirstLiverP
 import OrderInfoPage from "@/views/order/OrderInfoPage.vue"
 import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
 import ReviewListPage from '@/views/review/ReviewListPage';
+import ReviewModifyPage from '@/views/review/ReviewModifyPage'
 
 import QnaBoardRegisterPage from "@/views/board/qna/QnaBoardRegisterPage";
 import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
@@ -220,6 +221,11 @@ const routes = [
     path: '/review-list',
     name: 'ReviewListPage',
     component: ReviewListPage
+  },
+  {
+    path: '/review/modify',
+    name: 'ReviewModifyPage',
+    component: ReviewModifyPage
   },
   {
     path: '/qna/register',

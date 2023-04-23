@@ -10,8 +10,8 @@
         </v-col>
         <v-col cols="4">
           <div class="rating-section">
-            <p style="font-size: 20px" v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">리뷰 평점 {{ 0 }}</p>
-            <p style="font-size: 20px" v-else>리뷰 평점 {{ starRateAverage }}</p>
+            <p v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)" style="font-size: 20px">리뷰 평점 {{ 0 }}</p>
+            <p v-else style="font-size: 20px">리뷰 평점 {{ averageStarRate }}</p>
             <v-rating
               :value="starRateAverage"
               background-color="grey"
@@ -29,61 +29,66 @@
     <div class="review-register-btn">
       <v-btn color="primary" to="/review">리뷰 등록하러가기</v-btn>
     </div>
-    <div class="review-container">
-      <paginate tag="ul" name="reviews" :list="reviews" :per="3">
+      <div>
         <li v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">
           <p class="mb-7">작성된 리뷰가 없습니다.</p>
           <v-divider width="1070px"></v-divider>
         </li>
-        <li v-for="(review, idx) in paginated('reviews')" :key="idx" v-else>
-          <review-context-form
-              :review="review"/>
+        <li v-for="(review, idx) in reviews" :key="idx">
+          <review-context-form :review="review" />
         </li>
-      </paginate>
-      <paginate-links for="reviews" :simple="{
-          next: 'Next »',
-          prev: '« Back'
-        }"></paginate-links>
+      </div>
+        <div class="review-container" style="display: flex; justify-content: center; align-items: center;">
+          <paginate
+            tag="ul"
+            name="reviews"
+            :list="reviews"
+            :per="3"
+            :page-count="pageCount"
+          >
+          </paginate>
+        </div>
     </div>
-          
-  </div>
 </template>
 
 <script>
-
 import ReviewContextForm from "@/components/review/ReviewContextForm";
 import { mapActions, mapState } from "vuex";
+import Vue from 'vue';
+import Paginate from 'vuejs-paginate';
+const productModule = 'productModule';
+
+Vue.component('paginate', Paginate);
+
 
 export default {
   name: "ReviewListForm",
-  components: { ReviewContextForm },
-  data() {
-    return {
-      paginate: ["reviews"],
-    };
-  },
+  components: { ReviewContextForm  },
+
   props: {
     product: {
       type: Object,
       required: true,
     },
+    pageCount: {
+      type: Number,
+      default: 0, // 기본 값으로 0을 설정
+    },
   },
   methods: {
-    ...mapActions("productModule", ["reqReadReviewFromSpring"]),
+    ...mapActions(productModule, ["reqReadReviewFromSpring", "getStarRateAverage"]),
   },
-  created() {
-    const productId = this.product.Id;
-    this.reqReadReviewFromSpring(productId);
+  async created() {
+    const productId = 1;
+    await this.reqReadReviewFromSpring(productId);
+    await this.getStarRateAverage(productId);
+    
   },
   computed: {
-    ...mapState("productModule", ["reviews"]),
-    starRateAverage() {
-      if (this.reviews && this.reviews.length) {
-        const starRateAverage = this.reviews[0].starRateAverage;
-        return parseFloat(starRateAverage.toFixed(1));
-      }
-      return 0;
-    }
+    ...mapState(productModule, ["reviews", "starRateAverage"]),
+    averageStarRate() {
+    return this.starRateAverage;
+  },
   },
 };
 </script>

@@ -6,6 +6,7 @@ import {
 
     REQUEST_WISH_LIST_TO_SPRING,
     REQUEST_READ_REVIEW_FROM_SPRING,
+    REQUEST_STAR_RATE_AVERAGE,
 } from './mutation-types'
 
 export default {
@@ -28,5 +29,8 @@ export default {
     },
     [REQUEST_READ_REVIEW_FROM_SPRING](state, passingData) {
         state.reviews = passingData
+    },
+    [REQUEST_STAR_RATE_AVERAGE](state, passingData) {
+        state.starRateAverage = passingData
     },
 }

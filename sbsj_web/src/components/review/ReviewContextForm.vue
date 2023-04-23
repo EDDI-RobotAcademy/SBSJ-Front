@@ -3,8 +3,11 @@
       <v-row no-gutters>
         <v-col cols="4" align="right">
           <div class="mr-3">
+            <p>등록일자</p>
             <p>{{ review.createDate }}</p>
+            <p>수정일자</p>
             <p>{{ review.updateDate }}</p>
+            <p>리뷰 ID: {{ review.productReviewId }}</p>
             <v-rating
                 :value="review.starRate"
                 background-color="grey"
@@ -16,22 +19,42 @@
           </div>
         </v-col>
         <v-col cols="8" align="left">
-          <div class="ml-3" v-if="(!review.reviewImageList || review.reviewImageList.length === 0)">
-            <p>{{ review.reviewrId }}</p>
-            <p>{{ review.context }}</p>
+          <div class="ml-3" v-if="(!review.reviewImagePathList || review.reviewImagePathList.length === 0)" style="display: flex; justify-content: space-between;">
+              <div>
+                  <p>작성내용</p>
+                  <p>{{ review.context }}</p>
+              </div>
+              <div>
+                  <review-modify-form :review="review"/>
+                  <v-btn  width="50px" large rounded
+                        class="mt-1" color="primary" 
+                        >
+                        삭제
+                  </v-btn>
+              </div>
           </div>
           <div class="ml-3" v-else>
-            <p>{{ review.reviewrId }}</p>
-            <p>{{ review.context }}</p>
-            <v-carousel>
+            <div>
+                  <p>작성내용</p>
+                  <p>{{ review.context }}</p>
+              </div>
+              <div>
+                  <review-modify-form :review="review"/>
+                  <v-btn  width="50px" large rounded
+                        class="mt-1" color="primary"
+                        >
+                        삭제
+                  </v-btn>
+              </div>
+            <v-carousel height="100" width="100">
               <v-carousel-item
-                v-for="(image, index) in review.reviewImageList"
+                v-for="(imagePath, index) in review.reviewImagePathList"
                 :key="index"
               >
                 <v-img
-                  :src="require(`@/assets/reviewImgs/${image.fileName}`)"
-                  height="300"
-                  width="400"
+                  :src="require(`@/assets/reviewImgs/${imagePath}`)"
+                  height="100"
+                  width="100"
                   contain
                 ></v-img>
               </v-carousel-item>
@@ -45,9 +68,11 @@
 
   
   <script>
-  
+  import ReviewModifyForm from "@/components/review/ReviewModifyForm.vue"
+
   export default {
     name: "ReviewContextForm",
+    components: { ReviewModifyForm  },
     props: {
       review: {
         type: Object,

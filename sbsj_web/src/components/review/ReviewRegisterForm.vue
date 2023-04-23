@@ -47,13 +47,11 @@
                     color="#205C37"
                     prepend-icon="mdi-camera"
                     label="사진 추가하기"
+                    multiple
                 ></v-file-input>
-                <v-img
-                    :src="preview"
-                    max-height="200"
-                    max-width="200"
-                    contain
-                />
+              </div>
+              <div v-for="(image, index) in preview" :key="index">
+                <v-img :src="image" max-height="200" max-width="200" contain></v-img>
               </div>
               <v-divider></v-divider>
               <v-card-actions>
@@ -85,70 +83,80 @@ export default {
     starRate: 0,
     context: '',
     image: '',
-    preview: '',
+    preview: [],
     fileName: '',
     context_rule: [
       v => !!v || '필수 입력 사항입니다.',
       v => !(v && v.length < 10) || '10자 이상 입력해 주세요.',
     ],
     images: [], // Add this line
-  }
-},
+      }
+    },
   props: {
     product: {
       type: Object,
       required: true,
     },
-    
   },
   methods: {
     ...mapActions(productModule, [
-      'reqRegisterReviewToSpring',
-      'reqRegisterReviewWithImageToSpring'
+      "reqRegisterReviewToSpring",
+      "reqRegisterReviewWithImageToSpring",
     ]),
-    selectFile(file) {
-      this.image = file;
-      const fileData = (data) => {
-        this.preview = data;
-      };
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.addEventListener("load", function() {
-        fileData(reader.result);
-      }, false);
+    selectFile(files) {
+    this.images = files;
+    this.preview = [];
+
+    for (let i = 0; i < files.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            this.preview.push(e.target.result);
+        };
+        reader.readAsDataURL(files[i]);
+    }
     },
     removeFile(e) {
-      e.target.file = null
-      this.preview = ''
+      this.$refs.fileUpload.value = null;
+      this.preview = [];
+      this.images = []; 
     },
     async submit() {
-      if (this.image.length > 0) {
-        let formData = new FormData();
-        formData.append('imageFileList', this.image);
-        let fileInfo = {
-          memberId: '1L', // 수정된 부분
-          productId: '2L', // 수정된 부분
-          starRate: this.starRate,
-          context: this.context,
-        };
-        formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}));
-        await this.reqRegisterReviewWithImageToSpring(formData);
-      } else {
-        const {starRate, context} = this;
-        const memberId = '1'; // 수정된 부분
-        const productId = '2'; // 수정된 부분
-        await this.reqRegisterReviewToSpring({memberId, productId, starRate, context});
+    let reviewRegisterRequest = {
+      memberId: 3,
+      productId: 1,
+      starRate: this.starRate,
+      context: this.context,
+    };
+
+    if (this.images.length > 0) {
+      let formData = new FormData();
+      let reviewRegisterRequestBlob = new Blob([JSON.stringify(reviewRegisterRequest)], { type: "application/json" });
+      formData.append("reviewRegisterRequest", reviewRegisterRequestBlob);
+
+      for (let i = 0; i < this.images.length; i++) {
+        formData.append('imageFileList', this.images[i]);
       }
-      this.$router.go(this.$router.currentRoute);
-    },
+      console.log('이미지 파일 추가 완료'); // 이미지 추가 확인용 로그
+
+      // formData 내용 확인을 위한 코드
+      for (let entry of formData.entries()) {
+        console.log(entry[0] + ', ' + entry[1]);
+      }
+
+      await this.reqRegisterReviewWithImageToSpring(formData);
+    } else {
+      const { starRate, context } = this;
+      const memberId = 3;
+      const productId = 1;
+      await this.reqRegisterReviewToSpring({ memberId, productId, starRate, context });
+    }
+    this.$router.go(this.$router.currentRoute);
+  },
   },
   computed: {
-    ...mapState([
-      'member',
-      
-    ])
+    ...mapState(["member"]),
   },
-}
+};
 </script>
 
 <style scoped>
