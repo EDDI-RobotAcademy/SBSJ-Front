@@ -144,5 +144,15 @@ export default {
           console.error(error.message);
         }
     },
+    async getStarRateAverage({ commit },productId) {
+        try {
+          const response = await axiosInst.get('/review/starRateAverage/${productId}', { params: { productId }} );
+          const starRateAverage = parseFloat(response.data[0].averageStarRate.toFixed(1));
+          console.log(JSON.stringify(response.data));
+          commit('REQUEST_STAR_RATE_AVERAGE', starRateAverage);
+        } catch (error) {
+          console.error(error.message);
+        }
+      },
 
 }
