@@ -139,12 +139,12 @@ export default {
             alert('에러가 발생했습니다: ' + error.message);
         });
     },
-    async reqDeleteReviewToSpring({}, productReviewId) {
-        return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
-            .then(() => {
-                alert('리뷰삭제완료.')
-            })
-    },
+            async reqDeleteReviewToSpring({}, productReviewId) {
+                return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
+                    .then(() => {
+                        alert('리뷰삭제완료.')
+                    })
+            },
     async reqReadReviewFromSpring({ commit }, productId) {
         try {
           const response = await axiosInst.get(`/review/list/${productId}`, { params: { productId } });
