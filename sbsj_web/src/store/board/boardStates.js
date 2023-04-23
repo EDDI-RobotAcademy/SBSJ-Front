@@ -7,4 +7,7 @@ export default {
 
     qnaComments: [],
     qnaComment: {},
+
+    freeBoards: [],
+    freeBoard: {},
 }

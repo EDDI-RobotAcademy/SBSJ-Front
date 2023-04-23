@@ -83,6 +83,16 @@ export default {
                 alert('댓글 삭제 실패');
             });
     },
+    requestFreeBoardToSpring({ commit }, freeBoardId) {
+        console.log("requestFreeBoardToSpring: "+ freeBoardId)
+        return axiosInst.get(`/free/read/${freeBoardId}`)
+            .then((res) => {
+                commit(REQUEST_FREE_BOARD_TO_SPRING, res.data)
+            })
+            .catch(() => {
+                alert("requestFreeBoardToSpring 문제 발생!")
+            })
+    },
     requestFreeBoardDeleteToSpring({}, freeBoardId) {
         return axiosInst.get(`/free/delete/${freeBoardId}`)
             .then(() => {
