@@ -83,4 +83,13 @@ export default {
                 alert('댓글 삭제 실패');
             });
     },
+    requestFreeBoardDeleteToSpring({}, freeBoardId) {
+        return axiosInst.get(`/free/delete/${freeBoardId}`)
+            .then(() => {
+                alert("삭제 성공")
+            })
+            .catch(() => {
+                alert('문제 발생!')
+            })
+    },
 }
