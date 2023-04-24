@@ -83,7 +83,9 @@
                             <div style="display:flex; height:100%; border-bottom: 1px solid #DBDBDB;">
                                 <div style=" width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">배송비</div>
 
-                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small; font-weight: bold;">무료배송(우체국택배)</div>
+                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small;">
+                                    <span>(5만원 이상 주문시 무료배송)</span> &nbsp;<span style="font-weight:bold;">3,000원</span>
+                                </div>
                             </div>
                         </div>
 
