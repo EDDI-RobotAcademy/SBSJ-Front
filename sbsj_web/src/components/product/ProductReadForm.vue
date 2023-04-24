@@ -99,8 +99,8 @@
                             <div style="display:flex; height:100%;">
                                 <div style="width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">수량</div>
                                 <div style="width: 70%; display:flex; justify-content:center; align-items:center;">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected style="font-size:medium; --bs-btn-padding-x: 4rem;">수량을 선택하세요.</option>
+                                    <select class="form-select" v-model="selectCount" aria-label="Default select example">
+                                        <option :value="null" selected>수량을 선택하세요.</option>
                                         <option value="1">1박스</option>
                                         <option value="2">2박스</option>
                                         <option value="3">3박스</option>
@@ -175,7 +175,8 @@ export default {
         return {            
             checkedWish: false,
             thumbnail: '',
-            detail: ''
+            detail: '',
+            selectCount: null,
         };
     },
     props: {
@@ -237,10 +238,14 @@ export default {
             }
         },
         addToCart() {
+            if (!this.selectCount) {
+                alert("수량을 선택해주세요.");
+                return;
+            }
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             const memberId = userInfo.memberId;
             const productId = this.product.productId;
-            const count = 1
+            const count = this.selectCount;
             console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
