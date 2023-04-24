@@ -83,7 +83,9 @@
                             <div style="display:flex; height:100%; border-bottom: 1px solid #DBDBDB;">
                                 <div style=" width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">배송비</div>
 
-                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small; font-weight: bold;">무료배송(우체국택배)</div>
+                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small;">
+                                    <span>(5만원 이상 주문시 무료배송)</span> &nbsp;<span style="font-weight:bold;">3,000원</span>
+                                </div>
                             </div>
                         </div>
 
@@ -99,8 +101,8 @@
                             <div style="display:flex; height:100%;">
                                 <div style="width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">수량</div>
                                 <div style="width: 70%; display:flex; justify-content:center; align-items:center;">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected style="font-size:medium; --bs-btn-padding-x: 4rem;">수량을 선택하세요.</option>
+                                    <select class="form-select" v-model="selectCount" aria-label="Default select example">
+                                        <option :value="null" selected>수량을 선택하세요.</option>
                                         <option value="1">1박스</option>
                                         <option value="2">2박스</option>
                                         <option value="3">3박스</option>
@@ -128,7 +130,11 @@
                                 장바구니</button>
                             </div>
                             <div style="width:50%; display:flex; justify-content:center; align-items:center; ">
-                                <button type="button" class="btn btn-dark btn-lg" style="font-weight: bold;">바로구매</button>
+                                <button type="button" 
+                                    class="btn btn-dark btn-lg" 
+                                    style="font-weight: bold;"
+                                    @click="directPurchase(product)"
+                                >바로구매</button>
                             </div>
                         </div>
                     </div>
@@ -175,7 +181,8 @@ export default {
         return {            
             checkedWish: false,
             thumbnail: '',
-            detail: ''
+            detail: '',
+            selectCount: null,
         };
     },
     props: {
@@ -237,10 +244,14 @@ export default {
             }
         },
         addToCart() {
+            if (!this.selectCount) {
+                alert("수량을 선택해주세요.");
+                return;
+            }
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             const memberId = userInfo.memberId;
             const productId = this.product.productId;
-            const count = 1
+            const count = this.selectCount;
             console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
@@ -249,6 +260,22 @@ export default {
             if(goToCartMessage) {
                 this.$router.push({ name:'ShoppingCartPage' })
             }
+        },
+        async directPurchase(product){
+            // 바로 구매
+            if(!this.selectCount){
+                alert("수량을 선택해주세요.")
+                return;
+            }
+            this.count = this.selectCount
+            this.directTotalPrice = product.price * this.selectCount
+            this.thumbnail = product.thumbnail
+            this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
+                { orderSave: { directOrderCheck: true, product: product, 
+                                count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
+            console.log(this.$store.state.orderModule.orderList)
+            alert ("주문 페이지로 이동합니다.")
+            await this.$router.push({ name: 'OrderInfoPage' })
         },
 	},
     updated() {

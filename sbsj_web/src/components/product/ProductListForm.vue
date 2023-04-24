@@ -36,7 +36,12 @@
                     </dl>
                 </router-link>        
                 <div class="other-info">
-                    <v-btn class="directive-btn" rounded style="margin-right: 10px;">
+                    <v-btn
+                        class="directive-btn"
+                        rounded
+                        style="margin-right: 10px;"
+                        @click="directPurchase(product)"
+                    >
                         <span class="directive-btn-text">바로구매</span>
                     </v-btn>
                     <v-btn class="directive-btn" @click="addToCart(product)" rounded>
@@ -57,6 +62,15 @@ const accountModule = 'accountModule'
   
 export default {
     name: 'ProductListForm',
+    data () {
+        return {
+            cnt: 1,
+            merchant: {
+                productId: 0,
+                productName: "",
+            }
+        }
+    },
     props: {
         products: {
             type: Array,
@@ -95,7 +109,7 @@ export default {
                 let userInfo = JSON.parse(localStorage.getItem("userInfo"));
                 const memberId = userInfo.memberId;
                 const productId = product.productId;
-                const count = 1
+                const count = this.cnt;
 
                 this.reqAddCartToSpring({ memberId, productId, count })
 
@@ -107,7 +121,20 @@ export default {
             //     alert("로그인 후 사용가능합니다.")
             //     this.$router.push({ name: 'SignInPage' })
             // }
-        }
+        },
+        async directPurchase(product){
+            // 바로 구매
+            this.directTotalPrice = product.price
+            this.count = this.cnt
+            this.thumbnail = product.thumbnail
+            this.merchant = {productId: product.productId, productName: product.title}
+            this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
+                { orderSave: { directOrderCheck: true, product: this.merchant, 
+                                count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
+            console.log(this.$store.state.orderModule.orderList)
+            alert ("주문 페이지로 이동합니다.")
+            await this.$router.push({ name: 'OrderInfoPage' })
+        },
     }
 }
   
