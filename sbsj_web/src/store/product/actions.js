@@ -6,6 +6,7 @@ import {
 
     REQUEST_WISH_LIST_TO_SPRING,
     REQUEST_READ_REVIEW_FROM_SPRING,
+    REQUEST_STAR_RATE_AVERAGE,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject'
@@ -114,7 +115,7 @@ export default {
     async reqModifyReviewToSpring({}, payload) {
         console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
         return axiosInst.put('/review/modify', payload)
-            .then(() => {
+            .then((res) => {
                 console.log(res.data);
                 alert('리뷰수정완료.')
             })
@@ -160,7 +161,7 @@ export default {
           const response = await axiosInst.get('/review/starRateAverage/${productId}', { params: { productId }} );
           const starRateAverage = parseFloat(response.data[0].averageStarRate.toFixed(1));
           console.log(JSON.stringify(response.data));
-          commit('REQUEST_STAR_RATE_AVERAGE', starRateAverage);
+          commit(REQUEST_STAR_RATE_AVERAGE, starRateAverage);
         } catch (error) {
           console.error(error.message);
         }
