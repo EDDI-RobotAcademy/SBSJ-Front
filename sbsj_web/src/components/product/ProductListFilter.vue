@@ -4,7 +4,7 @@
       <div class="body-part">
         <ul class="list" style="padding-left: 0;">
           <li class="list-header">
-            <span>신체 부위별</span>
+            <span>신체 기관별</span>
           </li>
           <li class="list-item" @click="filtering('TOTAL')">
             <span>전체보기</span>
@@ -17,6 +17,35 @@
           </li>
           <li class="list-item" @click="filtering('STRESS')">
             <span>스트레스 완화</span>
+          </li>
+          <li class="list-item" @click="filtering('VITAMIN-C')">
+            <span>비타민 C</span>
+          </li>
+          <li class="list-item" @click="filtering('VITAMIN-D')">
+            <span>비타민 D</span>
+          </li>
+        </ul>
+        <ul class="list" style="padding-left: 0;">
+          <li class="list-header">
+            <span>브랜드별</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('TOTAL')">
+            <span>전체보기</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('ABC')">
+            <span>ABC</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('DEF')">
+            <span>DEF</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('GHI')">
+            <span>GHI</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('JKL')">
+            <span>JKL</span>
+          </li>
+          <li class="list-item" @click="filteringBrandProduct('MNO')">
+            <span>MNO</span>
           </li>
         </ul>
       </div>
@@ -35,6 +64,9 @@ export default {
   methods: {
     filtering(value) {
       this.$emit('filtering', value)
+    },
+    filteringBrandProduct(value) {
+      this.$emit('filteringBrandProduct', value)
     }
   }
 }

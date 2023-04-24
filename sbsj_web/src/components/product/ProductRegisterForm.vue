@@ -38,6 +38,23 @@
         </td>
       </tr>
       <tr>
+        <td>상품브랜드</td>
+        <td>
+            <div>
+                <select v-model="selectedBrand">
+                  <option value="">Select an Brand</option>
+                  <option v-for="(brand, index) in productBrand" :key="index" :value="brand">{{ brand }}</option>
+                </select>
+                <v-btn @click="addBrand">Add Selection</v-btn>
+                <ul>
+                    <li>
+                        {{ brand }}
+                    </li>
+                </ul>
+            </div>
+        </td>
+      </tr>
+      <tr>
         <td>썸네일이미지</td>
         <td>
           <input type="file"  ref="thumbnail"
@@ -46,7 +63,7 @@
         <td>상세이미지</td>
         <td>
           <input type="file"  ref="detailImage"
-            @change="handleDetailImage"/>
+            @change="handleDetailImage" disabled/>
         </td>
       </tr>
     </table>
@@ -79,22 +96,37 @@ const productModule = 'productModule'
             imageFileList: [],
             selectedOption: "",
             categories: [],
+            brand: '',
+            selectedBrand: "",
+            temp: []
         }
     },
     props: {
 
     },
     computed: {
-        ...mapState(productModule, {
-            productOptions: state => state.productOptions
-        })
+        ...mapState(productModule, [
+            'productOptions',
+            'productBrands'
+        ]),
+        productBrand: {
+          get() {
+            return this.temp;
+          },
+          set(value) {
+            this.temp = value;
+          }
+        }
     },
-    mounted() {
-        this.requestProductOptionListToSpring()
+    async created() {
+        await this.requestProductOptionListToSpring()
+        await this.requestProductBrandListToSpring()
+        this.productBrand = this.productBrands
     },
     methods: {
         ...mapActions(productModule, [
-            'requestProductOptionListToSpring'
+            'requestProductOptionListToSpring',
+            'requestProductBrandListToSpring'
         ]),
         onSubmit () {
             let formData = new FormData()
@@ -104,12 +136,13 @@ const productModule = 'productModule'
                 formData.append('imageFileList', this.thumbnail[i])
             }
 
-            const { productName, productSubName, price, categories } = this
+            const { productName, productSubName, price, categories, brand } = this
             let productInfo = {
                 productName: productName,
                 productSubName: productSubName,
                 price: price,
-                categories: categories
+                categories: categories,
+                brand: brand
             }
             console.log('productInfo: ' + JSON.stringify(productInfo))
             formData.append(
@@ -134,6 +167,9 @@ const productModule = 'productModule'
                 this.categories.push(this.selectedOption);
                 this.selectedOption = "";
             }
+        },
+        addBrand() {
+          this.brand = this.selectedBrand;
         },
         removeItem(index) {
             this.categories.splice(index, 1);
