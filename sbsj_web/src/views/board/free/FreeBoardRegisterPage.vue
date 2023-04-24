@@ -32,7 +32,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .mb-5 {
   font-size: medium;
   width: 70%;
