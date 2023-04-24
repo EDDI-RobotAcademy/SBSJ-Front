@@ -24,9 +24,35 @@
 </template>
 
 <script>
+import MyPageOrderReadForm from "@/components/mypage/MyPageOrderReadForm.vue"
+import {mapActions, mapState} from "vuex";
+
+const mypageModule = 'mypageModule';
 
 export default {
     name: "MyPageOrderListForm",
+    components: { MyPageOrderReadForm },
+    data() {
+        return {
+            
+        }
+    },
+    async created () {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        let token = userInfo.token;
+        console.log("MyPageOrder created() token: " + token);
+        
+        await this.reqCompleteOrderListToSpring(token);
+        console.log(this.completeOrderList)
+    },
+    computed: {
+        ...mapState(mypageModule, ['completeOrderList'])
+    },
+    methods: {
+        ...mapActions(mypageModule, [
+            'reqCompleteOrderListToSpring',
+        ]),
+    }
     
 }
 </script>
