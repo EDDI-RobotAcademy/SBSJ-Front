@@ -12,6 +12,21 @@
                         </div>
                         <div class="clear-fix"></div>
                         <product-list-form :products="showProducts" :viewCount="bindViewCount" :orderBy="bindOrderBy"/>
+                        <paginate :page-count="10" :page-range="3" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;">
+                            <template slot="page" slot-scope="props">
+                                <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page) }">
+                                    <a href="#" @click.prevent="props.pageSelected(page)" style="display: inline-block;
+                                    padding: 5px 10px;
+                                    background-color: #fff;
+                                    border: 1px solid #ddd;
+                                    border-radius: 3px;
+                                    color: #333;">{{ page }}</a>
+                                </li>
+                            </template>
+                        </paginate>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
