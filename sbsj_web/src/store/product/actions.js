@@ -140,12 +140,12 @@ export default {
             alert('에러가 발생했습니다: ' + error.message);
         });
     },
-            async reqDeleteReviewToSpring({}, productReviewId) {
-                return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
-                    .then(() => {
-                        alert('리뷰삭제완료.')
-                    })
-            },
+    async reqDeleteReviewToSpring({}, productReviewId) {
+        return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
+            .then(() => {
+                alert('리뷰삭제완료.')
+            })
+    },
     async reqReadReviewFromSpring({ commit }, productId) {
         try {
           const response = await axiosInst.get(`/review/list/${productId}`, { params: { productId } });
@@ -166,5 +166,34 @@ export default {
           console.error(error.message);
         }
       },
-
+    async requestSpecificProductListToSpring ({ commit }, payload) {
+        const { category, startIndex, endIndex } = payload;
+        return await axiosInst.get(`/category/${category}/${startIndex}/${endIndex}`)
+            .then((res) => {
+                commit(REQUEST_SPECIFIC_PRODUCT_LIST_TO_SPRING, res.data)
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error.response.data.message);
+            })
+    },
+    async requestProductBrandListToSpring({commit}) {
+        console.log("requestProductBrandListToSpring()");
+        return await axiosInst.get('/product/productBrands')
+            .then((res) => {
+                commit(REQUEST_PRODUCT_BRAND_LIST_TO_SPRING, res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+    },
+    async requestSpecificBrandProductListToSpring({commit}, payload) {
+        console.log("requestSpecificBrandProductListToSpring");
+        const { brand, startIndex, endIndex } = payload
+        return await axiosInst.get(`/category/brand/${brand}/${startIndex}/${endIndex}`)
+            .then((res) => {
+                commit(REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING, res.data);
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
 }

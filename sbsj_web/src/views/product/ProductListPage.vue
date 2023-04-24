@@ -12,11 +12,26 @@
                         </div>
                         <div class="clear-fix"></div>
                         <product-list-form :products="showProducts" :viewCount="bindViewCount" :orderBy="bindOrderBy"/>
+                        <paginate :page-count="10" :page-range="3" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;">
+                            <template slot="page" slot-scope="props">
+                                <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page) }">
+                                    <a href="#" @click.prevent="props.pageSelected(page)" style="display: inline-block;
+                                    padding: 5px 10px;
+                                    background-color: #fff;
+                                    border: 1px solid #ddd;
+                                    border-radius: 3px;
+                                    color: #333;">{{ page }}</a>
+                                </li>
+                            </template>
+                        </paginate>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
                 <div class="product-nav">
-                    <product-list-filter @filtering="filteringProduct"/>
+                    <product-list-filter @filtering="filteringProduct" @filteringBrandProduct="filteringBrandProduct"/>
                 </div>
             </div>
         </div>
@@ -29,38 +44,49 @@ import { mapActions, mapState } from 'vuex';
 import ProductListForm from '@/components/product/ProductListForm.vue';
 import ProductListFilter from '@/components/product/ProductListFilter.vue';
 import ProductCategoryHeader from '@/components/product/ProductCategoryHeader.vue';
+import Paginate from 'vuejs-paginate';
 
 const productModule = 'productModule'
   export default {
     name: "ProductListPage",
-    components: {ProductListForm, ProductListFilter, ProductCategoryHeader},
+    components: {ProductListForm, ProductListFilter, ProductCategoryHeader, Paginate},
     data() {
         return {
             category: 'TOTAL',
             temp: [],
             productTitle: '',
-            defaultViewCount: 2,
-            defaultOrderBy: 'Default'
+            defaultViewCount: 20,
+            defaultOrderBy: 'Default',
+            currentPage: 1,
+            itemsPerPage: 20,
+            cache: {},
+            brand: '',
+            isBrand: false
         }
     },
 
     
     async created() {
-        await this.requestProductListToSpring();
-        this.temp = this.products
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const payload = {startIndex: startIndex, endIndex: endIndex}
+        await this.requestProductListToSpring(payload);
+        this.showProducts = this.products
+        this.cache[this.currentPage] = this.products
         this.productTitle = this.category
         this.defaultOrderBy = 'Default'
         console.log(this.productTitle)
         },
 
     computed: {
+        // totalPages() {
+        //     return Math.ceil(this.temp.length / this.itemsPerPage);
+        // },
         showProducts: {
             get() {
-                // console.log("showProducts() get()")
                 return this.temp
             },
             set(value) {
-                // console.log("showProducts() set()")
                 this.temp = value
             },
         },
@@ -92,21 +118,41 @@ const productModule = 'productModule'
     },
     methods: {
         ...mapActions(productModule, [
-            'requestProductListToSpring'
+            'requestProductListToSpring',
+            'requestSpecificProductListToSpring',
+            'requestSpecificBrandProductListToSpring'
         ]),
         filteringProduct(productCategory) {
-            // console.log("filteringProduct();")
+            this.cache = {}
+            console.log("initialize cache, this cache current: " + this.cache)
+            console.log("filteringProduct(): " + productCategory)
             this.category = productCategory
-            console.log(this.category)
             if(this.category === 'TOTAL') {
                 console.log("total category")
                 this.showProducts = this.products
+                this.currentPage = 1
+                this.cache[1] = this.products
             } else {
-                // console.log("specific category")
-                console.log(this.products.filter((product) => product.productOptions.includes(this.category)))
-                this.showProducts = this.products.filter((product) => product.productOptions.includes(this.category))
+                this.clickCallback(1)
             }
             this.productTitle = this.category
+        },
+        filteringBrandProduct(productBrand) {
+            this.cache = {}
+            this.isBrand = true
+            console.log("initialize cache, this cache current: " + this.cache)
+            console.log("filteringBrandProduct(): " + productBrand)
+            this.brand = productBrand
+            if(this.productBrand === 'TOTAL') {
+                console.log("total category")
+                this.showProducts = this.products
+                this.currentPage = 1
+                this.cache[1] = this.products
+            } else {
+                this.clickCallback(1)
+            }
+            this.productTitle = this.brand
+            this.isBrand = false
         },
         priceDesc() {
             console.log("princeDesc() in View page")
@@ -123,6 +169,39 @@ const productModule = 'productModule'
         viewCount(value) {
             console.log("select viewCount is: " + value) 
             this.bindViewCount = value
+        },
+        async clickCallback(pageNumber) {
+            console.log("clickCallback(): " + pageNumber)
+            this.currentPage = pageNumber
+            const startIndex = (pageNumber - 1) * this.itemsPerPage;
+            const endIndex = startIndex + this.itemsPerPage;
+            if(!this.cache[pageNumber]) {
+                if(this.isBrand) {
+                    await this.getDataWithBrand(startIndex, endIndex)
+                } else {
+                    await this.getDataWithOption(startIndex, endIndex)
+                }
+                console.log(this.products)
+                if(this.products != this.temp) {
+                    this.cache[this.currentPage] = this.products;
+                    console.log("cache updated")
+                    this.showProducts = this.products;
+                }
+            } else {
+                console.log("cache used!!")
+                console.log(this.cache)
+                this.showProducts = this.cache[pageNumber];
+            }
+        },
+        async getDataWithOption(startIndex, endIndex) {
+            console.log("getDataWithOption()")
+            const payload = {category: this.category, startIndex: startIndex, endIndex: endIndex}
+            await this.requestSpecificProductListToSpring(payload);
+        },
+        async getDataWithBrand(startIndex, endIndex) {
+            console.log("getDataWithBrand()")
+            const payload = {brand: this.brand, startIndex: startIndex, endIndex: endIndex}
+            await this.requestSpecificBrandProductListToSpring(payload)
         }
     }
   }
@@ -190,5 +269,23 @@ const productModule = 'productModule'
         margin: auto;
         padding: 0;
         display: block;
+    }
+
+
+    pagination li {
+        margin-right: 5px;
+    }
+
+    pagination li a {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        color: #333;
+    }
+
+    li a:hover {
+        background-color: #f5f5f5;
     }
   </style>
