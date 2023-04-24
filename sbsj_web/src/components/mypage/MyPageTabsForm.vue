@@ -39,10 +39,10 @@ export default {
   },
   data() {
     return {
-      currentTab: "MyPageOrderForm",
+      currentTab: "MyPageOrderListForm",
       active_tab: 0,
       navi: [
-        { menu: "주문관리", tab: "MyPageOrderForm" },
+        { menu: "주문관리", tab: "MyPageOrderListForm" },
         { menu: "리뷰관리", tab: "MyPageReviewForm" },
         { menu: "찜한상품", tab: "MyPageWishListForm" },
         { menu: "장바구니", tab: "MyPageShoppingForm" },

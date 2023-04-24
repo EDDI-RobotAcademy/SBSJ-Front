@@ -298,7 +298,7 @@ export default {
             phoneNumber: '',
             recipientName: ''
         },
-        merchant_uid : 'ORD2023',
+        merchant_uid : 'ORD',
         randomNumber : 0,
         usedNum : [],
       }
@@ -381,12 +381,11 @@ export default {
             const deliveryFee = totalPrice < 50000 ? 3000 : 0;
             const amount = totalPrice + deliveryFee;
 
-            this.randomNumber = Math.floor(Math.random() * 1000000);
-            for (let i = 0; i < this.usedNum.length; i++) {
-                if(this.usedNum[i] == this.randomNumber){
-                    continue;
-                }
+            this.randomNumber = Math.floor(Math.random() * 100000000);
+            while (this.usedNum.includes(this.randomNumber)) {
+                this.randomNumber = Math.floor(Math.random() * 100000000);
             }
+            this.usedNum.push(this.randomNumber);
 
             let productName;
             if(this.orderList.orderSave.directOrderCheck) {
@@ -443,12 +442,11 @@ export default {
             const deliveryFee = totalPrice < 50000 ? 3000 : 0;
             const amount = totalPrice + deliveryFee;
 
-            this.randomNumber = Math.floor(Math.random() * 1000000);
-            for (let i = 0; i < this.usedNum.length; i++) {
-                if(this.usedNum[i] == this.randomNumber){
-                    continue;
-                }
+            this.randomNumber = Math.floor(Math.random() * 100000000);
+            while (this.usedNum.includes(this.randomNumber)) {
+                this.randomNumber = Math.floor(Math.random() * 100000000);
             }
+            this.usedNum.push(this.randomNumber);
 
             let productName;
             if(this.orderList.orderSave.directOrderCheck) {

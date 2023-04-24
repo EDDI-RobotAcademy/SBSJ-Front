@@ -38,6 +38,7 @@ import FirstIntestinePage from '@/views/survey/detailCheckList/intestineList/Fir
 import FirstLiverPage from '@/views/survey/detailCheckList/liverList/FirstLiverPage'
 
 import OrderInfoPage from "@/views/order/OrderInfoPage.vue"
+import PurchaseCompletePage from "@/views/order/PurchaseCompletePage.vue"
 import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
 import ReviewListPage from '@/views/review/ReviewListPage';
 import ReviewModifyPage from '@/views/review/ReviewModifyPage'
@@ -291,6 +292,11 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {    
+    path: '/purchase-complete',
+    name: 'PurchaseCompletePage',
+    component: PurchaseCompletePage
   },
   
 ]
