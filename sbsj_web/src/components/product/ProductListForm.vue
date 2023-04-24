@@ -95,7 +95,7 @@ export default {
                 let userInfo = JSON.parse(localStorage.getItem("userInfo"));
                 const memberId = userInfo.memberId;
                 const productId = product.productId;
-                const count = 1
+                const count = this.cnt;
 
                 this.reqAddCartToSpring({ memberId, productId, count })
 
