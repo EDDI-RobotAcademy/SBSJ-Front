@@ -154,4 +154,13 @@ export default {
             alert('댓글 등록 실패.')
         })
     },
+    requestFreeCommentDeleteToSpring({}, { freeCommentId }) {
+        return axios.delete(`http://localhost:7777/free/read/${freeCommentId}`)
+            .then(() => {
+                alert('댓글 삭제 완료');
+            })
+            .catch(() => {
+                alert('댓글 삭제 실패');
+            });
+    },
 }

@@ -51,6 +51,17 @@ export default {
                     alert("질문 게시글의 댓글 " + freeCommentId + "번 수정 실패")
                 })
         },
+        async deleteComment(payload) {
+            const { freeCommentId } = payload;
+            await axios.delete(`http://localhost:7777/free/read/${freeCommentId}`)
+                .then(() => {
+                    alert('댓글 삭제 완료');
+                    location.reload();
+                })
+                .catch(() => {
+                    alert('댓글 삭제 실패');
+                });
+        }
     },
 }
 </script>
