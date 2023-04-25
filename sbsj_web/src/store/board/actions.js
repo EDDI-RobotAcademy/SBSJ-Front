@@ -137,4 +137,14 @@ export default {
                 alert('문제 발생!')
             })
     },
+    requestFreeCommentRegisterToSpring({}, payload) {
+        const { writer, comment, freeBoardId} = payload
+        return axiosInst.post(`http://localhost:7777/free/read/register`, { writer, comment, freeBoardId })
+        .then(() => {
+            alert('댓글 등록을 완료하였습니다.')
+        })
+        .catch(() =>{
+            alert('댓글 등록 실패.')
+        })
+    },
 }
