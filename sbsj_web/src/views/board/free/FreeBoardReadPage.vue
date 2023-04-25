@@ -19,12 +19,21 @@
           </div>
         </div>
       </div>
+      <div style="border-bottom: 1px solid black; opacity: 0.2; margin-top:5%;"></div>
+          <table class="comment-form">
+            <tr>
+              <div>
+                <free-comment-list-form :freeComments="freeComments"/>
+              </div>
+                <free-comment-register-form @submit="onSubmitRegister"/>
+            </tr>
+          </table>
   </div>
 </template>
 
 <script>
-// import FreeCommentListForm from '@/components/board/comment/FreeCommentListForm.vue'
-// import FreeCommentRegisterForm from '@/components/board/comment/FreeCommentRegisterForm.vue'
+import FreeCommentListForm from '@/components/board/comment/FreeCommentListForm.vue'
+import FreeCommentRegisterForm from '@/components/board/comment/FreeCommentRegisterForm.vue'
 import FreeBoardReadForm from '@/components/board/freeBoard/FreeBoardReadForm.vue'
 import { mapActions, mapState } from 'vuex'
 
@@ -38,7 +47,7 @@ export default {
         enteredPassword: ''
       };
     },                        
-    components : { FreeBoardReadForm, },
+    components : { FreeBoardReadForm, FreeCommentListForm, FreeCommentRegisterForm },
     props: {
         freeBoardId: {
             type: String,
@@ -52,14 +61,24 @@ export default {
         ...mapActions(boardModule, [
             'requestFreeBoardToSpring',
             'requestFreeBoardDeleteToSpring',
+            'requestFreeCommentRegisterToSpring',
+            'requestFreeCommentListFromSpring'
         ]),
         async onDelete() {
             await this.requestFreeBoardDeleteToSpring(this.freeBoardId);
             await this.$router.push({ name: 'FreeBoardListPage' })
         },
+        async onSubmitRegister(payload) {
+            const { comment, writer, freeCommentId } = payload;
+            const freeBoardId = this.freeBoardId;
+            console.log("댓글 등록" + freeBoardId);
+            await this.requestFreeCommentRegisterToSpring({ comment, writer, freeBoardId, freeCommentId });
+            await this.requestFreeCommentListFromSpring(this.freeBoardId);
+        }
     },
     async created() {
         await this.requestFreeBoardToSpring(this.freeBoardId);
+        await this.requestFreeCommentListFromSpring(this.freeBoardId);
     }
 }
 

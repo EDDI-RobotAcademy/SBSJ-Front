@@ -10,4 +10,7 @@ export default {
 
     freeBoards: [],
     freeBoard: {},
+
+    freeComments: [],
+    freeComment: {}
 }

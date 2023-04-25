@@ -1,6 +1,6 @@
 <template>
   <div class="container" align="center">
-    <h2 class="mb-5">문의사항 작성</h2>
+    <div class="qnaRegisterPage">문의게시판</div>
     <qna-board-register-form @submit="onSubmit"/>
   </div>
 </template> 
@@ -12,7 +12,7 @@ import { mapState, mapActions } from 'vuex'
 const boardModule = 'boardModule'
 
 export default {
-    name: "QnqBoardRegisterPage",
+    name: "QnaBoardRegisterPage",
     components: { QnaBoardRegisterForm },
     computed: {
       ...mapState(boardModule, ['qnaBoard'])
@@ -33,5 +33,12 @@ export default {
 </script>
 
 <style>
+.qnaRegisterPage {
+  font-size: medium;
+  width: 70%;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
 
 </style>

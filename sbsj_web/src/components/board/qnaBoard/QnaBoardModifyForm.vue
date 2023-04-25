@@ -2,10 +2,10 @@
     <div>
       <form @submit.prevent="onSubmit">
           <div style="width:80%;">
-              <h1 style="text-align: center; width:60%;">
-                  <input type="text" style="text-align: center;" :value="qnaBoard.title"/>
+              <h1 style="text-align: center;">
+                  <input type="text" style="text-align: center; border: 2px solid #CCCC" v-model="title"/>
               </h1>
-              <div class="readText">
+              <div class="qnaModifyText">
                   <div style="border-bottom: 1px solid black; opacity: 0.2; margin-top:5%;"></div>
                   
                   <div style="display: flex;">
@@ -27,8 +27,8 @@
                       </div>
                   </div>
                   <div>
-                      <div style="margin-top: 5%;">
-                          <textarea cols="70" rows="10" :value="qnaBoard.content"></textarea>
+                      <div style="margin-top: 5%; border: 2px solid #CCCC">
+                          <textarea cols="75" rows="10" v-model="content"></textarea>
                       </div>
                   </div>
               </div>
@@ -82,5 +82,8 @@
       .qna-board-modify-table td {
           border: 1px solid;
           text-align: center;
+      }
+      .qnaModifyText {
+          width:60%;
       }
   </style>

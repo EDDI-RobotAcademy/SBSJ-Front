@@ -5,6 +5,7 @@ import {
 
     REQUEST_FREE_BOARD_LIST_TO_SPRING,
     REQUEST_FREE_BOARD_TO_SPRING,
+    REQUEST_FREE_COMMENT_LIST_FROM_SPRING, 
 } from "./mutation-types"
 
 export default { 
@@ -22,5 +23,8 @@ export default {
     },
     [REQUEST_FREE_BOARD_TO_SPRING] (state, passingData) {
         state.freeBoard = passingData
+    },
+    [REQUEST_FREE_COMMENT_LIST_FROM_SPRING] (state, passingData) {
+        state.freeComments = passingData
     },
 }

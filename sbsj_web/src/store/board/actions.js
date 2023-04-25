@@ -5,6 +5,7 @@ import {
 
     REQUEST_FREE_BOARD_LIST_TO_SPRING,
     REQUEST_FREE_BOARD_TO_SPRING,
+    REQUEST_FREE_COMMENT_LIST_FROM_SPRING,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject.js'
@@ -136,5 +137,30 @@ export default {
             .catch(() => {
                 alert('문제 발생!')
             })
+    },
+    requestFreeCommentListFromSpring({commit}, freeBoardId ){
+        return axiosInst.get(`/free/read/comments/${freeBoardId}`)
+        .then((res) => {
+            commit(REQUEST_FREE_COMMENT_LIST_FROM_SPRING, res.data)
+        })
+    },
+    requestFreeCommentRegisterToSpring({}, payload) {
+        const { writer, comment, freeBoardId} = payload
+        return axiosInst.post(`http://localhost:7777/free/read/register`, { writer, comment, freeBoardId })
+        .then(() => {
+            alert('댓글 등록을 완료하였습니다.')
+        })
+        .catch(() =>{
+            alert('댓글 등록 실패.')
+        })
+    },
+    requestFreeCommentDeleteToSpring({}, { freeCommentId }) {
+        return axios.delete(`http://localhost:7777/free/read/${freeCommentId}`)
+            .then(() => {
+                alert('댓글 삭제 완료');
+            })
+            .catch(() => {
+                alert('댓글 삭제 실패');
+            });
     },
 }
