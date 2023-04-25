@@ -5,6 +5,7 @@ import {
 
     REQUEST_FREE_BOARD_LIST_TO_SPRING,
     REQUEST_FREE_BOARD_TO_SPRING,
+    REQUEST_FREE_COMMENT_LIST_FROM_SPRING,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject.js'
@@ -136,6 +137,12 @@ export default {
             .catch(() => {
                 alert('문제 발생!')
             })
+    },
+    requestFreeCommentListFromSpring({commit}, freeBoardId ){
+        return axiosInst.get(`/free/read/comments/${freeBoardId}`)
+        .then((res) => {
+            commit(REQUEST_FREE_COMMENT_LIST_FROM_SPRING, res.data)
+        })
     },
     requestFreeCommentRegisterToSpring({}, payload) {
         const { writer, comment, freeBoardId} = payload
