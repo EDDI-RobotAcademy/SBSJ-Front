@@ -22,6 +22,7 @@ import MyPagePasswordCheckPage from "@/views/mypage/MyPagePasswordCheckPage";
 
 // 설문 관련
 import SurveyPage from '@/views/survey/SurveyPage'
+import SurveyResultPage from '@/views/survey/SurveyResultPage';
 
 // 기본정보 설문
 import UsernameCheckPage from '@/views/survey/commonCheckList/UsernameCheckPage'
@@ -250,6 +251,12 @@ const routes = [
     name: 'StressCheckPage',
     component: StressCheckPage 
   },
+  {
+    path: '/survey/result',
+    name: 'SurveyResultPage',
+    component: SurveyResultPage
+  },
+  
   {    
     path: '/product-register-page',
     name: 'ProductRegisterPage',
