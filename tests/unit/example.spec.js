@@ -3,14 +3,19 @@ import ProductListForm from '@/components/product/ProductListForm.vue'
 
 describe('ProductListForm', () => {
   it('renders props.msg when passed', () => {
-    let product = new Array()
-    product.id = 1
-    product.title = "go"
-    product.price = 10
+    let product = {
+      id: 1,
+      title: "go",
+      price: 10
+    }
 
     const wrapper = shallowMount(ProductListForm, {
-      propsData: { products: product }
+      propsData: {
+        products: [product],
+        viewCount: 10,
+        orderBy: 'price'
+      }
     })
-    expect(wrapper.props().products).toBe(product)
+    expect(wrapper.props().products).toEqual([product])
   })
 })
