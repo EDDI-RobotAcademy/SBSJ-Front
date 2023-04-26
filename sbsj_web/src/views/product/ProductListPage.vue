@@ -12,18 +12,13 @@
                         </div>
                         <div class="clear-fix"></div>
                         <product-list-form :products="showProducts" :viewCount="bindViewCount" :orderBy="bindOrderBy"/>
-                        <paginate :page-count="10" :page-range="3" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
+                        <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="10" :page-range="10" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
                         list-style: none;
                         padding: 0;
                         margin: 0;">
-                            <template slot="page" slot-scope="props">
-                                <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page) }">
-                                    <a href="#" @click.prevent="props.pageSelected(page)" style="display: inline-block;
-                                    padding: 5px 10px;
-                                    background-color: #fff;
-                                    border: 1px solid #ddd;
-                                    border-radius: 3px;
-                                    color: #333;">{{ page }}</a>
+                            <template slot="page" slot-scope="props"> 
+                                <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
+                                    <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
                                 </li>
                             </template>
                         </paginate>
@@ -61,27 +56,53 @@ const productModule = 'productModule'
             itemsPerPage: 20,
             cache: {},
             brand: '',
-            isBrand: false
+            isBrand: false,
+            isQuery: {}
         }
     },
-
-    
     async created() {
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const payload = {startIndex: startIndex, endIndex: endIndex}
-        await this.requestProductListToSpring(payload);
+        if(this.products.length == 0) {
+            console.log("requestProductListToSpring()")
+            await this.requestProductListToSpring(payload);
+        }
         this.showProducts = this.products
         this.cache[this.currentPage] = this.products
         this.productTitle = this.category
         this.defaultOrderBy = 'Default'
         console.log(this.productTitle)
         },
-
+    mounted() {
+        console.log("mounted()")
+        console.log(this.searchQuery)
+    },
+    watch: {
+        '$store.state.productModule.searchResult'(newValue, oldValue) {
+            console.log("searchResult Changed")
+            this.cache[this.currentPage] = this.searchResult;
+            console.log("cache updated")
+            this.showProducts = newValue;
+        },
+        '$store.state.productModule.searchQuery'(newValue, oldValue) {
+            this.syncCurrentPage = 1
+            this.cache = {}
+            console.log("initialize cache, this cache current: " + this.cache)
+            console.log("searchQuery Changed")
+            this.isQuery = newValue
+            console.log(this.isQuery)
+        },
+    },
     computed: {
-        // totalPages() {
-        //     return Math.ceil(this.temp.length / this.itemsPerPage);
-        // },
+        syncCurrentPage: {
+            get() {
+                return this.currentPage
+            },
+            set(value) {
+                this.currentPage = value
+            }
+        },
         showProducts: {
             get() {
                 return this.temp
@@ -114,43 +135,36 @@ const productModule = 'productModule'
                 this.defaultOrderBy = value
             }
         },
-        ...mapState(productModule, ['products']),
+        ...mapState(productModule, ['products', 'searchResult', 'searchQuery']),
     },
     methods: {
         ...mapActions(productModule, [
             'requestProductListToSpring',
             'requestSpecificProductListToSpring',
-            'requestSpecificBrandProductListToSpring'
+            'requestSpecificBrandProductListToSpring',
+            'requestSearchResultProductListToSpring'
         ]),
-        filteringProduct(productCategory) {
+        async filteringProduct(productCategory) {
             this.cache = {}
+            this.isQuery = {}
+            this.syncCurrentPage = 1
+            console.log("initialize Query, this Query current: " + this.isQuery.query)
             console.log("initialize cache, this cache current: " + this.cache)
             console.log("filteringProduct(): " + productCategory)
             this.category = productCategory
-            if(this.category === 'TOTAL') {
-                console.log("total category")
-                this.showProducts = this.products
-                this.currentPage = 1
-                this.cache[1] = this.products
-            } else {
-                this.clickCallback(1)
-            }
+            this.clickCallback(this.currentPage)
             this.productTitle = this.category
         },
         filteringBrandProduct(productBrand) {
             this.cache = {}
+            this.isQuery = {}
+            this.syncCurrentPage = 1
+            console.log("initialize Query, this Query current: " + this.isQuery.query)
             this.isBrand = true
             console.log("initialize cache, this cache current: " + this.cache)
             console.log("filteringBrandProduct(): " + productBrand)
             this.brand = productBrand
-            if(this.productBrand === 'TOTAL') {
-                console.log("total category")
-                this.showProducts = this.products
-                this.currentPage = 1
-                this.cache[1] = this.products
-            } else {
-                this.clickCallback(1)
-            }
+            this.clickCallback(this.currentPage)
             this.productTitle = this.brand
             this.isBrand = false
         },
@@ -172,21 +186,18 @@ const productModule = 'productModule'
         },
         async clickCallback(pageNumber) {
             console.log("clickCallback(): " + pageNumber)
-            this.currentPage = pageNumber
+            this.syncCurrentPage = pageNumber
             const startIndex = (pageNumber - 1) * this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage;
             if(!this.cache[pageNumber]) {
-                if(this.isBrand) {
+                if(this.isQuery.query !== undefined) {
+                    await this.getDataWithSearch(this.isQuery.query, startIndex, endIndex)
+                } else if(this.isBrand) {
                     await this.getDataWithBrand(startIndex, endIndex)
                 } else {
                     await this.getDataWithOption(startIndex, endIndex)
                 }
                 console.log(this.products)
-                if(this.products != this.temp) {
-                    this.cache[this.currentPage] = this.products;
-                    console.log("cache updated")
-                    this.showProducts = this.products;
-                }
             } else {
                 console.log("cache used!!")
                 console.log(this.cache)
@@ -194,21 +205,30 @@ const productModule = 'productModule'
             }
         },
         async getDataWithOption(startIndex, endIndex) {
-            console.log("getDataWithOption()")
+            console.log("getDataWithOption() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
             const payload = {category: this.category, startIndex: startIndex, endIndex: endIndex}
             await this.requestSpecificProductListToSpring(payload);
+            this.showProducts = this.products;
+            this.cache[this.currentPage] = this.products
         },
         async getDataWithBrand(startIndex, endIndex) {
-            console.log("getDataWithBrand()")
+            console.log("getDataWithBrand() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
             const payload = {brand: this.brand, startIndex: startIndex, endIndex: endIndex}
             await this.requestSpecificBrandProductListToSpring(payload)
+            this.showProducts = this.products;
+            this.cache[this.currentPage] = this.products
+        },
+        async getDataWithSearch(query, startIndex, endIndex) {
+            console.log("getDataWithSearch() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
+            const payload = {query: query, startIndex: startIndex, endIndex: endIndex}
+            await this.requestSearchResultProductListToSpring(payload)
         }
     }
   }
   
   </script>
   
-  <style>
+  <style scoped>
     .clear-fix::after {
         display: block;
         visibility: hidden;
@@ -269,20 +289,6 @@ const productModule = 'productModule'
         margin: auto;
         padding: 0;
         display: block;
-    }
-
-
-    pagination li {
-        margin-right: 5px;
-    }
-
-    pagination li a {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-        color: #333;
     }
 
     li a:hover {

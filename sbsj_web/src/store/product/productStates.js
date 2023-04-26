@@ -6,4 +6,6 @@ export default {
     wishList: [],
     reviews: [],
     review:[],
+    searchResult: [],
+    searchQuery: {}
 }
