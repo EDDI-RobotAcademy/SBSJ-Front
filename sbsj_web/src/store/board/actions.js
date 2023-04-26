@@ -22,8 +22,10 @@ export default {
                 alert('문제 발생!')
             })
     },
-    requestQnaBoardListToSpring({ commit }) {
-        return axiosInst.get('/qna/list')
+    requestQnaBoardListToSpring({ commit }, payload) {
+        console.log("requsetQnaBoardListToSpring()")
+        const {startIndex, endIndex} = payload
+        return axiosInst.get(`/qna/list/${startIndex}/${endIndex}`)
             .then((res) => {
                 const qnaBoards = res.data;
                 commit(REQUEST_QNA_BOARD_LIST_TO_SPRING, qnaBoards);
