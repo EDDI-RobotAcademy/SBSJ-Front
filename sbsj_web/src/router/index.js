@@ -60,6 +60,12 @@ import FreeBoardListPage from "@/views/board/free/FreeBoardListPage";
 import FreeBoardReadPage from "@/views/board/free/FreeBoardReadPage";
 import FreeBoardModifyPage from "@/views/board/free/FreeBoardModifyPage";
 
+import OrderInfoPage from "@/views/order/OrderInfoPage.vue"
+import PurchaseCompletePage from "@/views/order/PurchaseCompletePage.vue"
+import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
+import ReviewListPage from '@/views/review/ReviewListPage';
+import ReviewModifyPage from '@/views/review/ReviewModifyPage'
+
 Vue.use(VueRouter)
 
 const routes = [
