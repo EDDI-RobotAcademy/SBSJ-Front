@@ -60,10 +60,10 @@ export default {
         });
     },
 
-    reqMyPageDeliveryListToSpring({ commit }, memberId) {
+    reqMyPageDeliveryListToSpring({}, memberId) {
         return axiosInst.get(`/delivery/list/${memberId}`)
             .then((res) => {
-                commit(REQUEST_MY_PAGE_DELIVERY_LIST_TO_SPRING, res.data);
+                localStorage.setItem("lsDeliveryList", JSON.stringify(res.data));
             })
             .catch(() => {
                 alert('문제 발생!')
