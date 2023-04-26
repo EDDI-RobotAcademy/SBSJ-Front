@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 mx-5">
-        <div v-if="!deliveryList || (Array.isArray(deliveryList) && deliveryList.length === 0)">
+        <div v-if="!localDeliveryList || (Array.isArray(localDeliveryList) && localDeliveryList.length === 0)">
             <div class="d-flex justify-end mb-5">
                 <my-page-register-address-form @submit="onSubmit"/>
             </div>
@@ -12,7 +12,7 @@
             <div class="d-flex justify-end mb-5">
                 <my-page-register-address-form @submit="onSubmit"/>
             </div>
-            <v-card v-for="delivery in deliveryList" :key="delivery.addressId" class="mb-5 rounded-xl">
+            <v-card v-for="delivery in localDeliveryList" :key="delivery.addressId" class="mb-5 rounded-xl">
                 <v-card-title style="font-size: 20px;">
                     <strong>[{{ delivery.addressType }}]&nbsp;{{ delivery.addressName }}</strong> <br>
                 </v-card-title>
@@ -45,9 +45,6 @@ const orderModule = 'orderModule';
 export default {
     name: "MyPageDeliveryListForm",
     components: { MyPageRegisterAddressForm, MyPageDeliveryModifyForm },
-    computed : {
-        ...mapState(orderModule, ['deliveryList'])
-    },
     data() {
         return {
             localDeliveryList: []
@@ -56,15 +53,46 @@ export default {
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let memberId = userInfo.memberId;
-        await this.reqMyPageDeliveryListToSpring(memberId);
-        this.localDeliveryList = this.deliveryList;
+
+        let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+
+        // DB 에 데이터가 하나도 없을 때
+        if(lsDeliveryList == '') {
+            alert("배송지가 하나도 없습니다. 추가해주세요.");
+        }
+
+        // localStorage 에 lsDeliveryList 가 없을 때
+        if(lsDeliveryList == null) {
+            await this.reqMyPageDeliveryListToSpring(memberId);
+            lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+        }
+        
+        // localStorage 에 있는 lsDeliveryList 기본 배송지가 제일 위로 가게 정렬
+        lsDeliveryList = lsDeliveryList.sort((a, b) => {
+            if(a.defaultAddress.length < b.defaultAddress.length) return 1;
+            if(a.defaultAddress.length > b.defaultAddress.length) return -1;
+            return 0;
+        })
+        localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
+
+        this.localDeliveryList = lsDeliveryList;
     },
     methods:{
         ...mapActions(orderModule, ['reqMyPageRegisterDeliveryToSpring',
                                     'reqMyPageDeliveryListToSpring']),
 
         async onSubmit(payload) {
-            await this.reqMyPageRegisterDeliveryToSpring(payload);
+            let successRegister = await this.reqMyPageRegisterDeliveryToSpring(payload);
+
+            let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+            if(lsDeliveryList == null) {
+                if(successRegister != null) {
+                    localStorage.setItem("lsDeliveryList", JSON.stringify(successRegister));
+                }
+            } else {
+                lsDeliveryList.push(successRegister);
+                localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
+            }
             window.location.reload(true);
         }
     },
