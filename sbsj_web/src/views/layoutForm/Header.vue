@@ -177,8 +177,9 @@ export default {
         },
         async resign () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            
-            this.reqResignToSpring(userInfo);
+            if(confirm("정말로 회원 탈퇴 하시겠습니까?")) {
+                this.reqResignToSpring(userInfo);
+            }
         },
         async logout () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
