@@ -20,28 +20,34 @@ import InformationUsePage from "@/views/information/InformationUsePage";
 import MyPage from '@/views/mypage/MyPage';
 import MyPagePasswordCheckPage from "@/views/mypage/MyPagePasswordCheckPage";
 
+// 설문 관련
 import SurveyPage from '@/views/survey/SurveyPage'
-import DetailSurveyPage from '@/views/survey/DetailSurveyPage'
-import AfterCheckPage from '@/views/survey/AfterCheckPage'
-import FirstCheckPage from '@/views/survey/commonCheckList/FirstCheckPage'
-import SecondCheckPage from '@/views/survey/commonCheckList/SecondCheckPage'
-import ThirdCheckPage from '@/views/survey/commonCheckList/ThirdCheckPage'
-import FourthCheckPage from '@/views/survey/commonCheckList/FourthCheckPage'
-import FifthCheckPage from '@/views/survey/commonCheckList/FifthCheckPage'
-import SixthCheckPage from '@/views/survey/commonCheckList/SixthCheckPage'
 
-import FirstBonePage from '@/views/survey/detailCheckList/boneList/FirstBonePage'
-import SecondBonePage from '@/views/survey/detailCheckList/boneList/SecondBonePage'
-import FirstBrainPage from '@/views/survey/detailCheckList/brainList/FirstBrainPage'
-import FirstEyePage from '@/views/survey/detailCheckList/eyeList/FirstEyePage'
-import FirstIntestinePage from '@/views/survey/detailCheckList/intestineList/FirstIntestinePage'
-import FirstLiverPage from '@/views/survey/detailCheckList/liverList/FirstLiverPage'
+// 기본정보 설문
+import UsernameCheckPage from '@/views/survey/commonCheckList/UsernameCheckPage'
+import GenderCheckPage from '@/views/survey/commonCheckList/GenderCheckPage'
+import AgeCheckPage from '@/views/survey/commonCheckList/AgeCheckPage'
+import WeightCheckPage from '@/views/survey/commonCheckList/WeightCheckPage'
+import HeightCheckPage from '@/views/survey/commonCheckList/HeightCheckPage'
+import SmokingCheckPage from '@/views/survey/commonCheckList/SmokingCheckPage'
+import DrinkingCheckPage from '@/views/survey/commonCheckList/DrinkingCheckPage'
+import ExercisingCheckPage from '@/views/survey/commonCheckList/ExercisingCheckPage'
 
-import OrderInfoPage from "@/views/order/OrderInfoPage.vue"
-import PurchaseCompletePage from "@/views/order/PurchaseCompletePage.vue"
-import ReviewRegisterPage from '@/views/review/ReviewRegisterPage';
-import ReviewListPage from '@/views/review/ReviewListPage';
-import ReviewModifyPage from '@/views/review/ReviewModifyPage'
+// 신체기관 설문
+import VisceraSurveyPage from '@/views/survey/visceraCheckList/VisceraSurveyPage'
+import BoneCheckPage from '@/views/survey/visceraCheckList/BoneCheckPage'
+import BrainCheckPage from '@/views/survey/visceraCheckList/BrainCheckPage'
+import EyeCheckPage from '@/views/survey/visceraCheckList/EyeCheckPage'
+import IntestineCheckPage from '@/views/survey/visceraCheckList/IntestineCheckPage'
+import LiverCheckPage from '@/views/survey/visceraCheckList/LiverCheckPage'
+
+// 일상생활 설문
+import LifeSurveyPage from '@/views/survey/lifeCheckList/LifeSurveyPage'
+import BloodPressureCheckPage from '@/views/survey/lifeCheckList/BloodPressureCheckPage'
+import BloodSugarCheckPage from '@/views/survey/lifeCheckList/BloodSugarCheckPage'
+import BodyFatCheckPage from '@/views/survey/lifeCheckList/BodyFatCheckPage'
+import SkinCheckPage from '@/views/survey/lifeCheckList/SkinCheckPage'
+import StressCheckPage from '@/views/survey/lifeCheckList/StressCheckPage'
 
 import QnaBoardRegisterPage from "@/views/board/qna/QnaBoardRegisterPage";
 import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage";
@@ -133,80 +139,116 @@ const routes = [
     name: 'MyPagePasswordCheckPage',
     component: MyPagePasswordCheckPage
   },
+
+  // 설문조사
   {
-    path: '/survey-page',
+    path: '/survey',
     name: 'SurveyPage',
     component: SurveyPage
   },
   {    
-    path: '/detail-survey-page',
-    name: 'DetailSurveyPage',
-    component: DetailSurveyPage
+    path: '/survey/common/user-name',
+    name: 'UsernameCheckPage',
+    component: UsernameCheckPage
   },
   {    
-    path: '/after-check-page',
-    name: 'AfterCheckPage',
-    component: AfterCheckPage
+    path: '/survey/common/gender',
+    name: 'GenderCheckPage',
+    component: GenderCheckPage
   },
   {    
-    path: '/first-check-page',
-    name: 'FirstCheck',
-    component: FirstCheckPage
+    path: '/survey/common/age',
+    name: 'AgeCheckPage',
+    component: AgeCheckPage
   },
   {    
-    path: '/second-check-page',
-    name: 'SecondCheck',
-    component: SecondCheckPage
+    path: '/survey/common/body',
+    name: 'WeightCheckPage',
+    component: WeightCheckPage
   },
   {    
-    path: '/third-check-page',
-    name: 'ThirdCheck',
-    component: ThirdCheckPage
+    path: '/survey/common/body',
+    name: 'HeightCheckPage',
+    component: HeightCheckPage
   },
   {    
-    path: '/fourth-check-page',
-    name: 'FourthCheck',
-    component: FourthCheckPage
+    path: '/survey/common/smoking',
+    name: 'SmokingCheckPage',
+    component: SmokingCheckPage
   },
   {    
-    path: '/fifth-check-page',
-    name: 'FifthCheck',
-    component: FifthCheckPage
+    path: '/survey/common/drinking',
+    name: 'DrinkingCheckPage',
+    component: DrinkingCheckPage
   },
   {    
-    path: '/sixth-check-page',
-    name: 'SixthCheck',
-    component: SixthCheckPage
+    path: '/survey/common/exercising',
+    name: 'ExercisingCheckPage',
+    component: ExercisingCheckPage
+  },
+
+  // 신체기관 관련 설문조사
+  {
+    path: '/survey/viscera',
+    name: 'VisceraSurveyPage',
+    component: VisceraSurveyPage
   },
   {    
-    path: '/first-bone-page',
-    name: 'FirstBone',
-    component: FirstBonePage,
+    path: '/survey/viscera/bone',
+    name: 'BoneCheckPage',
+    component: BoneCheckPage,
   },
   {    
-    path: '/second-bone-page',
-    name: 'SecondBone',
-    component: SecondBonePage,
+    path: '/survey/viscera/brain',
+    name: 'BrainCheckPage',
+    component: BrainCheckPage
   },
   {    
-    path: '/first-brain-page',
-    name: 'FirstBrain',
-    component: FirstBrainPage
+    path: '/survey/viscera/eye',
+    name: 'EyeCheckPage',
+    component: EyeCheckPage
   },
   {    
-    path: '/first-eye-page',
-    name: 'FirstEye',
-    component: FirstEyePage
+    path: '/survey/viscera/intestine',
+    name: 'IntestineCheckPage',
+    component: IntestineCheckPage
   },
   {    
-    path: '/first-intestine-page',
-    name: 'FirstIntestine',
-    component: FirstIntestinePage
+    path: '/survey/viscera/liver',
+    name: 'LiverCheckPage',
+    component: LiverCheckPage
   },
-  {    
-    path: '/first-liver-page',
-    name: 'FirstLiver',
-    component: FirstLiverPage
+
+   // 일상생활 관련 설문조사
+   {
+    path: '/survey/life',
+    name: 'LifeSurveyPage',
+    component: LifeSurveyPage 
+  },
+  {
+    path: '/survey/life/blood-pressure',
+    name: 'BloodPressureCheckPage',
+    component: BloodPressureCheckPage 
+  },
+  {
+    path: '/survey/life/blood-sugar',
+    name: 'BloodSugarCheckPage',
+    component: BloodSugarCheckPage 
+  },
+  {
+    path: '/survey/life/body-fat',
+    name: 'BodyFatCheckPage',
+    component: BodyFatCheckPage 
+  },
+  {
+    path: '/survey/life/skin',
+    name: 'SkinCheckPage',
+    component: SkinCheckPage 
+  },
+  {
+    path: '/survey/life/stress',
+    name: 'StressCheckPage',
+    component: StressCheckPage 
   },
   {    
     path: '/product-register-page',
