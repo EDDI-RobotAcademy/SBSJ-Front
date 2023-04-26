@@ -1,5 +1,5 @@
 <template>
-  <div class="container" align="center">
+  <div class="container" style="align: center">
     <div class="qnaRegisterPage">문의게시판</div>
     <qna-board-register-form @submit="onSubmit"/>
   </div>
