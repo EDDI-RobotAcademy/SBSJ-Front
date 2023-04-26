@@ -42,35 +42,36 @@
       </div>
         <div class="d-flex justify-content-center my-5">
           <table class="free-board-list-table">
-            <tr>
-              <th width="100">No</th>
-              <th width="400">제목</th>
-              <th width="300">글쓴이</th>
-              <th width="200">작성일자</th>
-            </tr>
-            <tr v-if="!freeBoards || (Array.isArray(freeBoards) && freeBoards.length === 0)">
-              <td colspan="4">
-                  현재 등록된 게시물이 없습니다!
-              </td>
-            </tr>
-            <tr v-else
-            v-for="freeBoard in freeBoards"
-            :key="freeBoard.freeBoardId"
-            @click="goToFreeBoardReadPage(freeBoard.freeBoardId)"
-            style="cursor: pointer">
-              <td style="font-weight: bold;">
-                {{ freeBoard.freeBoardId }}
-              </td>
-              <td style="font-weight: bold;">
-                {{ freeBoard.title }}
-              </td>
-              <td style="opacity: 0.7;">
-                {{ freeBoard.writer }}
-              </td>
-              <td style="opacity: 0.7;">
-                {{ freeBoard.regDate | formatDate }}
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <th width="100">No</th>
+                <th width="400">제목</th>
+                <th width="300">글쓴이</th>
+                <th width="200">작성일자</th>
+              </tr>
+              <tr v-if="!freeBoards || (Array.isArray(freeBoards) && freeBoards.length === 0)">
+                <td colspan="4">
+                    현재 등록된 게시물이 없습니다!
+                </td>
+              </tr>
+              <tr v-else v-for="freeBoard in freeBoards"
+                                :key="freeBoard.freeBoardId"
+                                @click="goToFreeBoardReadPage(freeBoard.freeBoardId)"
+                                style="cursor: pointer">
+                <td style="font-weight: bold;">
+                  {{ freeBoard.freeBoardId }}
+                </td>
+                <td style="font-weight: bold;">
+                  {{ freeBoard.title }}
+                </td>
+                <td style="opacity: 0.7;">
+                  {{ freeBoard.writer }}
+                </td>
+                <td style="opacity: 0.7;">
+                  {{ freeBoard.regDate | formatDate }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
