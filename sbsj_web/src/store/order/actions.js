@@ -54,9 +54,9 @@ export default {
         await axiosInst.post("/cart/deleteCartItem", {
             selectCartItemId: payload.selectCartItemId,
         }).then(() => {
-            alert("장바구니에서 삭제되었습니다.")
+            console.log("장바구니에서 삭제되었습니다.")
         }).catch(() => {
-            alert("문제가 발생하여 삭제되지 않았습니다.")
+            console.log("문제가 발생하여 삭제되지 않았습니다.")
         });
     },
 
@@ -133,9 +133,9 @@ export default {
 
     // 결제 성공하면 주문 정보 저장
     reqRegisterOrderToSpring({}, payload) {
-        const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq } = payload
+        const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq } = payload
         return axiosInst.post("/order/register",
-            { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq })
+            { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
             .then((res) => {
                 console.log(res)
             })

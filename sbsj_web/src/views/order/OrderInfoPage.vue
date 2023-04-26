@@ -18,9 +18,9 @@ export default {
             "reqRegisterOrderToSpring"
         ]),
         async payment(payload) {
-          const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq } = payload
+          const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq } = payload
           
-          console.log(amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq)
+          console.log(amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq)
           
           await this.reqRegisterOrderToSpring(payload)
           
