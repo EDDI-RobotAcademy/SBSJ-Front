@@ -45,7 +45,7 @@ export default {
         { menu: "주문관리", tab: "MyPageOrderListForm" },
         { menu: "리뷰관리", tab: "MyPageReviewForm" },
         { menu: "찜한상품", tab: "MyPageWishListForm" },
-        { menu: "장바구니", tab: "MyPageShoppingForm" },
+        { menu: "맞춤 영양제 추천", tab: "MyPageSurveyResultForm" },
         { menu: "배송지관리", tab: "MyPageDeliveryListForm" },
         { menu: "회원정보수정", tab: "MyPageProfileForm" },
       ],
