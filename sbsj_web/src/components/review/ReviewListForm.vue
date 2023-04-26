@@ -11,7 +11,7 @@
         <v-col cols="4">
           <div class="rating-section">
             <p v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)" style="font-size: 20px">리뷰 평점 {{ 0 }}</p>
-            <p v-else style="font-size: 20px">리뷰 평점 {{ averageStarRate }}</p>
+            <p v-else style="font-size: 20px">리뷰 평점 {{ starRateAverage }}</p>
             <v-rating
               :value="starRateAverage"
               background-color="grey"
@@ -26,8 +26,11 @@
       </v-row>
       <v-divider></v-divider>
     </div>
-    <div class="review-register-btn">
-      <v-btn color="primary" to="/review">리뷰 등록하러가기</v-btn>
+    <div>
+      <li>
+          <review-register-page :productId="product.productId.toString()"/>
+      </li>
+      <!-- <v-btn color="primary" @click="reviewRegister">리뷰 등록하러가기</v-btn> -->
     </div>
       <div>
         <li v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">
@@ -52,43 +55,54 @@
 </template>
 
 <script>
-import ReviewContextForm from "@/components/review/ReviewContextForm";
+import ReviewContextForm from "@/components/review/ReviewContextForm.vue";
 import { mapActions, mapState } from "vuex";
 import Vue from 'vue';
 import Paginate from 'vuejs-paginate';
+import ReviewRegisterPage from '@/views/review/ReviewRegisterPage.vue';
 const productModule = 'productModule';
 
 Vue.component('paginate', Paginate);
 
-
 export default {
   name: "ReviewListForm",
-  components: { ReviewContextForm  },
+  components: { ReviewContextForm, ReviewRegisterPage },
 
   props: {
-    product: {
-      type: Object,
+    productId: {
+      type: String,
       required: true,
     },
     pageCount: {
       type: Number,
-      default: 0, // 기본 값으로 0을 설정
+      default: 0,
     },
   },
   methods: {
     ...mapActions(productModule, ["reqReadReviewFromSpring", "getStarRateAverage"]),
+    reviewRegister(){
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if (userInfo == undefined){
+        if(comfirm("리뷰등록은 로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?")){
+          this.$router.push({ name: 'SignInPage'});
+        }
+      } else {
+        alert(this.productId);
+        this.$router.push({ name: 'ReviewRegisterPage', params: {productId: this.productId}});
+      }
+    }
   },
+
   async created() {
-    const productId = 1;
+    const productId = Number(this.productId);
     await this.reqReadReviewFromSpring(productId);
     await this.getStarRateAverage(productId);
-    
   },
   computed: {
-    ...mapState(productModule, ["reviews", "starRateAverage"]),
+    ...mapState(productModule, ["reviews", "starRateAverage", "product"]),
     averageStarRate() {
-    return this.starRateAverage;
-  },
+      return this.starRateAverage;
+    },
   },
 };
 </script>
@@ -126,8 +140,6 @@ p {
 .review-container {
   margin-top: 30px;
 }
-.review-register-btn {
-  text-align: right;
-}
+
 
 </style>

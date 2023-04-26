@@ -26,11 +26,6 @@
               </div>
               <div>
                   <review-modify-form :review="review"/>
-                  <v-btn  width="50px" large rounded
-                        class="mt-1" color="primary" 
-                        >
-                        삭제
-                  </v-btn>
               </div>
           </div>
           <div class="ml-3" v-else>
@@ -40,25 +35,18 @@
               </div>
               <div>
                   <review-modify-form :review="review"/>
-                  <v-btn  width="50px" large rounded
-                        class="mt-1" color="primary"
-                        >
-                        삭제
-                  </v-btn>
+
               </div>
-            <v-carousel height="100" width="100">
-              <v-carousel-item
-                v-for="(imagePath, index) in review.reviewImagePathList"
-                :key="index"
-              >
-                <v-img
-                  :src="require(`@/assets/reviewImgs/${imagePath}`)"
-                  height="100"
-                  width="100"
-                  contain
-                ></v-img>
-              </v-carousel-item>
-            </v-carousel>
+              <v-row>
+                <v-col v-for="(imagePath, index) in review.reviewImagePathList" :key="index" cols="auto">
+                  <v-img
+                    :src="require(`@/assets/reviewImgs/${imagePath}`)"
+                    height="100"
+                    width="100"
+                    contain
+                  ></v-img>
+                </v-col>
+              </v-row>
           </div>
         </v-col>
       </v-row>

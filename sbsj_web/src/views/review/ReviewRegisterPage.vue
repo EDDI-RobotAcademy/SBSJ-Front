@@ -1,27 +1,22 @@
 <template>
-  <ReviewRegisterForm :product="product" />
+  <ReviewRegisterForm :productId="productId" />
 </template>
 
 <script>
-
 import ReviewRegisterForm from '@/components/review/ReviewRegisterForm.vue';
 
-
 export default {
-    name: "ReviewRegisterPage",
-    components: {
-        ReviewRegisterForm
- 
+  name: 'ReviewRegisterPage',
+  components: {
+    ReviewRegisterForm,
   },
-  data() {
-  return {
-    product: {
-      productId: '1',
-      // 기타 필요한 상품 정보
+  props: {
+    productId: {
+      type: String,
+      required: true,
     },
-  };
-},
-}
+  },
+};
 </script>
 
 <style>

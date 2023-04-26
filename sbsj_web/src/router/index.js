@@ -219,9 +219,10 @@ const routes = [
     component: OrderInfoPage
   },
   {
-    path: '/review',
+    path: '/review/:productId',
     name: 'ReviewRegisterPage',
-    component: ReviewRegisterPage
+    component: ReviewRegisterPage,
+    props: true
   },
   {
     path: '/review-list',
