@@ -17,32 +17,32 @@
                     <br>
                     <v-card-text style="padding: 0 100px 0 100px">
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.addressName" label="배송지명 ex) 우리집"
+                            <v-text-field :value="localDelivery.addressName" label="배송지명 ex) 우리집" id="addressName"
                                 :rules="addressName_rule" color="green" required/>
                         </div>
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.addressType" label="배송지 분류"
+                            <v-text-field :value="localDelivery.addressType" label="배송지 분류" id="addressType"
                                 :rules="addressType_rule" color="green" required/>
                         </div>
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.recipientName" label="수령인 이름"
+                            <v-text-field :value="localDelivery.recipientName" label="수령인 이름" id="recipientName"
                                 :rules="recipientName_rule" required color="green"/>
                         </div>
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.phoneNumber" label="전화번호 ex) 010-1234-5678"
+                            <v-text-field :value="localDelivery.phoneNumber" label="전화번호 ex) 010-1234-5678" id="phoneNumber"
                                 :rules="phoneNumber_rule" required color="green"/>
                         </div>
 
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.road" label="도로명" :disabled="true" required/>
+                            <v-text-field :value="localDelivery.road" label="도로명" :disabled="true" required id="road"/>
                         </div>
 
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.addressDetail" label="상세 주소" color="green" required/>
+                            <v-text-field :value="localDelivery.addressDetail" label="상세 주소" color="green" required id="addressDetail"/>
                         </div>
                         
                         <div class="d-flex">
-                            <v-text-field v-model="localDelivery.zipcode" label="우편번호" :disabled="true" required/>
+                            <v-text-field :value="localDelivery.zipcode" label="우편번호" :disabled="true" required id="zipcode"/>
                             
                             <v-btn text large outlined style="font-size: 13px"
                                 class="mt-3 ml-5" color="blue lighten-1"
@@ -127,22 +127,43 @@ export default {
                 let checkedDefaultAddress = document.getElementsByClassName("form-check-input")[0].checked;
                 let defaultAddress = checkedDefaultAddress === true ? "기본 배송지" : "";
                 
-                const { addressName, addressType, recipientName, phoneNumber, 
-                        road, addressDetail, zipcode } = this.localDelivery;
-                
+                const addressName = document.getElementById("addressName").value;
+                const addressType = document.getElementById("addressType").value;
+                const recipientName = document.getElementById("recipientName").value;
+                const phoneNumber = document.getElementById("phoneNumber").value;
+                const road = document.getElementById("road").value;
+                const addressDetail = document.getElementById("addressDetail").value;
+                const zipcode = document.getElementById("zipcode").value;
+
                 if(defaultAddress === "기본 배송지" && this.delivery.defaultAddress === "") {
                     let checkDefaultAddress =  await this.reqMyPageCheckDefaultAddressToSpring({ memberId, defaultAddress });
                     if(checkDefaultAddress) {
                         let changeDefaultAddress = confirm("기본 배송지가 이미 설정되어있습니다.\n이 배송지를 기본 배송지로 설정하시겠습니까?");
                         if(!changeDefaultAddress) {
                             defaultAddress = "";
+                        } else {
+                            let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+                            var foundDelivery = lsDeliveryList.find(e => e.defaultAddress === "기본 배송지");
+                            foundDelivery.defaultAddress = '';
+                            localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
                         }
                     }
                 }
 
-                await this.reqMyPageModifyDeliveryToSpring(
-                    { addressId, memberId, addressName, addressType, recipientName, phoneNumber, 
-                      road, addressDetail, zipcode, defaultAddress });
+                let successRegister = await this.reqMyPageModifyDeliveryToSpring({ addressId, memberId, addressName, addressType, 
+                                                recipientName, phoneNumber, road, addressDetail, zipcode, defaultAddress });
+                
+                let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+                if(successRegister != null) {
+                    lsDeliveryList.forEach((delivery, index) => {
+                        if(delivery.addressId === successRegister.addressId) {
+                            lsDeliveryList.splice(index, 1);
+                        }
+                    })
+                    lsDeliveryList.push(successRegister);
+
+                    localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
+                }
                 
                 this.dialog = false;
                 window.location.reload(true);
@@ -157,6 +178,15 @@ export default {
             let checkDelete = confirm("이 배송지를 삭제하시겠습니까?");
             if(checkDelete) {
                 await this.reqMyPageDeleteDeliveryToSpring(this.delivery.addressId);
+                
+                let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+                lsDeliveryList.forEach((delivery, index) => {
+                    if(delivery.addressId === this.delivery.addressId) {
+                        lsDeliveryList.splice(index, 1);
+                    }
+                })
+                
+                localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
                 window.location.reload(true);
             }
         },
