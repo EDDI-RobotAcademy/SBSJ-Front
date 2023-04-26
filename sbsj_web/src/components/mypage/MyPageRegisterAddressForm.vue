@@ -2,7 +2,7 @@
     <v-layout justify-end>
         <v-dialog v-model="dialog" persistent max-width="800" max-height="1000">
             <template v-slot:activator="{on}">
-                <v-btn class="w-10" color="#c7d6cd" v-on="on">배송지 등록</v-btn>
+                <v-btn class="w-10" color="#c7d6cd" v-on="on">신규 배송지 등록</v-btn>
             </template>
 
             <v-form @submit.prevent="onSubmit" ref="form">

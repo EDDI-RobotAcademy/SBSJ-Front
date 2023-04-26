@@ -24,95 +24,43 @@
                                     <v-divider class="mt-3" color="black"></v-divider>
                                 </v-list-item-title>
 
-                                <v-list-item-title class="name-phone mt-1 mb-2">
+                                <v-list-item-title class="name-phone mt-2">
                                     <div class="mb-2"><strong>주문자</strong> &nbsp;|&nbsp; {{ member.name }}</div>
                                     <div><strong>연락처</strong> &nbsp;|&nbsp; {{ member.phoneNumber }}</div>
-                                    <v-divider class="mt-5 mb-5" color="black"></v-divider>
-
-                                    <div class="mb-2">
-                                        <v-icon>mdi-map-marker</v-icon>
-                                        {{ defaultDelivery.addressName }}
-                                    </div>
-                                    <div class="mb-2"><strong>수령인</strong> &nbsp;|&nbsp; {{ defaultDelivery.recipientName }}</div>
-                                    <div><strong>연락처</strong> &nbsp;|&nbsp; {{ defaultDelivery.phoneNumber }}</div>
+                                    <v-divider class="mt-7" color="black"></v-divider>
                                 </v-list-item-title>
-                                
+
                                 <v-list-item-title class="address">
-                                    <p><strong>배송지</strong> &nbsp;|&nbsp; {{ defaultDelivery.road }} {{ defaultDelivery.addressDetail }}</p>
-                                    <div class="address-message">
-                                        <v-select label="배송시 요청사항을 선택해주세요." 
-                                                :items="deliveryMsg" 
-                                                v-model="selectedOption">
-                                        </v-select>
-                                        <v-textarea outlined v-if="selectedOption === deliveryMsg[2]" v-model="writeDeliveryMsg"></v-textarea>
+                                    <v-chip>배송지 선택</v-chip>
+                                    <v-radio-group v-model="selectedAddress">
+                                        <v-radio v-for="(deliveryOne, index) in lsDeliveryList" :key="index" 
+                                            :label="index === 0 ? '[기본] ' + deliveryOne.addressName : deliveryOne.addressName"
+                                            :value="deliveryOne"
+                                            color="success"
+                                        >
+                                        </v-radio>
+                                    </v-radio-group>
+                                    <div v-if="selectedAddress">
+                                        <div class="mt-5 mb-2">
+                                            <v-icon>mdi-map-marker</v-icon>
+                                            {{ selectedAddress.addressName }}
+                                        </div>
+                                        <div class="mb-2"><strong>수령인</strong> &nbsp;|&nbsp; {{ selectedAddress.recipientName }}</div>
+                                        <div class="mb-2"><strong>연락처</strong> &nbsp;|&nbsp; {{ selectedAddress.phoneNumber }}</div>
+                                        <div><strong>배송지</strong> &nbsp;|&nbsp; {{ selectedAddress.road }} {{ selectedAddress.addressDetail }}</div>
+                                        <div class="address-message">
+                                            <v-select label="배송시 요청사항을 선택해주세요." 
+                                                    :items="deliveryMsg" 
+                                                    v-model="selectedOption">
+                                            </v-select>
+                                            <v-textarea outlined v-if="selectedOption === deliveryMsg[2]" v-model="writeDeliveryMsg"></v-textarea>
+                                        </div>
                                     </div>
                                 </v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                         <v-card-actions class="d-flex justify-end">
-                            <v-dialog v-model="dialog" persistent width="1024">
-                                <template v-slot:activator="{ on }">
-                                    <v-btn class="me-2" v-on="on" outlined color="teal">
-                                        배송지 변경
-                                    </v-btn>
-                                </template>
-                                <v-card>
-                                    <v-card-title>
-                                        <span class="text-h5">배송지 변경</span>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        <v-container>
-                                            <v-row>
-                                                <v-col cols="12" sm="6">
-                                                    <v-text-field label="*배송지명" hint="ex) 즐거운나의집" required></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6">
-                                                    <v-select
-                                                    :items="['집', '직장', '학교', '기타']"
-                                                    label="*배송지 타입"
-                                                    hint="ex) 직장"
-                                                    required
-                                                    ></v-select>
-                                                </v-col>
-                                                <v-col cols="12" sm="6">
-                                                    <v-text-field label="*수령인 이름" required></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6">
-                                                    <v-text-field label="*전화번호" hint="하이픈(-)을 넣어 작성해주세요. ex) 010-1234-5678" required></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12">
-                                                    <v-text-field label="*기본 주소" required></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12">
-                                                    <v-text-field label="상세 주소"></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12">
-                                                    <v-text-field label="*우편번호" required></v-text-field>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
-                                        <small>*필수 입력 정보</small>
-                                    </v-card-text>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            color="blue-darken-1"
-                                            variant="text"
-                                            @click="dialog = false"
-                                        >
-                                            닫기
-                                        </v-btn>
-                                        <v-btn
-                                            color="blue-darken-1"
-                                            variant="text"
-                                            @click="dialog = false"
-                                        >
-                                            저장
-                                        </v-btn>
-                                        <!-- 저장 누르면 배송지 업데이트? -->
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
+                            <my-page-register-address-form @submit="onSubmit"/>
                         </v-card-actions>
                     </v-card>
 
@@ -270,6 +218,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import MyPageRegisterAddressForm from "@/components/mypage/MyPageRegisterAddressForm.vue"
 
 const orderModule = 'orderModule'
 const accountModule = 'accountModule'
@@ -279,6 +228,7 @@ IMP.init("imp36761363");
 
 export default {
     name: "OrderInfoForm",
+    components: { MyPageRegisterAddressForm },
     data() {
       return {
         selectedPayment: null,
@@ -289,18 +239,11 @@ export default {
         selectedOption: "",
         writeDeliveryMsg: "",
         selectedDeliveryReq: "",
-        defaultDelivery: {
-            addressName: '',
-            addressType: '',
-            road: '',
-            addressDetail: '',
-            zipcode: '',
-            phoneNumber: '',
-            recipientName: ''
-        },
         merchant_uid : 'ORD',
         randomNumber : 0,
         usedNum : [],
+        lsDeliveryList: [],
+        selectedAddress: null
       }
     },
     computed: {
@@ -317,7 +260,6 @@ export default {
         let memberId = userInfo.memberId;
         let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
 
-        console.log("멤버아이디: "+ memberId);
         await this.reqMyPageMemberInfoToSpring(memberId)
 
         if(lsDeliveryList === null || lsDeliveryList.length === 0) {
@@ -326,12 +268,15 @@ export default {
         } 
         
         if (lsDeliveryList && lsDeliveryList.length > 0) {
-            this.defaultDelivery = lsDeliveryList[0]
-            console.log("로컬스토리지에 저장된 기본 배송지: "+ this.defaultDelivery.addressName);
+            this.lsDeliveryList = lsDeliveryList;
         } else {
             console.log("로컬스토리지에 배송지 정보가 없습니다.");
         }
 
+        // 기본 배송지가 있는 경우 첫 번째 배송지를 선택
+        if (lsDeliveryList && lsDeliveryList.length > 0) {
+            this.selectedAddress = lsDeliveryList[0];
+        }
     },
     methods: {
         ...mapActions(accountModule, [
@@ -339,7 +284,19 @@ export default {
         ]),
         ...mapActions(orderModule, [
             "reqOrderPageDeliveryListToSpring",
+            'reqMyPageRegisterDeliveryToSpring',
         ]),
+        async onSubmit(payload) {
+            await this.reqMyPageRegisterDeliveryToSpring(payload);
+
+            // 로컬 스토리지에서 기존 lsDeliveryList 삭제
+            localStorage.removeItem('lsDeliveryList');
+
+            // 새로운 lsDeliveryList 생성
+            let lsDeliveryList = [...this.lsDeliveryList];
+            lsDeliveryList.push(payload); // 새로운 배송지 데이터를 배열에 추가
+            localStorage.setItem('lsDeliveryList', JSON.stringify(lsDeliveryList)); // 업데이트된 lsDeliveryList 저장
+        },
         setDeliveryRequest() {
             this.selectedDeliveryReq = this.selectedOption === this.deliveryMsg[2] ? this.writeDeliveryMsg : this.selectedOption
             console.log(this.selectedDeliveryReq);
@@ -356,14 +313,14 @@ export default {
             let memberId = userInfo.memberId;
 
             if (orderSave.directOrderCheck) {
-                // 직접 주문인 경우
+                // 바로 구매인 경우
                 const product = orderSave.product;
                 sendInfo.productId.push(product.productId);
                 sendInfo.memberId.push(memberId);
                 sendInfo.orderCount.push(orderSave.count);
                 sendInfo.orderPrice.push(orderSave.totalPrice);
             } else {
-                // 선택(여러개) 주문인 경우
+                // 선택(여러개) 구매인 경우
                 for (const orderItem of orderSave.selectItems) {
                     const product = orderItem.product;
                     sendInfo.productId.push(product.productId);
@@ -396,6 +353,11 @@ export default {
                 }
             }
             
+            if(!this.selectedAddress){
+                alert('배송지를 선택해주세요.');
+                return;
+            }
+
             IMP.request_pay({ // param
                 pg: "html5_inicis.INIBillTst",
                 pay_method: "card",
@@ -405,8 +367,8 @@ export default {
                 buyer_email: this.member.email,
                 buyer_name: this.member.name,
                 buyer_tel: this.member.phoneNumber,
-                buyer_addr: this.defaultDelivery.road + this.defaultDelivery.addressDetail,
-                buyer_postcode: this.defaultDelivery.zipcode
+                buyer_addr: this.selectedAddress.road + this.selectedAddress.addressDetail,
+                buyer_postcode: this.selectedAddress.zipcode
             }, rsp => { // callback
                 if (rsp.success) {
                     // 결제 성공 시
@@ -423,14 +385,15 @@ export default {
                     const amount = totalPrice + deliveryFee;
                     const merchant_uid = this.merchant_uid
                     const sendInfo = this.sendInfo
-                    const phoneNumber = this.defaultDelivery.phoneNumber
-                    const recipientName = this.defaultDelivery.recipientName
-                    const road = this.defaultDelivery.road
-                    const addressDetail = this.defaultDelivery.addressDetail
-                    const zipcode = this.defaultDelivery.zipcode
+                    const phoneNumber = this.selectedAddress.phoneNumber
+                    const recipientName = this.selectedAddress.recipientName
+                    const addressId = this.selectedAddress.addressId
+                    const road = this.selectedAddress.road
+                    const addressDetail = this.selectedAddress.addressDetail
+                    const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
@@ -456,6 +419,11 @@ export default {
                     productName = this.orderList.orderSave.selectItems[i].product.productName
                 }
             }
+
+            if(!this.selectedAddress){
+                alert('배송지를 선택해주세요.');
+                return;
+            }
             
             IMP.request_pay({
 
@@ -467,8 +435,8 @@ export default {
                 buyer_email: this.member.email,
                 buyer_name: this.member.name,
                 buyer_tel: this.member.phoneNumber,
-                buyer_addr: this.defaultDelivery.road + this.defaultDelivery.addressDetail,
-                buyer_postcode: this.defaultDelivery.zipcode
+                buyer_addr: this.selectedAddress.road + this.selectedAddress.addressDetail,
+                buyer_postcode: this.selectedAddress.zipcode
 
             }, rsp => { // callback
                 if (rsp.success) {
@@ -486,14 +454,15 @@ export default {
                     const amount = totalPrice + deliveryFee;
                     const merchant_uid = this.merchant_uid
                     const sendInfo = this.sendInfo
-                    const phoneNumber = this.defaultDelivery.phoneNumber
-                    const recipientName = this.defaultDelivery.recipientName
-                    const road = this.defaultDelivery.road
-                    const addressDetail = this.defaultDelivery.addressDetail
-                    const zipcode = this.defaultDelivery.zipcode
+                    const phoneNumber = this.selectedAddress.phoneNumber
+                    const recipientName = this.selectedAddress.recipientName
+                    const addressId = this.selectedAddress.addressId
+                    const road = this.selectedAddress.road
+                    const addressDetail = this.selectedAddress.addressDetail
+                    const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
@@ -501,8 +470,8 @@ export default {
             });
         }
       
-
-    }
+    },
+    
 }
 </script>
 
