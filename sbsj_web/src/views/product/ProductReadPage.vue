@@ -26,17 +26,19 @@ export default {
   computed: {
     ...mapState(productModule, ['product'])
   },
-  async created() {
+  created() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let memberId = 0;
-    if(userInfo != null) {
-      memberId = userInfo.memberId; 
+    if (userInfo != null) {
+      memberId = userInfo.memberId;
     }
     let productId = this.productId;
 
-    await this.requestProductToSpring({ memberId, productId });
-  }
-}
+    this.requestProductToSpring({ memberId, productId });
+    
+  },
+  // ...
+};
 
 </script>
 
