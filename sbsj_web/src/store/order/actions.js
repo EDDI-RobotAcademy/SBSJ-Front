@@ -76,8 +76,9 @@ export default {
         return axiosInst.post("/delivery/register", 
                { memberId, addressName, addressType, recipientName, phoneNumber, 
                 road, addressDetail, zipcode, defaultAddress })
-            .then(() => {
-                alert("배송지 등록 완료!")
+            .then((res) => {
+                alert("배송지 등록 완료!");
+                return res.data;
             })
             .catch(() => {
                 alert('문제 발생!')

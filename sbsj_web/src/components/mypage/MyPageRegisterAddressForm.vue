@@ -133,6 +133,11 @@ export default {
                             let changeDefaultAddress = confirm("기본 배송지가 이미 설정되어있습니다.\n이 배송지를 기본 배송지로 설정하시겠습니까?");
                             if(!changeDefaultAddress) {
                                 defaultAddress = "";
+                            } else {
+                                let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+                                var foundDelivery = lsDeliveryList.find(e => e.defaultAddress === "기본 배송지");
+                                foundDelivery.defaultAddress = '';
+                                localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
                             }
                         }
                     }

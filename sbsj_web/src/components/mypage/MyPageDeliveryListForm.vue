@@ -82,7 +82,17 @@ export default {
                                     'reqMyPageDeliveryListToSpring']),
 
         async onSubmit(payload) {
-            await this.reqMyPageRegisterDeliveryToSpring(payload);
+            let successRegister = await this.reqMyPageRegisterDeliveryToSpring(payload);
+
+            let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+            if(lsDeliveryList == null) {
+                if(successRegister != null) {
+                    localStorage.setItem("lsDeliveryList", JSON.stringify(successRegister));
+                }
+            } else {
+                lsDeliveryList.push(successRegister);
+                localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
+            }
             window.location.reload(true);
         }
     },
