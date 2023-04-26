@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div style=" width:100%; padding-inline:3%;  height:600px;">    
+                <div style=" width:110%; padding-inline:2%;  height:600px;">    
                     <div style=" height:100%; ">
                         <div style=" height:10%; display:flex; justify-content:flex-start; align-items:center; font-weight: bold; font-size:xx-large; ">{{product.productName }}</div>
                             <P style="font-size: medium; opacity: 0.8; ">{{ product.productSubName }}</P>
@@ -43,11 +43,12 @@
                         <div style=" height:15%; width: 100%; display:flex; ">
 
                             <div style=" width:30%; display:flex; justify-content:center; align-items:center; ">
-                                <div style="font-size:xx-large; font-weight: bold; ">36%</div>
+                                <div style="font-size:xx-large; font-weight: bold; ">10%</div>
                             </div>
                             <div style=" width:40%; margin-left:5%;  margin-top:1%;">
-                                <div class="text-decoration-line-through" style=" font-size:medium; display:flex; justify-content:start; align-items:center; opacity: 0.4; color:red; ">56,000</div>
-                                <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{ new Intl.NumberFormat().format(product.price) }} 원</div>
+                                <div class="text-decoration-line-through" style=" font-size:medium; display:flex; justify-content:start; align-items:center; opacity: 0.4; color:red; ">{{ new Intl.NumberFormat().format(product.price) }} 원</div>
+                                <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{new Intl.NumberFormat().format(Math.floor(product.price * 0.9))
+  }}  원</div>
                             </div>
                             <div style=" width:100%; display:flex; ">
                                 <div style=" width:40%; font-size:x-small; display:flex; justify-content:center; align-items:center;">
@@ -83,9 +84,7 @@
                             <div style="display:flex; height:100%; border-bottom: 1px solid #DBDBDB;">
                                 <div style=" width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">배송비</div>
 
-                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small;">
-                                    <span>(5만원 이상 주문시 무료배송)</span> &nbsp;<span style="font-weight:bold;">3,000원</span>
-                                </div>
+                                <div style=" width:70%; display:flex; justify-content:end; align-items:center; font-size:small; font-weight: bold;">무료배송(우체국택배)</div>
                             </div>
                         </div>
 
@@ -101,8 +100,8 @@
                             <div style="display:flex; height:100%;">
                                 <div style="width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold; ">수량</div>
                                 <div style="width: 70%; display:flex; justify-content:center; align-items:center;">
-                                    <select class="form-select" v-model="selectCount" aria-label="Default select example">
-                                        <option :value="null" selected>수량을 선택하세요.</option>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected style="font-size:medium; --bs-btn-padding-x: 4rem;">수량을 선택하세요.</option>
                                         <option value="1">1박스</option>
                                         <option value="2">2박스</option>
                                         <option value="3">3박스</option>
@@ -130,40 +129,26 @@
                                 장바구니</button>
                             </div>
                             <div style="width:50%; display:flex; justify-content:center; align-items:center; ">
-                                <button type="button" 
-                                    class="btn btn-dark btn-lg" 
-                                    style="font-weight: bold;"
-                                    @click="directPurchase(product)"
-                                >바로구매</button>
+                                <button type="button" class="btn btn-dark btn-lg" style="font-weight: bold;">바로구매</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
                 
-            <div style="margin-top: 20%; font-weight: bold; width:100%;">
-                <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item" style="color:black; border: 1px solid #DBDBDB;">
-                        <a class="nav-link" style="color:black;" href="#">상세보기</a>
-                    </li>
-                    <li class="nav-item" style="color:black; border: 1px solid #DBDBDB;">
-                        <a class="nav-link" style="color:black;" href="#">상품평</a>
-                    </li>
-                    <li class="nav-item" style="color:black; border: 1px solid #DBDBDB;">
-                        <a class="nav-link" style="color:black;" href="#">상품문의</a>
-                    </li>
-                </ul>
+            
+            <div class="container mx-auto p-10">
+                <ProductReadTabs
+                    :tabs="tabs"
+                    :detail="product.detail"
+                    :product="product"
+                ></ProductReadTabs>
             </div>
+            <!-- <v-window-item value="two">
+                            <review-list-form :productId = "this.product.productId"/>
+                        </v-window-item> -->
 
-            <div div style=" width:100%; display:flex; justify-content:center; align-items:center;">
-                <img src="@/assets/boneImgs/Point.jpg" alt="배너 사진">
-            </div>
-
-            <div style="width:100%; display:flex; justify-content:center; align-items:center;">
-                <div style="width:50%;">
-                    <v-img :src="require(`@/assets/productImgs/${product.detail}`)" alt="비타민 사진" />
-                </div>
-            </div>
+           
         </div>
     </div>
 </template>
@@ -171,18 +156,27 @@
 <script>
 
 import { mapActions, mapState } from "vuex";
+import ReviewListPage from "@/views/review/ReviewListPage.vue";
+import ProductReadTabs from "@/components/product/ProductReadTabs.vue"
+import ProductReadDetailForm from "@/components/product/ProductReadDetailForm.vue";
+import QnaBoardListPage from "@/views/board/qna/QnaBoardListPage.vue";
 
 const orderModule = 'orderModule';
 const productModule = 'productModule';
 
 export default {
     name: "ProductReadForm",
+    components : {ReviewListPage , ProductReadTabs, ProductReadDetailForm, QnaBoardListPage},
     data() {
         return {            
             checkedWish: false,
             thumbnail: '',
             detail: '',
-            selectCount: null,
+            tabs: [
+                { title: "상품 상세", component: ProductReadDetailForm },
+                { title: "리뷰 목록", component: ReviewListPage },
+                { title: "Q&A", component: QnaBoardListPage },
+                ],
         };
     },
     props: {
@@ -244,14 +238,10 @@ export default {
             }
         },
         addToCart() {
-            if (!this.selectCount) {
-                alert("수량을 선택해주세요.");
-                return;
-            }
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
             const memberId = userInfo.memberId;
             const productId = this.product.productId;
-            const count = this.selectCount;
+            const count = 1
             console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
@@ -260,22 +250,6 @@ export default {
             if(goToCartMessage) {
                 this.$router.push({ name:'ShoppingCartPage' })
             }
-        },
-        async directPurchase(product){
-            // 바로 구매
-            if(!this.selectCount){
-                alert("수량을 선택해주세요.")
-                return;
-            }
-            this.count = this.selectCount
-            this.directTotalPrice = product.price * this.selectCount
-            this.thumbnail = product.thumbnail
-            this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
-                { orderSave: { directOrderCheck: true, product: product, 
-                                count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
-            console.log(this.$store.state.orderModule.orderList)
-            alert ("주문 페이지로 이동합니다.")
-            await this.$router.push({ name: 'OrderInfoPage' })
         },
 	},
     updated() {
@@ -288,6 +262,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
