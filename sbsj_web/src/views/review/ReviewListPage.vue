@@ -1,5 +1,5 @@
 <template>
-  <review-list-form :page-count="pageCount" :product="product" />
+  <review-list-form :page-count="pageCount" :productId="productId" />
 </template>
 <script>
 import ReviewListForm from '@/components/review/ReviewListForm.vue';
@@ -10,23 +10,21 @@ export default {
   components: {
     ReviewListForm,
   },
-  data() {
-    return {
-      product: {
-        productId: '1',
-      },
-    };
+  props: {
+    productId: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
   ...mapState('productModule', ['reviews']),
   pageCount() {
-    const reviewsPerPage = 10; // 페이지당 표시할 리뷰의 수를 설정합니다.
+    const reviewsPerPage = 10;
     const pageCount = Math.ceil(this.reviews.length / reviewsPerPage);
     return pageCount;
       },
     },
   }
-
 </script>
 
 <style>
