@@ -7,6 +7,9 @@ import {
     REQUEST_WISH_LIST_TO_SPRING,
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_STAR_RATE_AVERAGE,
+    REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING,
+    REQUEST_SPECIFIC_PRODUCT_LIST_TO_SPRING,
+    REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING,
 } from './mutation-types'
 
 import axiosInst from '@/utility/axiosObject'
@@ -15,8 +18,9 @@ const config = {
   };
 
 export default {
-    async requestProductListToSpring({commit}) {
-        return await axiosInst.get('/category/default')
+    async requestProductListToSpring({commit}, payload) {
+        const { startIndex, endIndex } = payload
+        return await axiosInst.get(`/category/default/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
@@ -194,6 +198,18 @@ export default {
                 commit(REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
                 console.log(err)
+            })
+    },
+    async requestSearchResultProductListToSpring({commit}, payload) {
+        console.log("requestSearchResultProductListToSpring()");
+        const { query, startIndex, endIndex } = payload
+        console.log(query)
+        return await axiosInst.get(`/category/search/${query}/${startIndex}/${endIndex}`)
+            .then((res) => {
+                commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
+            }).catch((err) => {
+                console.log(err);
+                commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
             })
     }
 }

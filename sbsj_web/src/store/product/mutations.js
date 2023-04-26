@@ -11,6 +11,8 @@ import {
     REQUEST_WISH_LIST_TO_SPRING,
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_STAR_RATE_AVERAGE,
+    REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING,
+    SEARCH_QUERY,
 } from './mutation-types'
 
 export default {
@@ -46,4 +48,10 @@ export default {
     [REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING] (state, passingData) {
         state.products = passingData
     },
+    [REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING] (state, passingData) {
+        state.searchResult = passingData
+    },
+    [SEARCH_QUERY] (state, query) {
+        state.searchQuery = query;
+    }
 }

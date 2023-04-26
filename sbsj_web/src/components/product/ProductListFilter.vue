@@ -3,11 +3,11 @@
     <div class="filter-content">
       <div class="body-part">
         <ul class="list" style="padding-left: 0;">
-          <li class="list-header">
-            <span>신체 기관별</span>
-          </li>
           <li class="list-item" @click="filtering('TOTAL')">
             <span>전체보기</span>
+          </li>
+          <li class="list-header">
+            <span>신체 기관별</span>
           </li>
           <li class="list-item" @click="filtering('EYE')">
             <span>눈 건강</span>
@@ -28,9 +28,6 @@
         <ul class="list" style="padding-left: 0;">
           <li class="list-header">
             <span>브랜드별</span>
-          </li>
-          <li class="list-item" @click="filteringBrandProduct('TOTAL')">
-            <span>전체보기</span>
           </li>
           <li class="list-item" @click="filteringBrandProduct('ABC')">
             <span>ABC</span>

@@ -59,7 +59,8 @@
                 </v-toolbar-title>
             </router-link>
             <v-spacer></v-spacer>
-            <v-text-field class="green--text" v-model="search" append-icon="mdi-magnify" label="placeholder" single-line hide-details></v-text-field>
+            <v-text-field class="green--text" v-model="search" label="placeholder" single-line hide-details @keydown.enter="Search"></v-text-field>
+            <v-icon id="search-icon" v-on:click="Search" >mdi-magnify</v-icon>
             <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
                 <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
                     <span>My Page</span>
@@ -126,15 +127,17 @@
 
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
+import ProductListPage from "../product/ProductListPage.vue";
 
 const accountModule = 'accountModule';
+const productModule = 'productModule';
 
 export default {
     name: "Header",
     data() {
         return {
-            search: "",
+            search: '',
             scrollY: 0,
             showSidebar: false,
             isTrue: false,
@@ -152,6 +155,8 @@ export default {
     },
     methods: {
         ...mapActions(accountModule, ['commitIsAuthenticated', 'reqSignOutToSpring', 'reqResignToSpring']),
+        ...mapActions(productModule, ['requestSearchResultProductListToSpring']),
+        ...mapMutations(productModule, ['SEARCH_QUERY']),
 
         updateScrollY() {
             this.scrollY = window.scrollY;
@@ -179,6 +184,17 @@ export default {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
             await this.reqSignOutToSpring(userInfo);
+        },
+        async Search() {
+            console.log(this.sanitizedQuery.join(','));
+            const query = { query: this.sanitizedQuery.join(','), startIndex: 0, endIndex: 20}
+            this.$store.commit('productModule/SEARCH_QUERY', query);
+            await this.requestSearchResultProductListToSpring(query)
+            if(this.$route.name != 'ProductListPage') {
+                this.$router.push(
+                    {name: 'ProductListPage'}    
+                )
+            }
         }
     },
     computed: {
@@ -191,6 +207,14 @@ export default {
                 return (200 - this.scrollY) + 'px';
             }
         },
+        sanitizedQuery() {
+            let query = this.search.replace(/[!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]/g, '').split(' ')
+            if(query.length > 2) {
+                alert("단어 2개 까지 입력가능합니다.")
+            } else {
+                return query
+            }
+        }
     },
     mounted() {
         window.addEventListener('scroll', this.updateScrollY);
@@ -207,7 +231,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+#search-icon:hover {
+    cursor: pointer;
+}
 .shopping-cart-hover-highlight {
     line-height: 40px;
     width: 179px;
