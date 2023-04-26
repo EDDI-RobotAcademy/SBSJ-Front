@@ -5,7 +5,7 @@
             <v-card style="height: 450px;">
                 <v-img :src="image.imagePath" aspect-ratio="1" class="grey lighten-2"/>
                 <v-card-title style="font-size: 15px;">
-                    <router-link :to="{ name: 'DetailProductPage'}" style="color: black; text-decoration: none;">
+                    <router-link :to="{ name: 'ProductReadPage', params: { productId: image.productId.toString() } }" style="color: black; text-decoration: none;">
                         {{ image.imageName }}
                     </router-link>
                 </v-card-title>
@@ -23,13 +23,13 @@ export default {
         return {
             images: [
                 { imagePath: require('@/assets/productImgs/닥터엘리자베스 간에 좋은 밀크씨슬.jpg'),
-                  imageName: "닥터엘리자베스 간에 좋은 밀크씨슬" },
+                  imageName: "닥터엘리자베스 간에 좋은 밀크씨슬", productId: 1 },
                 { imagePath: require('@/assets/productImgs/닥터엘리자베스 알티지 오메가3.jpg'),
-                  imageName: " 닥터엘리자베스 알티지 오메가3" },
+                  imageName: " 닥터엘리자베스 알티지 오메가3", productId: 1 },
                 { imagePath: require('@/assets/productImgs/레이델 밀크씨슬 실리마린.jpg'),
-                  imageName: "레이델 밀크씨슬 실리마린" },
+                  imageName: "레이델 밀크씨슬 실리마린", productId: 1 },
                 { imagePath: require('@/assets/productImgs/[BHT 베터헬씨투모로우] 슈퍼 밀크씨슬.jpg'),
-                  imageName: "[BHT 베터헬씨투모로우] 슈퍼 밀크씨슬" },
+                  imageName: "[BHT 베터헬씨투모로우] 슈퍼 밀크씨슬", productId: 1 },
             ]
         }
     }
