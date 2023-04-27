@@ -7,7 +7,7 @@
             </div>
         </v-col>
         <v-col v-else v-for="(image, index) in images" :key="index" cols="3">
-            <v-card style="height: 450px;">
+            <v-card outlined style="height: 450px;">
                 <v-img :src="image.imagePath" aspect-ratio="1" class="grey lighten-2"/>
                 <v-card-title style="font-size: 15px;">
                     <router-link :to="{ name: 'ProductReadPage', params: { productId: image.productId.toString() } }" style="color: black; text-decoration: none;">
@@ -43,7 +43,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
     .blur {
         background-image: url("@/assets/uploadImgs/blur.jpg");
         background-repeat: no-repeat;

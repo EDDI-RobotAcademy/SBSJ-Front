@@ -21,20 +21,20 @@
             <transition name="sidebar-dropdown">
                 <div v-if="showSidebar" class="sidebar">
                     <div class="main__category-box" style="width: 700px;">
-                        <div class="main__category-list" style="width: 200px; background-color: black;">
+                        <div class="main__category-list" style="width: 200px; background-color: white;">
                             <li v-for="(item, index1) in items" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center;">
                                 <router-link :to="{ name: item.url }">
                                     <p>{{ item.mainTitle }}</p>
                                 </router-link>
                                 <div class="second-category hidden">
-                                    <div class="first-inline-category" style="background-color: aqua;">
+                                    <div class="first-inline-category" style="background-color: white;">
                                         <ul style="position: absolute; padding-left: 0;">
                                             <li v-for="(subTitle, index1) in item.subTitles" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
                                                 <a href="#">
                                                     <p>{{ subTitle.sub }}</p>
                                                 </a>
                                                 <div class="third-category hidden">
-                                                    <div class="second-inline-category" style="background-color: yellowgreen;">
+                                                    <div class="second-inline-category" style="background-color: white;">
                                                         <ul style="position: absolute; padding-left: 0;">
                                                             <li v-for="(content, index3) in subTitle.contents" :key="index3" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
                                                                 <a href="#">
@@ -54,12 +54,12 @@
                 </div>
             </transition>
             <router-link :to="{ name: 'home' }" style="color: black; text-decoration: none;">
-                <v-toolbar-title class="text--darken-4">
-                    <span>Pick Your Energy</span>
+                <v-toolbar-title class="text--darken-4 site-title">
+                    <span>에너-지니</span>
                 </v-toolbar-title>
             </router-link>
             <v-spacer></v-spacer>
-            <v-text-field class="green--text" v-model="search" label="placeholder" single-line hide-details @keydown.enter="Search"></v-text-field>
+            <v-text-field class="green--text" v-model="search" label="검색" single-line hide-details @keydown.enter="Search"></v-text-field>
             <v-icon id="search-icon" v-on:click="Search" >mdi-magnify</v-icon>
             <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
                 <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
@@ -68,10 +68,7 @@
                 </router-link>
                 <div class="mypage-hidden">
                     <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
-                        <li class="mypage-hover-highlight">
-                            <a href="#">Test 4</a>
-                        </li>
-                        <router-link :to="{ name: 'SurveyPage' }" style="color: grey; text-decoration: none;">
+                        <router-link :to="{ name: 'SurveyPage' }" style="text-decoration: none; color: black;">
                             <li class="mypage-hover-highlight">
                                 <a href="#">설문 조사</a>
                             </li>
@@ -87,28 +84,28 @@
             </v-btn>
             <router-link :to="{ name: 'SignAgreePage' }" style="text-decoration: none;">
                 <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
-                    <span>Sign Up</span>
+                    <span>회원가입</span>
                     <v-icon right>mdi-account-plus-outline</v-icon>
                 </v-btn>
             </router-link>
             <router-link :to="{ name: 'SignInPage' }" style="text-decoration: none;">
                 <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
-                    <span>Sign In</span>
+                    <span>로그인</span>
                     <v-icon right>mdi-login</v-icon>
                 </v-btn>
             </router-link>
             <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="logout" style="height: 64px;">
-                <span>Sign Out</span>
+                <span>로그아웃</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
             </v-btn>
             
             <v-btn text color="grey" class="shoppingCart" style="height: 64px;">
                 <router-link :to="{ name: 'ShoppingCartPage'}" style="color: grey; text-decoration: none;">
-                    <span>Shopping Cart</span>
+                    <span>장바구니</span>
                 </router-link>
                 <v-icon right>mdi-cart-outline</v-icon>
                 <div class="shopping-cart-hidden">
-                    <ul class="shopping-cart-contents" style="padding-left: 0;  margin: 0;">
+                    <!-- <ul class="shopping-cart-contents" style="padding-left: 0;  margin: 0;">
                         <li class="shopping-cart-hover-highlight">
                             <a href="#">Test 1</a>
                         </li>
@@ -118,7 +115,7 @@
                         <li class="shopping-cart-hover-highlight">
                             <a href="#">Test 3</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </v-btn>
         </v-app-bar>    
@@ -244,22 +241,12 @@ export default {
     text-align: center;
 }
 
-
-.shopping-cart-hidden {
-    display: none;
-    position: absolute;
-    top: 42px;
-    width: 179px;
-    background-color: aqua;
-    box-sizing: border-box;
-}
-
 .shoppingCart:hover .shopping-cart-hidden {
     display: inline-block;
 }
 
 .shoppingCart .shopping-cart-hover-highlight:hover {
-    background-color: green;
+    background-color: lightgray;
 }
 
 .mypage-hover-highlight {
@@ -275,7 +262,7 @@ export default {
     position: absolute;
     top: 42px;
     width: 122px;
-    background-color: aqua;
+    background-color: white;
     box-sizing: border-box;
 }
 
@@ -284,7 +271,7 @@ export default {
 }
 
 .mypage .mypage-hover-highlight:hover {
-    background-color: green;
+    background-color: lightgray;
 }
 
 .hover-highlight {
@@ -297,11 +284,11 @@ export default {
 }
 
 .second-category .hover-highlight:hover {
-    background-color: lightgreen;
+    background-color: lightgray;
 }
 
 .third-category .hover-highlight:hover {
-    background-color: lightgreen;
+    background-color: lightgray;
 }
 
 .second-category .first-inline-category {
@@ -387,5 +374,6 @@ li {
 .sidebar-dropdown-leave-to {
     transform: translateY(-300%);
 }
+
 
 </style>
