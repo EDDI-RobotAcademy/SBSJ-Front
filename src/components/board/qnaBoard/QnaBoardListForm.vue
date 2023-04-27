@@ -4,40 +4,71 @@
     <div style="width: 100%; display: flex; justify-content: center; margin-top: 2%;">
       <div style="width: 5%; display: flex; border-bottom: solid;"></div>
     </div>
-    <nav class="navbar navbar-expand">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-            <li class="nav-item mr-5">
-              <router-link to="{ name: 'NoticeListPage' }" class="nav-link text-dark" active-class="active" aria-current="page">공지사항</router-link>
-            </li>
-            <li class="nav-item mr-5">
-              <a class="nav-link text-dark" aria-current="page">Q&A</a>
-            </li>
-            <li class="nav-item mr-5">
-              <a class="nav-link text-dark">자유게시판</a>
-          </li>
-          </ul>
+    <div class="row">
+      <div class="col-3 mt-4"></div>
+      <div>
+        <div class="d-flex justify-content-center my-5">
+          <table class="qna-board-list-table">
+            <tr>
+              <th width="50">No</th>
+              <th width="150">문의유형</th>
+              <th width="500">제목</th>
+              <th width="100">글쓴이</th>
+              <th width="200">작성일자</th>
+            </tr>
+            <template v-if="!qnaBoards || (Array.isArray(qnaBoards) && qnaBoards.length === 0)">
+              <tr>
+                <td colspan="4">
+                  현재 등록된 게시물이 없습니다!
+                </td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr v-for="qnaBoard in qnaBoards" :key="qnaBoard.qnaBoardId" @click="goToQnaBoardReadPage(qnaBoard.qnaBoardId)" style="cursor: pointer">
+                <td style="font-weight: bold;">
+                  {{ qnaBoard.qnaBoardId }}
+                </td>
+                <td style="font-weight:500;">
+                  {{ qnaBoard.inquiryType }}
+                </td>
+                <td class="board-title" style="font-weight: bold;">
+                  <router-link :to="{ name: 'QnaBoardReadPage', params: { qnaBoardId: qnaBoard.qnaBoardId.toString() }}" style="text-decoration: none; color: black">
+                    <span :class="{ 'private-text': isPrivate(qnaBoard) }">
+                      {{ isPrivate(qnaBoard) ? "비밀글입니다" : qnaBoard.title }}
+                    </span>
+                  </router-link>
+                </td>
+                <td style="opacity: 0.7;">
+                  {{ isMasking(qnaBoard.writer) }}
+                </td>
+                <td style="opacity: 0.7;">
+                  {{ qnaBoard.regDate | formatDate }}
+                </td>
+              </tr>
+            </template>
+          </table>
         </div>
       </div>
-    </nav>
+      <div>
+        <div class="QnawriteContent">
+          <router-link :to="{ name: 'QnaBoardRegisterPage' }">
+            <button class="btn btn-dark rounded-pill">글 쓰기</button>
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- <template>
+  <div class="container">
+    <h2 align="center">Q&A</h2>
+    <div style="width: 100%; display: flex; justify-content: center; margin-top: 2%;">
+      <div style="width: 5%; display: flex; border-bottom: solid;"></div>
+    </div>
     <div class="row">
       <div class="col-3 mt-4">
       </div>
-      <!-- <div class="col-9 d-flex justify-content-end qna-board-list-search-form" style="padding-left: 700px;">
-        <v-text-field 
-          class="green--text header-search-form"
-          label="검색" v-model="search"
-          :loading="loading"
-          density="compact" variant="solo"
-          append-icon="mdi-magnify" color="green"
-          single-line hide-details clearable
-          @click:append="onClick"
-        ></v-text-field>
-      </div> -->
     <div>
       </div>
         <div class="d-flex justify-content-center my-5">
@@ -91,7 +122,7 @@
         </div>
       </div>
   </div>
-</template>
+</template> -->
   
 <script>
 export default {

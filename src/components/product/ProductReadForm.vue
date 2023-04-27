@@ -1,7 +1,6 @@
 <template>
     <div style="padding-inline:10%; display:flex; justify-content:center; align-items:center; font-weight: 100;">
         <div style="width:95%; margin-top:10%;">
-            <div style="width:20%; height:2%; font-size:small; display:flex; opacity: 0.8;">Home > 성분별 > 뼈</div>
             <div style="display:flex;">
                 <div style=" width:80%; hegiht:100%; display:flex; justify-content:center; align-items:center; ">
                     <div>
@@ -34,7 +33,7 @@
                 </div>
 
                 <div style=" width:110%; padding-inline:2%;  height:600px;">    
-                    <div style=" height:100%; ">
+                    <div style=" height:95%; padding-left: 1rem;">
                         <div style=" height:10%; display:flex; justify-content:flex-start; align-items:center; font-weight: bold; font-size:xx-large; ">{{product.productName }}</div>
                             <P style="font-size: medium; opacity: 0.8; ">{{ product.productSubName }}</P>
 
@@ -47,13 +46,9 @@
                             </div>
                             <div style=" width:40%; margin-left:5%;  margin-top:1%;">
                                 <div class="text-decoration-line-through" style=" font-size:medium; display:flex; justify-content:start; align-items:center; opacity: 0.4; color:red; ">{{ new Intl.NumberFormat().format(product.price) }} 원</div>
-                                <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{new Intl.NumberFormat().format(Math.floor(product.price * 0.9))
-  }}  원</div>
+                                <div style=" font-size:x-large; color: red; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{new Intl.NumberFormat().format(Math.floor(product.price * 0.9))}}  원</div>
                             </div>
                             <div style=" width:100%; display:flex; ">
-                                <div style=" width:40%; font-size:x-small; display:flex; justify-content:center; align-items:center;">
-                                    <button type="button" class="btn btn-outline-primary" style="font-size: x-small; --bs-btn-padding-y: .2rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .6rem;">쿠폰다운</button>
-                                </div>
                                 <div style="width: 57%; display:flex; justify-content:end; align-items:center; ">
                                     <div style="width:30%;">
                                         <div v-if="!this.checkedWish" @click="changeIcon">

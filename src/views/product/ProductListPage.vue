@@ -1,8 +1,8 @@
 <template>
     <section class="contents">
-        <div class="header">
+        <!-- <div class="header">
             <div class="header-content">header here</div>
-        </div>
+        </div> -->
         <div class="product-container">
             <div class="product-body">
                 <div class="product-main">
@@ -260,7 +260,7 @@ const productModule = 'productModule'
         border-bottom: 1px solid #eee;
         background-color: aqua;
         margin: auto;
-        width: 1300px;
+        width: 90%;
     }
 
     .product-body {
@@ -275,7 +275,7 @@ const productModule = 'productModule'
         float: left;
         margin: 0;
         padding: 0;
-        background-color: blueviolet;
+        background-color: rgb(255, 255, 255);
     }
 
     .product-main-category-header::after {
