@@ -7,6 +7,9 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// font.css 추가
+import '@/css/Font.css'
+
 import {formatDate} from '@/utility/filter.js'
 
 Vue.use(BootstrapVue)
