@@ -151,12 +151,12 @@ export default {
                 alert('리뷰삭제완료.')
             })
     },
-    async reqReadReviewFromSpring({ commit }, productId) {
+    async reqReadReviewFromSpring({ commit }, payload) {
+        const { productId, startIndex, endIndex } = payload
         try {
-          const response = await axiosInst.get(`/review/list/${productId}`, { params: { productId } });
+          const response = await axiosInst.get(`/review/list/${productId}/${startIndex}/${endIndex}`, { params: { productId } });
           commit(REQUEST_READ_REVIEW_FROM_SPRING, response.data);
           console.log(JSON.stringify(response.data));
-          return response.data; // API 호출 결과 반환
         } catch (error) {
           console.error(error.message);
         }

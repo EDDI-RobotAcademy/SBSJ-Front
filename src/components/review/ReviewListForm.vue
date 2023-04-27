@@ -38,35 +38,43 @@
           <v-divider width="1070px"></v-divider>
         </li>
         <li v-for="(review, idx) in reviews" :key="idx">
-          <review-context-form :review="review" />
+          <review-context-form :review="showReviews" />
         </li>
       </div>
         <div class="review-container" style="display: flex; justify-content: center; align-items: center;">
-          <paginate
-            tag="ul"
-            name="reviews"
-            :list="reviews"
-            :per="3"
-            :page-count="pageCount"
-          >
+          <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="5" :page-range="5" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
+                                            list-style: none;
+                                            padding: 0;
+                                            margin: 0;">
+              <template slot="page" slot-scope="props"> 
+                  <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
+                      <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
+                  </li>
+              </template>
           </paginate>
         </div>
     </div>
 </template>
 
 <script>
-import ReviewContextForm from "@/components/review/ReviewContextForm.vue";
 import { mapActions, mapState } from "vuex";
-import Vue from 'vue';
-import Paginate from 'vuejs-paginate';
+import ReviewContextForm from "@/components/review/ReviewContextForm.vue";
 import ReviewRegisterPage from '@/views/review/ReviewRegisterPage.vue';
-const productModule = 'productModule';
+import Paginate from 'vuejs-paginate';
 
-Vue.component('paginate', Paginate);
+const productModule = 'productModule';
 
 export default {
   name: "ReviewListForm",
-  components: { ReviewContextForm, ReviewRegisterPage },
+  components: { ReviewContextForm, ReviewRegisterPage, Paginate },
+  data() {
+    return {
+      currentPage: 1,
+      itemsPerPage: 5,
+      cache: {},
+      reviewList: []
+    }
+  },
 
   props: {
     productId: {
@@ -90,12 +98,36 @@ export default {
         alert(this.productId);
         this.$router.push({ name: 'ReviewRegisterPage', params: {productId: this.productId}});
       }
+    },
+    async clickCallback(pageNumber) {
+      console.log("clickCallback(): " + pageNumber)
+      this.syncCurrentPage = pageNumber
+      const startIndex = (pageNumber - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      
+      if(!this.cache[pageNumber]) {
+        const payload = {productId: this.productId, startIndex: startIndex, endIndex: endIndex}
+        await this.reqReadReviewFromSpring(payload)
+        this.showReviews = this.reviews
+        this.cache[this.currentPage] = this.reviews
+      } else {
+        console.log("cache used!!")
+        this.showReviews = this.cache[pageNumber]
+      }
+        
     }
   },
 
   async created() {
     const productId = Number(this.productId);
-    await this.reqReadReviewFromSpring(productId);
+    console.log("created()")
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    console.log(startIndex + "/" + endIndex)
+    const payload = {productId: this.productId, startIndex: startIndex, endIndex: endIndex}
+    await this.reqReadReviewFromSpring(payload)
+    this.showReviews = this.reviews
+    this.cache[this.currentPage] = this.reviews
     await this.getStarRateAverage(productId);
   },
   computed: {
@@ -103,6 +135,22 @@ export default {
     averageStarRate() {
       return this.starRateAverage;
     },
+    showReviews: {
+      get() {
+        return this.reviewList
+      },
+      set(value) {
+        this.reviewList = value
+      }
+    },
+    syncCurrentPage: {
+      get() {
+        return this.currentPage
+      },
+      set(value) {
+        this.currentPage = value
+      }
+    }
   },
 };
 </script>
