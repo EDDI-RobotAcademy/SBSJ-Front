@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 align="center">자유게시판</h2>
+    <h2 align="center">공지사항 게시판</h2>
     <div style="width: 100%; display: flex; justify-content: center; margin-top: 2%;">
       <div style="width: 5%; display: flex; border-bottom: solid;"></div>
     </div>
@@ -9,35 +9,11 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-            <li class="nav-item mr-5">
-              <router-link to="/notice/list" class="nav-link text-dark" active-class="active" aria-current="page">공지사항</router-link>
-            </li>
-            <li class="nav-item mr-5">
-              <router-link class="nav-link text-dark" to="/qna/list">Q&A</router-link>
-            </li>
-            <li class="nav-item mr-5">
-              <router-link class="nav-link text-dark" to="/free/list">자유게시판</router-link>
-            </li>
-          </ul>
-        </div>
       </div>
     </nav>
     <div class="row">
       <div class="col-3 mt-4">
       </div>
-      <!-- <div class="col-9 d-flex justify-content-end free-board-list-search-form" style="padding-left: 700px;">
-        <v-text-field 
-          class="green--text header-search-form"
-          label="검색" v-model="search"
-          :loading="loading"
-          density="compact" variant="solo"
-          append-icon="mdi-magnify" color="green"
-          single-line hide-details clearable
-          @click:append="onClick"
-        ></v-text-field>
-      </div> -->
     <div>
       </div>
         <div class="d-flex justify-content-center my-5">

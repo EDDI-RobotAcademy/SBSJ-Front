@@ -1,6 +1,6 @@
 <template>
   <div class="container" align="center">
-    <div class="mb-5">자유게시판</div>
+    <div class="mb-5">공지사항</div>
     <free-board-register-form @submit="onSubmit"/>
   </div>
 </template> 

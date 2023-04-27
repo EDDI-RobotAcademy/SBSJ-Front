@@ -1,31 +1,35 @@
 <template>
-    <div class="w-full">
-      <div class="bg-white p-5 rounded-lg">
-        <div class="flex flex-wrap">
-          <button
-            v-for="(tab, index) in tabs"
-            :key="index"
-            :class="[
-              'px-3 py-2 m-1 rounded-lg',
-              { 'bg-indigo-500 text-white': activeTab === index },
-              { 'bg-indigo-100 text-indigo-600': activeTab !== index },
-            ]"
-            @click="activeTab = index"
-          >
-            {{ tab.title }}
-          </button>
-        </div>
-        <div class="mt-5">
-          <component
-              :is="tabs[activeTab].component"
-              :detail="detail"
-              :product="product"
-              :productId="product.productId.toString()"
-            ></component>
-        </div>
+  <div class="w-full">
+    <div class="bg-white p-5 rounded-lg">
+      <div class="flex flex-wrap">
+        <button
+          v-for="(tab, index) in tabs"
+          :key="index"
+          :class="[
+            'px-3 py-2 m-1 rounded-lg',
+            { 'bg-gray text-black': activeTab === index },
+            { 'bg-gray text-gray border border-indigo-500': activeTab !== index },
+          ]"
+          @click="activeTab = index"
+        >
+          {{ tab.title }}
+        </button>
+      </div>
+      <div class="mt-5">
+        <component
+          :is="tabs[activeTab].component"
+          :detail="detail"
+          :product="product"
+          :productId="product.productId.toString()"
+        ></component>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
+
+
+
   
   <script>
 
