@@ -5,7 +5,7 @@
       <div style="margin-top: 75px;">
         <best-product-form/>
       </div>
-      <div style="margin-top: 50px;">
+      <div style="margin-top: 50px; margin-bottom: 50px;">
         <recommend-product-form/>
       </div>
     </div>
