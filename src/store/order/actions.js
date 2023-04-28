@@ -6,7 +6,7 @@ import {
 
 } from "./mutation-types";
 
-import mainRequest from '@/utility/mainRequest';
+import mainRequest from '@/api/mainRequest';
 
 export default { 
 

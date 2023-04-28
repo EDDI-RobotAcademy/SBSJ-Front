@@ -8,7 +8,7 @@ import {
     REQUEST_FREE_COMMENT_LIST_FROM_SPRING,
 } from './mutation-types'
 
-import mainRequest from '@/utility/mainRequest';
+import mainRequest from '@/api/mainRequest';
 
 export default {
     requestCreateQnaBoardToSpring({ }, payload) {
