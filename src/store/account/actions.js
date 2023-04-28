@@ -3,7 +3,7 @@ import {
     REQUEST_MY_PAGE_MEMBER_INFO
 } from './mutation-types'
 
-import mainRequest from '@/utility/mainRequest';
+import mainRequest from '@/api/mainRequest';
 import router from '@/router';
 
 export default {

@@ -3,7 +3,7 @@ import {
     REQUEST_COMPLETE_ORDER_TO_SPRING
 } from "./mutation-types";
 
-import mainRequest from '@/utility/mainRequest';
+import mainRequest from '@/api/mainRequest';
 
 export default { 
 

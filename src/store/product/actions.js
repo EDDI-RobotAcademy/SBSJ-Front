@@ -13,7 +13,7 @@ import {
     REQUEST_PRODUCT_BRAND_LIST_TO_SPRING,
 } from './mutation-types'
 
-import mainRequest from '@/utility/mainRequest';
+import mainRequest from '@/api/mainRequest';
 
 const config = {
     headers: { 'Content-Type': 'multipart/form-data' }
