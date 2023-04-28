@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  nginx:
+    image: "nginx:latest"
+    container_name: sbsj-project-nginx
+    restart: unless-stopped
+    volumes:
+      - /home/ubuntu/SBSJ/frontend/conf:/etc/nginx/conf.d
+      - /home/ubuntu/SBSJ/frontend/html:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    networks:
+      - app
+
+networks:
+  app:
+    name: server_network
+    external: true

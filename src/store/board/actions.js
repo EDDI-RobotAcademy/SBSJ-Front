@@ -8,12 +8,12 @@ import {
     REQUEST_FREE_COMMENT_LIST_FROM_SPRING,
 } from './mutation-types'
 
-import axiosInst from '@/utility/axiosObject.js'
+import mainRequest from '@/utility/mainRequest';
 
 export default {
     requestCreateQnaBoardToSpring({ }, payload) {
         const { title, content, inquiryType, writer, password, privateCheck } = payload;
-        return axiosInst.post('/qna/register', { title, content, inquiryType, writer, password, privateCheck })
+        return mainRequest.post('/qna/register', { title, content, inquiryType, writer, password, privateCheck })
             .then((res) => {
                 alert('게시물 등록 성공!');
                 return res.data
@@ -25,7 +25,7 @@ export default {
     requestQnaBoardListToSpring({ commit }, payload) {
         console.log("requsetQnaBoardListToSpring()")
         const {startIndex, endIndex} = payload
-        return axiosInst.get(`/qna/list/${startIndex}/${endIndex}`)
+        return mainRequest.get(`/qna/list/${startIndex}/${endIndex}`)
             .then((res) => {
                 const qnaBoards = res.data;
                 commit(REQUEST_QNA_BOARD_LIST_TO_SPRING, qnaBoards);
@@ -36,7 +36,7 @@ export default {
     },
     requestQnaBoardToSpring({ commit }, qnaBoardId) {
         console.log("requestQnaBoardToSpring: "+ qnaBoardId)
-        return axiosInst.get(`/qna/read/${qnaBoardId}`)
+        return mainRequest.get(`/qna/read/${qnaBoardId}`)
             .then((res) => {
                 commit(REQUEST_QNA_BOARD_TO_SPRING, res.data)
             })
@@ -45,7 +45,7 @@ export default {
             })
     },
     requestQnaBoardDeleteToSpring({}, qnaBoardId) {
-        return axiosInst.get(`/qna/delete/${qnaBoardId}`)
+        return mainRequest.get(`/qna/delete/${qnaBoardId}`)
             .then(() => {
                 alert("삭제 성공")
             })
@@ -56,7 +56,7 @@ export default {
     requestQnaBoardModifyToSpring({}, payload) {
         const { qnaBoardId, title, content } = payload
         console.log("수정: "+ qnaBoardId +", "+ title +", "+ content)
-        return axiosInst.post(`/qna/modify/${qnaBoardId}`, { title, content })
+        return mainRequest.post(`/qna/modify/${qnaBoardId}`, { title, content })
             .then(() => {
                 alert("수정 성공")
             })
@@ -65,14 +65,14 @@ export default {
             })
     },
     requestQnaCommentListFromSpring({commit}, qnaBoardId ){
-        return axiosInst.get(`/qna/read/comments/${qnaBoardId}`)
+        return mainRequest.get(`/qna/read/comments/${qnaBoardId}`)
         .then((res) => {
             commit(REQUEST_QNA_COMMENT_LIST_FROM_SPRING, res.data)
         })
     },
     requestQnaCommentRegisterToSpring({}, payload) {
         const { writer, comment, qnaBoardId} = payload
-        return axiosInst.post(`http://localhost:7777/qna/read/register`, { writer, comment, qnaBoardId })
+        return mainRequest.post(`qna/read/register`, { writer, comment, qnaBoardId })
         .then(() => {
             alert('댓글 등록을 완료하였습니다.')
         })
@@ -81,7 +81,7 @@ export default {
         })
     },
     requestQnaCommentDeleteToSpring({}, { qnaCommentId }) {
-        return axios.delete(`http://localhost:7777/qna/read/${qnaCommentId}`)
+        return mainRequest.delete(`qna/read/${qnaCommentId}`)
             .then(() => {
                 alert('댓글 삭제 완료');
             })
@@ -91,7 +91,7 @@ export default {
     },
     requestCreateFreeBoardToSpring({ }, payload) {
         const { title, content, writer } = payload;
-        return axiosInst.post('/free/register', { title, content, writer })
+        return mainRequest.post('/free/register', { title, content, writer })
             .then((res) => {
                 alert('게시물 등록 성공!');
                 return res.data
@@ -102,7 +102,7 @@ export default {
     },
     requestFreeBoardListToSpring({ commit }, payload) {
         const {startIndex, endIndex} = payload
-        return axiosInst.get(`/free/list/${startIndex}/${endIndex}`)
+        return mainRequest.get(`/free/list/${startIndex}/${endIndex}`)
             .then((res) => {
                 const freeBoards = res.data;
                 commit(REQUEST_FREE_BOARD_LIST_TO_SPRING, freeBoards);
@@ -113,7 +113,7 @@ export default {
     },
     requestFreeBoardToSpring({ commit }, freeBoardId) {
         console.log("requestFreeBoardToSpring: "+ freeBoardId)
-        return axiosInst.get(`/free/read/${freeBoardId}`)
+        return mainRequest.get(`/free/read/${freeBoardId}`)
             .then((res) => {
                 commit(REQUEST_FREE_BOARD_TO_SPRING, res.data)
             })
@@ -122,7 +122,7 @@ export default {
             })
     },
     requestFreeBoardDeleteToSpring({}, freeBoardId) {
-        return axiosInst.get(`/free/delete/${freeBoardId}`)
+        return mainRequest.get(`/free/delete/${freeBoardId}`)
             .then(() => {
                 alert("삭제 성공")
             })
@@ -133,7 +133,7 @@ export default {
     requestFreeBoardModifyToSpring({}, payload) {
         const { freeBoardId, title, content } = payload
         console.log("수정: "+ freeBoardId +", "+ title +", "+ content)
-        return axiosInst.post(`/free/modify/${freeBoardId}`, { title, content })
+        return mainRequest.post(`/free/modify/${freeBoardId}`, { title, content })
             .then(() => {
                 alert("수정 성공")
             })
@@ -142,14 +142,14 @@ export default {
             })
     },
     requestFreeCommentListFromSpring({commit}, freeBoardId ){
-        return axiosInst.get(`/free/read/comments/${freeBoardId}`)
+        return mainRequest.get(`/free/read/comments/${freeBoardId}`)
         .then((res) => {
             commit(REQUEST_FREE_COMMENT_LIST_FROM_SPRING, res.data)
         })
     },
     requestFreeCommentRegisterToSpring({}, payload) {
         const { writer, comment, freeBoardId} = payload
-        return axiosInst.post(`http://localhost:7777/free/read/register`, { writer, comment, freeBoardId })
+        return mainRequest.post('free/read/register', { writer, comment, freeBoardId })
         .then(() => {
             alert('댓글 등록을 완료하였습니다.')
         })
@@ -158,7 +158,7 @@ export default {
         })
     },
     requestFreeCommentDeleteToSpring({}, { freeCommentId }) {
-        return axios.delete(`http://localhost:7777/free/read/${freeCommentId}`)
+        return mainRequest.delete(`free/read/${freeCommentId}`)
             .then(() => {
                 alert('댓글 삭제 완료');
             })
