@@ -1,123 +1,127 @@
 <template>
     <nav>
-        <!-- <div class="header-main" style="height: 200px;
-                margin: auto;
-                display: flex; position: relative;
-                background-color: lightblue;
-                width: 1300px;
-                ">
-            <router-link :to="{ name: 'home' }" style="margin: auto; position: relative; width: auto;">
-                    <v-img class="mx-2" src="@/assets/logo.png"
-                            max-height="150" max-width="150" contain/>
-            </router-link>
-        </div>
-        <v-app-bar id="myElement" color="dark" class="flex-grow-0" app dark style="width: 1300px; margin: auto;" :style="{ top: adjust }" align-center> -->
-        <v-app-bar color="white" class="flex-grow-0" width="auto" elevation="4" app>
-            <v-app-bar-nav-icon v-on:click="activeSidebar"/>
-            <router-link :to="{ name: 'home' }">
-                <v-img class="mx-2" src="@/assets/logo.png"
-                        max-height="40" max-width="40" contain/>
-            </router-link>
-            <transition name="sidebar-dropdown">
-                <div v-if="showSidebar" class="sidebar">
-                    <div class="main__category-box" style="width: 700px;">
-                        <div class="main__category-list" style="width: 200px; background-color: white;">
-                            <li v-for="(item, index1) in items" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center;">
-                                <router-link :to="{ name: item.url }">
-                                    <p>{{ item.mainTitle }}</p>
-                                </router-link>
-                                <div class="second-category hidden">
-                                    <div class="first-inline-category" style="background-color: white;">
-                                        <ul style="position: absolute; padding-left: 0;">
-                                            <li v-for="(subTitle, index1) in item.subTitles" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
-                                                <a href="#">
-                                                    <p>{{ subTitle.sub }}</p>
-                                                </a>
-                                                <div class="third-category hidden">
-                                                    <div class="second-inline-category" style="background-color: white;">
-                                                        <ul style="position: absolute; padding-left: 0;">
-                                                            <li v-for="(content, index3) in subTitle.contents" :key="index3" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
-                                                                <a href="#">
-                                                                    <p>{{ content }}</p>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-            <router-link :to="{ name: 'home' }" style="color: black; text-decoration: none;">
-                <v-toolbar-title class="text--darken-4 site-title">
-                    <span>에너-지니</span>
-                </v-toolbar-title>
-            </router-link>
-            <v-spacer></v-spacer>
-            <v-text-field class="green--text" v-model="search" label="검색" single-line hide-details @keydown.enter="Search"></v-text-field>
-            <v-icon id="search-icon" v-on:click="Search" >mdi-magnify</v-icon>
-            <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 64px;" class="mypage">
-                <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
-                    <span>My Page</span>
-                    <v-icon right>mdi-login</v-icon>
-                </router-link>
-                <div class="mypage-hidden">
-                    <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
-                        <router-link :to="{ name: 'SurveyPage' }" style="text-decoration: none; color: black;">
-                            <li class="mypage-hover-highlight">
-                                <a href="#">설문 조사</a>
-                            </li>
+        <v-app-bar color="white" class="flex-grow-0" width="auto" height="130" elevation="1" app>
+            <div class="navbar-menu">
+                <!-- 첫번째 줄 -->
+                <div class="d-flex justify-end me-8 mb-0 mt-1 pt-5 pe-4">
+                    <v-btn v-if="isAuthenticated == true" text color="grey" style="height: 40px;" class="mypage">
+                        <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
+                            <span>My Page</span>
                         </router-link>
-                        <li class="mypage-hover-highlight">
-                            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
-                                <span>회원 탈퇴</span>
-                                <v-icon right>mdi-login</v-icon>
-                            </v-btn>
-                        </li>
-                    </ul>
+                        <!-- <div class="mypage-hidden">
+                            <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
+                                <li class="mypage-hover-highlight">
+                                    <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
+                                        <span>회원 탈퇴</span>
+                                    </v-btn>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </v-btn>
+                    <router-link :to="{ name: 'SignAgreePage' }" style="text-decoration: none;">
+                        <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 40px;">
+                            <span>회원가입</span>
+                        </v-btn>
+                    </router-link>
+                    <router-link :to="{ name: 'SignInPage' }" style="text-decoration: none;">
+                        <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 40px;">
+                            <span>로그인</span>
+                        </v-btn>
+                    </router-link>
+                    <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="logout" style="height: 40px;">
+                        <span>로그아웃</span>
+                    </v-btn>
+                    <v-btn text color="grey" class="shoppingCart" style="height: 38px;">
+                        <router-link :to="{ name: 'ShoppingCartPage'}" style="color: grey; text-decoration: none;">
+                            <span>장바구니</span>
+                        </router-link>
+                    </v-btn>
                 </div>
-            </v-btn>
-            <router-link :to="{ name: 'SignAgreePage' }" style="text-decoration: none;">
-                <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
-                    <span>회원가입</span>
-                    <v-icon right>mdi-account-plus-outline</v-icon>
-                </v-btn>
-            </router-link>
-            <router-link :to="{ name: 'SignInPage' }" style="text-decoration: none;">
-                <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 64px;">
-                    <span>로그인</span>
-                    <v-icon right>mdi-login</v-icon>
-                </v-btn>
-            </router-link>
-            <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="logout" style="height: 64px;">
-                <span>로그아웃</span>
-                <v-icon right>mdi-exit-to-app</v-icon>
-            </v-btn>
-            
-            <v-btn text color="grey" class="shoppingCart" style="height: 64px;">
-                <router-link :to="{ name: 'ShoppingCartPage'}" style="color: grey; text-decoration: none;">
-                    <span>장바구니</span>
-                </router-link>
-                <v-icon right>mdi-cart-outline</v-icon>
-                <div class="shopping-cart-hidden">
-                    <!-- <ul class="shopping-cart-contents" style="padding-left: 0;  margin: 0;">
-                        <li class="shopping-cart-hover-highlight">
-                            <a href="#">Test 1</a>
-                        </li>
-                        <li class="shopping-cart-hover-highlight">
-                            <a href="#">Test 2</a>
-                        </li>
-                        <li class="shopping-cart-hover-highlight">
-                            <a href="#">Test 3</a>
-                        </li>
-                    </ul> -->
+                <!-- 두번째줄-->
+                <div class="d-flex pb-3 mb-3 mt-0">
+                    <v-row>
+                        <v-col cols="1" class="ms-7">
+                            <div class="mt-4 me-0">
+                                <v-app-bar-nav-icon v-on:click="activeSidebar"/>
+                                <transition name="sidebar-dropdown">
+                                    <div v-if="showSidebar" class="sidebar">
+                                        <div class="main__category-box" style="width: 700px;">
+                                            <div class="main__category-list" style="width: 200px; background-color: white; display: flex; flex-direction: column;">
+                                                <li v-for="(item, index1) in items" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center; display: flex; align-items: flex-end; justify-content: center;">
+                                                    <router-link :to="{ name: item.url }">
+                                                        <p>{{ item.mainTitle }}</p>
+                                                    </router-link>
+                                                    <div class="second-category hidden">
+                                                        <div class="first-inline-category" style="background-color: white;">
+                                                            <ul style="position: absolute; padding-left: 0;">
+                                                                <li v-for="(subTitle, index1) in item.subTitles" :key="index1" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                                                    <a href="#">
+                                                                        <p>{{ subTitle.sub }}</p>
+                                                                    </a>
+                                                                    <!-- <div class="third-category hidden">
+                                                                        <div class="second-inline-category" style="background-color: white;">
+                                                                            <ul style="position: absolute; padding-left: 0;">
+                                                                                <li v-for="(content, index3) in subTitle.contents" :key="index3" class="hover-highlight" style="line-height: 44px; text-align: center; width: 249px;">
+                                                                                    <a href="#">
+                                                                                        <p>{{ content }}</p>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div> -->
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
+                        </v-col>
+                        <v-col cols="2">
+                            <div class="logo-area ms-0 mt-2 mb-3 p-0">
+                                <router-link :to="{ name: 'home' }">
+                                    <v-img src="@/assets/logo/energinie_logo3.png"
+                                            max-height="80" max-width="150" />
+                                </router-link>
+                            </div>
+                        </v-col>
+                        <v-col cols="5">
+                            <div class="mt-3">
+                                <v-row>
+                                    <v-col cols="10">
+                                        <v-text-field v-model="search" label="검색어를 입력하세요." single-line hide-details @keydown.enter="Search"></v-text-field>
+                                    </v-col>
+                                    <v-col cols="1">
+                                        <v-icon id="search-icon" v-on:click="Search" >mdi-magnify</v-icon>
+                                    </v-col>
+                                </v-row>
+                            </div>
+                        </v-col>
+                        <v-col>
+                            <div class="community-menu mt-2 me-8 pe-5 d-flex justify-end">
+                                <router-link :to="{ name: 'SurveyPage' }" style="text-decoration: none;">
+                                    <v-btn outlined rounded color="purple" style="height: 40px; margin-top: 12px;">
+                                        <span>맞춤 영양제 찾기</span>
+                                    </v-btn>
+                                </router-link>
+                                <router-link :to="{ name: 'FreeBoardListPage' }" style="text-decoration: none;">
+                                    <v-btn text color="black" style="height: 64px;">
+                                        <span>공지사항</span>
+                                    </v-btn>
+                                </router-link>
+                                <router-link :to="{ name: 'QnaBoardListPage' }" style="text-decoration: none;">
+                                    <v-btn text color="black" style="height: 64px;">
+                                        <span>Q&A</span>
+                                    </v-btn>
+                                </router-link>
+                            </div>
+                        </v-col>
+                    </v-row>
                 </div>
-            </v-btn>
+            </div>
         </v-app-bar>    
     </nav>
 </template>
@@ -373,6 +377,19 @@ li {
 .sidebar-dropdown-enter,
 .sidebar-dropdown-leave-to {
     transform: translateY(-300%);
+}
+
+.navbar-menu {
+    width: 100%;
+}
+
+.search-area {
+    justify-content: flex-start;
+}
+
+.logo-area {
+    width: 100%;
+    height: 100%;
 }
 
 
