@@ -3,13 +3,13 @@ import {
     REQUEST_MY_PAGE_MEMBER_INFO
 } from './mutation-types'
 
-import axiosInst from '@/utility/axiosObject.js';
+import mainRequest from '@/utility/mainRequest';
 import router from '@/router';
 
 export default {
     reqSignUpToSpring({}, payload) {
         const { name, userId, password, email, birthday, phoneNumber } = payload;
-        return axiosInst.post("/member/sign-up", { name, userId, password, email, birthday, phoneNumber })
+        return mainRequest.post("/member/sign-up", { name, userId, password, email, birthday, phoneNumber })
             .then(() => {
                 alert("회원 가입 완료!");
                 router.push("/sign-in");
@@ -19,19 +19,19 @@ export default {
             })
     },
     reqSignUpCheckUserIdToSpring({}, userId) {
-        return axiosInst.post(`/member/sign-up/check-userId/${userId}`)
+        return mainRequest.post(`/member/sign-up/check-userId/${userId}`)
             .then((res) => {
                 return res.data
             })
     },
     async reqSignUpCheckEmailToSpring({}, email) {
-        return await axiosInst.post(`/member/sign-up/check-email/${email}`)
+        return await mainRequest.post(`/member/sign-up/check-email/${email}`)
             .then((res) => {
                 return res.data;
             })
     },
     reqSignUpCheckPhoneNumberToSpring({}, phoneNumber) {
-        return axiosInst.post(`/member/sign-up/check-phoneNumber/${phoneNumber}`)
+        return mainRequest.post(`/member/sign-up/check-phoneNumber/${phoneNumber}`)
             .then((res) => {
                 return res.data;
             })
@@ -39,7 +39,7 @@ export default {
 
     reqSignInToSpring({ commit }, payload) {
         const { userId, password } = payload;
-        return axiosInst.post("/member/sign-in", { userId, password })
+        return mainRequest.post("/member/sign-in", { userId, password })
             .then((res) => {
                 (async () => {
                     let returnData = JSON.stringify(res.data);
@@ -64,7 +64,7 @@ export default {
             })
     },
     async reqSignOutToSpring({ commit }, userInfo) {
-        return await axiosInst.post("/member/logout", userInfo)
+        return await mainRequest.post("/member/logout", userInfo)
             .then(() => {
                 alert("로그아웃 완료");
                 localStorage.removeItem("userInfo");
@@ -73,7 +73,7 @@ export default {
             })
     },
     reqResignToSpring({ commit }, userInfo) {
-        return axiosInst.post("/member/resign", userInfo)
+        return mainRequest.post("/member/resign", userInfo)
             .then(() => {
                 alert("회원탈퇴 완료");
                 localStorage.removeItem("userInfo");
@@ -88,7 +88,7 @@ export default {
     async reqMyPageCheckPasswordToSpring({}, payload) {
         const { memberId, password } = payload
 
-        return await axiosInst.post("/member/mypage/check-password", { memberId, password })
+        return await mainRequest.post("/member/mypage/check-password", { memberId, password })
             .then((res) => {
                 if(res.data == false) {
                     alert("비밀번호가 맞지 않습니다. 다시 입력해주세요.");
@@ -102,7 +102,7 @@ export default {
     },
 
     reqMyPageMemberInfoToSpring({ commit }, memberId) {
-        return axiosInst.post(`/member/mypage/memberInfo/${memberId}`)
+        return mainRequest.post(`/member/mypage/memberInfo/${memberId}`)
             .then((res) => {
                 commit(REQUEST_MY_PAGE_MEMBER_INFO, res.data);
             })
@@ -112,7 +112,7 @@ export default {
     },
     reqMyPageUpdateMemberInfoToSpring({ }, payload) {
         const { memberId, name, birthday, email, phoneNumber, newPassword } = payload
-        return axiosInst.post(`/member/mypage/memberInfo/update/${memberId}`, 
+        return mainRequest.post(`/member/mypage/memberInfo/update/${memberId}`, 
                { name, birthday, email, phoneNumber, newPassword })
             .then((res) => {
                 alert("회원 정보를 성공적으로 수정하였습니다.");

@@ -13,7 +13,8 @@ import {
     REQUEST_PRODUCT_BRAND_LIST_TO_SPRING,
 } from './mutation-types'
 
-import axiosInst from '@/utility/axiosObject'
+import mainRequest from '@/utility/mainRequest';
+
 const config = {
     headers: { 'Content-Type': 'multipart/form-data' }
   };
@@ -21,7 +22,7 @@ const config = {
 export default {
     async requestProductListToSpring({commit}, payload) {
         const { startIndex, endIndex } = payload
-        return await axiosInst.get(`/category/default/${startIndex}/${endIndex}`)
+        return await mainRequest.get(`/category/default/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
@@ -30,13 +31,13 @@ export default {
     },
     async requestProductToSpring ({ commit }, payload) {
         const { memberId, productId } = payload;
-        return await axiosInst.get(`/product/detail-product-page/${productId}/${memberId}`)
+        return await mainRequest.get(`/product/detail-product-page/${productId}/${memberId}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_TO_SPRING, res.data)
             })
     },
     async requestProductListToSpringWithOption({commit}, option) {
-        return await axiosInst.get(`/category/${option}`)
+        return await mainRequest.get(`/category/${option}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING_WITH_OPTION, res.data);
             }).catch((err) => {
@@ -45,7 +46,7 @@ export default {
     },
     async requestProductOptionListToSpring({commit}) {
         console.log("actions()");
-        return await axiosInst.get('/product/productOptions')
+        return await mainRequest.get('/product/productOptions')
             .then((res) => {
                 commit(REQUEST_PRODUCT_OPTION_LIST_TO_SPRING, res.data);
             }).catch((err) => {
@@ -58,7 +59,7 @@ export default {
             console.log(key, ": ", payload.get(key))
         }
         try {
-            await axiosInst.post('/product/register', payload, config)
+            await mainRequest.post('/product/register', payload, config)
             alert("ProductCreated");
         } catch {
             console.log("error");
@@ -66,7 +67,7 @@ export default {
     },
 
     reqMyPageWishListToSpring({ commit }, memberId) {
-        return axiosInst.get(`/wish/list/${memberId}`)
+        return mainRequest.get(`/wish/list/${memberId}`)
             .then((res) => {
                 if(res.data === "") {
                     alert("리뷰가 하나도 없습니다.");
@@ -81,7 +82,7 @@ export default {
     reqSetWishToSpring({}, payload) {
         const { memberId, productId } = payload;
         console.log(productId, memberId);
-        return axiosInst.get(`/wish/set/${productId}/${memberId}`)
+        return mainRequest.get(`/wish/set/${productId}/${memberId}`)
             .then((res) => {
                 alert("res.data: " + res.data);
                 return res.data;
@@ -93,7 +94,7 @@ export default {
     
     async reqRegisterReviewToSpring({}, payload) {
         console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
-        return axiosInst.post('/review/register', payload)
+        return mainRequest.post('/review/register', payload)
             .then((res) => {
                 alert('리뷰등록완료.')
             })
@@ -104,7 +105,7 @@ export default {
     },
     async reqRegisterReviewWithImageToSpring({},formData) {
         
-        return axiosInst.post('/review/registerWithImg', formData, {
+        return mainRequest.post('/review/registerWithImg', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -120,7 +121,7 @@ export default {
     },
     async reqModifyReviewToSpring({}, payload) {
         console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
-        return axiosInst.put('/review/modify', payload)
+        return mainRequest.put('/review/modify', payload)
             .then((res) => {
                 console.log(res.data);
                 alert('리뷰수정완료.')
@@ -132,7 +133,7 @@ export default {
     },
     async reqModifyReviewWithImageToSpring({},formData) {
         console.log('리뷰 등록 요청 데이터:', formData);
-        return axiosInst.put('/review/modifyWithImg', formData, {
+        return mainRequest.put('/review/modifyWithImg', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -147,7 +148,7 @@ export default {
         });
     },
     async reqDeleteReviewToSpring({}, productReviewId) {
-        return axiosInst.delete(`/review/deleteReview/${productReviewId}`)
+        return mainRequest.delete(`/review/deleteReview/${productReviewId}`)
             .then(() => {
                 alert('리뷰삭제완료.')
             })
@@ -155,7 +156,7 @@ export default {
     async reqReadReviewFromSpring({ commit }, payload) {
         const { productId, startIndex, endIndex } = payload
         try {
-          const response = await axiosInst.get(`/review/list/${productId}/${startIndex}/${endIndex}`, { params: { productId } });
+          const response = await mainRequest.get(`/review/list/${productId}/${startIndex}/${endIndex}`, { params: { productId } });
           commit(REQUEST_READ_REVIEW_FROM_SPRING, response.data);
           console.log(JSON.stringify(response.data));
         } catch (error) {
@@ -164,7 +165,7 @@ export default {
     },
     async getStarRateAverage({ commit }, productId) {
         try {
-          const response = await axiosInst.get(`/review/starRateAverage/${productId}`, { params: { productId } });
+          const response = await mainRequest.get(`/review/starRateAverage/${productId}`, { params: { productId } });
           console.log(JSON.stringify(response.data));
       
           if (response.data && response.data[0] && response.data[0].averageStarRate) {
@@ -179,7 +180,7 @@ export default {
       },
     async requestSpecificProductListToSpring ({ commit }, payload) {
         const { category, startIndex, endIndex } = payload;
-        return await axiosInst.get(`/category/${category}/${startIndex}/${endIndex}`)
+        return await mainRequest.get(`/category/${category}/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_SPECIFIC_PRODUCT_LIST_TO_SPRING, res.data)
             })
@@ -190,7 +191,7 @@ export default {
     },
     async requestProductBrandListToSpring({commit}) {
         console.log("requestProductBrandListToSpring()");
-        return await axiosInst.get('/product/productBrands')
+        return await mainRequest.get('/product/productBrands')
             .then((res) => {
                 commit(REQUEST_PRODUCT_BRAND_LIST_TO_SPRING, res.data);
             }).catch((err) => {
@@ -200,7 +201,7 @@ export default {
     async requestSpecificBrandProductListToSpring({commit}, payload) {
         console.log("requestSpecificBrandProductListToSpring");
         const { brand, startIndex, endIndex } = payload
-        return await axiosInst.get(`/category/brand/${brand}/${startIndex}/${endIndex}`)
+        return await mainRequest.get(`/category/brand/${brand}/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
@@ -211,7 +212,7 @@ export default {
         console.log("requestSearchResultProductListToSpring()");
         const { query, startIndex, endIndex } = payload
         console.log(query)
-        return await axiosInst.get(`/category/search/${query}/${startIndex}/${endIndex}`)
+        return await mainRequest.get(`/category/search/${query}/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {

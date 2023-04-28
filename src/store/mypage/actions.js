@@ -3,7 +3,7 @@ import {
     REQUEST_COMPLETE_ORDER_TO_SPRING
 } from "./mutation-types";
 
-import axiosInst from "@/utility/axiosObject";
+import mainRequest from '@/utility/mainRequest';
 
 export default { 
 
@@ -11,7 +11,7 @@ export default {
     async reqCompleteOrderListToSpring({commit}, token) {
         console.log("reqCompleteOrderListToSpring 토큰: " + token);
 
-        return await axiosInst.post("/order/list", { token })
+        return await mainRequest.post("/order/list", { token })
 
         .then((res) => {
             commit(REQUEST_COMPLETE_ORDER_LIST_TO_SPRING, res.data)
