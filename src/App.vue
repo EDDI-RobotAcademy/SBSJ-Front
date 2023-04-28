@@ -4,7 +4,7 @@
     <v-main>
       <router-view/>
     </v-main>
-    <v-btn fab dark small fixed bottom right color="teal" @click="toTop">
+    <v-btn fab dark small fixed bottom right color="purple" @click="toTop">
       <v-icon>mdi-menu-up</v-icon>
     </v-btn>
     <Footer/>
