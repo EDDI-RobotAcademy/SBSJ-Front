@@ -34,6 +34,20 @@
                             </v-card-text>
                         </router-link>
                     </v-col>
+                    <v-col>
+                        <div class="other-info">
+                            <v-btn
+                                class="directive-btn"
+                                rounded
+                                @click="directPurchase(wish)"
+                            >
+                                <span class="directive-btn-text">바로구매</span>
+                            </v-btn>
+                            <v-btn class="directive-btn" @click="addToCart(wish)" rounded>
+                                <span class="directive-btn-text">장바구니</span>
+                            </v-btn>
+                        </div>
+                    </v-col>
                 </v-row>
             </v-card>
         </div>
@@ -60,11 +74,46 @@ export default {
     methods:{
         ...mapActions(productModule, ['reqMyPageWishListToSpring']),
         ...mapActions(orderModule, ['reqAddCartToSpring']),
+        addToCart(wish) {
+                let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                const memberId = userInfo.memberId;
+                const productId = wish.productId;
+                const count = 1
+
+                this.reqAddCartToSpring({ memberId, productId, count })
+
+                let goToCartMessage = confirm("장바구니로 이동하시겠습니까?")
+                if(goToCartMessage) {
+                    this.$router.push({ name:'ShoppingCartPage' })
+                }
+        },
+        async directPurchase(wish){
+            // 바로 구매
+            const directTotalPrice = wish.price
+            const count = 1
+            const thumbnail = wish.thumbnail
+            const merchant = {productId: wish.productId, productName: wish.productName}
+            this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
+                { orderSave: { directOrderCheck: true, product: merchant, 
+                                count: count, totalPrice: directTotalPrice, thumbnail: thumbnail }})
+            console.log(this.$store.state.orderModule.orderList)
+            alert ("주문 페이지로 이동합니다.")
+            await this.$router.push({ name: 'OrderInfoPage' })
+        },
 
     },
 }
 </script>
 
 <style scoped>
+    .other-info {
+        float: right;
+    }
 
+    .directive-btn {
+        display: block;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
 </style>
