@@ -114,17 +114,21 @@
                                 <div style=" width:30%; height:100%; display:flex; justify-content:start; align-items:center; font-size:small; font-weight:bold;"></div>
                             </div>
                         </div>
-                        <div style="width:100%; height:12%; display: flex; ">
-                            <div style=" width:50%; display:flex; justify-content:center; align-items:center; ">
-                                <button type="button" 
-                                    class="btn btn-primary btn-lg" 
+                        <div style="width:100%; height:12%; display: flex; justify-content:center; ">
+                            <div style="display:flex; align-items:center;">
+                                <v-btn outlined x-large
+                                    color="#692498" 
                                     style="font-weight: bold;"
                                     @click="addToCart"
                                 >
-                                장바구니</button>
+                                장바구니</v-btn>
                             </div>
-                            <div style="width:50%; display:flex; justify-content:center; align-items:center; ">
-                                <button type="button" class="btn btn-dark btn-lg" style="font-weight: bold;">바로구매</button>
+                            <div style="margin-left: 10px; display:flex; align-items:center;">
+                                <v-btn x-large
+                                    color="#692498"
+                                    style="font-weight: bold; color: white;"
+                                    @click="directPurchase(product)"
+                                >바로구매</v-btn>
                             </div>
                         </div>
                     </div>
@@ -250,6 +254,22 @@ export default {
             if(goToCartMessage) {
                 this.$router.push({ name:'ShoppingCartPage' })
             }
+        },
+        async directPurchase(product){
+            // 바로 구매
+            if(!this.selectCount){
+                alert("수량을 선택해주세요.")
+                return;
+            }
+            this.count = this.selectCount
+            this.directTotalPrice = product.price * this.selectCount
+            this.thumbnail = product.thumbnail
+            this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
+                { orderSave: { directOrderCheck: true, product: product, 
+                                count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
+            console.log(this.$store.state.orderModule.orderList)
+            alert ("주문 페이지로 이동합니다.")
+            await this.$router.push({ name: 'OrderInfoPage' })
         },
 	},
     updated() {
