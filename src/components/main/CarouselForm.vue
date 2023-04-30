@@ -3,12 +3,14 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active carousel">
 				<div class="main-top-promotion">
-					<img class="main-top-promotion-image" src="@/assets/carousel/carouselImg.jpg" alt="Image 1">
+					<router-link :to="{ name: 'SurveyPage' }" style="text-decoration: none;">
+						<img class="main-top-promotion-image" src="@/assets/carousel/carouselImg01.png" alt="Image 1">
+					</router-link>
 				</div>
 			</div>
 			<div class="carousel-item carousel">
 				<div class="main-top-promotion">
-					<img class="main-top-promotion-image" src="@/assets/carousel/carouselImg3.webp" alt="Image 2">
+					<img class="main-top-promotion-image" src="@/assets/carousel/carouselImg02.png" alt="Image 2">
 				</div>
 			</div>
 		</div>
