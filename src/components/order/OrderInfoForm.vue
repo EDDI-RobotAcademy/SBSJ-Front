@@ -256,17 +256,27 @@ export default {
         ]),
     },
     async created() {
+        if(this.orderList == '' || this.orderList == null) {
+            alert("새로고침하여 주문 정보가 날아갔습니다^^");
+            this.$router.push({ name: 'ShoppingCartPage' });
+        }
+
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let memberId = userInfo.memberId;
-        let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
-
         await this.reqMyPageMemberInfoToSpring(memberId)
-
+        
+        let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+        
         if(lsDeliveryList === null || lsDeliveryList.length === 0) {
             await this.reqOrderPageDeliveryListToSpring(memberId);
             lsDeliveryList = JSON.parse(localStorage.getItem('lsDeliveryList'));
-        } 
-        
+        }
+
+        lsDeliveryList = lsDeliveryList.sort((a, b) => {
+            if(a.defaultAddress.length < b.defaultAddress.length) return 1;
+            if(a.defaultAddress.length > b.defaultAddress.length) return -1;
+            return 0;
+        });
         if (lsDeliveryList && lsDeliveryList.length > 0) {
             this.lsDeliveryList = lsDeliveryList;
         } else {
@@ -277,6 +287,7 @@ export default {
         if (lsDeliveryList && lsDeliveryList.length > 0) {
             this.selectedAddress = lsDeliveryList[0];
         }
+        localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
     },
     methods: {
         ...mapActions(accountModule, [
@@ -287,15 +298,25 @@ export default {
             'reqMyPageRegisterDeliveryToSpring',
         ]),
         async onSubmit(payload) {
-            await this.reqMyPageRegisterDeliveryToSpring(payload);
+            let successRegister = await this.reqMyPageRegisterDeliveryToSpring(payload);
 
-            // 로컬 스토리지에서 기존 lsDeliveryList 삭제
-            localStorage.removeItem('lsDeliveryList');
+            let lsDeliveryList = JSON.parse(localStorage.getItem("lsDeliveryList"));
+            if(lsDeliveryList == null) {
+                if(successRegister != null) {
+                    localStorage.setItem("lsDeliveryList", JSON.stringify(successRegister));
+                }
+            } else {
+                lsDeliveryList.push(successRegister);
+                lsDeliveryList = lsDeliveryList.sort((a, b) => {
+                    if(a.defaultAddress.length < b.defaultAddress.length) return 1;
+                    if(a.defaultAddress.length > b.defaultAddress.length) return -1;
+                    return 0;
+                })
+                localStorage.setItem("lsDeliveryList", JSON.stringify(lsDeliveryList));
+            }
 
-            // 새로운 lsDeliveryList 생성
-            let lsDeliveryList = [...this.lsDeliveryList];
-            lsDeliveryList.push(payload); // 새로운 배송지 데이터를 배열에 추가
-            localStorage.setItem('lsDeliveryList', JSON.stringify(lsDeliveryList)); // 업데이트된 lsDeliveryList 저장
+            this.selectedAddress = lsDeliveryList[0];
+            this.lsDeliveryList = lsDeliveryList;
         },
         setDeliveryRequest() {
             this.selectedDeliveryReq = this.selectedOption === this.deliveryMsg[2] ? this.writeDeliveryMsg : this.selectedOption
@@ -469,9 +490,7 @@ export default {
                 }
             });
         }
-      
     },
-    
 }
 </script>
 
