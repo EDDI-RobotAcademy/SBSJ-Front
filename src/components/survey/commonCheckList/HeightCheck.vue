@@ -16,7 +16,7 @@
       </svg>
       <div class="alert alert-primary d-flex align-items-center" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="20" height="20" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-        <div style="font-size: small;">
+        <div style="font-size: small; padding-right: 10px;">
           몸무게와 키는 고객님의 정확한 BMI체질량지수 계산 및 영양성분 추천에 필요합니다. (30 ~ 300 사이의 값만 입력이 가능합니다.)
         </div>
       </div>

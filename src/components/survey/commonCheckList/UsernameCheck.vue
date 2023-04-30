@@ -5,7 +5,7 @@
         <div>
           <div style="font-size: xx-large;">
             <div style="margin-top:10%; height:100%; width:100%; display:flex; justify-content:start; align-items:center; font-weight: 100;">
-              <p style="margin-top:3%; font-weight: bold;">이름을</p>을 알려주세요.
+              <p style="margin-top:3%; font-weight: bold;">이름</p>을 알려주세요.
             </div>
           </div>
         </div>
