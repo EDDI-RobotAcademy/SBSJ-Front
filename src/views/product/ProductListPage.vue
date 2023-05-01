@@ -61,22 +61,27 @@ const productModule = 'productModule'
         }
     },
     async created() {
+        this.isQuery = this.searchQuery;
+    },
+    async mounted() {
+        console.log("mounted()")
+        console.log("searchQuery: " + this.searchQuery)
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const payload = {startIndex: startIndex, endIndex: endIndex}
-        if(this.products.length == 0) {
+        if(this.isQuery.query === undefined) {
             console.log("requestProductListToSpring()")
             await this.requestProductListToSpring(payload);
+            this.showProducts = this.products
+            this.cache[this.currentPage] = this.products
+            this.productTitle = this.category
+            this.defaultOrderBy = 'Default'
+        } else {
+            console.log("requestSearchResultProductListToSpring() in mounted")
+            this.cache[this.currentPage] = this.searchResult;
+            this.showProducts = this.searchResult
         }
-        this.showProducts = this.products
-        this.cache[this.currentPage] = this.products
-        this.productTitle = this.category
-        this.defaultOrderBy = 'Default'
-        console.log(this.productTitle)
-        },
-    mounted() {
-        console.log("mounted()")
-        console.log(this.searchQuery)
+        
     },
     watch: {
         '$store.state.productModule.searchResult'(newValue, oldValue) {
