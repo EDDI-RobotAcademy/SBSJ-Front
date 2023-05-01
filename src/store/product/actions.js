@@ -84,7 +84,7 @@ export default {
         console.log(productId, memberId);
         return mainRequest.get(`/wish/set/${productId}/${memberId}`)
             .then((res) => {
-                alert("res.data: " + res.data);
+                // alert("res.data: " + res.data);
                 return res.data;
             })
             .catch(() => {
