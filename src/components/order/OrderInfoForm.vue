@@ -408,13 +408,13 @@ export default {
                     const sendInfo = this.sendInfo
                     const phoneNumber = this.selectedAddress.phoneNumber
                     const recipientName = this.selectedAddress.recipientName
-                    const addressId = this.selectedAddress.addressId
+                    // const addressId = this.selectedAddress.addressId
                     const road = this.selectedAddress.road
                     const addressDetail = this.selectedAddress.addressDetail
-                    const zipcode = this.selectedAddress.zipcode
+                    // const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
@@ -477,13 +477,13 @@ export default {
                     const sendInfo = this.sendInfo
                     const phoneNumber = this.selectedAddress.phoneNumber
                     const recipientName = this.selectedAddress.recipientName
-                    const addressId = this.selectedAddress.addressId
+                    // const addressId = this.selectedAddress.addressId
                     const road = this.selectedAddress.road
                     const addressDetail = this.selectedAddress.addressDetail
-                    const zipcode = this.selectedAddress.zipcode
+                    // const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
