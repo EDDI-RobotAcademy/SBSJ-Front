@@ -5,10 +5,11 @@
         <v-col cols="auto" style="padding-bottom: 90px">
           <router-link to="/">
             <v-img
-                :src="require('@/assets/logo/logo-removebg.png')"
-                width="400"
-                height="200"
-                class="mx-auto mb-6"
+              :src="require('@/assets/logo/energinie_logo5_800x400.png')"
+              width="400"
+              height="200"
+              class="mx-auto mb-6"
+              contain
             ></v-img>
           </router-link>
           <v-card width="540">
@@ -16,7 +17,7 @@
               <v-row justify="center">
                 <v-col cols="auto">
                     <v-img
-                      :src="require('@/assets/banner/banner2.png')"
+                      :src="require('@/assets/banner/signin_banner.png')"
                       width="400"
                       height="200"
                       class="mx-auto"
@@ -24,8 +25,7 @@
                 </v-col>
               </v-row>
               <v-form @submit.prevent="onSubmit">
-                <div class="text-h4 font-weight-black mb-10" >로그인</div>
-
+                <div class="text-h4 font-weight-black mt-10 mb-10">로그인</div>
                 <div class="d-flex">
                   <v-text-field
                       type="id"
@@ -34,7 +34,7 @@
                       :rules="userId_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
-                      color="orange"
+                      color="#692498"
                       class="mb-2"
                   />
                 </div>
@@ -47,7 +47,7 @@
                       :rules="password_rule"
                       clearable
                       prepend-icon="mdi-lock-outline"
-                      color="orange"
+                      color="#692498"
                       class="mb-2"
                   />
                 </div>
@@ -57,7 +57,8 @@
                     block
                     x-large
                     rounded
-                    color="teal lighten-3"
+                    dark
+                    color="#692498"
                     class="mt-6"
                     :disabled="false"
                 >로그인</v-btn><br/>
@@ -187,7 +188,7 @@ body {
   top: 0;
   height: 490%;
   width: 140%;
-  background: #78c7d2;
+  background: #692498;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
   -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
