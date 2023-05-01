@@ -1,63 +1,68 @@
 <template>
-    <div class="mt-10 mx-5">
+    <div class="mt-10 mx-5 grey lighten-4 p-5">
         <div v-if="!reviewList || (Array.isArray(reviewList) && reviewList.length === 0)">
-            <div class="d-flex justify-center">
-                <h1 class="mt-10">아무것도 없음</h1>
-            </div>
+            <v-card outlined flat height="300">
+                <div class="d-flex justify-center align-center h2 empty-msg">
+                    작성한 리뷰가 없습니다.
+                </div>
+            </v-card>
         </div>
         <div v-else>
-            <v-card v-for="review in reviewList" :key="review.productReviewId" class="mb-5 rounded-xl">
-                <v-row>
-                    <v-col cols="1">
+            <v-card v-for="review in reviewList" :key="review.productReviewId" class="mb-5 p-3 rounded-xl" flat outlined>
+                <v-row class="d-flex align-center">
+                    <!-- <v-col cols="1">
                         <v-checkbox
-                            color="blue"
+                            color="#692498"
                             hide-details
-                            style="padding-top: 60px; padding-left: 50px;
-                                    width: 20px;"
+                            class="ms-3 mb-3"
                         ></v-checkbox>
-                    </v-col>
+                    </v-col> -->
                     <v-col cols="2">
                         <router-link :to="{ name: 'ProductReadPage', params: { productId: review.product.productId } }" class="baby-product-link">
                             <v-img :src="require(`@/assets/productImgs/${review.thumbnail}`)" 
                                 cover class="grey lighten-2" style="border-radius: 20px;"/>
                         </router-link>
                     </v-col>
-                    <v-col>
-                        <router-link :to="{ name: 'ProductReadPage', params: { productId: review.product.productId } }"
-                            class="baby-product-link" style="text-decoration: none; color: black">
-                            <v-card-title style="font-size: 20px; padding-top:40px;">
-                                {{ review.product.productName }}
-                            </v-card-title>
-                            
-                            <v-card-text style="font-size: 18px;">
-                                <strong>{{ new Intl.NumberFormat().format(review.price) }}원</strong>
-                            </v-card-text>
-                        </router-link>
+                    <v-col cols="2">
+                        <v-card-title>
+                            <router-link :to="{ name: 'ProductReadPage', params: { productId: review.product.productId } }"
+                                class="baby-product-link" style="text-decoration: none; color: black">
+                                    <strong>{{ review.product.productName }}</strong>
+                            </router-link>
+                        </v-card-title>    
+                        <v-card-text>
+                            {{ new Intl.NumberFormat().format(review.price) }}원
+                        </v-card-text>
                     </v-col>
-                    <v-col>
-                        <div class="review-info">
+                    <v-col cols="5">
+                        <div class="review-info me-3">
                             <div class="review-time">
-                                작성일자: {{ review.createDate.slice(0, 10) }}
+                                작성일자 : {{ review.createDate.slice(0, 10) }}
                             </div>
                             <div class="review-rate">
-                                부여별점: {{ review.starRate }}
+                                부여별점 : {{ review.starRate }}점
                             </div>
-                            <div class="review-content">
-                                {{ review.context }}
+                            <v-divider color="black"></v-divider>
+                            <div class="review-content h5">
+                                "{{ review.context }}"
                             </div>
                         </div>
                     </v-col>
                     <v-col>
                         <div class="other-info">
+                            <v-btn 
+                                class="directive-btn"
+                                outlined rounded color="#692498"
+                                @click="modifyReview(review)"
+                            >
+                                변경하기
+                            </v-btn>
                             <v-btn
                                 class="directive-btn"
-                                rounded
+                                rounded outlined color="grey"
                                 @click="deleteReview(review)"
                             >
-                                <span class="directive-btn-text">삭제하기</span>
-                            </v-btn>
-                            <v-btn class="directive-btn" @click="modifyReview(review)" rounded>
-                                <span class="directive-btn-text">변경하기</span>
+                                삭제하기
                             </v-btn>
                         </div>
                     </v-col>
@@ -105,7 +110,7 @@ export default {
 </script>
 
 <style scoped>
-    .other-info {
+    /* .other-info {
         float: right;
     }
 
@@ -125,5 +130,9 @@ export default {
     .review-time {
         width: 200px;
 
+    } */
+
+    .empty-msg {
+        margin-top: 130px;
     }
 </style>
