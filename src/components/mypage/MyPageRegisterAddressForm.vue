@@ -2,7 +2,7 @@
     <v-layout justify-end>
         <v-dialog v-model="dialog" persistent max-width="800" max-height="1000">
             <template v-slot:activator="{on}">
-                <v-btn class="w-10" color="#c7d6cd" v-on="on">신규 배송지 등록</v-btn>
+                <v-btn class="w-10" color="#692498" dark v-on="on">신규 배송지 등록</v-btn>
             </template>
 
             <v-form @submit.prevent="onSubmit" ref="form">
@@ -17,19 +17,19 @@
                     <v-card-text style="padding: 0 100px 0 100px">
                         <div class="d-flex">
                             <v-text-field v-model="addressName" label="배송지명 ex) 우리집"
-                                :rules="addressName_rule" color="green" required/>
+                                :rules="addressName_rule" color="#692498" required/>
                         </div>
                         <div class="d-flex">
-                            <v-text-field v-model="addressType" label="배송지 분류"
-                                :rules="addressType_rule" color="green" required/>
+                            <v-text-field v-model="addressType" label="배송지 분류 ex) 집/회사"
+                                :rules="addressType_rule" color="#692498" required/>
                         </div>
                         <div class="d-flex">
                             <v-text-field v-model="recipientName" label="수령인 이름"
-                                :rules="recipientName_rule" required color="green"/>
+                                :rules="recipientName_rule" required color="#692498"/>
                         </div>
                         <div class="d-flex">
                             <v-text-field v-model="phoneNumber" label="전화번호 ex) 010-1234-5678"
-                                :rules="phoneNumber_rule" required color="green"/>
+                                :rules="phoneNumber_rule" required color="#692498"/>
                         </div>
 
                         <div class="d-flex">
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="d-flex">
-                            <v-text-field v-model="addressDetail" label="상세 주소" color="green" required/>
+                            <v-text-field v-model="addressDetail" label="상세 주소" color="#692498" required/>
                         </div>
 
                         
@@ -45,7 +45,7 @@
                             <v-text-field v-model="zipcode" label="우편번호" :disabled="true" required/>
                             
                             <v-btn text large outlined style="font-size: 13px"
-                                class="mt-3 ml-5" color="blue lighten-1"
+                                class="mt-3 ml-5" color="#692498"
                                 @click="callDaumAddressApi">
                                 주소 확인
                             </v-btn>
@@ -60,7 +60,7 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn type="submit" width="610px" x-large rounded
-                                    class="mt-6" color="#c7d6cd"
+                                    class="mt-6" color="#692498"
                                     :disabled="this.streetPass == false">
                                 배송지 등록
                             </v-btn>
@@ -97,7 +97,7 @@ export default {
                 v => !!v || '배송지명을 입력 해주세요.',
             ],
             addressType_rule: [
-                v => !!v || '배송지 분류를? 입력 해주세요.',
+                v => !!v || '배송지 분류를 입력 해주세요.',
             ],
             recipientName_rule: [
                 v => !!v || '수령인 이름을 입력 해주세요.',
