@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <v-app-bar color="white" class="flex-grow-0" width="auto" height="130" elevation="1" app>
+        <v-app-bar color="white" class="flex-grow-0" width="auto" height="130" elevation="0" app>
             <div class="navbar-menu">
                 <!-- 첫번째 줄 -->
                 <div class="d-flex justify-end me-8 mb-0 mt-1 pt-5 pe-4">
