@@ -1,79 +1,99 @@
 <template>
-  <div class="mt-5 ml-5">
+  <div class="mt-5 mb-5 ml-5 p-5 grey lighten-4">
     <div class="white" style="font-family: Arial">
       <v-row justify="center">
         <v-col cols="auto" style="padding-bottom: 90px">
-        <v-card width="800" elevation="0">
-          <v-card-text class="text-center px-12 py-16">
-            <div class="text-h4 font-weight-black mb-10">회원정보수정</div>
-            <v-form @submit.prevent="onSubmit" ref="form">
-              <v-divider class="mb-8" style="border-width: 1px; border-color: black"></v-divider>
-              <v-row>
-                <v-col class="text-h5">
-                  <v-text-field v-model="member.userId" label="아이디" readonly
-                    :rules="userId_rule" :disabled="true" required outlined color="green" prepend-icon="mdi-account-outline"/>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <div class="d-flex">
-                    <v-text-field v-model="member.name" label="이름" class="v-text-fields" readonly ref="name"
-                      :rules="name_rule" required outlined color="green" prepend-icon="mdi-account-outline"/>
-                  </div>
-                </v-col>
-                <v-col cols="2">
-                  <v-btn class="w-100 h-50" id="name"
-                   @click="modify($event.target, 0)">수정</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col class="text-h5">
-                  <v-text-field v-model="member.birthday" label="생년월일(8자리) ex)19001111" ref="birthday"
-                   class="v-text-fields" readonly :rules="birthday_rule"
-                    required outlined color="green" prepend-icon="mdi-cake-variant"/>
-                </v-col>
-                <v-col cols="2">
-                  <v-btn class="w-100 h-50" id="birthday"
-                    @click="modify($event.target, 1)">수정</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col class="text-h5">
-                  <v-text-field v-model="member.email" label="이메일 ex) gildong@naver.com" ref="email"
-                   class="v-text-fields" readonly :rules="email_rule" :disabled="false"
-                   required outlined color="green" prepend-icon="mdi-email"/>
-                </v-col>
-                <v-col cols="2">
-                  <v-btn class="w-100 h-50" id="email"
-                   @click="modify($event.target, 2)">수정</v-btn>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col class="text-h5">
-                  <v-text-field v-model="member.phoneNumber" label="전화번호 ex) 010-1234-5678" ref="phoneNumber"
-                   class="v-text-fields" readonly :rules="phoneNumber_rule" :disabled="false"
-                   required outlined color="green" prepend-icon="mdi-phone-outline"/>
-                </v-col>
-                <v-col cols="2">
-                  <v-btn class="w-100 h-50" id="phoneNumber"
-                   @click="modify($event.target, 3)">수정</v-btn>
-                </v-col>
-              </v-row>
+          <v-card width="800" elevation="0">
+            <v-card-text class="text-center px-12 py-16">
+              <div class="text-h4 font-weight-black mb-10">회원정보수정</div>
+              <v-form @submit.prevent="onSubmit" ref="form">
+                <v-divider class="mb-8" style="border-width: 1px; border-color: black"></v-divider>
+                <v-row>
+                  <v-col class="text-h5">
+                    <v-text-field v-model="member.userId" label="아이디" readonly
+                      :rules="userId_rule" :disabled="true" required outlined color="#692498" prepend-icon="mdi-account-outline"/>
+                  </v-col>
+                </v-row>
 
-              <my-page-password-modify-form @passwordConfirm="passwordConfirm"/> 
-              <br><br>
+                <v-row>
+                  <v-col>
+                    <div class="d-flex">
+                      <v-text-field v-model="member.password" label="비밀번호" readonly
+                      :disabled="true" required outlined prepend-icon="mdi-lock-outline"/>
+                    </div>
+                  </v-col>
+                  <v-col cols="2">
+                    <my-page-password-modify-form @passwordConfirm="passwordConfirm"/>
+                  </v-col>
+                </v-row>
 
-              <v-btn type="submit"
-                      block
-                      x-large
-                      style="height: 55px"
-                      color="#c7d6cd"
-                      >
-                      변경
-              </v-btn>
+                <v-row>
+                  <v-col>
+                    <div class="d-flex">
+                      <v-text-field v-model="member.name" label="이름" class="v-text-fields" readonly ref="name"
+                        :rules="name_rule" required outlined color="#692498" prepend-icon="mdi-account-outline"/>
+                    </div>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn height="50px" width="100px" id="name" outlined color="#692498"
+                    @click="modify($event.target, 0)">수정</v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="text-h5">
+                    <v-text-field v-model="member.birthday" label="생년월일(8자리) ex)19001111" ref="birthday"
+                    class="v-text-fields" readonly :rules="birthday_rule"
+                      required outlined color="#692498" prepend-icon="mdi-cake-variant"/>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn height="50px" width="100px" id="birthday" outlined color="#692498"
+                      @click="modify($event.target, 1)">수정</v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="text-h5">
+                    <v-text-field v-model="member.email" label="이메일 ex) gildong@naver.com" ref="email"
+                    class="v-text-fields" readonly :rules="email_rule" :disabled="false"
+                    required outlined color="#692498" prepend-icon="mdi-email"/>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn height="50px" width="100px" id="email" outlined color="#692498"
+                    @click="modify($event.target, 2)">수정</v-btn>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col class="text-h5">
+                    <v-text-field v-model="member.phoneNumber" label="전화번호 ex) 010-1234-5678" ref="phoneNumber"
+                    class="v-text-fields" readonly :rules="phoneNumber_rule" :disabled="false"
+                    required outlined color="#692498" prepend-icon="mdi-phone-outline"/>
+                  </v-col>
+                  <v-col cols="2">
+                    <v-btn height="50px" width="100px" id="phoneNumber" outlined color="#692498"
+                    @click="modify($event.target, 3)">수정</v-btn>
+                  </v-col>
+                </v-row>
 
+                <v-btn type="submit"
+                  block
+                  x-large
+                  class="h-55 mt-3"
+                  color="#692498"
+                  dark
+                >
+                  변경
+                </v-btn>
               </v-form> 
             </v-card-text>
+              <div class="d-flex justify-end align-end me-10">
+                  <v-btn v-if="isAuthenticated == true"
+                    v-on:click="resign"
+                    text
+                    color="grey"
+                  >
+                    <v-icon>mdi-account-off</v-icon>
+                    회원 탈퇴
+                  </v-btn>
+              </div>
           </v-card>
         </v-col>
       </v-row>
@@ -93,7 +113,7 @@ export default {
   components: { MyPagePasswordModifyForm },
   methods: {
     ...mapActions(accountModule, 
-      ['reqSignUpCheckEmailToSpring', 'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 'reqSignOutToSpring']),
+      ['reqSignUpCheckEmailToSpring', 'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 'reqSignOutToSpring', 'reqResignToSpring']),
 
     async modify(element, index) {
       let text = document.getElementsByClassName("v-text-fields")[index];
@@ -217,9 +237,15 @@ export default {
         alert('형식에 맞게 입력해주세요!')
       }
     },
+    async resign () {
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      if(confirm("정말로 회원 탈퇴 하시겠습니까?")) {
+          this.reqResignToSpring(userInfo);
+      }
+    },
   },
   computed: {
-    ...mapState(accountModule, ['member'])
+    ...mapState(accountModule, ['member', 'isAuthenticated'])
   },
   created() {
     this.oldName = this.member.name;

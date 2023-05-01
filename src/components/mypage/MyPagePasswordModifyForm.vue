@@ -2,7 +2,7 @@
     <v-layout justify-end>
         <v-dialog v-model="dialog" persistent max-width="800" max-height="1000">
             <template v-slot:activator="{on}">
-                <v-btn color="#c7d6cd" dark v-on="on">비밀번호 수정</v-btn>
+                <v-btn color="#692498" dark v-on="on" height="50px" width="100px" elevation="0">수정</v-btn>
             </template>
             
             <v-card height="550" class="rounded-xl">
@@ -16,21 +16,21 @@
                 <v-card-text style="padding: 0 50px 0 50px">
                     <v-col class="text-h5">
                     <v-text-field v-model="password" label="현재 비밀번호" type="password" ref="password"
-                        :rules="password_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
+                        :rules="password_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-lock-outline" class="mb-2"/>
                     </v-col>
                     <v-col class="text-h5">
                     <v-text-field v-model="newPassword" label="새로운 비밀번호" type="password" ref="password"
-                        :rules="newPassword_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
+                        :rules="newPassword_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-lock-outline" class="mb-2"/>
                     </v-col>
                     <v-col class="text-h5">
                     <v-text-field v-model="newPasswordConfirm" label="새로운 비밀번호 확인" type="password" ref="password"
-                        :rules="newPassword_confirm_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
+                        :rules="newPassword_confirm_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-lock-outline" class="mb-2"/>
                     </v-col>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="teal darken-1" text @click="btnCancel">취소</v-btn>
-                    <v-btn color="teal darken-1" text @click="btnModify">비밀번호 수정</v-btn>
+                    <v-btn color="black" text @click="btnCancel">취소</v-btn>
+                    <v-btn color="#692498" text @click="btnModify">비밀번호 수정</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

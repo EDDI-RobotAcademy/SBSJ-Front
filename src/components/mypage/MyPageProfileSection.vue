@@ -22,7 +22,7 @@
         <p class="content-text">0 건</p>
       </li>
       <li>
-        <p class="head-text">예약내역</p>
+        <p class="head-text">찜한내역</p>
         <p class="content-text">
           0 건
         </p>
@@ -66,7 +66,7 @@ export default {
   margin: 0 auto 30px;
   padding: 20px 30px 13px;
   border-radius: 20px;
-  border: 1px solid #718679;
+  border: 1px solid #692498;
 }
 
 .profile-section .my-info-box{
@@ -95,12 +95,13 @@ export default {
   width: 32%;
   border-radius: 12px;
   padding: 14px 20px;
-  background-color: #c7d6cd;
+  background-color: #692498;
+  opacity: 80%;
 }
 .profile-section > ul > li > p {
   margin-top: 4px;
   margin-bottom: 0;
-  color: #2c4636;
+  color: #f1f6f3;
   font-size: 14px;
 }
 

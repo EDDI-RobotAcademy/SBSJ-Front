@@ -24,7 +24,7 @@ export default {
 .wrap {
   width: 1200px;
   margin: 0 auto;
-  padding: 40px 0 100px;
+  padding: 40px 0 0 0;
 }
 .wrap ul {
   list-style: none !important;

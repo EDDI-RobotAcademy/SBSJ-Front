@@ -20,20 +20,21 @@
                 </div>
                 <p align="center" class="mt-3 mb-5">장바구니에 담긴 상품이 없습니다.</p>
                 <div class="d-flex justify-center mb-10">
-                    <v-btn color="white" elevation="1" @click="backHome">메인으로 가기</v-btn>
+                    <v-btn color="#692498" dark elevation="1" @click="backHome">메인으로 가기</v-btn>
                 </div>
             </div>
             
             <div v-else>
-                <v-row>
-                    <v-col class="itemCheck ms-8 mt-14">
+                <v-row align-items="center">
+                    <v-col class="itemCheck ms-8 mt-1">
                         <v-checkbox
                             class="allCheckbox"
                             v-model="allChecked"
-                            label="전체 선택" 
+                            label="전체 선택"
+                            color="#692498"
                         />
                     </v-col>
-                    <v-col cols="auto" class="mt-16 me-8" justify="right">
+                    <v-col cols="auto" class="me-8 mt-4 justify-end align-center">
                         <v-btn text @click="deleteSelectItem()">
                             <v-icon>mdi-delete-outline</v-icon>
                             선택 삭제
@@ -52,9 +53,10 @@
                                                 class="itemCheckbox"
                                                 v-model="checkedValues"
                                                 :value="cartItem.cartItemId"
+                                                color="#692498"
                                             />
                                         </div>
-                                        <v-list-item-title class="item-name headline" @click="productView()">
+                                        <v-list-item-title class="item-name headline" @click="productView(cartItem)">
                                             <a>{{ cartItem.product.productName }}</a>
                                         </v-list-item-title>
 
@@ -108,7 +110,7 @@
                                     <v-btn 
                                         class="me-2" 
                                         outlined 
-                                        color="teal"
+                                        color="#692498"
                                         @click="directPurchase(cartItem, index)"
                                     >
                                     구매
@@ -149,7 +151,8 @@
                                 <v-card-actions>
                                     <v-btn 
                                         block
-                                        color="teal" 
+                                        color="#692498"
+                                        dark
                                         @click="selectPurchase"
                                     >
                                         구매하기
@@ -221,10 +224,9 @@ export default {
             this.checkedValues = value ? this.cartItems.map(cartItem => cartItem.cartItemId) : [];
         },
         
-        productView(){
+        productView(cartItem){
             alert("상품 상세 페이지로 이동합니다.")
-            this.$router.push({ name: 'DetailProductPage'})
-            // 상품 상세 페이지가 구체화되면 name 뒤에 , params: { productId: cartItem.product.productId } 추가하여 수정
+            this.$router.push({ name: 'ProductReadPage', params: { productId: cartItem.product.productId.toString() }})
         },
 
         async deleteSelectItem() {

@@ -4,7 +4,7 @@
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
           <v-img
-              :src="require('@/assets/logo/logo-removebg.png')" width="400" height="200" class="mx-auto mb-6"/>
+              :src="require('@/assets/logo/energinie_logo5_800x400.png')" width="400" height="200" class="mx-auto mb-6"/>
         </router-link>
         <v-card width="540">
           <v-card-text class="text-center px-12 py-16">
@@ -13,12 +13,12 @@
 
               <div class="d-flex">
                   <v-text-field v-model="name" label="이름" 
-                  :rules="name_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                  :rules="name_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-account-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="userId" label="아이디" @input="userIdValidation"
-                              :rules="userId_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-account-outline" class="mb-2"/>
+                              :rules="userId_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
                        class="mt-1 ml-5" color="teal lighten-1"
                        @click="checkDuplicateUserId"
@@ -29,19 +29,19 @@
 
               <div class="d-flex">
                 <v-text-field v-model="password" label="비밀번호" type="password"
-                              :rules="password_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
+                              :rules="password_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-lock-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="passwordConfirm" label="비밀번호 확인" type="password"
-                              :rules="passwordConfirm_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-lock-outline" class="mb-2"/>
+                              :rules="passwordConfirm_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-lock-outline" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="email" label="이메일 ex) gildong@naver.com" @input="emailValidation"
-                              :rules="email_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-email" class="mb-2"/>
+                              :rules="email_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-email" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
-                       class="mt-1 ml-5" color="teal lighten-1"
+                       class="mt-1 ml-5" color="#692498"
                        @click="checkDuplicateEmail"
                        :disabled="!this.ruleCheckList['email']">
                   이메일 <br/>중복 확인
@@ -66,7 +66,7 @@
               </div>
 
               <v-btn type="submit" block x-large rounded
-                     class="mt-6" color="teal lighten-3">
+                     class="mt-6" color="#692498" dark>
                 가입하기
               </v-btn>
 

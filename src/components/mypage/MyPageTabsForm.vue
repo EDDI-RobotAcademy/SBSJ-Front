@@ -7,7 +7,7 @@
       v-model="active_tab"
       fixed-tabs
       background-color="white"
-      color="#205C37"
+      color="#692498"
     >  
       <v-tab
         :key="i"
@@ -39,15 +39,15 @@ export default {
   },
   data() {
     return {
-      currentTab: "MyPageOrderListForm",
+      currentTab: "MyPageProfileForm",
       active_tab: 0,
       navi: [
-        { menu: "주문관리", tab: "MyPageOrderListForm" },
-        { menu: "리뷰관리", tab: "MyPageReviewForm" },
-        { menu: "찜한상품", tab: "MyPageWishListForm" },
-        { menu: "맞춤 영양제 추천", tab: "MyPageSurveyResultForm" },
-        { menu: "배송지관리", tab: "MyPageDeliveryListForm" },
         { menu: "회원정보수정", tab: "MyPageProfileForm" },
+        { menu: "배송지관리", tab: "MyPageDeliveryListForm" },
+        { menu: "주문관리", tab: "MyPageOrderListForm" },
+        { menu: "맞춤 추천 결과", tab: "MyPageSurveyResultForm" },
+        { menu: "찜한상품", tab: "MyPageWishListForm" },
+        { menu: "리뷰관리", tab: "MyPageReviewForm" },
       ],
     };
   },
