@@ -20,7 +20,7 @@
                 <v-text-field v-model="userId" label="아이디" @input="userIdValidation"
                               :rules="userId_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-account-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
-                       class="mt-1 ml-5" color="teal lighten-1"
+                       class="mt-1 ml-5" color="#692498"
                        @click="checkDuplicateUserId"
                        :disabled="!this.ruleCheckList['userId']">
                   아이디 <br/>중복 확인
@@ -51,14 +51,14 @@
               <div class="d-flex">
                   <v-text-field v-model="birthday" label="생년월일(8자리) ex)19001111" 
                   :disabled="false" :rules="birthday_rule"
-                                required outlined color="green" prepend-icon="mdi-cake-variant" class="mb-2"/>
+                                required outlined color="#692498" prepend-icon="mdi-cake-variant" class="mb-2"/>
               </div>
 
               <div class="d-flex">
                 <v-text-field v-model="phoneNumber" label="휴대폰 번호 ex) 010-1234-5678" @input="phoneNumberValidation"
-                              :rules="phoneNumber_rule" :disabled="false" required outlined color="green" prepend-icon="mdi-phone-outline" class="mb-2"/>
+                              :rules="phoneNumber_rule" :disabled="false" required outlined color="#692498" prepend-icon="mdi-phone-outline" class="mb-2"/>
                 <v-btn text large outlined style="font-size: 15px"
-                       class="mt-1 ml-5" color="teal lighten-1" 
+                       class="mt-1 ml-5" color="#692498" 
                        @click="checkDuplicatePhoneNumber"
                        :disabled="!this.ruleCheckList['phoneNumber']">
                   휴대폰번호 <br/>중복 확인
