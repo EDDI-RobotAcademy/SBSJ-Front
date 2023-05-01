@@ -5,36 +5,42 @@
                 class="mx-auto transition-swing baby-product-hover elevation-2"
                 style="border-radius: 20px;"
             >
-                <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }" class="baby-product-link">
                     <dl class="baby-product-wrap">
-                        <dt class="image">
-                            <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
-                                cover class="grey lighten-2" style="border-radius: 20px; width: 234px; height: 234px;"/>
-                        </dt>
+                        <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                            <dt class="image">
+                                <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
+                                    cover class="grey lighten-2" style="border-radius: 20px; width: 234px; height: 234px;"/>
+                            </dt>
+                        </router-link>
                         <dd class="descriptions" >
                             <div class="badge">
-                                <v-icon class="icon-wish">mdi-heart-outline</v-icon>
-                                <span class="total-wish">
-                                    {{ product.wishCount }}
-                                </span>
-                            </div>
-                            <div class="name">
-                                <span class="name-text" style="text-decoration: none;">
-                                    {{ product.title }}
-                                </span>
-                            </div>
-                            <div class="price-area">
-                                <div class="price-wrap">
-                                    <div class="price">
-                                        <span class="price-text">
-                                            {{ new Intl.NumberFormat().format(product.price) }}원
-                                        </span>
-                                    </div>
+                                <div v-if="isInWishList(product)">
+                                    <v-icon  class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>
+                                </div>
+                                <div v-else>
+                                    <v-icon  class="icon-wish" @click="addWish(product)">mdi-heart-outline</v-icon>
                                 </div>
                             </div>
+                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                                <div class="name">
+                                    <span class="name-text" style="text-decoration: none;">
+                                        {{ product.title }}
+                                    </span>
+                                </div>
+                            </router-link>
+                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                                <div class="price-area">
+                                    <div class="price-wrap">
+                                        <div class="price">
+                                            <span class="price-text">
+                                                {{ new Intl.NumberFormat().format(product.price) }}원
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </router-link>
                         </dd>
                     </dl>
-                </router-link>        
                 <div class="other-info">
                     <v-btn
                         class="directive-btn"
@@ -59,6 +65,7 @@ import { mapActions, mapState } from "vuex";
 
 const orderModule = 'orderModule'
 const accountModule = 'accountModule'
+const productModule = 'productModule'
   
 export default {
     name: 'ProductListForm',
@@ -68,7 +75,17 @@ export default {
             merchant: {
                 productId: 0,
                 productName: "",
-            }
+            },
+            wishListData: [],
+        }
+    },
+    async created() {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(userInfo);
+        let memberId = userInfo.memberId;
+        if(memberId !== null) {
+            await this.reqMyPageWishListToSpring(memberId);
+            this.wishListData = this.wishList;
         }
     },
     props: {
@@ -89,6 +106,7 @@ export default {
         ...mapState(accountModule, {
             isAuthenticated: state => state.isAuthenticated
         }),
+        ...mapState(productModule, ['wishList']),
         bindViewCount: {
             get() {
                 return this.viewCount
@@ -98,15 +116,27 @@ export default {
             get() {
                 return this.orderBy
             }
-        }
+        },  
     },
     methods: {
         ...mapActions(orderModule, [
             'reqAddCartToSpring',
         ]),
+        ...mapActions(productModule, [
+            'reqMyPageWishListToSpring'
+        ]),
+        ...mapActions(productModule, [
+            'reqSetWishToSpring'
+        ]),
         addToCart(product) { // 객체를 매개변수로 전달
-            //if(this.isAuthenticated === true) {
                 let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+                if(userInfo == null) {
+                let loginCheck = confirm("찜은 로그인 한 회원만 가능한 기능입니다.\n로그인 하시겠습니까?");
+                if(loginCheck) {
+                    this.$router.push({ name: 'SignInPage' });
+                }
+                return;
+                }
                 const memberId = userInfo.memberId;
                 const productId = product.productId;
                 const count = this.cnt;
@@ -117,10 +147,6 @@ export default {
                 if(goToCartMessage) {
                     this.$router.push({ name:'ShoppingCartPage' })
                 }
-            // } else {
-            //     alert("로그인 후 사용가능합니다.")
-            //     this.$router.push({ name: 'SignInPage' })
-            // }
         },
         async directPurchase(product){
             // 바로 구매
@@ -135,6 +161,35 @@ export default {
             alert ("주문 페이지로 이동합니다.")
             await this.$router.push({ name: 'OrderInfoPage' })
         },
+        isInWishList(product) {
+            console.log("isInWishList()")
+            return this.wishListData.some((wish) => wish.productId === product.productId);
+        },
+        async addWish(product) {
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            if(userInfo == null) {
+                let loginCheck = confirm("찜은 로그인 한 회원만 가능한 기능입니다.\n로그인 하시겠습니까?");
+                if(loginCheck) {
+                    this.$router.push({ name: 'SignInPage' });
+                }
+                return;
+            }
+            
+            let memberId = userInfo.memberId;
+            let productId = product.productId;
+
+            this.wishListData.push({ productId: product.productId });
+            await this.reqSetWishToSpring({ memberId, productId });
+            alert("찜 성공");
+        },
+        async removeWish(product) {
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            let memberId = userInfo.memberId;
+            let productId = product.productId;
+            this.wishListData = this.wishListData.filter((wish) => wish.productId !== product.productId);
+            await this.reqSetWishToSpring({ memberId, productId });
+            alert("찜 취소")
+        }
     }
 }
   
@@ -161,13 +216,6 @@ export default {
         height: 30px;
     }
 
-    .total-wish {
-        line-height: 30px;
-        text-align: center;
-        font-size: 15px;
-        font-weight: 500;
-        color: black;
-    }
     .badge {
         text-align: right;
         height: 30px;
