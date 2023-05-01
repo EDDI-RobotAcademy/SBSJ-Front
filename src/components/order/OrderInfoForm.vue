@@ -40,7 +40,10 @@
                                         >
                                         </v-radio>
                                     </v-radio-group>
-                                    <div v-if="selectedAddress">
+                                    <div v-if="!selectedAddress" class="if-not-delivery">
+                                        등록된 배송지가 없습니다. 신규 배송지를 등록해주세요.
+                                    </div>
+                                    <div v-else>
                                         <div class="mt-5 mb-2">
                                             <v-icon>mdi-map-marker</v-icon>
                                             {{ selectedAddress.addressName }}
@@ -166,9 +169,12 @@
                                 </div>
                                 <v-divider class="my-3" color="black"></v-divider>
                                 <v-row>
-                                    <v-col>
+                                    <v-col cols="7">
                                         <div class="mb-3">상품 금액</div>
-                                        <div>배송비</div>
+                                        <div class="mb-3">
+                                            배송비
+                                        </div>
+                                        <v-chip small>5만원 이상 주문시 무료배송</v-chip>
                                     </v-col>
                                     <v-col>
                                         <div class="d-flex justify-end mb-3"><strong>{{ new Intl.NumberFormat().format(orderList.orderSave.totalPrice) }}</strong>원</div>
@@ -408,13 +414,13 @@ export default {
                     const sendInfo = this.sendInfo
                     const phoneNumber = this.selectedAddress.phoneNumber
                     const recipientName = this.selectedAddress.recipientName
-                    const addressId = this.selectedAddress.addressId
+                    // const addressId = this.selectedAddress.addressId
                     const road = this.selectedAddress.road
                     const addressDetail = this.selectedAddress.addressDetail
-                    const zipcode = this.selectedAddress.zipcode
+                    // const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
@@ -477,13 +483,13 @@ export default {
                     const sendInfo = this.sendInfo
                     const phoneNumber = this.selectedAddress.phoneNumber
                     const recipientName = this.selectedAddress.recipientName
-                    const addressId = this.selectedAddress.addressId
+                    // const addressId = this.selectedAddress.addressId
                     const road = this.selectedAddress.road
                     const addressDetail = this.selectedAddress.addressDetail
-                    const zipcode = this.selectedAddress.zipcode
+                    // const zipcode = this.selectedAddress.zipcode
                     const selectedDeliveryReq = this.selectedDeliveryReq
 
-                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
+                    this.$emit("payment-success", { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
                 } else {
                     // 결제 실패 시
                     alert ("결제에 실패했습니다. 다시 시도해주세요.")
@@ -497,5 +503,9 @@ export default {
 <style scoped>
     .order-info-title {
         margin-bottom: 0;
+    }
+    .if-not-delivery {
+        margin-left: 95px;
+        margin-bottom: 20px;
     }
 </style>

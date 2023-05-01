@@ -18,9 +18,9 @@
                         <div class="mb-1"><strong>주문번호</strong> | {{ completeOrder.orderNo }}</div>
                         <div class="mb-1"><strong>주문일시</strong> | {{ completeOrder.orderDate | formatDate }}</div>
                         <v-divider color="black"></v-divider>
-                        <div class="mb-1"><strong>수령인</strong> | {{ completeOrder.recipientName }}</div>
-                        <div class="mb-1"><strong>연락처</strong> | {{ completeOrder.phoneNumber }}</div>
-                        <div class="mb-1"><strong>배송지</strong> | {{ completeOrder.road }} {{ completeOrder.addressDetail }}</div>
+                        <div class="mb-1"><strong>수령인</strong> | {{ completeOrder.orderRecipient }}</div>
+                        <div class="mb-1"><strong>연락처</strong> | {{ completeOrder.orderPhoneNumber }}</div>
+                        <div class="mb-1"><strong>배송지</strong> | {{ completeOrder.orderAddress }}</div>
                         <div class="mb-1"><strong>배송 시 요청사항</strong> | {{ completeOrder.selectedDeliveryReq }}</div>
                         <v-divider color="black"></v-divider>
                         <div class="mb-1"> <strong>주문상품</strong>

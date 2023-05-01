@@ -136,9 +136,9 @@ export default {
 
     // 결제 성공하면 주문 정보 저장
     reqRegisterOrderToSpring({}, payload) {
-        const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq } = payload
+        const { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq } = payload
         return mainRequest.post("/order/register",
-            { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, addressId, road, addressDetail, zipcode, selectedDeliveryReq })
+            { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
             .then((res) => {
                 console.log(res)
             })
