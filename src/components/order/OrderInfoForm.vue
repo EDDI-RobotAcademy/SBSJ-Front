@@ -36,7 +36,7 @@
                                         <v-radio v-for="(deliveryOne, index) in lsDeliveryList" :key="index" 
                                             :label="index === 0 ? '[기본] ' + deliveryOne.addressName : deliveryOne.addressName"
                                             :value="deliveryOne"
-                                            color="success"
+                                            color="#692498"
                                         >
                                         </v-radio>
                                     </v-radio-group>
@@ -74,7 +74,7 @@
                                         <v-divider class="mt-3" color="black"></v-divider>
                                     </div>
                                     <div class="mb-3">
-                                        <v-btn-toggle v-model="selectedPayment" mandatory color="teal" variant="outlined">
+                                        <v-btn-toggle v-model="selectedPayment" mandatory color="#692498" variant="outlined">
                                             <v-btn value="kakao">카카오페이</v-btn>
                                             <v-btn value="creditCard">신용카드</v-btn>
                                         </v-btn-toggle>
@@ -194,15 +194,15 @@
                                         </div>
                                     </v-col>
                                 </v-row>
-                                <v-btn block color="teal" v-if="selectedPayment === 'kakao'" @click="kakaoPay">
+                                <v-btn block color="#692498" dark v-if="selectedPayment === 'kakao'" @click="kakaoPay">
                                     <v-icon>mdi-credit-card-check-outline</v-icon>
                                     <strong>결제하기</strong>
                                 </v-btn>
-                                <v-btn block color="teal" v-else-if="selectedPayment === 'creditCard'" @click="cardPay">
+                                <v-btn block color="#692498" dark v-else-if="selectedPayment === 'creditCard'" @click="cardPay">
                                     <v-icon>mdi-credit-card-check-outline</v-icon>
                                     <strong>결제하기</strong>
                                 </v-btn>
-                                <v-btn block color="teal" v-else disabled>
+                                <v-btn block color="#692498" dark v-else disabled>
                                     <v-icon>mdi-credit-card-check-outline</v-icon>
                                     <strong>결제하기</strong>
                                 </v-btn>
@@ -257,7 +257,7 @@ export default {
     },
     async created() {
         if(this.orderList == '' || this.orderList == null) {
-            alert("새로고침하여 주문 정보가 날아갔습니다^^");
+            alert("새로고침하면 주문 정보가 손실됩니다.");
             this.$router.push({ name: 'ShoppingCartPage' });
         }
 
