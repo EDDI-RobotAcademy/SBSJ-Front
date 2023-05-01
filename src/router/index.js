@@ -285,9 +285,10 @@ const routes = [
     component: ReviewListPage
   },
   {
-    path: '/review/modify',
+    path: '/review/modify/:review?',
     name: 'ReviewModifyPage',
-    component: ReviewModifyPage
+    component: ReviewModifyPage,
+    props: true
   },
   {
     path: '/qna/register',

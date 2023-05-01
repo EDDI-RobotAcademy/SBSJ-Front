@@ -1,6 +1,7 @@
 import {
     REQUEST_COMPLETE_ORDER_LIST_TO_SPRING,
-    REQUEST_COMPLETE_ORDER_TO_SPRING
+    REQUEST_COMPLETE_ORDER_TO_SPRING,
+    REQUEST_MYPAGE_REVIEW_LIST_TO_SPRING
 } from "./mutation-types";
 
 import mainRequest from '@/api/mainRequest';
@@ -17,6 +18,14 @@ export default {
             commit(REQUEST_COMPLETE_ORDER_LIST_TO_SPRING, res.data)
         })
     },
+    async requestMypageReviewListToSpring({commit}, payload) {
+        const memberId = payload;
+        console.log('requestMypageReviewListToSpring()');
+        await mainRequest.get(`/review/list/${memberId}`)
+            .then((res) => {
+                commit(REQUEST_MYPAGE_REVIEW_LIST_TO_SPRING, res.data);
+            })
+    }
 
     
 }

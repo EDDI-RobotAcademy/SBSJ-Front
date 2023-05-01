@@ -1,5 +1,5 @@
 <template>
-  <ReviewModifyForm :product="product" />
+  <ReviewModifyForm :review="review" />
 </template>
 
 <script>
@@ -11,20 +11,13 @@ export default {
     ReviewModifyForm,
   },
   props: {
-    productId: {
-      type: String,
+    review: {
+      type: Object,
       required: true,
     },
   },
-  data() {
-    return {
-      product: {
-        productId: this.productId,
-        // 기타 필요한 상품 정보
-      },
-    };
-  },
 };
+
 </script>
 
   

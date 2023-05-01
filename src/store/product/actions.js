@@ -209,7 +209,7 @@ export default {
             })
     },
     async requestSearchResultProductListToSpring({commit}, payload) {
-        console.log("requestSearchResultProductListToSpring()");
+        console.log("requestSearchResultProductListToSpring() in action");
         const { query, startIndex, endIndex } = payload
         console.log(query)
         return await mainRequest.get(`/category/search/${query}/${startIndex}/${endIndex}`)
