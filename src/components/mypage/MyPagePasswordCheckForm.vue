@@ -18,7 +18,7 @@
                           :rules="password_rule"
                           clearable
                           prepend-icon="mdi-lock-outline"
-                          color="orange"
+                          color="#692498"
                           class="mb-2"
                       />
                     </div>
@@ -26,7 +26,8 @@
                         type="submit"
                         block
                         x-large
-                        color="#97d9e1"
+                        color="#692498"
+                        dark
                         class="mt-6"
                         :disabled="false"
                     >확인</v-btn><br/>
