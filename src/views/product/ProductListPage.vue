@@ -60,8 +60,22 @@ const productModule = 'productModule'
             isQuery: {}
         }
     },
+    props: {
+        categoryName: {
+            type: String
+        },
+        brandName: {
+            type: String
+        }
+    },
     async created() {
         this.isQuery = this.searchQuery;
+        if(this.categoryName) {
+            this.category = this.categoryName;
+        };
+        if(this.brandName) {
+            this.brand = this.brandName;
+        }
     },
     async mounted() {
         console.log("mounted()")
@@ -70,11 +84,20 @@ const productModule = 'productModule'
         const endIndex = startIndex + this.itemsPerPage;
         const payload = {startIndex: startIndex, endIndex: endIndex}
         if(this.isQuery.query === undefined) {
-            console.log("requestProductListToSpring()")
-            await this.requestProductListToSpring(payload);
+            if(this.categoryName != null) {
+                console.log("filteringProduct()");
+                this.productTitle = this.category
+                this.filteringProduct(this.category);
+            } else if(this.brandName != null) {
+                console.log("filteringBrandProduct()");
+                this.productTitle = this.brand
+                this.filteringBrandProduct(this.brand);
+            } else {
+                console.log("requestProductListToSpring()")
+                await this.requestProductListToSpring(payload);
+            }
             this.showProducts = this.products
             this.cache[this.currentPage] = this.products
-            this.productTitle = this.category
             this.defaultOrderBy = 'Default'
         } else {
             console.log("requestSearchResultProductListToSpring() in mounted")
@@ -149,9 +172,10 @@ const productModule = 'productModule'
             'requestSpecificBrandProductListToSpring',
             'requestSearchResultProductListToSpring'
         ]),
-        async filteringProduct(productCategory) {
+        filteringProduct(productCategory) {
             this.cache = {}
             this.isQuery = {}
+            this.isBrand = false
             this.syncCurrentPage = 1
             console.log("initialize Query, this Query current: " + this.isQuery.query)
             console.log("initialize cache, this cache current: " + this.cache)
@@ -171,7 +195,6 @@ const productModule = 'productModule'
             this.brand = productBrand
             this.clickCallback(this.currentPage)
             this.productTitle = this.brand
-            this.isBrand = false
         },
         priceDesc() {
             console.log("princeDesc() in View page")
@@ -217,7 +240,7 @@ const productModule = 'productModule'
             this.cache[this.currentPage] = this.products
         },
         async getDataWithBrand(startIndex, endIndex) {
-            console.log("getDataWithBrand() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
+            console.log("getDataWithBrand() " + "/" + this.brand + "/" + startIndex + "/" + endIndex)
             const payload = {brand: this.brand, startIndex: startIndex, endIndex: endIndex}
             await this.requestSpecificBrandProductListToSpring(payload)
             this.showProducts = this.products;
