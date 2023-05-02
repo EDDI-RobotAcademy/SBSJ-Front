@@ -72,7 +72,7 @@ export default {
 		position: absolute;
 		left: 0;
 		top: 0;
-		object-fit: contain;
+		object-fit: cover;
 	}
 	.main-top-promotion>.container {
 		position: relative;
