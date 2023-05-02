@@ -4,8 +4,8 @@
     <v-row justify="center">
       <v-col cols="auto" style="padding-left: 600px; padding-bottom: 50px">
           <div class="checkbox-container">
-            <input type="checkbox" v-model="agreement" class="checkbox" />
-            <label for="checkbox" class="label">이용약관에 동의합니다.</label>
+            <input type="checkbox" v-model="agreement" class="checkbox" id="id_agree"/>
+            <label for="id_agree" class="label">이용약관에 동의합니다.</label>
           </div>
           <br>
           <div style="padding-left: 25px;">
