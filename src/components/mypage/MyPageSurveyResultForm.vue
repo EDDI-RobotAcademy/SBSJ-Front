@@ -1,102 +1,56 @@
 <template>
-    <body>
-        <div v-if="!commonSurveyResult|| (Array.isArray(commonSurveyResult) && commonSurveyResult.length === 0)">
-            <survey-form/>
-        </div>
-        <div id="content" style="padding-top: 126px;">
-            <div class="survey_result_new rslt3">
-                <div class="top_area">
-                    <div class="inner">
-                        <div class="info_box">
-                            <div class="title_text"><span>{{ commonSurveyResult.username }}</span>님의 <h2>건강설문 결과</h2></div>
-                            <p class="text">※ 본 결과는 의사의 처방을 대신하지 않습니다.</p>
-                        </div>
-                        <div class="graph_box">
-                            <div class="graph_info">
-                                <div class="graph_div lv4">
-                                    <div class="graph">
-                                        <canvas id="canvas" width="440" height="440"></canvas>
-                                        <canvas id="canvas_line" width="440" height="440"></canvas>
-                                    </div>
-                                    <div class="info_text">
-                                        <p class="grade">양호</p><!-- 점수에 따라 텍스트 변경 -->
-                                        <p class="num"><span class="number">86</span>점</p>
-                                    </div>
-                                </div>
-                                <div class="graph_right_div">
-                                    <div class="mem_info_div">         
-                                        <div class="info_text">
-                                            <div class="list">
-                                                <p> {{ commonSurveyResult.age }} {{ commonSurveyResult.gender }} </p>
-                                                <p> {{ commonSurveyResult.height }}cm </p>
-                                                <p> {{ commonSurveyResult.weight }}kg</p>
-                                                <div class="bmi_tit tool">
-                                                    <p class="tit">BMI</p>
-                                                    <p class="bmi">{{ this.bmi }}</p>
-                                                    <div class="tooltip_div">
-                                                        ({{ this.bmiText }})
-                                                    </div>      
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text_div">
-                                        <p class="txt">당신의 건강은<br/>성실한 모범생형</p><!-- 점수에 따라 텍스트 변경 -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <survey-result-summary-form/>
-                </div>
-                <div>
-                    <survey-result-recommend-form/>
-                </div>
-            </div>
-        </div>
-    </body>
+    <div v-if="isSurvey == true">
+        <survey-result-form/>
+    </div>
+    <div v-else>
+        <survey-form/>
+    </div>
 </template>
 
 <script>
+
 import SurveyForm from '@/components/survey/SurveyForm.vue';
-import SurveyResultSummaryForm from '@/components/survey/SurveyResultSummaryForm.vue';
-import SurveyResultRecommendForm from '@/components/survey/SurveyResultRecommendForm.vue';
+import SurveyResultForm from '@/components/survey/SurveyResultForm.vue';
+import { mapActions, mapState } from 'vuex';
+
+const surveyModule = 'surveyModule'
 
 export default {
     name: 'MyPageSurveyResultForm',
-    components: { SurveyForm, SurveyResultSummaryForm, SurveyResultRecommendForm },
+    components: { SurveyForm, SurveyResultForm },
     data() {
         return {
-            commonSurveyResult: {},
-            visceraSurveyResult: {},
-            lifeSurveyResult: {},
+            isSurvey: false,
             bmi: 0,
             bmiText: ''
         }
     },
-    created() {
-        this.commonSurveyResult = JSON.parse(localStorage.getItem("commonSurveyResult"));
-        this.visceraSurveyResult = JSON.parse(localStorage.getItem("visceraSurveyResult"));
-        this.lifeSurveyResult = JSON.parse(localStorage.getItem("lifeSurveyResult"));
+    computed: {
+        ...mapState(surveyModule, ['commonSurveyResult'])
+    },
+    async created() {
+        let memberId = JSON.parse(localStorage.getItem("userInfo")).memberId;
 
-        if(!(Array.isArray(this.commonSurveyResult) && this.commonSurveyResult.length === 0)) {
-            let height_m = this.commonSurveyResult.height / 100;
-            let weight = this.commonSurveyResult.weight;
-            this.bmi = Math.floor((weight / (height_m * height_m)) * 100) / 100;
-            if(this.bmi < 0) {
-                alert("키와 몸무게를 잘 못 입력하셨습니다. 다시 입력해주세요.");
-            } else if(this.bmi < 18.5) {
-                this.bmiText = "저체중";
-            } else if(this.bmi < 23) {
-                this.bmiText = "정상";
-            } else if(this.bmi < 25) {
-                this.bmiText = "과체중";
-            } else if(this.bmi >= 25) {
-                this.bmiText = "비만";
+        let localCommonSurveyResult = JSON.parse(localStorage.getItem("commonSurveyResult"));
+        let localVisceraSurveyResult = JSON.parse(localStorage.getItem("visceraSurveyResult"));
+        let localLifeSurveyResult = JSON.parse(localStorage.getItem("lifeSurveyResult"));
+
+        if(localCommonSurveyResult == null || Object.keys(localCommonSurveyResult).length == 0
+            || localVisceraSurveyResult == null || Object.keys(localVisceraSurveyResult).length == 0
+            || localLifeSurveyResult == null || Object.keys(localLifeSurveyResult).length == 0) {
+            
+            await this.reqReadSurveyResultToSpring(memberId);
+            if(this.commonSurveyResult == null || Object.values(this.commonSurveyResult).length == 0) {
+                this.isSurvey = false;
+            } else {
+                this.isSurvey = true;
             }
+        } else {
+            this.isSurvey = true;
         }
+    },
+    methods: {
+        ...mapActions(surveyModule, ['reqReadSurveyResultToSpring'])
     }
 }
 

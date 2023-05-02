@@ -89,7 +89,7 @@
                                             x-small
                                             elevation="0"
                                             color="white"
-                                            @click="countDecrease(cartItem)"
+                                            @click="changeCount(cartItem, -1)"
                                         >
                                             <v-icon>mdi-minus</v-icon>
                                         </v-btn>
@@ -99,7 +99,7 @@
                                             x-small
                                             elevation="0"
                                             color="white"
-                                            @click="countIncrease(cartItem)"
+                                            @click="changeCount(cartItem, 1)"
                                         >
                                             <v-icon>mdi-plus</v-icon>
                                         </v-btn>
@@ -180,13 +180,13 @@ export default {
         return {
             checkedValues: [], 
             // 체크박스 v-model에 작성되어 있음
+            cartItems: [],
 
             selectTotalPrice: 0,
         }
     },
     computed: {
         ...mapState(orderModule, [
-            'cartItems',
             'resCountRequest'
         ]),
         totalPrice() {
@@ -207,13 +207,22 @@ export default {
             }
         },
     },
-    created() {
-        console.log("cartItems: " + JSON.stringify(this.cartItems));
+    async created() {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            
+        let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
+        if(lsCartItems == null || Object.keys(lsCartItems).length == 0) {
+            await this.reqCartItemListToSpring(userInfo);
+        }
+        
+        lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
+        this.cartItems = lsCartItems;
     },
     methods: {
         ...mapActions(orderModule, [
             'reqCartItemCountChangeToSpring',
-            'reqDeleteCartItemFromSpring'
+            'reqDeleteCartItemFromSpring',
+            'reqCartItemListToSpring',
         ]),
 
         backHome () {
@@ -240,83 +249,86 @@ export default {
                 }
                 console.log("selectCartItemId: " + selectCartItemId)
 
+                let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
+                for(let i=0; i<lsCartItems.length; i++) {
+                    selectCartItemId.forEach((select) => {
+                        if(select == lsCartItems[i].cartItemId) {
+                            lsCartItems.splice(i, 1);
+                        }
+                    })
+                }
+                localStorage.setItem("lsCartItems", JSON.stringify(lsCartItems));
+
                 await this.reqDeleteCartItemFromSpring({ selectCartItemId })
                 window.location.reload(true);
             }
         },
 
-        async countDecrease(cartItem) {
-            if (cartItem.count > 1) {
-                cartItem.count--
-            } else {
-                cartItem.count = 1
-            }
-            
-            var payload =  {
-                'cartItemId': cartItem.cartItemId, 
-                'count': cartItem.count
-            }
-            await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.resCountRequest;
-
-            if (this.res === 1) {
-                console.log("수량 변경 성공")
-            } else {
-                console.log("실패")
-            }
-        },
-
-        async countIncrease(cartItem) {
-            cartItem.count++
-            
-            var payload =  {
-                'cartItemId':cartItem.cartItemId, 
-                'count':cartItem.count
-            }
-            await this.reqCartItemCountChangeToSpring(payload);
-            this.res = this.resCountRequest;
-
-            if (this.res === 1) {
-                console.log("수량 변경 성공")
-            } else {
-                console.log("실패")
+        async changeCount(cartItem, count) {
+            cartItem.count += count;
+            if (cartItem.count <= 0) {
+                cartItem.count = 1;
             }
         },
 
         async directPurchase(cartItem, index){
             // 바로 구매 (낱개 구매)
-            this.directTotalPrice = cartItem.count * cartItem.price
-            this.directCartItem = this.cartItems[index]
-            this.count = this.cartItems[index].count
-            this.cartItemId =  this.cartItems[index].cartItemId
-            this.thumbnail = this.cartItems[index].thumbnail
+            let directTotalPrice = cartItem.count * cartItem.price;
+            let directCartItem = this.cartItems[index];
+            let count = this.cartItems[index].count;
+            let cartItemId =  this.cartItems[index].cartItemId;
+            let thumbnail = this.cartItems[index].thumbnail;
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
-                { orderSave: { directOrderCheck: true, cartItemId: this.cartItemId, product:this.cartItems[index].product,
-                                count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
-            console.log(this.$store.state.orderModule.orderList)
-            alert ("주문 페이지로 이동합니다.")
+                { orderSave: { directOrderCheck: true, cartItemId: cartItemId, product: this.cartItems[index].product,
+                                count: count, totalPrice: directTotalPrice, thumbnail: thumbnail }})
+            console.log(this.$store.state.orderModule.orderList);
+            alert ("주문 페이지로 이동합니다.");
+
+            let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
+            lsCartItems[index].count = cartItem.count;
+            localStorage.setItem("lsCartItems", JSON.stringify(lsCartItems));
+
+            var payload =  {
+                'cartItemIdList': [ cartItem.cartItemId ], 
+                'countList': [ cartItem.count ]
+            }
+            await this.reqCartItemCountChangeToSpring(payload);
             await this.$router.push({ name: 'OrderInfoPage' })
         },
 
         async selectPurchase() {
             // 선택 상품 구매 (여러개 구매 or 전체 구매 가능)
             let selectItem = []
+            var payload =  {
+                'cartItemIdList': [],
+                'countList': []
+            }
+
+            let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
+            let forCount = 0;
             for (let i = 0; i < this.cartItems.length; i++) {
                 if (this.checkedValues.includes(this.cartItems[i].cartItemId)) {
                     selectItem.push(this.cartItems[i])
+                    
+                    payload.cartItemIdList[forCount] = this.cartItems[i].cartItemId;
+                    payload.countList[forCount] = this.cartItems[i].count;
+                    lsCartItems[i].count = this.cartItems[i].count;
+                    forCount++;
                 }
             }
+            localStorage.setItem("lsCartItems", JSON.stringify(lsCartItems));
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: false, selectItems: selectItem, totalPrice: this.totalPrice }})
             console.log(this.$store.state.orderModule.orderList)
+
             if(selectItem.length > 0) {
                 alert ("주문 페이지로 이동합니다.")
-            await this.$router.push({ name: 'OrderInfoPage' })
+
+                await this.reqCartItemCountChangeToSpring(payload);
+                await this.$router.push({ name: 'OrderInfoPage' })
             } else {
                 alert ("선택한 상품이 없습니다.")
             }
-            
-
         },
     },    
 }
