@@ -22,8 +22,7 @@
         </div>
       </div>
       <div class="survey_intro_btn">
-        <router-link :to="{ name: 'UsernameCheckPage' }" type="submit" class="btn btn-outline-primary" 
-          style="font-weight: bold;">설문 시작하기</router-link>
+        <a class="btn btn-outline-primary" @click="removeLocalStorage" style="font-weight: bold;">설문 시작하기</a>
       </div>
     </div>
   </div>
@@ -32,7 +31,16 @@
 <script>
 
 export default {
-  name: 'SurveyForm'
+  name: 'SurveyForm',
+  methods: {
+    removeLocalStorage() {
+      // 맞춤 영양제 찾기 결과 값 삭제 하기
+      localStorage.removeItem("commonSurveyResult");
+      localStorage.removeItem("visceraSurveyResult");
+      localStorage.removeItem("lifeSurveyResult");
+      this.$router.push({ name: "UsernameCheckPage" });
+    }
+  }
 }
 
 </script>
