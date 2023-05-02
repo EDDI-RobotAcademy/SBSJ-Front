@@ -122,6 +122,43 @@ export default {
                 alert('문제 발생!');
             })
     },
-    
+    async reqfindMatchingUserIdToSpring({ commit }, payload) {
+        const { name, phoneNumber } = payload
+        
+      
+        try {
+          const response = await mainRequest.get(`/member/findMatchingUserId/${name}/${phoneNumber}`);
+          
+      
+          if (response.data) {
+            return response.data;
+          } else {
+            return "";
+          }
+        } catch (error) {
+          console.error(error);
+          alert("요청에 실패했습니다. 다시 시도해주세요.");
+          return "";
+        }
+      },
+      async reqfindMatchingUserPwToSpring({ commit }, payload) {
+        const { name, phoneNumber } = payload
+        
+      
+        try {
+          const response = await mainRequest.get(`/member/findMatchingUserPw/${name}/${phoneNumber}`);
+          
+      
+          if (response.data) {
+            return response.data;
+          } else {
+            return "";
+          }
+        } catch (error) {
+          console.error(error);
+          alert("요청에 실패했습니다. 다시 시도해주세요.");
+          return "";
+        }
+      }
 
 }

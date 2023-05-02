@@ -70,13 +70,11 @@
                     </v-col>
                     <v-col>
                       <router-link
-                          class="text-decoration-none purple--text ml-5 mr-5"
-                          to="/search-userId">ID 찾기</router-link>
+                          :to="{ name: 'SearchUserIdPage' }" class="text-decoration-none purple--text ml-5 mr-5">ID 찾기</router-link>
                     </v-col>
                     <v-col>
                       <router-link
-                          class="text-decoration-none purple--text ml-5 mr-5"
-                          to="/search-password">PW 찾기</router-link>
+                          :to="{ name: 'SearchPasswordPage' }" class="text-decoration-none purple--text ml-5 mr-5">PW 찾기</router-link>s
                     </v-col>
                   </v-row> 
                 </div>    
