@@ -4,7 +4,7 @@
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
           <v-img
-              :src="require('@/assets/logo/energinie_logo5_800x400.png')" width="400" height="200" class="mx-auto mb-6"/>
+              :src="require('@/assets/logo/energenie_logo5_800x400.png')" width="400" height="200" class="mx-auto mb-6"/>
         </router-link>
         <v-card width="540">
           <v-card-text class="text-center px-12 py-16">
