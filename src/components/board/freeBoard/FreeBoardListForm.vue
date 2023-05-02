@@ -4,13 +4,13 @@
     <div style="width: 100%; display: flex; justify-content: center; margin-top: 2%;">
       <div style="width: 5%; display: flex; border-bottom: solid;"></div>
     </div>
-    <nav class="navbar navbar-expand">
+    <!-- <nav class="navbar navbar-expand">
       <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
-    </nav>
+    </nav> -->
     <div class="row">
       <div class="col-3 mt-4">
       </div>
