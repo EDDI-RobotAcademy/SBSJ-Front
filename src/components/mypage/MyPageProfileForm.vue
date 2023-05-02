@@ -113,7 +113,9 @@ export default {
   components: { MyPagePasswordModifyForm },
   methods: {
     ...mapActions(accountModule, 
-      ['reqSignUpCheckEmailToSpring', 'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 'reqSignOutToSpring', 'reqResignToSpring']),
+      ['reqMyPageMemberInfoToSpring', 'reqSignUpCheckEmailToSpring', 
+       'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 
+       'reqSignOutToSpring']),
 
     async modify(element, index) {
       let text = document.getElementsByClassName("v-text-fields")[index];
@@ -220,7 +222,7 @@ export default {
           let newPassword = this.newPassword;
 
           let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-          let memberId = userInfo.memberId;
+          let memberId = this.memberId;
 
           let successUpdate = await this.reqMyPageUpdateMemberInfoToSpring({ memberId, name, birthday, email, phoneNumber, newPassword })
           console.log("회원 정보 수정 잘 됐나? "+ successUpdate.data)
@@ -247,7 +249,11 @@ export default {
   computed: {
     ...mapState(accountModule, ['member', 'isAuthenticated'])
   },
-  created() {
+  async created() {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.memberId = userInfo.memberId;
+    await this.reqMyPageMemberInfoToSpring(this.memberId);
+
     this.oldName = this.member.name;
     this.oldBirthday = this.member.birthday;
     this.oldEmail = this.member.email;
@@ -261,6 +267,7 @@ export default {
   },
   data() {
     return {
+      memberId: 0,
       newPassword: '',
       oldName: '',
       oldBirthday: '',
