@@ -2,16 +2,18 @@
   <div>
     <qna-board-list-form :qnaBoards="showQnaBoards"/>
     <div class="clear-fix"></div>
-    <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="10" :page-range="10" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;">
-        <template slot="page" slot-scope="props"> 
-            <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
-                <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
-            </li>
-        </template>
-    </paginate>
+    <div style="display: flex; justify-content: center; margin-top: 50px;">
+      <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="10" :page-range="10" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;">
+          <template slot="page" slot-scope="props"> 
+              <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
+                  <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
+              </li>
+          </template>
+      </paginate>
+    </div>
     <div class="clear-fix"></div>
   </div>
 </template>
