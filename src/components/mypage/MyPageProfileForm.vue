@@ -11,7 +11,7 @@
                 <v-row>
                   <v-col class="text-h5">
                     <v-text-field v-model="member.userId" label="아이디" readonly
-                      :rules="userId_rule" :disabled="true" required outlined color="#692498" prepend-icon="mdi-account-outline"/>
+                      :disabled="true" required outlined color="#692498" prepend-icon="mdi-account-outline"/>
                   </v-col>
                 </v-row>
 
@@ -30,45 +30,45 @@
                 <v-row>
                   <v-col>
                     <div class="d-flex">
-                      <v-text-field v-model="member.name" label="이름" class="v-text-fields" readonly ref="name"
+                      <v-text-field v-model="member.name" label="이름" class="v-text-fields" readonly ref="name" id="이름"
                         :rules="name_rule" required outlined color="#692498" prepend-icon="mdi-account-outline"/>
                     </div>
                   </v-col>
                   <v-col cols="2">
-                    <v-btn height="50px" width="100px" id="name" outlined color="#692498"
+                    <v-btn height="50px" width="100px" id="이름" class="setModifyIdName" outlined color="#692498"
                     @click="modify($event.target, 0)">수정</v-btn>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col class="text-h5">
-                    <v-text-field v-model="member.birthday" label="생년월일(8자리) ex)19001111" ref="birthday"
+                    <v-text-field v-model="member.birthday" label="생년월일(8자리) ex)19001111" ref="birthday" id="생년월일"
                     class="v-text-fields" readonly :rules="birthday_rule"
                       required outlined color="#692498" prepend-icon="mdi-cake-variant"/>
                   </v-col>
                   <v-col cols="2">
-                    <v-btn height="50px" width="100px" id="birthday" outlined color="#692498"
+                    <v-btn height="50px" width="100px" id="생년월일" class="setModifyIdName" outlined color="#692498"
                       @click="modify($event.target, 1)">수정</v-btn>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col class="text-h5">
-                    <v-text-field v-model="member.email" label="이메일 ex) gildong@naver.com" ref="email"
+                    <v-text-field v-model="member.email" label="이메일 ex) gildong@naver.com" ref="email" id="이메일"
                     class="v-text-fields" readonly :rules="email_rule" :disabled="false"
                     required outlined color="#692498" prepend-icon="mdi-email"/>
                   </v-col>
                   <v-col cols="2">
-                    <v-btn height="50px" width="100px" id="email" outlined color="#692498"
+                    <v-btn height="50px" width="100px" id="이메일" class="setModifyIdName" outlined color="#692498"
                     @click="modify($event.target, 2)">수정</v-btn>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col class="text-h5">
-                    <v-text-field v-model="member.phoneNumber" label="전화번호 ex) 010-1234-5678" ref="phoneNumber"
+                    <v-text-field v-model="member.phoneNumber" label="전화번호 ex) 010-1234-5678" ref="phoneNumber" id="전화번호"
                     class="v-text-fields" readonly :rules="phoneNumber_rule" :disabled="false"
                     required outlined color="#692498" prepend-icon="mdi-phone-outline"/>
                   </v-col>
                   <v-col cols="2">
-                    <v-btn height="50px" width="100px" id="phoneNumber" outlined color="#692498"
+                    <v-btn height="50px" width="100px" id="전화번호" class="setModifyIdName" outlined color="#692498"
                     @click="modify($event.target, 3)">수정</v-btn>
                   </v-col>
                 </v-row>
@@ -120,14 +120,14 @@ export default {
       var id = await element.id;
       var mode = this.modifyMode[id];
       if(Boolean(mode)) {
-        if(id == "email") {
+        if(id == "이메일") {
           let isEmail = await this.emailValidation();
           if(isEmail) {
             alert("중복된 이메일 입니다.");
             return;
           }
         }
-        if(id == "phoneNumber") {
+        if(id == "전화번호") {
           let isPhoneNumber = await this.phoneNumberValidation();
           if(isPhoneNumber) {
             alert("중복된 전화번호 입니다.");
@@ -143,7 +143,7 @@ export default {
           element.innerText = "수정";
           alert("수정 완료!");
         } else if(Boolean(formCheck) == false) {
-          alert(id + ', 형식에 맞게 입력해주세요!')
+          alert(id + '을(를) 형식에 맞게 입력해주세요!')
         }
       } else {
         text.getElementsByTagName("input")[0].readOnly = false;
@@ -152,19 +152,19 @@ export default {
       }
     },
     async formValidation(id) {
-      if(id == "name"){ 
+      if(id == "이름"){ 
         if(!this.$refs.name.validate()) { return null;}
         else { return true; }
       }
-      if(id == "birthday"){ 
+      if(id == "생년월일"){ 
         if(!this.$refs.birthday.validate()) { return null;}
         else { return true; }
       }
-      if(id == "email"){ 
+      if(id == "이메일"){ 
         if(!this.$refs.email.validate()) { return null;}
         else { return true; }
       }
-      if(id == "phoneNumber"){ 
+      if(id == "전화번호"){ 
         if(!this.$refs.phoneNumber.validate()) { return null;}
         else { return true; }
       }
@@ -187,19 +187,19 @@ export default {
       this.newPassword = newPassword;
     },
     async onSubmit() {
-      if(this.modifyMode["name"]) {
+      if(this.modifyMode["이름"]) {
         alert("이름 수정을 완료해주세요.");
         return;
       }
-      if(this.modifyMode["birthday"]) {
+      if(this.modifyMode["생년월일"]) {
         alert("생년월일 수정을 완료해주세요.");
         return;
       }
-      if(this.modifyMode["email"]) {
+      if(this.modifyMode["이메일"]) {
         alert("이메일 수정을 완료해주세요.");
         return;
       }
-      if(this.modifyMode["phoneNumber"]) {
+      if(this.modifyMode["전화번호"]) {
         alert("전화번호 수정을 완료해주세요.");
         return;
       }
@@ -254,10 +254,10 @@ export default {
     this.oldPhoneNumber = this.member.phoneNumber;
   },
   mounted() {
-    document.getElementsByClassName("w-100")[0].getElementsByTagName("span")[0].id = "name";
-    document.getElementsByClassName("w-100")[1].getElementsByTagName("span")[0].id = "birthday";
-    document.getElementsByClassName("w-100")[2].getElementsByTagName("span")[0].id = "email";
-    document.getElementsByClassName("w-100")[3].getElementsByTagName("span")[0].id = "phoneNumber";
+    document.getElementsByClassName("setModifyIdName")[0].getElementsByTagName("span")[0].id = "이름";
+    document.getElementsByClassName("setModifyIdName")[1].getElementsByTagName("span")[0].id = "생년월일";
+    document.getElementsByClassName("setModifyIdName")[2].getElementsByTagName("span")[0].id = "이메일";
+    document.getElementsByClassName("setModifyIdName")[3].getElementsByTagName("span")[0].id = "전화번호";
   },
   data() {
     return {
@@ -267,7 +267,7 @@ export default {
       oldEmail: '',
       oldPhoneNumber: '',
       
-      modifyMode: { name: false, birthday: false, email: false, phoneNumber: false},
+      modifyMode: { 이름: false, 생년월일: false, 이메일: false, 전화번호: false},
 
       name_rule: [
         v => !!v || '이름을 입력해주세요.',
@@ -275,14 +275,6 @@ export default {
         const replaceV = v.replace(/(\s*)/g, '')
         const pattern = /^[가-힣]{2,}$/
         return pattern.test(replaceV) || '한글 이름을 작성해주세요.'
-        }
-      ],
-      userId_rule:[
-        v => !!v || '아이디를 입력해주세요.',
-        v => {
-          const replaceV = v.replace(/(\s*)/g, '')
-          const pattern = /^[a-zA-Z][0-9a-zA-Z]{3,11}$/
-          return pattern.test(replaceV) || '영문 대소문자와 숫자포함 4~12자 아이디를 입력해주세요'
         }
       ],
       email_rule: [
