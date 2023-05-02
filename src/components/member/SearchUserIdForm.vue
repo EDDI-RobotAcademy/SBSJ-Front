@@ -12,10 +12,8 @@
             </router-link>
             <v-card width="540" v-if="!isPass">
               <v-card-text class="text-center px-12 py-16">
-  
                 <v-form>
                   <div class="text-h4 font-weight-black mb-10">ID 찾기</div>
-  
                   <div class="d-flex">
                     <v-text-field
                         v-model="name"
@@ -36,27 +34,27 @@
                       color="orange"
                   />
                 </div>
-                  <v-btn
-                      block
-                      x-large
-                      rounded
-                      color="teal lighten-3"
-                      class="mt-6"
-                      @click="findAccountname(), findAccountPhone()"
-                      :disabled="false"
-                  >ID 찾기</v-btn>
+                <v-btn
+                    block
+                    x-large
+                    rounded
+                    color="teal lighten-3"
+                    class="mt-6"
+                    @click="findAccountInfo()"
+                    :disabled="false"
+                >ID 찾기</v-btn>
                 </v-form>
-                <v-card width="460" v-if="isPass">
-                  <v-card-text>
-                    <div class="text-h4 font-weight-black mb-10">ID 찾기 결과</div>
-                      <div v-if="matchingUserId">{{ matchingUserId }}</div>
-                      <div v-else>입력한 정보와 일치하는 아이디가 없습니다.</div>
-                  </v-card-text>
-                </v-card>
                 <br>
               <br>
               <div class="btn back" onclick="history.go(-1);return false;">뒤로가기</div>
               </v-card-text>
+            </v-card>
+            <v-card width="460" v-if="isPass">
+                  <v-card-text>
+                    <div class="text-h4 font-weight-black mb-10">ID 찾기 결과</div>
+                      <div v-if="matchingUserId">{{ matchingUserId }}</div>
+                    <div v-else>입력한 정보와 일치하는 아이디가 없습니다.</div>
+                  </v-card-text>
             </v-card>
         </v-col>
       </v-row>
@@ -66,7 +64,9 @@
 
 <script>
 
-import axios from "axios";
+import { mapActions } from 'vuex';
+
+const accountModule = 'accountModule';
 
 export default {
   name: "SearchIdForm",
@@ -96,62 +96,27 @@ export default {
     }
   },
   methods: {
-    findAccountName() {
-      const { name } = this;
-      axios
-          .post("http://localhost:7777/member/name-match", { name })
-          .then((res) => {
-            if (res.data) {
-              alert("인증이 완료되었습니다.");
-              this.isPass = true;
-              this.matchingUserId(name, this.phoneNumber);
-            } else {
-              alert("해당이름으로 가입된 정보가 없습니다.");
-              this.isPass = false;
-            }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("요청에 실패했습니다. 다시 시도해주세요.");
+    ...mapActions(accountModule, [
+      'reqfindMatchingUserIdToSpring'
+    ]),
+    async findAccountInfo() {
+        const result = await this.reqfindMatchingUserIdToSpring({
+          name: this.name,
+          phoneNumber: this.phoneNumber
         });
-    },
-    findAccountPhone() {
-      const { phoneNumber } = this;
-      axios
-          .post("http://localhost:7777/member/phoneNumber-match", { phoneNumber })
-          .then((res) => {
-            if (res.data) {
-              alert("인증이 완료되었습니다.");
-              this.isPass = true;
-              this.matchingUserId(this.name, phoneNumber);
-            } else {
-              alert("입력한 휴대폰번호로 가입된 정보가 없습니다.");
-              this.isPass = false;
-            }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("요청에 실패했습니다. 다시 시도해주세요.");
-        });
-      },
-      findMatchingUserId(name, phoneNumber) {
-      axios
-        .post("http://localhost:7777/member/findMatchingUserId", { name, phoneNumber })
-        .then((res) => {
-          if (res.data) {
-            this.matchingUserId = res.data;
-          } else {
-            this.matchingUserId = "";
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          alert("요청에 실패했습니다. 다시 시도해주세요.");
-        });
+
+        if (result) {
+          alert("인증이 완료되었습니다.");
+          this.isPass = true;
+          this.matchingUserId = result;
+        } else {
+          alert("입력한 정보와 일치하는 계정이 없습니다.");
+          this.isPass = true;
+          this.matchingUserId = "";
+        }
       },
   },
 }
-
 </script>
 
 <style scoped>
