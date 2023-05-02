@@ -33,14 +33,11 @@
                         <div>{{ image.price }}</div>
                     </v-card-text>
                     <v-card-actions class="justify-center">
-                        <div>
-                            <v-btn outlined color="#692498">
-                                장바구니
-                            </v-btn>
-                            <v-btn class="text-white ms-1" elevation="0" color="#692498">
-                                바로 구매
-                            </v-btn>
-                        </div>
+                        <v-btn block outlined color="#692498">
+                            <router-link :to="{ name: 'ProductReadPage', params: { productId: image.productId.toString() } }" style="color: black; text-decoration: none;">
+                                상세 보기
+                            </router-link>
+                        </v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>

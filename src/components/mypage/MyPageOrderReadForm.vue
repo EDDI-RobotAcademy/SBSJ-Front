@@ -27,16 +27,21 @@
                             <div class="mb-2 p-3" outlined v-for="(item, index) in completeOrder.orderItemList" :key="index">
                                 <v-row>
                                     <v-col cols="2">
-                                        <v-img
-                                            :src="require(`@/assets/productImgs/${item.thumbnail}`)"
-                                            aspect-ratio="1"
-                                            max-width="100"
-                                            max-height="100"
-                                            contain
-                                        />
+                                        <router-link :to="{ name: 'ProductReadPage', params: { productId: item.productId.toString() } }">
+                                            <v-img
+                                                :src="require(`@/assets/productImgs/${item.thumbnail}`)"
+                                                aspect-ratio="1"
+                                                max-width="100"
+                                                max-height="100"
+                                                contain
+                                            />
+                                        </router-link>
                                     </v-col>
                                     <v-col>
-                                        <div class="mb-1">상품명: {{ item.productName }}</div>
+                                        <router-link :to="{ name: 'ProductReadPage', params: { productId: item.productId.toString() } }"
+                                            style="text-decoration: none; color: black">
+                                            <div class="mb-1">상품명: {{ item.productName }}</div>
+                                        </router-link>
                                         <div class="mb-1">수량: {{ item.orderItemCount }}개</div>
                                     </v-col>
                                 </v-row>

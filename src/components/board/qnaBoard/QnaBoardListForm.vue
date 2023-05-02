@@ -18,7 +18,7 @@
             </tr>
             <template v-if="!qnaBoards || (Array.isArray(qnaBoards) && qnaBoards.length === 0)">
               <tr>
-                <td colspan="4">
+                <td colspan="5">
                   현재 등록된 게시물이 없습니다!
                 </td>
               </tr>
