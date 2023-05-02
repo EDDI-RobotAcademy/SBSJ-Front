@@ -77,7 +77,8 @@ const routes = [
   {
     path: '/shopping-cart',
     name: 'ShoppingCartPage',
-    component: ShoppingCartPage
+    component: ShoppingCartPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/product/:categoryName?/:brandName?',
@@ -94,27 +95,32 @@ const routes = [
   {
     path: '/sign-up',
     name: 'SignUpPage',
-    component: SignUpPage
+    component: SignUpPage,
+    meta: { logoutCheck: true }
   },
   {
     path: '/sign-in',
     name: 'SignInPage',
-    component: SignInPage
+    component: SignInPage,
+    meta: { logoutCheck: true }
   },
   {
     path: '/search-id',
     name: 'SearchUserIdPage',
-    component: SearchUserIdPage
+    component: SearchUserIdPage,
+    meta: { logoutCheck: true }
   },
   {
     path: '/search-password',
     name: 'SearchPasswordPage',
-    component: SearchPasswordPage
+    component: SearchPasswordPage,
+    meta: { logoutCheck: true }
   },
   {
     path: '/agree-pass',
     name: 'SignAgreePage',
-    component: SignAgreePage
+    component: SignAgreePage,
+    meta: { logoutCheck: true }
   },
   {
     path: '/agreement',
@@ -140,145 +146,172 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPage',
-    component: MyPage
+    component: MyPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/mypage/check-password',
     name: 'MyPagePasswordCheckPage',
-    component: MyPagePasswordCheckPage
+    component: MyPagePasswordCheckPage,
+    meta: { loginCheck: true }
   },
 
   // 설문조사
   {
     path: '/survey',
     name: 'SurveyPage',
-    component: SurveyPage
+    component: SurveyPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/user-name',
     name: 'UsernameCheckPage',
-    component: UsernameCheckPage
+    component: UsernameCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/gender',
     name: 'GenderCheckPage',
-    component: GenderCheckPage
+    component: GenderCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/age',
     name: 'AgeCheckPage',
-    component: AgeCheckPage
+    component: AgeCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/body',
     name: 'WeightCheckPage',
-    component: WeightCheckPage
+    component: WeightCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/body',
     name: 'HeightCheckPage',
-    component: HeightCheckPage
+    component: HeightCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/smoking',
     name: 'SmokingCheckPage',
-    component: SmokingCheckPage
+    component: SmokingCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/drinking',
     name: 'DrinkingCheckPage',
-    component: DrinkingCheckPage
+    component: DrinkingCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/common/exercising',
     name: 'ExercisingCheckPage',
-    component: ExercisingCheckPage
+    component: ExercisingCheckPage,
+    meta: { loginCheck: true }
   },
 
   // 신체기관 관련 설문조사
   {
     path: '/survey/viscera',
     name: 'VisceraSurveyPage',
-    component: VisceraSurveyPage
+    component: VisceraSurveyPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/viscera/bone',
     name: 'BoneCheckPage',
     component: BoneCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/viscera/brain',
     name: 'BrainCheckPage',
-    component: BrainCheckPage
+    component: BrainCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/viscera/eye',
     name: 'EyeCheckPage',
-    component: EyeCheckPage
+    component: EyeCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/viscera/intestine',
     name: 'IntestineCheckPage',
-    component: IntestineCheckPage
+    component: IntestineCheckPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/survey/viscera/liver',
     name: 'LiverCheckPage',
-    component: LiverCheckPage
+    component: LiverCheckPage,
+    meta: { loginCheck: true }
   },
 
    // 일상생활 관련 설문조사
    {
     path: '/survey/life',
     name: 'LifeSurveyPage',
-    component: LifeSurveyPage 
+    component: LifeSurveyPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/life/blood-pressure',
     name: 'BloodPressureCheckPage',
-    component: BloodPressureCheckPage 
+    component: BloodPressureCheckPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/life/blood-sugar',
     name: 'BloodSugarCheckPage',
-    component: BloodSugarCheckPage 
+    component: BloodSugarCheckPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/life/body-fat',
     name: 'BodyFatCheckPage',
-    component: BodyFatCheckPage 
+    component: BodyFatCheckPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/life/skin',
     name: 'SkinCheckPage',
-    component: SkinCheckPage 
+    component: SkinCheckPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/life/stress',
     name: 'StressCheckPage',
-    component: StressCheckPage 
+    component: StressCheckPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/survey/result',
     name: 'SurveyResultPage',
-    component: SurveyResultPage
+    component: SurveyResultPage,
+    meta: { loginCheck: true }
   },
   
   {    
     path: '/product-register-page',
     name: 'ProductRegisterPage',
-    component: ProductRegisterPage
+    component: ProductRegisterPage,
+    meta: { loginCheck: true }
   },
   {    
     path: '/order-info',
     name: 'OrderInfoPage',
-    component: OrderInfoPage
+    component: OrderInfoPage,
+    meta: { loginCheck: true }
   },
   {
     path: '/review/:productId',
     name: 'ReviewRegisterPage',
     component: ReviewRegisterPage,
-    props: true
+    props: true,
+    meta: { loginCheck: true }
   },
   {
     path: '/review-list',
@@ -354,7 +387,8 @@ const routes = [
   {    
     path: '/purchase-complete',
     name: 'PurchaseCompletePage',
-    component: PurchaseCompletePage
+    component: PurchaseCompletePage,
+    meta: { loginCheck: true }
   },
   
 ]
@@ -363,6 +397,32 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+router.beforeEach((to, from, next) => {
+  let isLoggedIn;
+  // alert(JSON.stringify(userInfo))
+  if(userInfo == null || userInfo == '' || Object.keys(userInfo).length == 0) {
+    isLoggedIn = false;
+  } else {
+    isLoggedIn = true;
+  }
+
+  if(to.meta.loginCheck && !isLoggedIn) {
+    alert("로그인이 필요한 페이지 입니다. 로그인 페이지로 이동합니다.");
+    next({ name: "SignInPage" });
+  } else {
+    next();
+  }
+
+  if(to.meta.logoutCheck && isLoggedIn) {
+    alert("이미 로그인 되어있습니다. 로그인 상태로는 들어갈 수 없는 페이지입니다.");
+    next({ name: "home" });
+  } else {
+    next();
+  }
 })
 
 export default router
