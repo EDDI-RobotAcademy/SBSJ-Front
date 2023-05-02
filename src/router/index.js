@@ -80,9 +80,10 @@ const routes = [
     component: ShoppingCartPage
   },
   {
-    path: '/product',
+    path: '/product/:categoryName?/:brandName?',
     name: 'ProductListPage',
-    component: ProductListPage
+    component: ProductListPage,
+    props: true
   },
   {
     path: '/product/read/:productId',

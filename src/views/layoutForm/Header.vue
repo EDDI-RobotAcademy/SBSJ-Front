@@ -52,8 +52,8 @@
                                                 </router-link>
                                                 <p class="category_name">기능별 카테고리</p>
                                                 <li v-for="(item, index1) in items1" :key="'items1-' + index1" class="hover-highlight" style="line-height: 40px; text-align: center; display: flex; justify-content: center;">
-                                                    <router-link style="text-decoration: none; color: black;" :to="{ name: item.url }">
-                                                        <p>{{ item.mainTitle }}</p>
+                                                    <router-link style="text-decoration: none; color: black;" :to="{ name: item.url, params: {categoryName: item.category} }">
+                                                        <p style="width: 200px; height: 43px;">{{ item.mainTitle }}</p>
                                                     </router-link>
                                                     <!-- <div class="second-category hidden">
                                                         <div class="first-inline-category" style="background-color: white;">
@@ -80,8 +80,8 @@
                                                 </li>
                                                 <p class="category_name mt-2">브랜드별 카테고리</p>
                                                 <li v-for="(item, index2) in items2" :key="'items2-' + index2" class="hover-highlight" style="line-height: 40px; text-align: center; display: flex; justify-content: center;">
-                                                    <router-link style="text-decoration: none; color: black;" :to="{ name: item.url }">
-                                                        <p>{{ item.mainTitle }}</p>
+                                                    <router-link style="text-decoration: none; color: black;" :to="{ name: item.url, params: {brandName: item.brand}}">
+                                                        <p style="width: 200px; height: 43px;">{{ item.mainTitle }}</p>
                                                     </router-link>
                                                 </li>
                                             </div>
@@ -153,20 +153,20 @@ export default {
             showSidebar: false,
             isTrue: false,
             items1: [
-                { mainTitle: "눈 건강", url: 'ProductListPage'},
-                { mainTitle: "뼈 건강", url: 'ProductListPage'},
-                { mainTitle: "스트레스 완화", url: 'ProductListPage'},
-                { mainTitle: "비타민C", url: 'ProductListPage'},
-                { mainTitle: "비타민D", url: 'ProductListPage'},
+                { mainTitle: "눈 건강", url: 'ProductListPage', category: 'EYE'},
+                { mainTitle: "뼈 건강", url: 'ProductListPage', category: 'BONE'},
+                { mainTitle: "스트레스 완화", url: 'ProductListPage', category: 'STRESS'},
+                { mainTitle: "비타민C", url: 'ProductListPage', category: 'VITAMIN-C'},
+                { mainTitle: "비타민D", url: 'ProductListPage', category: 'VITAMIN-D'},
                 // { mainTitle: "리뷰", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 
                 //     { sub: "sub22", contents: ["link10", "link11", "link12"] }], url: 'ReviewListPage' },
             ],
             items2: [
-                { mainTitle: "ABC", url: 'ProductListPage'},
-                { mainTitle: "DEF", url: 'ProductListPage'},
-                { mainTitle: "GHI", url: 'ProductListPage'},
-                { mainTitle: "JKL", url: 'ProductListPage'},
-                { mainTitle: "MNO", url: 'ProductListPage'},
+                { mainTitle: "ABC", url: 'ProductListPage', brand: "ABC"},
+                { mainTitle: "DEF", url: 'ProductListPage', brand: "DEF"},
+                { mainTitle: "GHI", url: 'ProductListPage', brand: "GHI"},
+                { mainTitle: "JKL", url: 'ProductListPage', brand: "JKL"},
+                { mainTitle: "MNO", url: 'ProductListPage', brand: "MNO"},
             ],
         }
     },
