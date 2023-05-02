@@ -86,7 +86,7 @@ const routes = [
     props: true
   },
   {
-    path: '/product/read/:productId',
+    path: '/productDetail/read/:productId',
     name: 'ProductReadPage',
     component: ProductReadPage,
     props: true

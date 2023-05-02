@@ -13,7 +13,7 @@
             <p v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)" style="font-size: 20px">리뷰 평점 {{ 0 }}</p>
             <p v-else style="font-size: 20px">리뷰 평점 {{ starRateAverage }}</p>
             <v-rating
-              :value="starRateAverage"
+              :value="Number(this.starRateAverage)"
               background-color="grey"
               color="yellow darken-1"
               half-increments
@@ -37,9 +37,7 @@
           <p class="mb-7">작성된 리뷰가 없습니다.</p>
           <v-divider width="1070px"></v-divider>
         </li>
-        <li v-for="(review, idx) in reviews" :key="idx">
-          <review-context-form :review="showReviews" />
-        </li>
+          <review-context-form :reviews="showReviews" />
       </div>
         <div class="review-container" style="display: flex; justify-content: center; align-items: center;">
           <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="5" :page-range="5" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
@@ -129,12 +127,15 @@ export default {
     this.showReviews = this.reviews
     this.cache[this.currentPage] = this.reviews
     await this.getStarRateAverage(productId);
+    console.log("starRateAverage: " + this.starRateAverage);
   },
   computed: {
     ...mapState(productModule, ["reviews", "starRateAverage", "product"]),
-    averageStarRate() {
-      return this.starRateAverage;
-    },
+    // averageStarRate: {
+    //   get() {
+    //     return this.starRateAverage;
+    //   }
+    // },
     showReviews: {
       get() {
         return this.reviewList
