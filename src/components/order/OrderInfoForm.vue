@@ -264,7 +264,7 @@ export default {
     async created() {
         if(this.orderList == '' || this.orderList == null) {
             alert("새로고침하면 주문 정보가 손실됩니다.");
-            this.$router.push({ name: 'ShoppingCartPage' });
+            await this.$router.push({ name: 'ShoppingCartPage' });
         }
 
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
