@@ -48,17 +48,17 @@
                                 <div style=" font-size:medium; display:flex; justify-content:start; align-items:center;">1개</div>
                                 <div style=" font-size:x-large; font-weight: bold; display:flex; justify-content:start; align-items:center; ">{{new Intl.NumberFormat().format(Math.floor(product.price))}}원</div>
                             </div>
-                            <div style=" width:100%; display:flex; ">
+                            <div style=" width:100%; display:flex;">
                                 <div style="width: 95%; display:flex; justify-content:end; align-items:center; ">
                                     <div style="width:15%;">
-                                        <div v-if="!this.checkedWish" @click="changeIcon">
+                                        <button v-if="!this.checkedWish" @click="changeIcon">
                                             <v-icon x-large>mdi-heart-outline</v-icon>
-                                        </div>
-                                        <div v-else @click="changeIcon">
+                                        </button>
+                                        <button v-else @click="changeIcon">
                                             <v-icon x-large color="red">mdi-heart</v-icon>
-                                        </div>
+                                        </button>
                                     </div>
-                                    <button class="wishCountDiv">{{ product.wishCount }}</button>
+                                    <div style="width: 0px" class="wishCountDiv">{{ product.wishCount }}</div>
                                 </div>
                             </div>
                         </div><br>  
@@ -143,11 +143,11 @@
                 
             
             <div class="container mx-auto p-10">
-                <ProductReadTabs
+                <product-read-tabs
                     :tabs="tabs"
                     :detail="product.detail"
                     :product="product"
-                ></ProductReadTabs>
+                ></product-read-tabs>
             </div>
             <!-- <v-window-item value="two">
                             <review-list-form :productId = "this.product.productId"/>
@@ -160,7 +160,7 @@
 
 <script>
 
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 import ReviewListPage from "@/views/review/ReviewListPage.vue";
 import ProductReadTabs from "@/components/product/ProductReadTabs.vue"
 import ProductReadDetailForm from "@/components/product/ProductReadDetailForm.vue";
@@ -182,7 +182,7 @@ export default {
                 { title: "상품 상세", component: ProductReadDetailForm },
                 { title: "리뷰 목록", component: ReviewListPage },
                 { title: "Q&A", component: QnaBoardListPage },
-                ],
+            ],
         };
     },
     props: {
