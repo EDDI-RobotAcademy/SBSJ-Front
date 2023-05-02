@@ -5,7 +5,7 @@
           <v-col cols="auto" style="padding-bottom: 90px">
             <router-link to="/">
               <v-img
-                  :src="require('@/assets/logo/logo-removebg.png')"
+                  :src="require('@/assets/logo/energenie_logo5_800x400.png')"
                   width="400"
                   class="mx-auto mb-6"
               ></v-img>
@@ -21,7 +21,7 @@
                         :rules="name_rule"
                         clearable
                         prepend-icon="mdi-account-outline"
-                        color="orange"
+                        color="#692498"
                     />
                   </div>
                   <div class="d-flex">
@@ -31,14 +31,14 @@
                       :rules="phoneNumber_rule"
                       clearable
                       prepend-icon="mdi-phone-outline"
-                      color="orange"
+                      color="#692498"
                   />
                 </div>
                 <v-btn
                     block
                     x-large
-                    rounded
-                    color="teal lighten-3"
+                    rounded dark
+                    color="#692498"
                     class="mt-6"
                     @click="findAccountInfo()"
                     :disabled="false"
@@ -177,7 +177,7 @@ body {
   top: 0;
   height: 490%;
   width: 140%;
-  background: #78c7d2;
+  background: #692498;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
   -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
