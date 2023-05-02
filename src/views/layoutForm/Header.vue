@@ -93,7 +93,7 @@
                         <v-col cols="2">
                             <div class="logo-area ms-0 mt-2 mb-3 p-0">
                                 <router-link :to="{ name: 'home' }">
-                                    <v-img src="@/assets/logo/energinie_logo5.png"
+                                    <v-img src="@/assets/logo/energenie_logo5.png"
                                             max-height="80" max-width="150" />
                                 </router-link>
                             </div>
