@@ -139,30 +139,30 @@ export default {
         context: this.context,
       };
 
-    if (this.images.length > 0) {
-      let formData = new FormData();
-      let reviewRegisterRequestBlob = new Blob([JSON.stringify(reviewRegisterRequest)], { type: "application/json" });
-      formData.append("reviewRegisterRequest", reviewRegisterRequestBlob);
+      if (this.images.length > 0) {
+        let formData = new FormData();
+        let reviewRegisterRequestBlob = new Blob([JSON.stringify(reviewRegisterRequest)], { type: "application/json" });
+        formData.append("reviewRegisterRequest", reviewRegisterRequestBlob);
 
-      for (let i = 0; i < this.images.length; i++) {
-        formData.append('imageFileList', this.images[i]);
-      }
-      console.log('이미지 파일 추가 완료'); // 이미지 추가 확인용 로그
+        for (let i = 0; i < this.images.length; i++) {
+          formData.append('imageFileList', this.images[i]);
+        }
+        console.log('이미지 파일 추가 완료'); // 이미지 추가 확인용 로그
 
-      // formData 내용 확인을 위한 코드
-      for (let entry of formData.entries()) {
-        console.log(entry[0] + ', ' + entry[1]);
-      }
+        // formData 내용 확인을 위한 코드
+        for (let entry of formData.entries()) {
+          console.log(entry[0] + ', ' + entry[1]);
+        }
 
       await this.reqRegisterReviewWithImageToSpring(formData);
-    } else {
-      const { starRate, context } = this;
-      const memberId =  userInfo.memberId;
-      const productId = this.productId;
-      await this.reqRegisterReviewToSpring({ memberId, productId, starRate, context });
-    }
-    this.$router.go(this.$router.currentRoute);
-  },
+      } else {
+        const { starRate, context } = this;
+        const memberId =  userInfo.memberId;
+        const productId = this.productId;
+        await this.reqRegisterReviewToSpring({ memberId, productId, starRate, context });
+      }
+      window.location.reload(true)
+    },
   },
   
 };
