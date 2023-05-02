@@ -229,10 +229,10 @@ export default {
           if(successUpdate.data) {
             let token = userInfo.token;
 
-            this.reqSignOutToSpring(token);
+            await this.reqSignOutToSpring(token);
             router.push({ name: 'SignInPage' })
           } else {
-            alert("회원 정보를 수정하는 데 실패하였습니다.\n다시 시도해주세요.")
+            alert("회원 정보를 수정하는 데 실패하였습니다.\n다시 시도해주세요.");
           }
         }
       } else {
