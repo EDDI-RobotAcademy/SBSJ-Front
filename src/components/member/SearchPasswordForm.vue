@@ -21,7 +21,7 @@
                       :rules="name_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
-                      color="#692498"
+                      color="orange"
                   />
                 </div>
                 <div class="d-flex">
@@ -31,29 +31,49 @@
                     :rules="phoneNumber_rule"
                     clearable
                     prepend-icon="mdi-phone-outline"
-                    color="#692498"
+                    color="orange"
                 />
               </div>
               <v-btn
                   block
                   x-large
-                  rounded dark
+                  rounded
+                  dark
                   color="#692498"
                   class="mt-6"
                   @click="findAccountInfo()"
                   :disabled="false"
               >PW 찾기</v-btn>
+              <v-btn
+                  block
+                  x-large
+                  rounded
+                  dark
+                  color="#FFCD4A"
+                  class="mt-6"
+                  :disabled="false"
+                  :to="{ name: 'SignInPage' }"
+              >로그인</v-btn>
               </v-form>
               <br>
             <br>
-            <div class="btn back" onclick="history.go(-1);return false;">뒤로가기</div>
             </v-card-text>
           </v-card>
           <v-card width="460" v-if="isPass">
                 <v-card-text>
-                  <div class="text-h4 font-weight-black mb-10">임시 비밀번호</div>
-                    <div v-if="matchingUserPw">{{ matchingUserPw }}</div>
-                  <div v-else>입력한 정보와 일치하는 pw가 없습니다.</div>
+                  <div class="text-h4 font-weight-black mb-10" style="text-align: center;">임시 비밀번호</div>
+                    <div v-if="matchingUserPw" style="text-align: center;"><h3 style="font-weight: bold;"> {{ matchingUserPw }} </h3>
+                      <v-btn
+                        block
+                        x-large
+                        rounded
+                        dark
+                        color="#692498"
+                        class="mt-6"
+                        :disabled="false"
+                        :to="{ name: 'SignInPage' }"
+                    >로그인</v-btn>
+                    </div>
                 </v-card-text>
           </v-card>
       </v-col>
@@ -69,7 +89,7 @@ import { mapActions } from 'vuex';
 const accountModule = 'accountModule';
 
 export default {
-name: "SearchIdForm",
+name: "SearchPasswordForm",
 data() {
   return {
     name: "",
@@ -111,7 +131,7 @@ methods: {
         this.matchingUserPw = result;
       } else {
         alert("입력한 정보와 일치하는 계정이 없습니다.");
-        this.isPass = true;
+        this.isPass = false;
         this.matchingUserPw = "";
       }
     },
@@ -125,7 +145,7 @@ methods: {
 body {
 margin: 0;
 height: 100%;
-background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+background-image: linear-gradient(to top, #d9afd9 0%, #692498 100%);
 background-repeat: no-repeat;
 background-size: cover;
 background-attachment: fixed;
