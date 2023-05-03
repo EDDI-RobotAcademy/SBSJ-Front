@@ -44,16 +44,43 @@
                     :disabled="false"
                 >ID 찾기</v-btn>
                 </v-form>
-                <br>
-              <br>
-              <div class="btn back" onclick="history.go(-1);return false;">뒤로가기</div>
+              <v-btn
+                  block
+                  x-large
+                  rounded
+                  dark
+                  color="#FFCD4A"
+                  class="mt-6"
+                  :disabled="false"
+                  :to="{ name: 'SignInPage' }"
+              >로그인</v-btn>
               </v-card-text>
             </v-card>
             <v-card width="460" v-if="isPass">
                   <v-card-text>
-                    <div class="text-h4 font-weight-black mb-10">ID 찾기 결과</div>
-                      <div v-if="matchingUserId">{{ matchingUserId }}</div>
-                    
+                    <div class="text-h4 font-weight-black mb-10" style="text-align: center;">ID 찾기 결과</div>
+                      <div v-if="matchingUserId" style="text-align: center;"><h3 style="font-weight: bold;"> {{ matchingUserId }} </h3>
+                        <v-btn
+                        block
+                        x-large
+                        rounded
+                        dark
+                        color="#692498"
+                        class="mt-6"
+                        :disabled="false"
+                        :to="{ name: 'SignInPage' }"
+                    >로그인</v-btn>
+                    <v-btn
+                        block
+                        x-large
+                        rounded
+                        dark
+                        color="#FFCD4A"
+                        class="mt-6"
+                        :disabled="false"
+                        :to="{ name: 'SearchPasswordPage' }"
+                    >패스워드 찾기</v-btn>
+                      </div>
                   </v-card-text>
             </v-card>
         </v-col>
