@@ -147,7 +147,10 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: MyPage,
-    meta: { loginCheck: true }
+    meta: { loginCheck: true },
+    // beforeEnter: (to, from, next) => {
+    //   next({ name: 'MyPagePasswordCheckPage' });
+    // },
   },
   {
     path: '/mypage/check-password',
@@ -399,9 +402,9 @@ const router = new VueRouter({
   routes
 })
 
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
 router.beforeEach((to, from, next) => {
+  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   let isLoggedIn;
   // alert(JSON.stringify(userInfo))
   if(userInfo == null || userInfo == '' || Object.keys(userInfo).length == 0) {

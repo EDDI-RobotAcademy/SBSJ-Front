@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
+  <div class="grey lighten-5">
     <v-container class="white" style="width: 1240px">
       <v-row justify="center">
         <v-col cols="auto" style="padding-bottom: 90px">
@@ -21,7 +21,7 @@
                       :rules="name_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
-                      color="orange"
+                      color="#692498"
                   />
                 </div>
                 <div class="d-flex">
@@ -31,7 +31,7 @@
                     :rules="phoneNumber_rule"
                     clearable
                     prepend-icon="mdi-phone-outline"
-                    color="orange"
+                    color="#692498"
                 />
               </div>
               <v-btn
@@ -61,18 +61,26 @@
           </v-card>
           <v-card width="460" v-if="isPass">
                 <v-card-text>
-                  <div class="text-h4 font-weight-black mb-10" style="text-align: center;">임시 비밀번호</div>
-                    <div v-if="matchingUserPw" style="text-align: center;"><h3 style="font-weight: bold;"> {{ matchingUserPw }} </h3>
-                      <v-btn
-                        block
-                        x-large
-                        rounded
-                        dark
-                        color="#692498"
-                        class="mt-6"
-                        :disabled="false"
-                        :to="{ name: 'SignInPage' }"
-                    >로그인</v-btn>
+                  <div class="text-h5 font-weight-black mb-10" style="text-align: center;">
+                    임시 비밀번호
+                  </div>
+                    <div v-if="matchingUserPw" style="text-align: center;">
+                      <v-card flat outlined class="justify-center align-center" height="200">
+                        <div style="font-weight: bold; margin-top: 60px;">
+                          <h4>{{ matchingUserPw }}</h4>
+                          <br>로 임시 비밀번호가 발급되었습니다. 
+                        </div>
+                      </v-card>
+                        <v-btn
+                          block
+                          x-large
+                          rounded
+                          dark
+                          color="#692498"
+                          class="mt-6"
+                          :disabled="false"
+                          :to="{ name: 'SignInPage' }"
+                        >로그인</v-btn>
                     </div>
                 </v-card-text>
           </v-card>
