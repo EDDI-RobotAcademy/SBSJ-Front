@@ -1,69 +1,72 @@
 <template>
     <div>
-        <v-row class="baby-product-list">
-            <v-col v-for="(product, index) in products" :key="index" class="baby-product mb-5 d-flex align-items-center" cols="3">
-                <!-- v-for="(product, index) in calData" -->
-                <v-card outlined flat
-                    class="mx-auto transition-swing baby-product-hover p-4"
-                    style="border-radius: 20px;"
-                    width="250"
-                >
-                    <div class="baby-product-wrap">
-                        <div class="d-flex justify-center">
-                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
-                                <v-img contain width="150" height="180"
-                                    :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
-                                />
-                            </router-link>
-                        </div>
-                        <div class="descriptions">
-                            <div class="badge d-flex justify-end">
-                                <div v-if="isInWishList(product)">
-                                    <v-icon color="red" class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>
-                                </div>
-                                <div v-else>
-                                    <v-icon class="icon-wish" @click="addWish(product)">mdi-heart-outline</v-icon>
-                                </div>
-                            </div>
-                            <div class="name d-flex justify-center h5">
+        <div v-if="this.products.length === 0">상품이 존재하지 않습니다...</div>
+        <div v-else>
+            <v-row class="baby-product-list">
+                <v-col v-for="(product, index) in products" :key="index" class="baby-product mb-5 d-flex align-items-center" cols="3">
+                    <!-- v-for="(product, index) in calData" -->
+                    <v-card outlined flat
+                        class="mx-auto transition-swing baby-product-hover p-4"
+                        style="border-radius: 20px;"
+                        width="250"
+                    >
+                        <div class="baby-product-wrap">
+                            <div class="d-flex justify-center">
                                 <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
-                                    <span class="name-text" style="text-decoration: none; color: black; font-weight: bold;">
-                                        {{ product.title }}
-                                    </span>
+                                    <v-img contain width="150" height="180"
+                                        :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
+                                    />
                                 </router-link>
                             </div>
-                            <div class="price d-flex justify-end h6 me-3">
-                                {{ new Intl.NumberFormat().format(product.price) }}원
+                            <div class="descriptions">
+                                <div class="badge d-flex justify-end">
+                                    <div v-if="isInWishList(product)">
+                                        <v-icon color="red" class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>
+                                    </div>
+                                    <div v-else>
+                                        <v-icon class="icon-wish" @click="addWish(product)">mdi-heart-outline</v-icon>
+                                    </div>
+                                </div>
+                                <div class="name d-flex justify-center h5">
+                                    <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                                        <span class="name-text" style="text-decoration: none; color: black; font-weight: bold;">
+                                            {{ product.title }}
+                                        </span>
+                                    </router-link>
+                                </div>
+                                <div class="price d-flex justify-end h6 me-3">
+                                    {{ new Intl.NumberFormat().format(product.price) }}원
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="other-info d-flex justify-center mt-5">
-                        <v-btn class="directive-btn"
-                            rounded
-                            outlined
-                            color="#692498"
-                            @click="addToCart(product)"
-                        >
-                            <span class="directive-btn-text">장바구니</span>
-                        </v-btn>
-                        <v-btn
-                            class="directive-btn ms-2"
-                            rounded
-                            dark
-                            color="#692498"
-                            @click="directPurchase(product)"
-                        >
-                            <span class="directive-btn-text">바로구매</span>
-                        </v-btn>
-                        
-                    </div>
-                </v-card>
-            </v-col>
-        </v-row>
-        <!-- <v-pagination
-            v-model="curPageNum"
-            :length="numOfPages">
-        </v-pagination> -->
+                        <div class="other-info d-flex justify-center mt-5">
+                            <v-btn class="directive-btn"
+                                rounded
+                                outlined
+                                color="#692498"
+                                @click="addToCart(product)"
+                            >
+                                <span class="directive-btn-text">장바구니</span>
+                            </v-btn>
+                            <v-btn
+                                class="directive-btn ms-2"
+                                rounded
+                                dark
+                                color="#692498"
+                                @click="directPurchase(product)"
+                            >
+                                <span class="directive-btn-text">바로구매</span>
+                            </v-btn>
+                            
+                        </div>
+                    </v-card>
+                </v-col>
+            </v-row>
+            <!-- <v-pagination
+                v-model="curPageNum"
+                :length="numOfPages">
+            </v-pagination> -->
+        </div>
     </div>
 </template>
 
@@ -91,9 +94,8 @@ export default {
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         console.log(userInfo);
-        let memberId = userInfo.memberId;
-        if(memberId !== null) {
-            await this.reqMyPageWishListToSpring(memberId);
+        if(userInfo != null) {
+            await this.reqMyPageWishListToSpring(userInfo.memberId);
             this.wishListData = this.wishList;
         }
     },

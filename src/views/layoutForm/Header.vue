@@ -47,7 +47,7 @@
                                     <div v-if="showSidebar" class="sidebar">
                                         <div class="main__category-box">
                                             <div class="main__category-list">
-                                                <router-link style="text-decoration: none; color: black;" :to="{ name: 'ProductListPage' }">
+                                                <router-link style="text-decoration: none; color: black;" :to="{ name: 'ProductListPage', params: {categoryName: 'TOTAL'} }">
                                                     <p class="all_product hover-highlight">전체 상품 보기</p>
                                                 </router-link>
                                                 <p class="category_name">기능별 카테고리</p>
