@@ -1,66 +1,35 @@
 <template>
     <div class="container">
-        <h1>회사소개</h1>
-          <!-- <table class="rwd-table">
-            <tbody>
-              <tr>
-                <th>상점명</th>
-                <th>구성원</th>
-                <th>대표전화</th>
-                <th>주소</th>
-                <th>개인정보 관리책임</th>
-                <th>대표메일</th>
-              </tr>
-              <tr>
-                <td data-th="Supplier Code">
-                  PYE
-                </td>
-                <td data-th="Supplier Name">
-                  윤영현 김민홍 남건호 황동희 서예인
-                </td>
-                <td data-th="Invoice Number">
-                  02-2212-2568
-                </td>
-                <td data-th="Invoice Date">
-                    서울특별시 강남구 테헤란로14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F
-                </td>
-                <td data-th="Due Date">
-                    윤영현 김민홍 남건호 황동희 서예인
-                </td>
-                <td data-th="Net Amount">
-                    PYECompany@PYE.co.kr
-                </td>
-              </tr>
-            </tbody>
-          </table> -->
-          <table class="type03">
-            <tr>
-                <th scope="row">상점명</th>
-                <td>주식회사 PYE</td>
-            </tr>
-            <tr>
-                <th scope="row">구성원</th>
-                <td>윤영현 김민홍 남건호 황동희 서예인</td>
-            </tr>
-            <tr>
-                <th scope="row">대표전화</th>
-                <td>내용이 들어갑니다.</td>
-            </tr>
-            <tr>
-                <th scope="row">주소</th>
-                <td>서울특별시 강남구 테헤란로14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F</td>
-            </tr>
-              <tr>
-                <th scope="row">개인정보 관리책임</th>
-                <td>윤영현 김민홍 남건호 황동희 서예인</td>
-            </tr>
-            <tr>
-                <th scope="row">대표메일</th>
-                <td>PYECompany@PYE.co.kr</td>
-            </tr>
-          </table>
-          <h3>Team SBSJ</h3>
+        <div class="text-area">
+          <h1>회사 소개</h1>
         </div>
+        <table class="type03 table table-hover mt-5">
+          <tr>
+              <th scope="row">상점명</th>
+              <td>Team SBSJ</td>
+          </tr>
+          <tr>
+              <th scope="row">구성원</th>
+              <td>윤영현 서예인 김민홍 남건호</td>
+          </tr>
+          <tr>
+              <th scope="row">대표전화</th>
+              <td>1544-9970</td>
+          </tr>
+          <tr>
+              <th scope="row">주소</th>
+              <td>서울특별시 강남구 테헤란로14길 6 남도빌딩 3F</td>
+          </tr>
+            <tr>
+              <th scope="row">개인정보 관리책임</th>
+              <td>윤영현 서예인 김민홍 남건호</td>
+          </tr>
+          <tr>
+              <th scope="row">대표메일</th>
+              <td>SBSJCompany@SBSJ.co.kr</td>
+          </tr>
+        </table>
+      </div>
 </template>
 
 <script>
@@ -70,40 +39,44 @@ export default {
 </script>
 <style scoped>
 
-
-@import 'https://fonts.googleapis.com/css?family=Open+Sans:600,700';
-
-* {font-family: 'Open Sans', sans-serif;}
+.container {
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
 
 table.type03 {
     border-collapse: collapse;
-    text-align: left;
     line-height: 1.5;
-    border-top: 1px solid #ccc;
-    border-left: 3px solid #369;
+    border: 1px solid #ccc;
     margin : 20px 10px;
     margin: 0 auto;
+    width: 600px;
   }
   table.type03 th {
     width: 147px;
     padding: 10px;
     font-weight: bold;
-    vertical-align: top;
-    color: #153d73;
+    color: white;
+    text-align: right;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     margin: 0 auto;
+    background-color: #692498;
+    opacity: 60%;
   
   }
   table.type03 td {
     width: 349px;
     padding: 10px;
-    vertical-align: top;
+    text-align: left;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     margin: 0 auto;
   }
-.rwd-table {
+  .text-area {
+    text-align: center;
+  }
+/* .rwd-table {
   margin: auto;
   min-width: 300px;
   max-width: 100%;
@@ -198,13 +171,13 @@ table.type03 {
   .rwd-table td {
     padding: 1em !important;
   }
-}
+} */
 
 
 /* THE END OF THE IMPORTANT STUFF */
 
 /* Basic Styling */
-body {
+/* body {
 background: #4B79A1;
 background: -webkit-linear-gradient(to left, #4B79A1 , #283E51);
 background: linear-gradient(to left, #4B79A1 , #283E51);        
@@ -238,7 +211,7 @@ h3 {
   25%   { transform: translateX(-10px)}
   75%   { transform: translateX(10px)}
   100%  { transform: translateX(0)}
-}
+} */
 
 /*
     Don't look at this last part. It's unnecessary. I was just playing with pixel gradients... Don't judge.
