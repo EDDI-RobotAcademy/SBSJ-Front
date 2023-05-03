@@ -1,5 +1,5 @@
 <template>
-    <div class="grey lighten-5" style="font-family: 'Noto Sans KR', sans-serif">
+    <div class="grey lighten-5">
       <v-container class="white" style="width: 1240px">
         <v-row justify="center">
           <v-col cols="auto" style="padding-bottom: 90px">
@@ -58,9 +58,17 @@
             </v-card>
             <v-card width="460" v-if="isPass">
                   <v-card-text>
-                    <div class="text-h4 font-weight-black mb-10" style="text-align: center;">ID 찾기 결과</div>
-                      <div v-if="matchingUserId" style="text-align: center;"><h3 style="font-weight: bold;"> {{ matchingUserId }} </h3>
-                        <v-btn
+                    <div class="text-h5 font-weight-black mb-7" style="text-align: center;">
+                      ID 찾기 결과
+                    </div>
+                    <div v-if="matchingUserId" style="text-align: center;">
+                      <v-card flat outlined class="justify-center align-center" height="200">
+                        <div style="font-weight: bold; margin-top: 60px;">
+                          입력하신 정보와 일치하는 아이디는<br>
+                          <h4>{{ matchingUserId }}</h4> 입니다. 다시 로그인을 시도하세요.
+                        </div>
+                      </v-card>
+                      <v-btn
                         block
                         x-large
                         rounded
@@ -69,8 +77,10 @@
                         class="mt-6"
                         :disabled="false"
                         :to="{ name: 'SignInPage' }"
-                    >로그인</v-btn>
-                    <v-btn
+                      >
+                      로그인
+                      </v-btn>
+                      <v-btn
                         block
                         x-large
                         rounded
@@ -79,8 +89,10 @@
                         class="mt-6"
                         :disabled="false"
                         :to="{ name: 'SearchPasswordPage' }"
-                    >패스워드 찾기</v-btn>
-                      </div>
+                      >
+                      패스워드 찾기
+                      </v-btn>
+                    </div>
                   </v-card-text>
             </v-card>
         </v-col>
