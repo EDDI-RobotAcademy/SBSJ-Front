@@ -1,7 +1,7 @@
 <template>
     <v-container>
       <h2>상품 등록</h2>
-      <product-register-form @submit="onSubmit"/>
+      <product-register-form @submit="onSubmit" @testSubmit="testOnSubmit"/>
     </v-container>
   </template>
   
@@ -15,14 +15,34 @@
       name: "ProductRegisterPage",
       methods: {
           ...mapActions (productModule, [
-              'requestCreateProductToSpring'
+              'requestCreateProductToSpring',
+              'requestTestCreateProductToSpring'
           ]),
           async onSubmit (payload) {
               await this.requestCreateProductToSpring(payload)
               await this.$router.push({
-                  name: 'ProductListPage',
+                  name: 'ProductRegisterPage',
               })
-          }
+          },
+          async testOnSubmit (payload) {
+              await this.requestTestCreateProductToSpring(payload)
+              await this.$router.push({
+                  name: 'ProductRegisterPage',
+              })
+          },
+      },
+      created() {
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(userInfo);
+        if(userInfo != null) {
+            if(userInfo.memberId != 1) {
+                alert("권한없는 접근");
+                this.$router.push({name: 'home'});
+            }
+        } else {
+            alert("권한없는 접근");
+            this.$router.push({name: 'home'});
+        }
       }
   }
   </script>
