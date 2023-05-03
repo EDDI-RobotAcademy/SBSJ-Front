@@ -62,7 +62,7 @@ export default {
 	.main-top-promotion {
 		position: relative;
 		width: 99%;
-		height: 500px;
+		height: 570px;
 	}
 	.main-top-promotion-image {
 		height: 100%;
