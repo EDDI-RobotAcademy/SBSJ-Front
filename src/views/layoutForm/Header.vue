@@ -50,7 +50,7 @@
                                                 <router-link style="text-decoration: none; color: black;" :to="{ name: 'ProductListPage', params: {categoryName: 'TOTAL'} }">
                                                     <p class="all_product hover-highlight">전체 상품 보기</p>
                                                 </router-link>
-                                                <p class="category_name">기능별 카테고리</p>
+                                                <p class="category_name">신체기관별 카테고리</p>
                                                 <li v-for="(item, index1) in items1" :key="'items1-' + index1" class="hover-highlight" style="line-height: 40px; text-align: center; display: flex; justify-content: center;">
                                                     <router-link style="text-decoration: none; color: black;" :to="{ name: item.url, params: {categoryName: item.category} }">
                                                         <p style="width: 200px; height: 43px;">{{ item.mainTitle }}</p>
@@ -78,7 +78,7 @@
                                                         </div>
                                                     </div> -->
                                                 </li>
-                                                <p class="category_name mt-2">브랜드별 카테고리</p>
+                                                <p class="category_name mt-2">일상생활별 카테고리</p>
                                                 <li v-for="(item, index2) in items2" :key="'items2-' + index2" class="hover-highlight" style="line-height: 40px; text-align: center; display: flex; justify-content: center;">
                                                     <router-link style="text-decoration: none; color: black;" :to="{ name: item.url, params: {brandName: item.brand}}">
                                                         <p style="width: 200px; height: 43px;">{{ item.mainTitle }}</p>
@@ -153,20 +153,20 @@ export default {
             showSidebar: false,
             isTrue: false,
             items1: [
+                { mainTitle: "뇌 건강", url: 'ProductListPage', category: 'BRAIN'},
                 { mainTitle: "눈 건강", url: 'ProductListPage', category: 'EYE'},
                 { mainTitle: "뼈 건강", url: 'ProductListPage', category: 'BONE'},
-                { mainTitle: "스트레스 완화", url: 'ProductListPage', category: 'STRESS'},
-                { mainTitle: "비타민C", url: 'ProductListPage', category: 'VITAMIN-C'},
-                { mainTitle: "비타민D", url: 'ProductListPage', category: 'VITAMIN-D'},
+                { mainTitle: "간 건강", url: 'ProductListPage', category: 'LIVER'},
+                { mainTitle: "장 건강", url: 'ProductListPage', category: 'INTESTINE'},
                 // { mainTitle: "리뷰", subTitles: [{ sub: "sub21", contents: ["link7", "link8", "link9"] }, 
                 //     { sub: "sub22", contents: ["link10", "link11", "link12"] }], url: 'ReviewListPage' },
             ],
             items2: [
-                { mainTitle: "ABC", url: 'ProductListPage', brand: "ABC"},
-                { mainTitle: "DEF", url: 'ProductListPage', brand: "DEF"},
-                { mainTitle: "GHI", url: 'ProductListPage', brand: "GHI"},
-                { mainTitle: "JKL", url: 'ProductListPage', brand: "JKL"},
-                { mainTitle: "MNO", url: 'ProductListPage', brand: "MNO"},
+                { mainTitle: "스트레스 관리", url: 'ProductListPage', brand: "STRESS"},
+                { mainTitle: "체지방 관리", url: 'ProductListPage', brand: "BODY-FAT"},
+                { mainTitle: "혈당 관리", url: 'ProductListPage', brand: "BLOOD-SUGAR"},
+                { mainTitle: "혈압 관리", url: 'ProductListPage', brand: "BLOOD-PRESSURE"},
+                { mainTitle: "피부 관리", url: 'ProductListPage', brand: "SKIN"},
             ],
         }
     },
