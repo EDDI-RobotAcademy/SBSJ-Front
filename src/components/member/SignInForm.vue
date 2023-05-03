@@ -74,7 +74,7 @@
                     </v-col>
                     <v-col>
                       <router-link
-                          :to="{ name: 'SearchPasswordPage' }" class="text-decoration-none purple--text ml-5 mr-5">PW 찾기</router-link>s
+                          :to="{ name: 'SearchPasswordPage' }" class="text-decoration-none purple--text ml-5 mr-5">PW 찾기</router-link>
                     </v-col>
                   </v-row> 
                 </div>    

@@ -53,7 +53,7 @@
                   <v-card-text>
                     <div class="text-h4 font-weight-black mb-10">ID 찾기 결과</div>
                       <div v-if="matchingUserId">{{ matchingUserId }}</div>
-                    <div v-else>입력한 정보와 일치하는 아이디가 없습니다.</div>
+                    
                   </v-card-text>
             </v-card>
         </v-col>
@@ -111,7 +111,7 @@ export default {
           this.matchingUserId = result;
         } else {
           alert("입력한 정보와 일치하는 계정이 없습니다.");
-          this.isPass = true;
+          this.isPass = false;
           this.matchingUserId = "";
         }
       },
@@ -125,7 +125,7 @@ export default {
 body {
   margin: 0;
   height: 100%;
-  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+  background-image: linear-gradient(to top, #d9afd9 0%, #692498 100%);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -177,7 +177,7 @@ body {
   top: 0;
   height: 490%;
   width: 140%;
-  background: #78c7d2;
+  background: #692498;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
   -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
