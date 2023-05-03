@@ -21,7 +21,7 @@
                       :rules="name_rule"
                       clearable
                       prepend-icon="mdi-account-outline"
-                      color="#692498"
+                      color="orange"
                   />
                 </div>
                 <div class="d-flex">
@@ -31,28 +31,49 @@
                     :rules="phoneNumber_rule"
                     clearable
                     prepend-icon="mdi-phone-outline"
-                    color="#692498"
+                    color="orange"
                 />
               </div>
               <v-btn
                   block
                   x-large
-                  rounded dark
+                  rounded
+                  dark
                   color="#692498"
                   class="mt-6"
                   @click="findAccountInfo()"
                   :disabled="false"
               >PW 찾기</v-btn>
+              <v-btn
+                  block
+                  x-large
+                  rounded
+                  dark
+                  color="#FFCD4A"
+                  class="mt-6"
+                  :disabled="false"
+                  :to="{ name: 'SignInPage' }"
+              >로그인</v-btn>
               </v-form>
               <br>
             <br>
-            <div class="btn back" onclick="history.go(-1);return false;">뒤로가기</div>
             </v-card-text>
           </v-card>
           <v-card width="460" v-if="isPass">
                 <v-card-text>
-                  <div class="text-h4 font-weight-black mb-10">임시 비밀번호</div>
-                    <div v-if="matchingUserPw">{{ matchingUserPw }}</div>
+                  <div class="text-h4 font-weight-black mb-10" style="text-align: center;">임시 비밀번호</div>
+                    <div v-if="matchingUserPw" style="text-align: center;"><h3 style="font-weight: bold;"> {{ matchingUserPw }} </h3>
+                      <v-btn
+                        block
+                        x-large
+                        rounded
+                        dark
+                        color="#692498"
+                        class="mt-6"
+                        :disabled="false"
+                        :to="{ name: 'SignInPage' }"
+                    >로그인</v-btn>
+                    </div>
                 </v-card-text>
           </v-card>
       </v-col>
@@ -68,7 +89,7 @@ import { mapActions } from 'vuex';
 const accountModule = 'accountModule';
 
 export default {
-name: "SearchIdForm",
+name: "SearchPasswordForm",
 data() {
   return {
     name: "",
