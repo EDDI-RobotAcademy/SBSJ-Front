@@ -149,6 +149,7 @@ export default {
           }
   
           this.dialog = false;
+          this.$router.push({name: 'MyPage'})
       },
       async deleteReview() {
               let checkDelete = confirm("이 리뷰를 삭제하시겠습니까?");

@@ -15,9 +15,6 @@ import {
 
 import mainRequest from '@/api/mainRequest';
 
-const config = {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  };
 
 export default {
     async requestProductListToSpring({commit}, payload) {
@@ -59,8 +56,21 @@ export default {
             console.log(key, ": ", payload.get(key))
         }
         try {
-            await mainRequest.post('/product/register', payload, config)
+            await mainRequest.post('/product/register', payload)
             alert("ProductCreated");
+        } catch {
+            console.log("error");
+        }
+    },
+
+    async requestTestCreateProductToSpring({}, payload) {
+        console.log("testProductCreate()");
+        for (let key of payload.keys()) {
+            console.log(key, ": ", payload.get(key))
+        }
+        try {
+            await mainRequest.post('/product/register/forTest', payload)
+            alert("testProductCreated");
         } catch {
             console.log("error");
         }

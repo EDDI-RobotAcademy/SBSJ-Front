@@ -83,7 +83,7 @@ const productModule = 'productModule'
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const payload = {startIndex: startIndex, endIndex: endIndex}
-        if(this.isQuery.query === undefined) {
+        if(this.categoryName != null || this.brandName != null) {
             if(this.categoryName != null) {
                 console.log("filteringProduct()");
                 this.productTitle = this.category
@@ -99,9 +99,10 @@ const productModule = 'productModule'
             this.showProducts = this.products
             this.cache[this.currentPage] = this.products
             this.defaultOrderBy = 'Default'
-        } else {
+        } else if(this.isQuery.query != undefined) {
             console.log("requestSearchResultProductListToSpring() in mounted")
             this.cache[this.currentPage] = this.searchResult;
+            this.productTitle = this.isQuery.query
             this.showProducts = this.searchResult
         }
         
@@ -111,6 +112,7 @@ const productModule = 'productModule'
             console.log("searchResult Changed")
             this.cache[this.currentPage] = this.searchResult;
             console.log("cache updated")
+            this.productTitle = this.isQuery.query
             this.showProducts = newValue;
         },
         '$store.state.productModule.searchQuery'(newValue, oldValue) {
