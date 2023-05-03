@@ -39,15 +39,20 @@ export default {
   },
   data() {
     return {
-      currentTab: "MyPageProfileForm",
+      currentTab: "MyPageSurveyResultForm",
       active_tab: 0,
       navi: [
-        { menu: "회원정보수정", tab: "MyPageProfileForm" },
-        { menu: "배송지관리", tab: "MyPageDeliveryListForm" },
-        { menu: "주문관리", tab: "MyPageOrderListForm" },
         { menu: "맞춤 추천 결과", tab: "MyPageSurveyResultForm" },
-        { menu: "찜한상품", tab: "MyPageWishListForm" },
+        { menu: "주문관리", tab: "MyPageOrderListForm" },
         { menu: "리뷰관리", tab: "MyPageReviewForm" },
+        { menu: "찜한상품", tab: "MyPageWishListForm" },
+        { menu: "배송지관리", tab: "MyPageDeliveryListForm" },
+        { menu: "회원정보수정", tab: "MyPageProfileForm" },
+        
+        
+        
+        
+        
       ],
     };
   },
