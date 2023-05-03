@@ -70,6 +70,7 @@ export default {
                 localStorage.removeItem("userInfo");
 
                 commit(COMMIT_IS_AUTHENTICATED, false);
+                window.location.reload(true);
             })
     },
     reqResignToSpring({ commit }, userInfo) {
@@ -124,7 +125,6 @@ export default {
     },
     async reqfindMatchingUserIdToSpring({ commit }, payload) {
         const { name, phoneNumber } = payload
-        
       
         try {
           const response = await mainRequest.get(`/member/findMatchingUserId/${name}/${phoneNumber}`);
