@@ -1,63 +1,70 @@
 <template>
-    <ul class="baby-product-list">
-        <li v-for="(product, index) in products" :key="index" class="baby-product mb-5">
-            <div
-                class="mx-auto transition-swing baby-product-hover elevation-2"
-                style="border-radius: 20px;"
-            >
-                    <dl class="baby-product-wrap">
-                        <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
-                            <dt class="image">
-                                <v-img :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
-                                    cover class="grey lighten-2" style="border-radius: 20px; width: 234px; height: 234px;"/>
-                            </dt>
-                        </router-link>
-                        <dd class="descriptions" >
-                            <div class="badge">
+    <div>
+        <v-row class="baby-product-list">
+            <v-col v-for="(product, index) in products" :key="index" class="baby-product mb-5 d-flex align-items-center" cols="3">
+                <!-- v-for="(product, index) in calData" -->
+                <v-card outlined flat
+                    class="mx-auto transition-swing baby-product-hover p-4"
+                    style="border-radius: 20px;"
+                    width="250"
+                >
+                    <div class="baby-product-wrap">
+                        <div class="d-flex justify-center">
+                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                                <v-img contain width="150" height="180"
+                                    :src="require(`@/assets/productImgs/${product.thumbnail}`)" 
+                                />
+                            </router-link>
+                        </div>
+                        <div class="descriptions">
+                            <div class="badge d-flex justify-end">
                                 <div v-if="isInWishList(product)">
-                                    <v-icon  class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>
+                                    <v-icon color="red" class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>
                                 </div>
                                 <div v-else>
-                                    <v-icon  class="icon-wish" @click="addWish(product)">mdi-heart-outline</v-icon>
+                                    <v-icon class="icon-wish" @click="addWish(product)">mdi-heart-outline</v-icon>
                                 </div>
                             </div>
-                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
-                                <div class="name">
-                                    <span class="name-text" style="text-decoration: none;">
+                            <div class="name d-flex justify-center h5">
+                                <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
+                                    <span class="name-text" style="text-decoration: none; color: black; font-weight: bold;">
                                         {{ product.title }}
                                     </span>
-                                </div>
-                            </router-link>
-                            <router-link :to="{ name: 'ProductReadPage', params: { productId: product.productId.toString() } }">
-                                <div class="price-area">
-                                    <div class="price-wrap">
-                                        <div class="price">
-                                            <span class="price-text">
-                                                {{ new Intl.NumberFormat().format(product.price) }}원
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </router-link>
-                        </dd>
-                    </dl>
-                <div class="other-info">
-                    <v-btn
-                        class="directive-btn"
-                        rounded
-                        style="margin-right: 10px;"
-                        @click="directPurchase(product)"
-                    >
-                        <span class="directive-btn-text">바로구매</span>
-                    </v-btn>
-                    <v-btn class="directive-btn" @click="addToCart(product)" rounded>
-                        <span class="directive-btn-text">장바구니</span>
-                        <v-icon>mdi-cart</v-icon>
-                    </v-btn>
-                </div>
-            </div>
-        </li>
-    </ul>
+                                </router-link>
+                            </div>
+                            <div class="price d-flex justify-end h6 me-3">
+                                {{ new Intl.NumberFormat().format(product.price) }}원
+                            </div>
+                        </div>
+                    </div>
+                    <div class="other-info d-flex justify-center mt-5">
+                        <v-btn class="directive-btn"
+                            rounded
+                            outlined
+                            color="#692498"
+                            @click="addToCart(product)"
+                        >
+                            <span class="directive-btn-text">장바구니</span>
+                        </v-btn>
+                        <v-btn
+                            class="directive-btn ms-2"
+                            rounded
+                            dark
+                            color="#692498"
+                            @click="directPurchase(product)"
+                        >
+                            <span class="directive-btn-text">바로구매</span>
+                        </v-btn>
+                        
+                    </div>
+                </v-card>
+            </v-col>
+        </v-row>
+        <!-- <v-pagination
+            v-model="curPageNum"
+            :length="numOfPages">
+        </v-pagination> -->
+    </div>
 </template>
 
 <script>
@@ -77,6 +84,8 @@ export default {
                 productName: "",
             },
             wishListData: [],
+            // dataPerPage: 3,
+            // curPageNum: 1,
         }
     },
     async created() {
@@ -116,7 +125,19 @@ export default {
             get() {
                 return this.orderBy
             }
-        },  
+        },
+        // startOffset() {
+        //     return ((this.curPageNum - 1) * this.dataPerPage);
+        // },
+        // endOffset() {
+        //     return (this.startOffset + this.dataPerPage);
+        // },
+        // numOfPages() {
+        //     return Math.ceil(this.products.length / this.dataPerPage);
+        // },
+        // calData() {
+        //     return this.products.slice(this.startOffset, this.endOffset)
+        // },
     },
     methods: {
         ...mapActions(orderModule, [
@@ -196,58 +217,16 @@ export default {
 </script>
 
 <style scoped>
-    .directive-btn-text {
-        font-weight: bolder;
-    }
-    .directive-btn {
-        width: 100px;
-    }
-    .price-text {
-        font-size: 23px;
-        font-weight: 600;
-        color: black;
-    }
-
     a {
         text-decoration: none;
     }
 
-    .icon-wish {
-        height: 30px;
-    }
-
-    .badge {
-        text-align: right;
-        height: 30px;
-        width: 100%;
-    }
-    .name-text {
-        line-height: 45px;
-        font-style: none;
-        font-size: 23px;
-        font-weight: bold;
-        color: black;
-    }
-
-    .other-info {
-        height: 45px;
-        text-align: center;
-    }
-    .name {
-        text-align: center;
-        height: 40px;
-    }
-
-    .price {
-        text-align: right;
-        height: 45px;
-        padding-right: 10px;
-        margin-bottom: 10px;
-    }
     .baby-product-list {
-        display: block;
-        width: 1098px;
-        padding-left: 0px;
+        width: 1024px;
+        padding-left: 35px;
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 20px;
         list-style-type: none;
     }
 
@@ -259,32 +238,6 @@ export default {
         visibility: hidden;
     }
  
-    .baby-product {
-        position: relative;
-        float: left;
-        width: 274px;
-        padding: 20px 20px 20px 20px;
-        border-bottom: 1px solid #ddd;
-        display: list-item;
-        height: 450px;
-    }
-
-    .baby-product-link {
-        display: block;
-        box-sizing: border-box;
-        width: 234px;
-        cursor: pointer;
-        height: 365px;
-    }
-    .baby-product-wrap {
-        width: 234px;
-        display: block;
-        
-    }
-    .image {
-        width: 234px;
-        height: 234px;
-    }
     .baby-product-hover:hover {
         box-shadow: 0 30px 50px rgba(42, 39, 39, 0.4);
         transform: translateY(-2px);

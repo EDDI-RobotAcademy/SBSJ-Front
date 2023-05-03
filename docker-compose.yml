@@ -5,8 +5,8 @@ services:
     container_name: sbsj-project-nginx
     restart: unless-stopped
     volumes:
-      - /home/ubuntu/SBSJ/frontend/conf:/etc/nginx/conf.d
-      - /home/ubuntu/SBSJ/frontend/html:/usr/share/nginx/html
+      - /home/ec2-user/SBSJ/frontend/conf:/etc/nginx/conf.d
+      - /home/ec2-user/SBSJ/frontend/html:/usr/share/nginx/html
     ports:
       - "80:80"
     networks:

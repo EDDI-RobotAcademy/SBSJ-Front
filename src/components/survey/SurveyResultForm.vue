@@ -1,11 +1,11 @@
 <template>
     <body>
-        <div id="content" style="padding-top: 126px;">
+        <div id="content" style="padding-top: 0">
             <div class="survey_result_new rslt3">
                 <div class="top_area">
                     <div class="inner">
                         <div class="info_box">
-                            <div class="title_text"><span>{{ commonSurveyResult.username }}</span>님의 <h2>건강설문 결과</h2></div>
+                            <div class="title_text"><span>{{ localCommonSurveyResult.username }}</span>님의 <h2>건강설문 결과</h2></div>
                             <p class="text">※ 본 결과는 의사의 처방을 대신하지 않습니다.</p>
                         </div>
                         <div class="graph_box">
@@ -21,12 +21,12 @@
                                     </div>
                                 </div>
                                 <div class="graph_right_div">
-                                    <div class="mem_info_div">         
+                                    <div class="mem_info_div">
                                         <div class="info_text">
                                             <div class="list">
-                                                <p> {{ commonSurveyResult.age }} {{ commonSurveyResult.gender }} </p>
-                                                <p> {{ commonSurveyResult.height }}cm </p>
-                                                <p> {{ commonSurveyResult.weight }}kg</p>
+                                                <p> {{ localCommonSurveyResult.age }} {{ localCommonSurveyResult.gender }} </p>
+                                                <p> {{ localCommonSurveyResult.height }}cm </p>
+                                                <p> {{ localCommonSurveyResult.weight }}kg</p>
                                                 <div class="bmi_tit tool">
                                                     <p class="tit">BMI</p>
                                                     <p class="bmi">{{ this.bmi }}</p>
@@ -57,29 +57,50 @@
 </template>
 
 <script>
+
 import SurveyResultSummaryForm from '@/components/survey/SurveyResultSummaryForm.vue';
 import SurveyResultRecommendForm from '@/components/survey/SurveyResultRecommendForm.vue';
+import { mapState } from 'vuex';
+
+const surveyModule = 'surveyModule';
 
 export default {
     name: 'SurveyResultForm',
     components: { SurveyResultSummaryForm, SurveyResultRecommendForm },
     data() {
         return {
-            commonSurveyResult: {},
-            visceraSurveyResult: {},
-            lifeSurveyResult: {},
+            localCommonSurveyResult: {},
             bmi: 0,
             bmiText: ''
         }
     },
+    computed: {
+        ...mapState(surveyModule, ['commonSurveyResult', 'visceraSurveyResult', 'lifeSurveyResult'])
+    },
     created() {
-        this.commonSurveyResult = JSON.parse(localStorage.getItem("commonSurveyResult"));
-        this.visceraSurveyResult = JSON.parse(localStorage.getItem("visceraSurveyResult"));
-        this.lifeSurveyResult = JSON.parse(localStorage.getItem("lifeSurveyResult"));
+        let isLocalStorageCommon = JSON.parse(localStorage.getItem("commonSurveyResult"));
+        let isLocalStorageViscera = JSON.parse(localStorage.getItem("visceraSurveyResult"));
+        let isLocalStorageLife = JSON.parse(localStorage.getItem("lifeSurveyResult"));
+        if(isLocalStorageCommon == null || isLocalStorageViscera == null || isLocalStorageLife == null) {
+            if(this.commonSurveyResult == null || Object.values(this.commonSurveyResult).length == 0) {
+                
+            } else {
+                localStorage.setItem("commonSurveyResult", JSON.stringify(this.commonSurveyResult));
+                localStorage.setItem("visceraSurveyResult", JSON.stringify(this.visceraSurveyResult));
+                localStorage.setItem("lifeSurveyResult", JSON.stringify(this.lifeSurveyResult));
+            }
+        }
+        isLocalStorageCommon = JSON.parse(localStorage.getItem("commonSurveyResult"));
 
-        if(!(Array.isArray(this.commonSurveyResult) && this.commonSurveyResult.length === 0)) {
-            let height_m = this.commonSurveyResult.height / 100;
-            let weight = this.commonSurveyResult.weight;
+        this.localCommonSurveyResult = isLocalStorageCommon;
+        this.setBmi();
+    },
+    methods: {
+        setBmi() {
+
+            let height_m = this.localCommonSurveyResult.height / 100;
+            let weight = this.localCommonSurveyResult.weight;
+
             this.bmi = Math.floor((weight / (height_m * height_m)) * 100) / 100;
             if(this.bmi < 0) {
                 alert("키와 몸무게를 잘 못 입력하셨습니다. 다시 입력해주세요.");

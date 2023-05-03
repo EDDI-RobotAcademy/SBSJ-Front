@@ -11,7 +11,7 @@
                 <v-text-field v-model="freeComment.comment" label="댓글 수정" v-show="commentModify === index"></v-text-field>
                 <button v-if="commentModify !== index" @click="startModify(index)">수정 | </button>
                 <button v-if="commentModify === index" @click="saveComment(freeComment)">수정 완료 | </button>
-                <button @click="deleteComment(freeComment)">삭제</button>
+                <button @click="deleteComment(freeComment)">&nbsp;삭제</button>
                 </div>
             </v-card-text>
         </v-container>

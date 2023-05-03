@@ -12,16 +12,16 @@
                         </div>
                         <div class="clear-fix"></div>
                         <product-list-form :products="showProducts" :viewCount="bindViewCount" :orderBy="bindOrderBy"/>
-                        <paginate :containerClass="'pagination'" v-model="syncCurrentPage" :page-count="10" :page-range="10" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" style="display: flex;
-                        list-style: none;
-                        padding: 0;
-                        margin: 0;">
-                            <template slot="page" slot-scope="props"> 
-                                <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
-                                    <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
-                                </li>
-                            </template>
-                        </paginate>
+                        <div style="display: flex; justify-content: center;">
+                            <paginate :containerClass="'pagination-container'" v-model="syncCurrentPage" :page-count="10" :page-range="10" :margin-pages="1" :click-handler="clickCallback" :prev-text="'Previous'" :next-text="'Next'" 
+                                style="display: flex; list-style: none; margin-bottom: 50px;">
+                                <template slot="page" slot-scope="props"> 
+                                    <li v-for="(page, index) in props.pages" :key="index" :class="{ 'active': props.isActive(page), 'disabled': props.isDisabled(page)}">
+                                        <a href="#" @click.prevent="props.pageSelected(page)">{{ page }}</a>
+                                    </li>
+                                </template>
+                            </paginate>
+                        </div>
                         <div class="clear-fix"></div>
                     </div>
                 </div>
@@ -322,4 +322,30 @@ const productModule = 'productModule'
     li a:hover {
         background-color: #f5f5f5;
     }
+
+    .pagination li {
+        margin-right: 10px;
+    }
+
+    .pagination-container {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pagination-container li {
+        margin-right: 10px;
+    }
+
+    .pagination-container li.active a {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination-container li.disabled a {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
   </style>

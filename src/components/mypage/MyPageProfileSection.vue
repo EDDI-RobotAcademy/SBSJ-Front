@@ -15,16 +15,16 @@
     <ul>
       <li>
         <p class="head-text">주문내역</p>
-        <p class="content-text">0 건</p>
+        <p class="content-text">{{ completeOrderList.length }} 건</p>
       </li>
       <li>
         <p class="head-text">리뷰내역</p>
-        <p class="content-text">0 건</p>
+        <p class="content-text">{{ reviewList.length }} 건</p>
       </li>
       <li>
         <p class="head-text">찜한내역</p>
         <p class="content-text">
-          0 건
+          {{ wishList.length }} 건
         </p>
       </li>
     </ul>
@@ -36,18 +36,25 @@ import { mapActions, mapState } from "vuex";
 import router from "@/router";
 
 const accountModule = 'accountModule';
-const orderModule = 'orderModule';
+const productModule = 'productModule';
+const mypageModule = 'mypageModule';
 
 export default {
   name: "MyPageProfileSection",
   computed: {
     ...mapState(accountModule, ["isAuthenticated"]),
-    ...mapState(orderModule, ["deliveryList"]),
+    ...mapState(productModule, ["wishList"]),
+    ...mapState(mypageModule, ["completeOrderList", "reviewList"]),
   },
   async mounted() {
     if (this.isAuthenticated === true) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
       let memberId = userInfo.memberId;
+      let token = userInfo.token;
+
+      this.reqCompleteOrderListToSpring(token);
+      this.requestMypageReviewListToSpring(memberId);
+      this.reqMyPageWishListToSpring(memberId);
 
       console.log("ProfilePage mounted: "+ memberId);
     } else {
@@ -56,6 +63,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(productModule, [
+      "reqMyPageWishListToSpring"
+    ]),
+    ...mapActions(mypageModule, [
+      "reqCompleteOrderListToSpring",
+      "requestMypageReviewListToSpring",
+    ])
   },
 };
 </script>
