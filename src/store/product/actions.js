@@ -11,6 +11,7 @@ import {
     REQUEST_SPECIFIC_PRODUCT_LIST_TO_SPRING,
     REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING,
     REQUEST_PRODUCT_BRAND_LIST_TO_SPRING,
+    REQUEST_PRODUCT_MODIFY_FORM_TO_SPRING,
 } from './mutation-types'
 
 import mainRequest from '@/api/mainRequest';
@@ -42,7 +43,7 @@ export default {
             })
     },
     async requestProductOptionListToSpring({commit}) {
-        console.log("actions()");
+        console.log("requestProductOptionListToSpring() in action");
         return await mainRequest.get('/product/productOptions')
             .then((res) => {
                 commit(REQUEST_PRODUCT_OPTION_LIST_TO_SPRING, res.data);
@@ -200,7 +201,7 @@ export default {
             })
     },
     async requestProductBrandListToSpring({commit}) {
-        console.log("requestProductBrandListToSpring()");
+        console.log("requestProductBrandListToSpring() in action");
         return await mainRequest.get('/product/productBrands')
             .then((res) => {
                 commit(REQUEST_PRODUCT_BRAND_LIST_TO_SPRING, res.data);
@@ -228,6 +229,35 @@ export default {
             }).catch((err) => {
                 console.log(err);
                 commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
+            })
+    },
+    async requestDeleteProductToSpring({}, payload) {
+        console.log("requestDeleteProductToSpring() in action");
+        const { productId } = payload;
+        await mainRequest.delete(`/product/delete/${productId}`)
+            .then(() => {
+                alert("Delete complete");
+            }).catch((err) => {
+                alert(err);
+            });
+    },
+    async requestProductModifyFormToSpring({commit}, payload) {
+        console.log("requestProductModifyFormToSpring() in action");
+        const { productId } = payload;
+        await mainRequest.get(`product/modifyForm/${productId}`)
+            .then((res) => {
+                commit(REQUEST_PRODUCT_MODIFY_FORM_TO_SPRING, res.data);
+            }).catch((err) => {
+                alert(err)
+            })
+    },
+    async requestProductModifyToSpring({}, payload) {
+        console.log("requestProductModifyToSpring() in action");
+        await mainRequest.put('/product/modify', payload)
+            .then(() => {
+                alert("Modify complete");
+            }).catch((err) => {
+                alert(err);
             })
     }
 }
