@@ -170,7 +170,7 @@
                   price: price,
                   categories: categories,
                   brand: brand,
-                  productId: this.product.productId
+                  productId: this.productId
               }
               console.log('productInfo: ' + JSON.stringify(productInfo))
               formData.append(
