@@ -132,7 +132,7 @@ export default {
             type: Array
         }
     },
-    date() {
+    data() {
       return {
         loaded: false,
         loading: false,

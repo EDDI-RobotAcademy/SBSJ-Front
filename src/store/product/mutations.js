@@ -13,6 +13,7 @@ import {
     REQUEST_STAR_RATE_AVERAGE,
     REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING,
     SEARCH_QUERY,
+    REQUEST_PRODUCT_MODIFY_FORM_TO_SPRING,
 } from './mutation-types'
 
 export default {
@@ -53,5 +54,8 @@ export default {
     },
     [SEARCH_QUERY] (state, query) {
         state.searchQuery = query;
+    },
+    [REQUEST_PRODUCT_MODIFY_FORM_TO_SPRING] (state, passingData) {
+        state.productModifyForm = passingData;
     }
 }

@@ -8,5 +8,6 @@ export default {
     review:[],
     starRateAverage:[],
     searchResult: [],
-    searchQuery: {}
+    searchQuery: {},
+    productModifyForm: {},
 }

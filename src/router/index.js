@@ -6,6 +6,7 @@ import ShoppingCartPage from "@/views/order/shoppingCart/ShoppingCartPage.vue"
 import ProductListPage from "@/views/product/ProductListPage.vue"
 import ProductReadPage from '@/views/product/ProductReadPage'
 import ProductRegisterPage from '@/views/product/ProductRegisterPage'
+import ProductModifyPage from '@/views/product/ProductModifyPage'
 
 import SignUpPage from "@/views/account/member/SignUpPage";
 import SignInPage from "@/views/account/member/SignInPage";
@@ -393,7 +394,13 @@ const routes = [
     component: PurchaseCompletePage,
     meta: { loginCheck: true }
   },
-  
+  {    
+    path: '/product-modify-page/:productId',
+    name: 'ProductModifyPage',
+    component: ProductModifyPage,
+    props: true,
+    meta: { loginCheck: true }
+  },
 ]
 
 const router = new VueRouter({

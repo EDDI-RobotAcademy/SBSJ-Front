@@ -154,6 +154,27 @@
         </router-link>
       </div>
     </form>
+    <div class="mt-5 mb-5"></div>
+    <h3>상품 수정 및 삭제</h3>
+    <div class="product-list-container">
+      <table>
+        <th class="product-id">productId</th>
+        <th class="product-name">productName</th>
+        <th class="product-price">productPrice</th>
+        <tr class="product-record" v-for="(product, index) in showProducts" :key="index">
+          <td class="product-id-domain">{{ product.productId }}</td>
+          <td class="product-name-domain">{{ product.title }}</td>
+          <td class="product-price-domain">{{ product.price }}</td>
+          <td class="product-modify-btn">
+            <v-btn @click="modify(product.productId)">변경하기</v-btn>
+          </td >
+          <td class="product-delete-btn">
+            <v-btn @click="deleteProduct(product.productId)">삭제하기</v-btn>
+          </td>
+        </tr>
+      </table>
+    </div>
+
   </div>
   </template>
   
@@ -178,19 +199,17 @@ const productModule = 'productModule'
             brand: '',
             selectedBrand: "",
             temp: [],
-
+            productList: [],
 
             testThumbnail: "",
             testDetail: "",
         }
     },
-    props: {
-
-    },
     computed: {
         ...mapState(productModule, [
             'productOptions',
-            'productBrands'
+            'productBrands',
+            'products'
         ]),
         productBrand: {
           get() {
@@ -199,17 +218,33 @@ const productModule = 'productModule'
           set(value) {
             this.temp = value;
           }
+        },
+        showProducts: {
+          get() {
+            return this.productList;
+          },
+          set(value) {
+            this.productList = value;
+          }
         }
     },
     async created() {
         await this.requestProductOptionListToSpring()
         await this.requestProductBrandListToSpring()
+        
         this.productBrand = this.productBrands
+    },
+    async mounted() {
+      const payload = {startIndex: 0, endIndex: 1000}
+      await this.requestProductListToSpring(payload)
+      this.productList = this.products;
     },
     methods: {
         ...mapActions(productModule, [
             'requestProductOptionListToSpring',
-            'requestProductBrandListToSpring'
+            'requestProductBrandListToSpring',
+            'requestProductListToSpring',
+            'requestDeleteProductToSpring'
         ]),
         onSubmit () {
             let formData = new FormData()
@@ -287,6 +322,15 @@ const productModule = 'productModule'
         removeItem(index) {
             this.categories.splice(index, 1);
         },
+        async deleteProduct(productId) {
+          const payload = {productId: productId}
+          await this.requestDeleteProductToSpring(payload);
+          window.location.reload(true);
+        },
+        modify(productId) {
+          console.log("RegisterForm productId: "+ productId)
+          this.$router.push({name: 'ProductModifyPage', params: {productId: productId}})
+        }
     },
   }
   
