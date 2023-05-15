@@ -115,7 +115,7 @@ export default {
     ...mapActions(accountModule, 
       ['reqMyPageMemberInfoToSpring', 'reqSignUpCheckEmailToSpring', 
        'reqSignUpCheckPhoneNumberToSpring', 'reqMyPageUpdateMemberInfoToSpring', 
-       'reqSignOutToSpring']),
+       'reqSignOutToSpring', 'reqResignToSpring']),
 
     async modify(element, index) {
       let text = document.getElementsByClassName("v-text-fields")[index];
@@ -225,12 +225,8 @@ export default {
           let memberId = this.memberId;
 
           let successUpdate = await this.reqMyPageUpdateMemberInfoToSpring({ memberId, name, birthday, email, phoneNumber, newPassword })
-          console.log("회원 정보 수정 잘 됐나? "+ successUpdate.data)
           if(successUpdate.data) {
-            let token = userInfo.token;
-
-            await this.reqSignOutToSpring(token);
-            router.push({ name: 'SignInPage' })
+            await this.reqSignOutToSpring(userInfo);
           } else {
             alert("회원 정보를 수정하는 데 실패하였습니다.\n다시 시도해주세요.");
           }
