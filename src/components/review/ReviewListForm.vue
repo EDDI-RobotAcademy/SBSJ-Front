@@ -129,6 +129,17 @@ export default {
     await this.getStarRateAverage(productId);
     // console.log("starRateAverage: " + this.starRateAverage);
   },
+  mounted() {
+    document.getElementsByTagName("li")[2].style="display: inline-block; margin: 20px; border-radius: 5px; color: #692498; float: left; !important";
+
+    document.getElementsByTagName("li")[3].style="margin: 20px";
+    document.getElementsByTagName("li")[4].style="margin: 20px";
+    document.getElementsByTagName("li")[5].style="margin: 20px";
+    document.getElementsByTagName("li")[6].style="margin: 20px";
+    document.getElementsByTagName("li")[7].style="margin: 20px";
+
+    document.getElementsByTagName("li")[8].style="display: inline-block; margin: 20px; border-radius: 5px; color: #692498; float: left; !important";
+  },
   computed: {
     ...mapState(productModule, ["reviews", "starRateAverage", "product"]),
     // averageStarRate: {

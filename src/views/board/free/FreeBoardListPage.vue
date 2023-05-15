@@ -64,6 +64,21 @@ export default {
     await this.requestFreeBoardListToSpring(payload)
     this.showFreeBoards = this.freeBoards
     this.cache[this.currentPage] = this.freeBoards
+
+    document.getElementsByTagName("li")[0].style="display: inline-block; margin: 20px; border-radius: 5px; color: #692498; float: left; !important";
+
+    document.getElementsByTagName("li")[1].style="margin: 20px";
+    document.getElementsByTagName("li")[2].style="margin: 20px";
+    document.getElementsByTagName("li")[3].style="margin: 20px";
+    document.getElementsByTagName("li")[4].style="margin: 20px";
+    document.getElementsByTagName("li")[5].style="margin: 20px";
+    document.getElementsByTagName("li")[6].style="margin: 20px";
+    document.getElementsByTagName("li")[7].style="margin: 20px";
+    document.getElementsByTagName("li")[8].style="margin: 20px";
+    document.getElementsByTagName("li")[9].style="margin: 20px";
+    document.getElementsByTagName("li")[10].style="margin: 20px";
+
+    document.getElementsByTagName("li")[11].style="display: inline-block; margin: 20px; border-radius: 5px; color: #692498; float: left; !important";
   },
   methods: {
     ...mapActions(boardModule, [
