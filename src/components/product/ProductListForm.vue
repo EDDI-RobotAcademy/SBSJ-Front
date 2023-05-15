@@ -8,7 +8,7 @@
                     <v-card outlined flat
                         class="mx-auto transition-swing baby-product-hover p-4"
                         style="border-radius: 20px;"
-                        width="250"
+                        width="250" height="420"
                     >
                         <div class="baby-product-wrap">
                             <div class="d-flex justify-center">
@@ -18,7 +18,7 @@
                                     />
                                 </router-link>
                             </div>
-                            <div class="descriptions">
+                            <div class="descriptions" style="height:135px;">
                                 <div class="badge d-flex justify-end">
                                     <div v-if="isInWishList(product)">
                                         <v-icon color="red" class="icon-wish" @click="removeWish(product)">mdi-heart</v-icon>

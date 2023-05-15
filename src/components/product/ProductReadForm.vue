@@ -35,11 +35,11 @@
                 <div style=" width:110%; padding-inline:2%;  height:600px;">    
                     <div style=" height:95%; padding-left: 1rem;">
                         <div style=" height:10%; display:flex; justify-content:flex-start; align-items:center; font-weight: bold; font-size:xx-large; ">{{product.productName }}</div>
-                            <P style="font-size: medium; opacity: 0.8; ">{{ product.productSubName }}</P>
+                            <P style="font-size: medium; opacity: 0.8; margin-top: 25px;">{{ product.productSubName }}</P>
 
                         <div style="border-bottom: 2px solid "></div><br>
 
-                        <div style=" height:15%; width: 100%; display:flex; ">
+                        <div style=" height:15%; width: 100%; display:flex;">
 
                             <!-- <div style=" width:30%; display:flex; justify-content:center; align-items:center; ">
                                 <div style="font-size:xx-large; font-weight: bold; ">10%</div>

@@ -45,7 +45,7 @@
                     <v-row>
                         <v-col>
                             <v-card class="ms-8 mb-3 pa-5" v-for="(cartItem, index) in cartItems" :key="index"
-                                max-width="720" flat outlined>
+                                max-width="714" flat outlined>
                                 <v-list-item three-line>
                                     <v-list-item-content class="ms-1">
                                         <div class="itemCheck" align="left">

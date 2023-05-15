@@ -9,8 +9,8 @@
         </div>
         <div v-else>
             <v-row>
-                    <v-card class="justify-center mb-5 mx-3 rounded-xl p-4" width="300" height="370" flat outlined>
                 <v-col v-for="wish in localWishList" :key="wish.wishId" cols="4" class="d-flex align-items-center">
+                    <v-card class="justify-center mb-5 mx-3 rounded-xl p-4" width="300" height="400" flat outlined>
                         <div>
                             <v-checkbox
                                 color="#692498"
@@ -24,10 +24,10 @@
                                     contain width="150" height="150"/>
                             </router-link>
                         </div>
-                        <v-card-subtitle class="pt-4 justify-center">
+                        <v-card-subtitle class="pt-4 justify-center" style="height: 120px;">
                             <div class="d-flex justify-center">
                                 <router-link :to="{ name: 'ProductReadPage', params: { productId: wish.productId.toString() } }"
-                                    class="baby-product-link" style="text-decoration: none; color: black">
+                                    class="baby-product-link" style="text-decoration: none; color: black; height: 70px;">
                                         <strong>{{ wish.productName }}</strong>
                                 </router-link>
                             </div>
