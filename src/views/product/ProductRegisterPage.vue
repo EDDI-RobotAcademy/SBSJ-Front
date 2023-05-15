@@ -19,16 +19,18 @@
               'requestTestCreateProductToSpring'
           ]),
           async onSubmit (payload) {
-              await this.requestCreateProductToSpring(payload)
-              await this.$router.push({
-                  name: 'ProductRegisterPage',
-              })
-          },
-          async testOnSubmit (payload) {
-              await this.requestTestCreateProductToSpring(payload)
-              await this.$router.push({
-                  name: 'ProductRegisterPage',
-              })
+            await this.requestCreateProductToSpring(payload)
+            //   await this.$router.push({
+            //       name: 'ProductRegisterPage',
+            //   })
+            window.location.reload(true);
+        },
+        async testOnSubmit (payload) {
+            await this.requestTestCreateProductToSpring(payload)
+            //   await this.$router.push({
+            //       name: 'ProductRegisterPage',
+            //   })
+            window.location.reload(true);
           },
       },
       created() {
