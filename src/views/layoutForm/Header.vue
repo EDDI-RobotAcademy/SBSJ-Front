@@ -8,15 +8,6 @@
                         <router-link :to="{ name: 'MyPagePasswordCheckPage' }" style="color: grey; text-decoration: none;">
                             <span>My Page</span>
                         </router-link>
-                        <!-- <div class="mypage-hidden">
-                            <ul class="mypage-contents" style="padding-left: 0;  margin: 0;">
-                                <li class="mypage-hover-highlight">
-                                    <v-btn v-if="isAuthenticated == true" text color="grey" v-on:click="resign">
-                                        <span>회원 탈퇴</span>
-                                    </v-btn>
-                                </li>
-                            </ul>
-                        </div> -->
                     </v-btn>
                     <router-link :to="{ name: 'SignAgreePage' }" style="text-decoration: none;">
                         <v-btn v-if="isAuthenticated == false" text color="grey" style="height: 40px;">
@@ -171,7 +162,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(accountModule, ['commitIsAuthenticated', 'reqSignOutToSpring', 'reqResignToSpring']),
+        ...mapActions(accountModule, ['commitIsAuthenticated', 'reqSignOutToSpring']),
         ...mapActions(productModule, ['requestSearchResultProductListToSpring']),
         ...mapMutations(productModule, ['SEARCH_QUERY']),
 
@@ -191,12 +182,6 @@ export default {
         hide() {
             this.showSidebar = false;
             document.removeEventListener("click", this.hide);
-        },
-        async resign () {
-            let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-            if(confirm("정말로 회원 탈퇴 하시겠습니까?")) {
-                this.reqResignToSpring(userInfo);
-            }
         },
         async logout () {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
