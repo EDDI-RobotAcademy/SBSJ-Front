@@ -17,14 +17,14 @@ export default {
   methods: {
     ...mapActions(accountModule, ['reqMyPageCheckPasswordToSpring']),
     onSubmit(password) {
-      console.log("이거는 비밀번호 체크: "+ password)
+      // console.log("이거는 비밀번호 체크: "+ password)
       
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
       let memberId = userInfo.memberId;
       
       (async () => {
         let checkPassword = await this.reqMyPageCheckPasswordToSpring({ memberId, password })
-        console.log("체크 페이지에서 보는 "+ checkPassword);
+        // console.log("체크 페이지에서 보는 "+ checkPassword);
   
         if(checkPassword) {
           router.push('/mypage');

@@ -13,7 +13,7 @@ export default {
     // 장바구니에 추가
     reqAddCartToSpring({}, payload) {
         const { memberId, productId, count } = payload;
-        console.log(memberId + ', ' + productId +', '+ count)
+        // console.log(memberId + ', ' + productId +', '+ count)
 
         return mainRequest.post("/cart/addCartItem", { memberId, productId, count })
             .then(() => {
@@ -26,10 +26,10 @@ export default {
 
     // 장바구니 목록 조회
     async reqCartItemListToSpring({commit}, userInfo) {
-        console.log("reqCartItemListToSpring userInfo: " + userInfo.token);
+        // console.log("reqCartItemListToSpring userInfo: " + userInfo.token);
         return await mainRequest.post("/cart/list", userInfo)
             .then((res) => {
-                console.log("res.data: " + res.data.cartItemId)
+                // console.log("res.data: " + res.data.cartItemId)
                 localStorage.setItem("lsCartItems", JSON.stringify(res.data));
                 commit(REQUEST_CART_ITEM_LIST_TO_SPRING, res.data)
             })
@@ -37,7 +37,7 @@ export default {
 
     // 장바구니에 든 상품 수량 변경
     reqCartItemCountChangeToSpring({commit}, payload) {
-        console.log("reqCartItemCountChangeToSpring: "+ JSON.stringify(payload));
+        // console.log("reqCartItemCountChangeToSpring: "+ JSON.stringify(payload));
         return mainRequest.post("/cart/changeCartItemCount", payload)
             .then((res) => {
                 commit(RESPONSE_COUNT_REQUEST, res.data)
@@ -46,7 +46,7 @@ export default {
 
     // 장바구니에서 삭제
     async reqDeleteCartItemFromSpring({}, payload) {
-        console.log("아이디: " + payload.selectCartItemId)
+        // console.log("아이디: " + payload.selectCartItemId)
 
         if (!payload.selectCartItemId || payload.selectCartItemId.length === 0) {
             alert("선택된 아이템이 없습니다.");
@@ -56,9 +56,9 @@ export default {
         await mainRequest.post("/cart/deleteCartItem", {
             selectCartItemId: payload.selectCartItemId,
         }).then(() => {
-            console.log("장바구니에서 삭제되었습니다.")
+            // console.log("장바구니에서 삭제되었습니다.")
         }).catch(() => {
-            console.log("문제가 발생하여 삭제되지 않았습니다.")
+            // console.log("문제가 발생하여 삭제되지 않았습니다.")
         });
     },
 
@@ -68,7 +68,7 @@ export default {
                 localStorage.setItem("lsDeliveryList", JSON.stringify(res.data));
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
 
@@ -83,7 +83,7 @@ export default {
                 return res.data;
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     reqMyPageDeleteDeliveryToSpring({}, addressId) {
@@ -92,7 +92,7 @@ export default {
                 alert(addressId +", 배송지 삭제 완료! "+ res.data);
             })
             .catch((res) => {
-                alert("문제 발생! "+ res.data);
+                // alert("문제 발생! "+ res.data);
             })
     },
     reqMyPageCheckDefaultAddressToSpring({}, payload) {
@@ -115,7 +115,7 @@ export default {
                 alert("배송지 수정 완료!")
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
 
@@ -124,13 +124,13 @@ export default {
         return mainRequest.get(`/delivery/list/${memberId}`)
             .then((res) => {
                 let returnData = JSON.stringify(res.data);
-                console.log("리턴 데이터: "+ returnData);
+                // console.log("리턴 데이터: "+ returnData);
                 
                 localStorage.setItem("lsDeliveryList", JSON.stringify(res.data));
                 commit(REQUEST_ORDER_PAGE_DELIVERY_LIST_TO_SPRING, res.data);
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
 
@@ -140,10 +140,10 @@ export default {
         return mainRequest.post("/order/register",
             { amount, merchant_uid, sendInfo, imp_uid, phoneNumber, recipientName, road, addressDetail, selectedDeliveryReq })
             .then((res) => {
-                console.log(res)
+                // console.log(res)
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     

@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     this.active_tab = this.index;
-    console.log("navi : " + this.currentTab);
+    // console.log("navi : " + this.currentTab);
   },
   computed: {
     componentLoader() {

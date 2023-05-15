@@ -9,7 +9,7 @@ import mainRequest from '@/api/mainRequest';
 export default {
 
     setSurveyResult({ commit }, payload) {
-        console.log(payload);
+        // console.log(payload);
         commit(SET_COMMON_SURVEY_RESULT, payload[0]);
         commit(SET_VISCERA_SURVEY_RESULT, payload[1]);
         commit(SET_LIFE_SURVEY_RESULT, payload[2]);
@@ -33,11 +33,14 @@ export default {
                 let visceraSurveyResult = { "viscera" : response.viscera }
                 let lifeSurveyResult = { "life" : response.life }
 
+                localStorage.setItem("commonSurveyResult", commonSurveyResult);
+                localStorage.setItem("visceraSurveyResult", visceraSurveyResult);
+                localStorage.setItem("lifeSurveyResult", lifeSurveyResult);
                 dispatch('setSurveyResult', [commonSurveyResult, visceraSurveyResult, lifeSurveyResult]);
             }
         })
         .catch((error) => {
-            alert("설문조사 읽기 에러가 발생했습니다: " + error.message);
+            // alert("설문조사 읽기 에러가 발생했습니다: " + error.message);
         })
     },
 
@@ -50,7 +53,7 @@ export default {
             }
         })
         .catch((error) => {
-            alert("설문조사 등록 에러가 발생했습니다: " + error.message);
+            // alert("설문조사 등록 에러가 발생했습니다: " + error.message);
         })
     },
     

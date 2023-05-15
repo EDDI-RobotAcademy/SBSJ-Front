@@ -12,7 +12,7 @@
                             <div class="swiper-wrapper list" style="height: 184px; transform: translate3d(0px, 0px, 0px);">
                                 <a href="" class="swiper-slide link_area swiper-slide-active" style="margin-right: 30px;">
                                     <div class="info_text">
-                                        <p class="img"><img src="@/assets/productImgs/PERNIT.jpg" alt=""></p>
+                                        <p class="img"><img src="@/assets/productImgs/cenovis_mega_vitamind_thumbnail.jpg" alt=""></p>
                                         <div class="txt_area">
                                             <h4 class="name">조인트본 1500</h4>
                                         </div>
@@ -23,7 +23,7 @@
                                 </a>
                                 <a href="" class="swiper-slide link_area swiper-slide-next" style="margin-right: 30px;">
                                     <div class="info_text">
-                                        <p class="img"><img src="@/assets/productImgs/PERNIT.jpg" alt=""></p>
+                                        <p class="img"><img src="@/assets/productImgs/boryeong_calcium_thumbnail.jpg" alt=""></p>
                                         <div class="txt_area">
                                             <h4 class="name">어골칼슘 & 마그네슘 비타민D</h4>
                                         </div>
@@ -34,7 +34,7 @@
                                 </a>
                                 <a href="" class="swiper-slide link_area" style="margin-right: 30px;">
                                     <div class="info_text">
-                                        <p class="img"><img src="@/assets/productImgs/PERNIT.jpg" alt=""></p>
+                                        <p class="img"><img src="@/assets/productImgs/nowfoods_silymarin_thumbnail.jpg" alt=""></p>
                                         <div class="txt_area">
                                             <h4 class="name">멀티비타민 미네랄 139</h4>
                                         </div>

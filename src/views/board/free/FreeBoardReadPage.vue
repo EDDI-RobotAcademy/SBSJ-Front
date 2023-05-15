@@ -71,7 +71,7 @@ export default {
         async onSubmitRegister(payload) {
             const { comment, writer, freeCommentId } = payload;
             const freeBoardId = this.freeBoardId;
-            console.log("댓글 등록" + freeBoardId);
+            // console.log("댓글 등록" + freeBoardId);
             await this.requestFreeCommentRegisterToSpring({ comment, writer, freeBoardId, freeCommentId });
             await this.requestFreeCommentListFromSpring(this.freeBoardId);
         }

@@ -45,10 +45,10 @@ export default {
             return axios.put(`http://localhost:7777/qna/read/${qnaCommentId}`, 
                 {comment})
                 .then((res) => {
-                    alert("질문 게시글의 댓글 " + qnaCommentId + "번 -> " + comment  +"로 수정 성공", res.data)
+                    // alert("질문 게시글의 댓글 " + qnaCommentId + "번 -> " + comment  +"로 수정 성공", res.data)
                 })
                 .catch(() => {
-                    alert("질문 게시글의 댓글 " + qnaCommentId + "번 수정 실패")
+                    // alert("질문 게시글의 댓글 " + qnaCommentId + "번 수정 실패")
                 })
         },
         async deleteComment(payload) {

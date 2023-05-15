@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 mx-5 grey lighten-4 p-5">
-        <div v-if="!wishList || (Array.isArray(wishList) && wishList.length === 0)">
+        <div v-if="!localWishList || (Array.isArray(localWishList) && localWishList.length === 0)">
             <v-card outlined flat height="300">
                 <div class="d-flex justify-center align-center h2 empty-msg">
                     찜한 상품이 존재하지 않습니다.
@@ -9,8 +9,8 @@
         </div>
         <div v-else>
             <v-row>
-                <v-col v-for="wish in wishList" :key="wish.wishId" cols="4" class="d-flex align-items-center">
-                    <v-card class="justify-center mb-5 mx-3 rounded-xl p-4" width="300" height="370" flat outlined>
+                <v-col v-for="wish in localWishList" :key="wish.wishId" cols="4" class="d-flex align-items-center">
+                    <v-card class="justify-center mb-5 mx-3 rounded-xl p-4" width="300" height="400" flat outlined>
                         <div>
                             <v-checkbox
                                 color="#692498"
@@ -24,10 +24,10 @@
                                     contain width="150" height="150"/>
                             </router-link>
                         </div>
-                        <v-card-subtitle class="pt-4 justify-center">
+                        <v-card-subtitle class="pt-4 justify-center" style="height: 120px;">
                             <div class="d-flex justify-center">
                                 <router-link :to="{ name: 'ProductReadPage', params: { productId: wish.productId.toString() } }"
-                                    class="baby-product-link" style="text-decoration: none; color: black">
+                                    class="baby-product-link" style="text-decoration: none; color: black; height: 70px;">
                                         <strong>{{ wish.productName }}</strong>
                                 </router-link>
                             </div>
@@ -66,13 +66,28 @@ const productModule = 'productModule';
 
 export default {
     name: "MyPageWishListForm",
+    data() {
+        return {
+            localWishList: []
+        }
+    },
     computed : {
         ...mapState(productModule, ['wishList'])
     },
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let memberId = userInfo.memberId;
-        await this.reqMyPageWishListToSpring(memberId);
+        
+        let lsWishList = JSON.parse(localStorage.getItem("lsWishList"));
+        if(!lsWishList || (Array.isArray(lsWishList) && lsWishList.length === 0)) {
+            await this.reqMyPageWishListToSpring(memberId);
+        }
+
+        lsWishList = JSON.parse(localStorage.getItem("lsWishList"));
+        this.localWishList = lsWishList;
+    },
+    destroyed() {
+        localStorage.removeItem("lsWishList");
     },
     methods:{
         ...mapActions(productModule, ['reqMyPageWishListToSpring']),
@@ -99,8 +114,8 @@ export default {
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: true, product: merchant, 
                                 count: count, totalPrice: directTotalPrice, thumbnail: thumbnail }})
-            console.log(this.$store.state.orderModule.orderList)
-            alert ("주문 페이지로 이동합니다.")
+            // console.log(this.$store.state.orderModule.orderList)
+            // alert ("주문 페이지로 이동합니다.")
             await this.$router.push({ name: 'OrderInfoPage' })
         },
 

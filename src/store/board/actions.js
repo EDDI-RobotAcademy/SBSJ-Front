@@ -19,11 +19,11 @@ export default {
                 return res.data
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestQnaBoardListToSpring({ commit }, payload) {
-        console.log("requsetQnaBoardListToSpring()")
+        // console.log("requsetQnaBoardListToSpring()")
         const {startIndex, endIndex} = payload
         return mainRequest.get(`/qna/list/${startIndex}/${endIndex}`)
             .then((res) => {
@@ -31,17 +31,17 @@ export default {
                 commit(REQUEST_QNA_BOARD_LIST_TO_SPRING, qnaBoards);
             })
             .catch((res) => {
-                alert("문제 발생! " + res.data);
+                // alert("문제 발생! " + res.data);
             });
     },
     requestQnaBoardToSpring({ commit }, qnaBoardId) {
-        console.log("requestQnaBoardToSpring: "+ qnaBoardId)
+        // console.log("requestQnaBoardToSpring: "+ qnaBoardId)
         return mainRequest.get(`/qna/read/${qnaBoardId}`)
             .then((res) => {
                 commit(REQUEST_QNA_BOARD_TO_SPRING, res.data)
             })
             .catch(() => {
-                alert("requestQnaBoardToSpring 문제 발생!")
+                // alert("requestQnaBoardToSpring 문제 발생!")
             })
     },
     requestQnaBoardDeleteToSpring({}, qnaBoardId) {
@@ -50,18 +50,18 @@ export default {
                 alert("삭제 성공")
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestQnaBoardModifyToSpring({}, payload) {
         const { qnaBoardId, title, content } = payload
-        console.log("수정: "+ qnaBoardId +", "+ title +", "+ content)
+        // console.log("수정: "+ qnaBoardId +", "+ title +", "+ content)
         return mainRequest.post(`/qna/modify/${qnaBoardId}`, { title, content })
             .then(() => {
                 alert("수정 성공")
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestQnaCommentListFromSpring({commit}, qnaBoardId ){
@@ -97,7 +97,7 @@ export default {
                 return res.data
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestFreeBoardListToSpring({ commit }, payload) {
@@ -108,17 +108,17 @@ export default {
                 commit(REQUEST_FREE_BOARD_LIST_TO_SPRING, freeBoards);
             })
             .catch((res) => {
-                alert("문제 발생! " + res.data);
+                // alert("문제 발생! " + res.data);
             });
     },
     requestFreeBoardToSpring({ commit }, freeBoardId) {
-        console.log("requestFreeBoardToSpring: "+ freeBoardId)
+        // console.log("requestFreeBoardToSpring: "+ freeBoardId)
         return mainRequest.get(`/free/read/${freeBoardId}`)
             .then((res) => {
                 commit(REQUEST_FREE_BOARD_TO_SPRING, res.data)
             })
             .catch(() => {
-                alert("requestFreeBoardToSpring 문제 발생!")
+                // alert("requestFreeBoardToSpring 문제 발생!")
             })
     },
     requestFreeBoardDeleteToSpring({}, freeBoardId) {
@@ -127,18 +127,18 @@ export default {
                 alert("삭제 성공")
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestFreeBoardModifyToSpring({}, payload) {
         const { freeBoardId, title, content } = payload
-        console.log("수정: "+ freeBoardId +", "+ title +", "+ content)
+        // console.log("수정: "+ freeBoardId +", "+ title +", "+ content)
         return mainRequest.post(`/free/modify/${freeBoardId}`, { title, content })
             .then(() => {
                 alert("수정 성공")
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     requestFreeCommentListFromSpring({commit}, freeBoardId ){

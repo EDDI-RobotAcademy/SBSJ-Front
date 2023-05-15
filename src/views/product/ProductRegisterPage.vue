@@ -19,21 +19,23 @@
               'requestTestCreateProductToSpring'
           ]),
           async onSubmit (payload) {
-              await this.requestCreateProductToSpring(payload)
-              await this.$router.push({
-                  name: 'ProductRegisterPage',
-              })
-          },
-          async testOnSubmit (payload) {
-              await this.requestTestCreateProductToSpring(payload)
-              await this.$router.push({
-                  name: 'ProductRegisterPage',
-              })
+            await this.requestCreateProductToSpring(payload)
+            //   await this.$router.push({
+            //       name: 'ProductRegisterPage',
+            //   })
+            window.location.reload(true);
+        },
+        async testOnSubmit (payload) {
+            await this.requestTestCreateProductToSpring(payload)
+            //   await this.$router.push({
+            //       name: 'ProductRegisterPage',
+            //   })
+            window.location.reload(true);
           },
       },
       created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(userInfo);
+        // console.log(userInfo);
         if(userInfo != null) {
             if(userInfo.memberId != 1) {
                 alert("권한없는 접근");

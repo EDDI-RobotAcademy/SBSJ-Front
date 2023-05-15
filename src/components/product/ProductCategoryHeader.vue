@@ -73,15 +73,15 @@
     },
     methods: {
       priceDesc() {
-        console.log("priceDesc() in Component")
+        // console.log("priceDesc() in Component")
         this.$emit('priceDesc')
       },
       priceAsc() {
-        console.log("priceAsc() in Component")
+        // console.log("priceAsc() in Component")
         this.$emit('priceAsc')
       },
       wishCountDesc() {
-        console.log("wishCountDesc() in Component")
+        // console.log("wishCountDesc() in Component")
         this.$emit('wishCountDesc')
       },
       // viewCount(event) {

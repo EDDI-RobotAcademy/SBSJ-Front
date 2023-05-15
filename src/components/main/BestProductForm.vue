@@ -8,8 +8,8 @@
                 <v-divider class="mt-0" color="black" width="128"></v-divider> -->
             </div>
             <v-col v-for="(image, index) in images" :key="index" cols="3">
-                <v-card class="mx-auto p-3" max-width="250" height="400" outlined>
-                    <div class="p-4">
+                <v-card class="mx-auto p-3" max-width="250" height="450" outlined>
+                    <div class="p-4" style="width: 220px; height: 220px;">
                         <v-img
                         class="align-center justify-center"
                         :src="image.imagePath"
@@ -17,7 +17,7 @@
                         >
                         </v-img>
                     </div>
-                    <v-card-subtitle class="pt-4">
+                    <v-card-subtitle style="height: 100px">
                         <div style="font-weight: bold;">
                             <router-link :to="{ name: 'ProductReadPage', params: { productId: image.productId.toString() } }" style="color: black; text-decoration: none;">
                                 {{ image.brand }}
@@ -52,14 +52,14 @@ export default {
     data() {
         return {
             images: [
-                { imagePath: require('@/assets/productImgs/닥터엘리자베스 간에 좋은 밀크씨슬.jpg'),
-                  brand: "닥터엘리자베스", imageName: "간에 좋은 밀크씨슬", productId: 1, price: "10,000원" },
-                { imagePath: require('@/assets/productImgs/닥터엘리자베스 알티지 오메가3.jpg'),
-                  brand: "닥터엘리자베스", imageName: "알티지 오메가3", productId: 1, price: "10,000원" },
-                { imagePath: require('@/assets/productImgs/레이델 밀크씨슬 실리마린.jpg'),
-                  brand: "레이델", imageName: "밀크씨슬 실리마린", productId: 1, price: "10,000원" },
-                { imagePath: require('@/assets/productImgs/[BHT 베터헬씨투모로우] 슈퍼 밀크씨슬.jpg'),
-                  brand: "BHT 베터헬씨투모로우", imageName: "슈퍼 밀크씨슬", productId: 1, price: "10,000원" },
+                { imagePath: require('@/assets/productImgs/acebiom_diet_lacto_thumbnail.jpg'),
+                  brand: "에이스 바이옴", imageName: "비에날씬 다이어트 유산균", productId: 1, price: "20,000원" },
+                { imagePath: require('@/assets/productImgs/metebiotics_thumbnail.jpg'),
+                  brand: "메타바이오틱스", imageName: "신애라 유산균", productId: 1, price: "15,000원" },
+                { imagePath: require('@/assets/productImgs/vitaminvillage_perfect_probiotics_thumbnail.jpg'),
+                  brand: "비타민마을", imageName: "퍼펙트바이오틱스 밀크씨슬 프로바이오틱스 유산균", productId: 1, price: "30,000원" },
+                { imagePath: require('@/assets/productImgs/vitaminvillage_lutein_family_thumbnail.jpg'),
+                  brand: "비타민마을", imageName: "4중복합 눈영양제 루테인 패밀리", productId: 1, price: "40,000원" },
             ]
         }
     }
@@ -68,5 +68,8 @@ export default {
 </script>
 
 <style>
-    
+    v-img {
+        width: 160px;
+        height: 160px;
+    }
 </style>

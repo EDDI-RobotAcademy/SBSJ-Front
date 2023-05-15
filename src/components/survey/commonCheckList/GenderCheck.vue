@@ -88,8 +88,15 @@ export default {
         this.next = true;
       }
     }
+    this.beforeCheck(this.commonSurveyResult.username, "UsernameCheckPage", "이름 입력이 되지 않았습니다.\n이름 입력 페이지로 이동합니다.");
   },
   methods: {
+    beforeCheck(key, url, message) {
+      if(key == null || key == '' || key == undefined) {
+        alert(message);
+        this.$router.push({ name: url })
+      }
+    },
     genderCheck() {
       this.next = true;
     },

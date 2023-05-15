@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-dialog v-model="dialog" persistent max-width="800">
+        <v-dialog v-model="dialog" max-width="800">
             <template v-slot:activator="{on}">
                 <v-btn class="w-10 me-2" outlined color="#692498" v-on="on">상세 보기</v-btn>
             </template>

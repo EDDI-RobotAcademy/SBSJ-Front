@@ -52,7 +52,30 @@ export default {
                 localStorage.removeItem('lifeSurveyResult');
                 this.$router.push({ name: 'SurveyPage' });
             }
+        },
+        beforeCheck(key, url, message) {
+            if(key == null || key == '' || key == undefined) {
+                alert(message);
+                this.$router.push({ name: url })
+            }
         }
+    },
+    mounted() {
+        let commonSurveyResult = JSON.parse(localStorage.getItem("commonSurveyResult"));
+        let visceraSurveyResult = JSON.parse(localStorage.getItem("visceraSurveyResult"));
+        if(commonSurveyResult == '' || commonSurveyResult == null || commonSurveyResult == undefined) {
+            this.beforeCheck(null, "UsernameCheckPage", "이름 입력이 되지 않았습니다.\n이름 입력 페이지로 이동합니다.");
+        }
+        if(visceraSurveyResult == '' || visceraSurveyResult == null || visceraSurveyResult == undefined) {
+            this.beforeCheck(null, "VisceraSurveyPage", "신체기관 선택이 되지 않았습니다.\n신체기관 선택 페이지로 이동합니다.");
+        }
+        
+        this.beforeCheck(commonSurveyResult.username, "UsernameCheckPage", "이름 입력이 되지 않았습니다.\n이름 입력 페이지로 이동합니다.");
+        this.beforeCheck(commonSurveyResult.gender, "GenderCheckPage", "성별 선택이 되지 않았습니다.\n성별 선택 페이지로 이동합니다.");
+        this.beforeCheck(commonSurveyResult.age, "AgeCheckPage", "나이 선택이 되지 않았습니다.\n나이 선택 페이지로 이동합니다.");
+        this.beforeCheck(commonSurveyResult.height, "HeightCheckPage", "키 입력이 되지 않았습니다.\n키 입력 페이지로 이동합니다.");
+        this.beforeCheck(commonSurveyResult.weight, "WeightCheckPage", "몸무게 입력이 되지 않았습니다.\n몸무게 입력 페이지로 이동합니다.");
+        this.beforeCheck(visceraSurveyResult.viscera, "VisceraSurveyPage", "신체기관 선택이 되지 않았습니다.\n신체기관 선택 페이지로 이동합니다.");
     }
 }
 

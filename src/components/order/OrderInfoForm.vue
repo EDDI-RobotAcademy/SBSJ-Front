@@ -286,7 +286,7 @@ export default {
         if (lsDeliveryList && lsDeliveryList.length > 0) {
             this.lsDeliveryList = lsDeliveryList;
         } else {
-            console.log("로컬스토리지에 배송지 정보가 없습니다.");
+            // console.log("로컬스토리지에 배송지 정보가 없습니다.");
         }
 
         // 기본 배송지가 있는 경우 첫 번째 배송지를 선택
@@ -326,7 +326,7 @@ export default {
         },
         setDeliveryRequest() {
             this.selectedDeliveryReq = this.selectedOption === this.deliveryMsg[2] ? this.writeDeliveryMsg : this.selectedOption
-            console.log(this.selectedDeliveryReq);
+            // console.log(this.selectedDeliveryReq);
         },
         setSendInfo() {
             const sendInfo = {
@@ -358,7 +358,7 @@ export default {
             }
 
             this.sendInfo = sendInfo;
-            console.log(sendInfo)
+            // console.log(sendInfo)
         },
         cardPay() {
             const totalPrice = this.orderList.orderSave.totalPrice;
