@@ -96,13 +96,11 @@ export default {
         this.exercisingAmount = exercisingAmount;
       }
     }
-    
-    this.beforeCheck(this.commonSurveyResult.gender, "GenderCheckPage", "성별 선택이 제대로 되지 않았습니다.\n성별 선택 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.age, "AgeCheckPage", "나이 선택이 제대로 되지 않았습니다.\n나이 선택 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.weight, "BodyCheckPage", "몸무게 입력이 제대로 되지 않았습니다.\n몸무게 입력 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.height, "BodyCheckPage", "키 입력이 제대로 되지 않았습니다.\n키 입력 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.height, "SmokingCheckPage", "흡연 여부가 제대로 체크 되지 않았습니다.\흡연 여부 체크 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.height, "DrinkingCheckPage", "음주 여부가 제대로 체크 되지 않았습니다.\음주 여부 체크 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.username, "UsernameCheckPage", "이름 입력이 되지 않았습니다.\n이름 입력 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.gender, "GenderCheckPage", "성별 선택이 되지 않았습니다.\n성별 선택 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.age, "AgeCheckPage", "나이 선택이 되지 않았습니다.\n나이 선택 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.height, "HeightCheckPage", "키 입력이 되지 않았습니다.\n키 입력 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.weight, "WeightCheckPage", "몸무게 입력이 되지 않았습니다.\n몸무게 입력 페이지로 이동합니다.");
   },
   methods: {
     beforeCheck(key, url, message) {

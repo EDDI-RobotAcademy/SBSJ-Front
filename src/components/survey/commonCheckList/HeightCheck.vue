@@ -73,8 +73,9 @@ export default {
       let height = this.commonSurveyResult.height;
       this.inputCheck(height);
     }
-    this.beforeCheck(this.commonSurveyResult.gender, "GenderCheckPage", "성별 선택이 제대로 되지 않았습니다.\n성별 선택 페이지로 이동합니다.");
-    this.beforeCheck(this.commonSurveyResult.age, "AgeCheckPage", "나이 선택이 제대로 되지 않았습니다.\n나이 선택 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.username, "UsernameCheckPage", "이름 입력이 되지 않았습니다.\n이름 입력 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.gender, "GenderCheckPage", "성별 선택이 되지 않았습니다.\n성별 선택 페이지로 이동합니다.");
+    this.beforeCheck(this.commonSurveyResult.age, "AgeCheckPage", "나이 선택이 되지 않았습니다.\n나이 선택 페이지로 이동합니다.");
   },
   methods: {
     beforeCheck(key, url, message) {
