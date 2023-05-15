@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 mx-5 grey lighten-4 p-5">
-        <div v-if="!reviewList || (Array.isArray(reviewList) && reviewList.length === 0)">
+        <div v-if="!localReviewList || (Array.isArray(localReviewList) && localReviewList.length === 0)">
             <v-card outlined flat height="300">
                 <div class="d-flex justify-center align-center h2 empty-msg">
                     작성한 리뷰가 없습니다.
@@ -8,7 +8,7 @@
             </v-card>
         </div>
         <div v-else>
-            <v-card v-for="review in reviewList" :key="review.productReviewId" class="mb-5 p-3 rounded-xl" flat outlined>
+            <v-card v-for="review in localReviewList" :key="review.productReviewId" class="mb-5 p-3 rounded-xl" flat outlined>
                 <v-row class="d-flex align-center">
                     <!-- <v-col cols="1">
                         <v-checkbox
@@ -84,10 +84,22 @@ export default {
     computed : {
         ...mapState(mypageModule, ['reviewList'])
     },
+    data() {
+        return {
+            localReviewList: []
+        }
+    },
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let memberId = userInfo.memberId;
-        await this.requestMypageReviewListToSpring(memberId);
+        
+        let lsReviewList = JSON.parse(localStorage.getItem("lsReviewList"));
+        if(!lsReviewList || (Array.isArray(lsReviewList) && lsReviewList.length === 0)) {
+            await this.requestMypageReviewListToSpring(memberId);
+        }
+
+        lsReviewList = JSON.parse(localStorage.getItem("lsReviewList"));
+        this.localReviewList = lsReviewList;
     },
     methods:{
         ...mapActions(mypageModule, ['requestMypageReviewListToSpring']),

@@ -33,6 +33,9 @@ export default {
                 let visceraSurveyResult = { "viscera" : response.viscera }
                 let lifeSurveyResult = { "life" : response.life }
 
+                localStorage.setItem("commonSurveyResult", commonSurveyResult);
+                localStorage.setItem("visceraSurveyResult", visceraSurveyResult);
+                localStorage.setItem("lifeSurveyResult", lifeSurveyResult);
                 dispatch('setSurveyResult', [commonSurveyResult, visceraSurveyResult, lifeSurveyResult]);
             }
         })

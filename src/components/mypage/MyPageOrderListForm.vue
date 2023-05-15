@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 mx-5 grey lighten-4 p-5">
-        <div v-if="!completeOrderList || (Array.isArray(completeOrderList) && completeOrderList.length === 0)">
+        <div v-if="!localCompleteOrderList || (Array.isArray(localCompleteOrderList) && localCompleteOrderList.length === 0)">
             <v-card outlined flat height="300">
                 <div class="d-flex justify-center align-center h2 empty-msg">
                     주문 내역이 존재하지 않습니다.
@@ -8,7 +8,7 @@
             </v-card>
         </div>
         <div v-else>
-            <v-card v-for="completeOrder in completeOrderList" :key="completeOrder.orderId" class="m-5 p-5 rounded-xl" flat outlined>
+            <v-card v-for="completeOrder in localCompleteOrderList" :key="completeOrder.orderId" class="m-5 p-5 rounded-xl" flat outlined>
                 <div>
                     <v-chip class="ms-3">결제완료</v-chip>
                     <v-row>
@@ -70,16 +70,20 @@ export default {
     components: { MyPageOrderReadForm },
     data() {
         return {
-            
+            localCompleteOrderList: []
         }
     },
     async created () {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let token = userInfo.token;
-        console.log("MyPageOrder created() token: " + token);
         
-        await this.reqCompleteOrderListToSpring(token);
-        console.log(this.completeOrderList)
+        let lsCompleteOrderList = JSON.parse(localStorage.getItem("lsCompleteOrderList"));
+        if(!lsCompleteOrderList || (Array.isArray(lsCompleteOrderList) && lsCompleteOrderList.length === 0)) {
+            await this.reqCompleteOrderListToSpring(token);
+        }
+
+        lsCompleteOrderList = JSON.parse(localStorage.getItem("lsCompleteOrderList"));
+        this.localCompleteOrderList = lsCompleteOrderList;
     },
     computed: {
         ...mapState(mypageModule, ['completeOrderList'])

@@ -13,10 +13,10 @@ export default {
         // console.log("reqCompleteOrderListToSpring 토큰: " + token);
 
         return await mainRequest.post("/order/list", { token })
-
-        .then((res) => {
-            commit(REQUEST_COMPLETE_ORDER_LIST_TO_SPRING, res.data)
-        })
+            .then((res) => {
+                commit(REQUEST_COMPLETE_ORDER_LIST_TO_SPRING, res.data);
+                localStorage.setItem("lsCompleteOrderList", JSON.stringify(res.data));
+            })
     },
     async requestMypageReviewListToSpring({commit}, payload) {
         const memberId = payload;
@@ -24,6 +24,7 @@ export default {
         await mainRequest.get(`/review/list/${memberId}`)
             .then((res) => {
                 commit(REQUEST_MYPAGE_REVIEW_LIST_TO_SPRING, res.data);
+                localStorage.setItem("lsReviewList", JSON.stringify(res.data));
             })
     }
 

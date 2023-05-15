@@ -99,6 +99,9 @@ export default {
             this.wishListData = this.wishList;
         }
     },
+    destroyed() {
+        localStorage.removeItem("lsWishList");
+    },
     props: {
         products: {
             type: Array,

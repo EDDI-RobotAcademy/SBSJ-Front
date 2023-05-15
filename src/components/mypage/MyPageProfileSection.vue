@@ -15,16 +15,16 @@
     <ul>
       <li>
         <p class="head-text">주문내역</p>
-        <p class="content-text">{{ completeOrderList.length }} 건</p>
+        <p class="content-text">{{ localCompleteOrderList.length }} 건</p>
       </li>
       <li>
         <p class="head-text">리뷰내역</p>
-        <p class="content-text">{{ reviewList.length }} 건</p>
+        <p class="content-text">{{ localReviewList.length }} 건</p>
       </li>
       <li>
         <p class="head-text">찜한내역</p>
         <p class="content-text">
-          {{ wishList.length }} 건
+          {{ localWishList.length }} 건
         </p>
       </li>
     </ul>
@@ -46,21 +46,49 @@ export default {
     ...mapState(productModule, ["wishList"]),
     ...mapState(mypageModule, ["completeOrderList", "reviewList"]),
   },
+  data() {
+    return {
+      localCompleteOrderList: [],
+      localReviewList: [],
+      localWishList: []
+    }
+  },
   async mounted() {
     if (this.isAuthenticated === true) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
       let memberId = userInfo.memberId;
       let token = userInfo.token;
 
-      this.reqCompleteOrderListToSpring(token);
-      this.requestMypageReviewListToSpring(memberId);
-      this.reqMyPageWishListToSpring(memberId);
-
-      console.log("ProfilePage mounted: "+ memberId);
+      let lsCompleteOrderList = JSON.parse(localStorage.getItem("lsCompleteOrderList"));
+      if(!lsCompleteOrderList || (Array.isArray(lsCompleteOrderList) && lsCompleteOrderList.length === 0)) {
+        await this.reqCompleteOrderListToSpring(token);
+      }
+      let lsReviewList = JSON.parse(localStorage.getItem("lsReviewList"));
+      if(!lsReviewList || (Array.isArray(lsReviewList) && lsReviewList.length === 0)) {
+        await this.requestMypageReviewListToSpring(memberId);
+      }
+      let lsWishList = JSON.parse(localStorage.getItem("lsWishList"));
+      if(!lsWishList || (Array.isArray(lsWishList) && lsWishList.length === 0)) {
+        await this.reqMyPageWishListToSpring(memberId);
+      }
+      
+      lsCompleteOrderList = JSON.parse(localStorage.getItem("lsCompleteOrderList"));
+      lsReviewList = JSON.parse(localStorage.getItem("lsReviewList"));
+      lsWishList = JSON.parse(localStorage.getItem("lsWishList"));
+      
+      this.localCompleteOrderList = lsCompleteOrderList;
+      this.localReviewList = lsReviewList;
+      this.localWishList = lsWishList;
+      // console.log("ProfilePage mounted: "+ memberId);
     } else {
-      alert("로그인 상태가 아닙니다.");
-      router.push("/sign-in");
+      // alert("로그인 상태가 아닙니다.");
+      // router.push("/sign-in");
     }
+  },
+  destroyed() {
+    localStorage.removeItem("lsCompleteOrderList");
+    localStorage.removeItem("lsReviewList");
+    localStorage.removeItem("lsWishList");
   },
   methods: {
     ...mapActions(productModule, [

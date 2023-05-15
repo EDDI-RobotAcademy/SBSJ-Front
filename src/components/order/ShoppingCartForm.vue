@@ -218,6 +218,9 @@ export default {
         lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
         this.cartItems = lsCartItems;
     },
+    destroyed() {
+        localStorage.removeItem("lsCartItems");
+    },
     methods: {
         ...mapActions(orderModule, [
             'reqCartItemCountChangeToSpring',

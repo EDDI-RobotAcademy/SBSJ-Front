@@ -67,7 +67,7 @@ export default {
         return await mainRequest.post("/member/logout", userInfo)
             .then(() => {
                 alert("로그아웃 완료");
-                localStorage.removeItem("userInfo");
+                localStorage.clear();
 
                 commit(COMMIT_IS_AUTHENTICATED, false);
                 window.location.reload(true);
@@ -77,9 +77,10 @@ export default {
         return mainRequest.post("/member/resign", userInfo)
             .then(() => {
                 alert("회원탈퇴 완료");
-                localStorage.removeItem("userInfo");
+                localStorage.clear();
                 
                 commit(COMMIT_IS_AUTHENTICATED, false);
+                window.location.reload(true);
             })
     },
     commitIsAuthenticated({ commit }, payload) {
