@@ -252,7 +252,7 @@ export default {
             const memberId = userInfo.memberId;
             const productId = this.product.productId;
             const count = this.selectCount;
-            console.log(memberId + ', ' + productId +', '+ count)
+            // console.log(memberId + ', ' + productId +', '+ count)
 
             this.reqAddCartToSpring({memberId, productId, count})
             
@@ -273,8 +273,8 @@ export default {
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: true, product: product, 
                                 count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
-            console.log(this.$store.state.orderModule.orderList)
-            alert ("주문 페이지로 이동합니다.")
+            // console.log(this.$store.state.orderModule.orderList)
+            // alert ("주문 페이지로 이동합니다.")
             await this.$router.push({ name: 'OrderInfoPage' })
         },
 	},

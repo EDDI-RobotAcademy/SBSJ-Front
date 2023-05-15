@@ -147,11 +147,11 @@ export default {
         for (let i = 0; i < this.images.length; i++) {
           formData.append('imageFileList', this.images[i]);
         }
-        console.log('이미지 파일 추가 완료'); // 이미지 추가 확인용 로그
+        // console.log('이미지 파일 추가 완료'); // 이미지 추가 확인용 로그
 
         // formData 내용 확인을 위한 코드
         for (let entry of formData.entries()) {
-          console.log(entry[0] + ', ' + entry[1]);
+          // console.log(entry[0] + ', ' + entry[1]);
         }
 
       await this.reqRegisterReviewWithImageToSpring(formData);

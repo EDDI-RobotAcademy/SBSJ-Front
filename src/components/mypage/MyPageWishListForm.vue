@@ -101,6 +101,8 @@ export default {
                                 count: count, totalPrice: directTotalPrice, thumbnail: thumbnail }})
             console.log(this.$store.state.orderModule.orderList)
             alert ("주문 페이지로 이동합니다.")
+            // console.log(this.$store.state.orderModule.orderList)
+            // alert ("주문 페이지로 이동합니다.")
             await this.$router.push({ name: 'OrderInfoPage' })
         },
 

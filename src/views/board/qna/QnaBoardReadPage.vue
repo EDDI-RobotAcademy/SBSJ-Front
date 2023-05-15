@@ -71,7 +71,7 @@ export default {
         async onSubmitRegister(payload) {
             const { comment, writer, qnaCommentId } = payload;
             const qnaBoardId = this.qnaBoardId;
-            console.log("댓글 등록" + qnaBoardId);
+            // console.log("댓글 등록" + qnaBoardId);
             await this.requestQnaCommentRegisterToSpring({ comment, writer, qnaBoardId, qnaCommentId });
             await this.requestQnaCommentListFromSpring(this.qnaBoardId);
         }

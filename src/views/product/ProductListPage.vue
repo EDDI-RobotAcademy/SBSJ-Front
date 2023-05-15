@@ -78,29 +78,29 @@ const productModule = 'productModule'
         }
     },
     async mounted() {
-        console.log("mounted()")
-        console.log("searchQuery: " + this.searchQuery)
+        // console.log("mounted()")
+        // console.log("searchQuery: " + this.searchQuery)        
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const payload = {startIndex: startIndex, endIndex: endIndex}
         if(this.categoryName != null || this.brandName != null) {
             if(this.categoryName != null) {
-                console.log("filteringProduct()");
+                // console.log("filteringProduct()");
                 this.productTitle = this.category
                 this.filteringProduct(this.category);
             } else if(this.brandName != null) {
-                console.log("filteringBrandProduct()");
+                // console.log("filteringBrandProduct()");
                 this.productTitle = this.brand
                 this.filteringBrandProduct(this.brand);
             } else {
-                console.log("requestProductListToSpring()")
+                // console.log("requestProductListToSpring()")
                 await this.requestProductListToSpring(payload);
             }
             this.showProducts = this.products
             this.cache[this.currentPage] = this.products
             this.defaultOrderBy = 'Default'
         } else if(this.isQuery.query != undefined) {
-            console.log("requestSearchResultProductListToSpring() in mounted")
+            // console.log("requestSearchResultProductListToSpring() in mounted")
             this.cache[this.currentPage] = this.searchResult;
             this.productTitle = this.isQuery.query
             this.showProducts = this.searchResult
@@ -109,19 +109,19 @@ const productModule = 'productModule'
     },
     watch: {
         '$store.state.productModule.searchResult'(newValue, oldValue) {
-            console.log("searchResult Changed")
+            // console.log("searchResult Changed")
             this.cache[this.currentPage] = this.searchResult;
-            console.log("cache updated")
+            // console.log("cache updated")
             this.productTitle = this.isQuery.query
             this.showProducts = newValue;
         },
         '$store.state.productModule.searchQuery'(newValue, oldValue) {
             this.syncCurrentPage = 1
             this.cache = {}
-            console.log("initialize cache, this cache current: " + this.cache)
-            console.log("searchQuery Changed")
+            // console.log("initialize cache, this cache current: " + this.cache)
+            // console.log("searchQuery Changed")
             this.isQuery = newValue
-            console.log(this.isQuery)
+            // console.log(this.isQuery)
         },
     },
     computed: {
@@ -179,9 +179,9 @@ const productModule = 'productModule'
             this.isQuery = {}
             this.isBrand = false
             this.syncCurrentPage = 1
-            console.log("initialize Query, this Query current: " + this.isQuery.query)
-            console.log("initialize cache, this cache current: " + this.cache)
-            console.log("filteringProduct(): " + productCategory)
+            // console.log("initialize Query, this Query current: " + this.isQuery.query)
+            // console.log("initialize cache, this cache current: " + this.cache)
+            // console.log("filteringProduct(): " + productCategory)
             this.category = productCategory
             this.clickCallback(this.currentPage)
             this.productTitle = this.category
@@ -190,32 +190,32 @@ const productModule = 'productModule'
             this.cache = {}
             this.isQuery = {}
             this.syncCurrentPage = 1
-            console.log("initialize Query, this Query current: " + this.isQuery.query)
+            // console.log("initialize Query, this Query current: " + this.isQuery.query)
             this.isBrand = true
-            console.log("initialize cache, this cache current: " + this.cache)
-            console.log("filteringBrandProduct(): " + productBrand)
+            // console.log("initialize cache, this cache current: " + this.cache)
+            // console.log("filteringBrandProduct(): " + productBrand)
             this.brand = productBrand
             this.clickCallback(this.currentPage)
             this.productTitle = this.brand
         },
         priceDesc() {
-            console.log("princeDesc() in View page")
+            // console.log("princeDesc() in View page")
             this.temp.sort((a, b) => b.price - a.price)
         },
         priceAsc() {
-            console.log("princeAsc() in View page")
+            // console.log("princeAsc() in View page")
             this.temp.sort((a, b) => a.price - b.price)
         },
         wishCountDesc() {
-            console.log("wishCountDesc in View page")
+            // console.log("wishCountDesc in View page")
             this.temp.sort((a, b) => b.wishCount - a.wishCount)
         },
         viewCount(value) {
-            console.log("select viewCount is: " + value) 
+            // console.log("select viewCount is: " + value) 
             this.bindViewCount = value
         },
         async clickCallback(pageNumber) {
-            console.log("clickCallback(): " + pageNumber)
+            // console.log("clickCallback(): " + pageNumber)
             this.syncCurrentPage = pageNumber
             const startIndex = (pageNumber - 1) * this.itemsPerPage;
             const endIndex = startIndex + this.itemsPerPage;
@@ -227,29 +227,29 @@ const productModule = 'productModule'
                 } else {
                     await this.getDataWithOption(startIndex, endIndex)
                 }
-                console.log(this.products)
+                // console.log(this.products)
             } else {
-                console.log("cache used!!")
-                console.log(this.cache)
+                // console.log("cache used!!")
+                // console.log(this.cache)
                 this.showProducts = this.cache[pageNumber];
             }
         },
         async getDataWithOption(startIndex, endIndex) {
-            console.log("getDataWithOption() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
+            // console.log("getDataWithOption() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
             const payload = {category: this.category, startIndex: startIndex, endIndex: endIndex}
             await this.requestSpecificProductListToSpring(payload);
             this.showProducts = this.products;
             this.cache[this.currentPage] = this.products
         },
         async getDataWithBrand(startIndex, endIndex) {
-            console.log("getDataWithBrand() " + "/" + this.brand + "/" + startIndex + "/" + endIndex)
+            // console.log("getDataWithBrand() " + "/" + this.brand + "/" + startIndex + "/" + endIndex)
             const payload = {brand: this.brand, startIndex: startIndex, endIndex: endIndex}
             await this.requestSpecificBrandProductListToSpring(payload)
             this.showProducts = this.products;
             this.cache[this.currentPage] = this.products
         },
         async getDataWithSearch(query, startIndex, endIndex) {
-            console.log("getDataWithSearch() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
+            // console.log("getDataWithSearch() " + "/" + this.category + "/" + startIndex + "/" + endIndex)
             const payload = {query: query, startIndex: startIndex, endIndex: endIndex}
             await this.requestSearchResultProductListToSpring(payload)
         }

@@ -93,7 +93,7 @@ export default {
     },
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(userInfo);
+        // console.log(userInfo);
         if(userInfo != null) {
             await this.reqMyPageWishListToSpring(userInfo.memberId);
             this.wishListData = this.wishList;
@@ -180,12 +180,12 @@ export default {
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: true, product: this.merchant, 
                                 count: this.count, totalPrice: this.directTotalPrice, thumbnail: this.thumbnail }})
-            console.log(this.$store.state.orderModule.orderList)
-            alert ("주문 페이지로 이동합니다.")
+            // console.log(this.$store.state.orderModule.orderList)
+            // alert ("주문 페이지로 이동합니다.")
             await this.$router.push({ name: 'OrderInfoPage' })
         },
         isInWishList(product) {
-            console.log("isInWishList()")
+            // console.log("isInWishList()")
             return this.wishListData.some((wish) => wish.productId === product.productId);
         },
         async addWish(product) {
@@ -203,7 +203,7 @@ export default {
 
             this.wishListData.push({ productId: product.productId });
             await this.reqSetWishToSpring({ memberId, productId });
-            alert("찜 성공");
+            // alert("찜 성공");
         },
         async removeWish(product) {
             let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -211,7 +211,7 @@ export default {
             let productId = product.productId;
             this.wishListData = this.wishListData.filter((wish) => wish.productId !== product.productId);
             await this.reqSetWishToSpring({ memberId, productId });
-            alert("찜 취소")
+            // alert("찜 취소")
         }
     }
 }

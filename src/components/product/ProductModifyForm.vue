@@ -135,7 +135,7 @@
       async created() {
           await this.requestProductOptionListToSpring()
           await this.requestProductBrandListToSpring()
-          console.log("ModifyForm productId: " + this.productId)
+          // console.log("ModifyForm productId: " + this.productId)
           await this.requestProductModifyFormToSpring({ productId: this.productId })
           this.productName = this.productModifyForm.productName
           this.price = this.productModifyForm.price
@@ -144,7 +144,7 @@
           this.brand = this.productModifyForm.brand
           this.productBrand = this.productBrands
           this.dataLoaded = true
-          console.log("created end")
+          // console.log("created end")
       },
 
       methods: {
@@ -172,7 +172,7 @@
                   brand: brand,
                   productId: this.productId
               }
-              console.log('productInfo: ' + JSON.stringify(productInfo))
+              // console.log('productInfo: ' + JSON.stringify(productInfo))
               formData.append(
                   "productInfo",
                   new Blob([JSON.stringify(productInfo)], { type: "application/json" })
@@ -182,14 +182,14 @@
   
   
           handleThumbnail () {
-              console.log("handleThumbnail()")
+              // console.log("handleThumbnail()")
               this.thumbnail = this.$refs.thumbnail.files[0]
-              console.log(this.thumbnail);
+              // console.log(this.thumbnail);
           },
           handleDetailImage () {
-              console.log("handleDetailImage()")
+              // console.log("handleDetailImage()")
               this.detail = this.$refs.detail.files[0];
-              console.log(this.detail)
+              // console.log(this.detail)
           },
 
           addItem() {

@@ -33,7 +33,7 @@
       },
       created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(userInfo);
+        // console.log(userInfo);
         if(userInfo != null) {
             if(userInfo.memberId != 1) {
                 alert("권한없는 접근");

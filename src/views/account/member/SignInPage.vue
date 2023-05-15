@@ -25,7 +25,7 @@ export default {
     ...mapState(accountModule, ['isAuthenticated']),
   },
   updated() {
-    console.log("signin updated");
+    // console.log("signin updated");
     if (this.isAuthenticated === true) {
       this.isLogin = true;
     } else {

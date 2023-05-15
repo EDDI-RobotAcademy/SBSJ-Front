@@ -260,7 +260,7 @@ const productModule = 'productModule'
                 categories: categories,
                 brand: brand
             }
-            console.log('productInfo: ' + JSON.stringify(productInfo))
+            // console.log('productInfo: ' + JSON.stringify(productInfo))
             formData.append(
                 "productInfo",
                 new Blob([JSON.stringify(productInfo)], { type: "application/json" })
@@ -281,7 +281,7 @@ const productModule = 'productModule'
                 thumbnail: testThumbnail,
                 detail: testDetail
             }
-            console.log('productInfo: ' + JSON.stringify(productInfo))
+            // console.log('productInfo: ' + JSON.stringify(productInfo))
             formData.append(
                 "productInfo",
                 new Blob([JSON.stringify(productInfo)], { type: "application/json" })
@@ -290,25 +290,25 @@ const productModule = 'productModule'
         },
 
         handleThumbnail () {
-            console.log("handleThumbnail()")
+            // console.log("handleThumbnail()")
             this.thumbnail = this.$refs.thumbnail.files[0]
-            console.log(this.thumbnail);
+            // console.log(this.thumbnail);
         },
         handleDetailImage () {
-            console.log("handleDetailImage()")
+            // console.log("handleDetailImage()")
             this.detail = this.$refs.detail.files[0];
-            console.log(this.detail)
+            // console.log(this.detail)
         },
 
         testHandleThumbnail () {
-            console.log("testHandleThumbnail()")
+            // console.log("testHandleThumbnail()")
             this.testThumbnail = this.$refs.testThumbnail.files[0].name;
-            console.log(this.testThumbnail);
+            // console.log(this.testThumbnail);
         },
         testHandleDetailImage () {
-            console.log("testHandleDetailImage()")
+            // console.log("testHandleDetailImage()")
             this.testDetail = this.$refs.testDetail.files[0].name;
-            console.log(this.testDetail);
+            // console.log(this.testDetail);
         },
         addItem() {
             if (this.selectedOption !== "" && !this.categories.includes(this.selectedOption)) {

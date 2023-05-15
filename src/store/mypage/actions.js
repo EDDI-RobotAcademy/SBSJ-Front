@@ -10,7 +10,7 @@ export default {
 
     // 주문내역 목록 조회
     async reqCompleteOrderListToSpring({commit}, token) {
-        console.log("reqCompleteOrderListToSpring 토큰: " + token);
+        // console.log("reqCompleteOrderListToSpring 토큰: " + token);
 
         return await mainRequest.post("/order/list", { token })
 
@@ -20,7 +20,7 @@ export default {
     },
     async requestMypageReviewListToSpring({commit}, payload) {
         const memberId = payload;
-        console.log('requestMypageReviewListToSpring()');
+        // console.log('requestMypageReviewListToSpring()');
         await mainRequest.get(`/review/list/${memberId}`)
             .then((res) => {
                 commit(REQUEST_MYPAGE_REVIEW_LIST_TO_SPRING, res.data);

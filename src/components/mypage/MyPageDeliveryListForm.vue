@@ -60,7 +60,7 @@ export default {
 
         // DB 에 데이터가 하나도 없을 때
         if(lsDeliveryList == '') {
-            alert("배송지가 하나도 없습니다. 추가해주세요.");
+            // alert("배송지가 하나도 없습니다. 추가해주세요.");
         }
 
         // localStorage 에 lsDeliveryList 가 없을 때

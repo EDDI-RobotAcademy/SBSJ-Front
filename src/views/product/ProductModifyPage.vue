@@ -37,7 +37,7 @@
     },
     async created() {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(userInfo);
+        // console.log(userInfo);
         if(userInfo != null) {
             if(userInfo.memberId != 1) {
                 alert("권한없는 접근");
@@ -47,14 +47,14 @@
             alert("권한없는 접근");
             this.$router.push({name: 'home'});
         }
-        console.log("Modify Page productId: " + this.productId)
+        // console.log("Modify Page productId: " + this.productId)
         this.bindProductId = this.productId
         
     },
     methods: {
       ...mapActions(productModule, ['requestProductModifyToSpring']),
       async submit(payload) {
-        console.log("submit triggered in modify page")
+        // console.log("submit triggered in modify page")
         await this.requestProductModifyToSpring(payload);
         this.$router.push({name: 'ProductRegisterPage'})
       }

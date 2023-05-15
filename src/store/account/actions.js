@@ -43,9 +43,9 @@ export default {
             .then((res) => {
                 (async () => {
                     let returnData = JSON.stringify(res.data);
-                    console.log("1이건 뭔데: "+ returnData);
+                    // console.log("1이건 뭔데: "+ returnData);
                     let token = JSON.stringify(res.data.token);
-                    console.log("2얘는 token: "+ token);
+                    // console.log("2얘는 token: "+ token);
                     
                     if(token == JSON.stringify("incorrect")) {
                         alert("아이디 혹은 비밀번호가 틀렸습니다.");
@@ -97,7 +97,7 @@ export default {
                 return res.data;
             })
             .catch((res) => {
-                alert("문제 발생!");
+                // alert("문제 발생!");
                 return res.data;
             })
     },
@@ -108,7 +108,7 @@ export default {
                 commit(REQUEST_MY_PAGE_MEMBER_INFO, res.data);
             })
             .catch(() => {
-                alert('문제 발생!')
+                // alert('문제 발생!')
             })
     },
     reqMyPageUpdateMemberInfoToSpring({ }, payload) {
@@ -120,7 +120,7 @@ export default {
                 return res;
             })
             .catch(() => {
-                alert('문제 발생!');
+                // alert('문제 발생!');
             })
     },
     async reqfindMatchingUserIdToSpring({ commit }, payload) {
@@ -136,7 +136,7 @@ export default {
             return "";
           }
         } catch (error) {
-          console.error(error);
+        //   console.error(error);
           alert("요청에 실패했습니다. 다시 시도해주세요.");
           return "";
         }
@@ -155,7 +155,7 @@ export default {
             return "";
           }
         } catch (error) {
-          console.error(error);
+        //   console.error(error);
           alert("요청에 실패했습니다. 다시 시도해주세요.");
           return "";
         }

@@ -24,7 +24,7 @@ export default {
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     },
     async requestProductToSpring ({ commit }, payload) {
@@ -39,41 +39,41 @@ export default {
             .then((res) => {
                 commit(REQUEST_PRODUCT_LIST_TO_SPRING_WITH_OPTION, res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     },
     async requestProductOptionListToSpring({commit}) {
-        console.log("requestProductOptionListToSpring() in action");
+        // console.log("requestProductOptionListToSpring() in action");
         return await mainRequest.get('/product/productOptions')
             .then((res) => {
                 commit(REQUEST_PRODUCT_OPTION_LIST_TO_SPRING, res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     },
     async requestCreateProductToSpring({}, payload) {
-        console.log("ProductCreate()");
+        // console.log("ProductCreate()");
         for (let key of payload.keys()) {
-            console.log(key, ": ", payload.get(key))
+            // console.log(key, ": ", payload.get(key))
         }
         try {
             await mainRequest.post('/product/register', payload)
-            alert("ProductCreated");
+            // alert("ProductCreated");
         } catch {
-            console.log("error");
+            // console.log("error");
         }
     },
 
     async requestTestCreateProductToSpring({}, payload) {
-        console.log("testProductCreate()");
+        // console.log("testProductCreate()");
         for (let key of payload.keys()) {
-            console.log(key, ": ", payload.get(key))
+            // console.log(key, ": ", payload.get(key))
         }
         try {
             await mainRequest.post('/product/register/forTest', payload)
             alert("testProductCreated");
         } catch {
-            console.log("error");
+            // console.log("error");
         }
     },
 
@@ -81,9 +81,10 @@ export default {
         return mainRequest.get(`/wish/list/${memberId}`)
             .then((res) => {
                 if(res.data === "") {
-                    alert("리뷰가 하나도 없습니다.");
+                    alert("찜이 하나도 없습니다.");
                     return;
                 }
+                localStorage.setItem("lsWishList", JSON.stringify(res.data));
                 commit(REQUEST_WISH_LIST_TO_SPRING, res.data);
             })
             .catch(() => {
@@ -92,26 +93,26 @@ export default {
     },
     reqSetWishToSpring({}, payload) {
         const { memberId, productId } = payload;
-        console.log(productId, memberId);
+        // console.log(productId, memberId);
         return mainRequest.get(`/wish/set/${productId}/${memberId}`)
             .then((res) => {
                 // alert("res.data: " + res.data);
                 return res.data;
             })
             .catch(() => {
-                console.log("찜 실패...");
+                // console.log("찜 실패...");
             })
     },
     
     async reqRegisterReviewToSpring({}, payload) {
-        console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
+        // console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
         return mainRequest.post('/review/register', payload)
             .then((res) => {
                 alert('리뷰등록완료.')
             })
             .catch((error) => {
-                console.log(error.message);
-                alert('에러가 발생했습니다: ' + error.message);
+                // console.log(error.message);
+                // alert('에러가 발생했습니다: ' + error.message);
             })
     },
     async reqRegisterReviewWithImageToSpring({},formData) {
@@ -122,40 +123,40 @@ export default {
             }
         })
         .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             alert('이미지리뷰등록완료.')
         })
         .catch((error) => {
-            console.log(error.message);
-            alert('에러가 발생했습니다: ' + error.message);
+            // console.log(error.message);
+            // alert('에러가 발생했습니다: ' + error.message);
         });
     },
     async reqModifyReviewToSpring({}, payload) {
-        console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
+        // console.log('리뷰 등록 요청 데이터:', payload); // 데이터 확인용 로그
         return mainRequest.put('/review/modify', payload)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 alert('리뷰수정완료.')
             })
             .catch((error) => {
-                console.log(error.message);
-                alert('에러가 발생했습니다: ' + error.message);
+                // console.log(error.message);
+                // alert('에러가 발생했습니다: ' + error.message);
             })
     },
     async reqModifyReviewWithImageToSpring({},formData) {
-        console.log('리뷰 등록 요청 데이터:', formData);
+        // console.log('리뷰 등록 요청 데이터:', formData);
         return mainRequest.put('/review/modifyWithImg', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
         .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             alert('이미지리뷰수정완료.')
         })
         .catch((error) => {
-            console.log(error.message);
-            alert('에러가 발생했습니다: ' + error.message);
+            // console.log(error.message);
+            // alert('에러가 발생했습니다: ' + error.message);
         });
     },
     async reqDeleteReviewToSpring({}, productReviewId) {
@@ -169,15 +170,15 @@ export default {
         try {
           const response = await mainRequest.get(`/review/list/${productId}/${startIndex}/${endIndex}`, { params: { productId } });
           commit(REQUEST_READ_REVIEW_FROM_SPRING, response.data);
-          console.log(JSON.stringify(response.data));
+          // console.log(JSON.stringify(response.data));
         } catch (error) {
-          console.error(error.message);
+        //   console.error(error.message);
         }
     },
     async getStarRateAverage({ commit }, productId) {
         try {
           const response = await mainRequest.get(`/review/starRateAverage/${productId}`, { params: { productId } });
-          console.log(JSON.stringify(response.data));
+          // console.log(JSON.stringify(response.data));
       
           if (response.data && response.data[0] && response.data[0].averageStarRate) {
             const starRateAverage = parseFloat(response.data[0].averageStarRate.toFixed(1));
@@ -186,7 +187,7 @@ export default {
             commit(REQUEST_STAR_RATE_AVERAGE, 0);
           }
         } catch (error) {
-          console.error(error.message);
+        //   console.error(error.message);
         }
       },
     async requestSpecificProductListToSpring ({ commit }, payload) {
@@ -196,68 +197,68 @@ export default {
                 commit(REQUEST_SPECIFIC_PRODUCT_LIST_TO_SPRING, res.data)
             })
             .catch((error) => {
-                console.log(error)
-                alert(error.response.data.message);
+                // console.log(error)
+                // alert(error.response.data.message);
             })
     },
     async requestProductBrandListToSpring({commit}) {
-        console.log("requestProductBrandListToSpring() in action");
+        // console.log("requestProductBrandListToSpring() in action");
         return await mainRequest.get('/product/productBrands')
             .then((res) => {
                 commit(REQUEST_PRODUCT_BRAND_LIST_TO_SPRING, res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
             })
     },
     async requestSpecificBrandProductListToSpring({commit}, payload) {
-        console.log("requestSpecificBrandProductListToSpring");
+        // console.log("requestSpecificBrandProductListToSpring");
         const { brand, startIndex, endIndex } = payload
         return await mainRequest.get(`/category/brand/${brand}/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_SPECIFIC_BRAND_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
-                console.log(err)
+                // console.log(err)
             })
     },
     async requestSearchResultProductListToSpring({commit}, payload) {
-        console.log("requestSearchResultProductListToSpring() in action");
+        // console.log("requestSearchResultProductListToSpring() in action");
         const { query, startIndex, endIndex } = payload
-        console.log(query)
+        // console.log(query)
         return await mainRequest.get(`/category/search/${query}/${startIndex}/${endIndex}`)
             .then((res) => {
                 commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 commit(REQUEST_SEARCH_RESULT_PRODUCT_LIST_TO_SPRING, res.data);
             })
     },
     async requestDeleteProductToSpring({}, payload) {
-        console.log("requestDeleteProductToSpring() in action");
+        // console.log("requestDeleteProductToSpring() in action");
         const { productId } = payload;
         await mainRequest.delete(`/product/delete/${productId}`)
             .then(() => {
                 alert("Delete complete");
             }).catch((err) => {
-                alert(err);
+                // alert(err);
             });
     },
     async requestProductModifyFormToSpring({commit}, payload) {
-        console.log("requestProductModifyFormToSpring() in action");
+        // console.log("requestProductModifyFormToSpring() in action");
         const { productId } = payload;
         await mainRequest.get(`product/modifyForm/${productId}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_MODIFY_FORM_TO_SPRING, res.data);
             }).catch((err) => {
-                alert(err)
+                // alert(err)
             })
     },
     async requestProductModifyToSpring({}, payload) {
-        console.log("requestProductModifyToSpring() in action");
+        // console.log("requestProductModifyToSpring() in action");
         await mainRequest.put('/product/modify', payload)
             .then(() => {
                 alert("Modify complete");
             }).catch((err) => {
-                alert(err);
+                // alert(err);
             })
     }
 }

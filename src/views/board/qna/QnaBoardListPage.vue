@@ -56,10 +56,10 @@ export default {
       }
   },
   async mounted () {
-    console.log("mouted()")
+    // console.log("mouted()")
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log(startIndex + "/" + endIndex)
+    // console.log(startIndex + "/" + endIndex)
     const payload = {startIndex: startIndex, endIndex: endIndex}
     await this.requestQnaBoardListToSpring(payload)
     this.showQnaBoards = this.qnaBoards
@@ -71,7 +71,7 @@ export default {
     ]),
     
     async clickCallback(pageNumber) {
-      console.log("clickCallback(): " + pageNumber)
+      // console.log("clickCallback(): " + pageNumber)
       this.syncCurrentPage = pageNumber
       const startIndex = (pageNumber - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -82,7 +82,7 @@ export default {
         this.showQnaBoards = this.qnaBoards
         this.cache[this.currentPage] = this.qnaBoards
       } else {
-        console.log("cache used!!")
+        // console.log("cache used!!")
         this.showQnaBoards = this.cache[pageNumber]
       }
         

@@ -234,7 +234,7 @@ export default {
         },
         
         productView(cartItem){
-            alert("상품 상세 페이지로 이동합니다.")
+            // alert("상품 상세 페이지로 이동합니다.")
             this.$router.push({ name: 'ProductReadPage', params: { productId: cartItem.product.productId.toString() }})
         },
 
@@ -247,7 +247,7 @@ export default {
                         selectCartItemId.push(this.cartItems[i].cartItemId)
                     }
                 }
-                console.log("selectCartItemId: " + selectCartItemId)
+                // console.log("selectCartItemId: " + selectCartItemId)
 
                 let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
                 for(let i=0; i<lsCartItems.length; i++) {
@@ -281,8 +281,8 @@ export default {
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: true, cartItemId: cartItemId, product: this.cartItems[index].product,
                                 count: count, totalPrice: directTotalPrice, thumbnail: thumbnail }})
-            console.log(this.$store.state.orderModule.orderList);
-            alert ("주문 페이지로 이동합니다.");
+            // console.log(this.$store.state.orderModule.orderList);
+            // alert ("주문 페이지로 이동합니다.");
 
             let lsCartItems = JSON.parse(localStorage.getItem("lsCartItems"));
             lsCartItems[index].count = cartItem.count;
@@ -319,10 +319,10 @@ export default {
             localStorage.setItem("lsCartItems", JSON.stringify(lsCartItems));
             this.$store.commit('orderModule/REQUEST_ORDER_INFO_FROM_SPRING',
                 { orderSave: { directOrderCheck: false, selectItems: selectItem, totalPrice: this.totalPrice }})
-            console.log(this.$store.state.orderModule.orderList)
+            // console.log(this.$store.state.orderModule.orderList)
 
             if(selectItem.length > 0) {
-                alert ("주문 페이지로 이동합니다.")
+                // alert ("주문 페이지로 이동합니다.")
 
                 await this.reqCartItemCountChangeToSpring(payload);
                 await this.$router.push({ name: 'OrderInfoPage' })

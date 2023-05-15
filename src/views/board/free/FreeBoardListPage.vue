@@ -56,10 +56,10 @@ export default {
       }
   },
   async mounted () {
-    console.log("mouted()")
+    // console.log("mouted()")
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log(startIndex + "/" + endIndex)
+    // console.log(startIndex + "/" + endIndex)
     const payload = {startIndex: startIndex, endIndex: endIndex}
     await this.requestFreeBoardListToSpring(payload)
     this.showFreeBoards = this.freeBoards
@@ -70,7 +70,7 @@ export default {
       'requestFreeBoardListToSpring'
     ]),
     async clickCallback(pageNumber) {
-      console.log("clickCallback(): " + pageNumber)
+      // console.log("clickCallback(): " + pageNumber)
       this.syncCurrentPage = pageNumber
       const startIndex = (pageNumber - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -81,7 +81,7 @@ export default {
         this.showFreeBoards = this.freeBoards
         this.cache[this.currentPage] = this.freeBoards
       } else {
-        console.log("cache used!!")
+        // console.log("cache used!!")
         this.showFreeBoards = this.cache[pageNumber]
       }
         

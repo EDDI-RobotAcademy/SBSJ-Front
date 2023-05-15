@@ -66,7 +66,7 @@ export default {
 
                 const { username, gender, age, height, weight } = commonSurveyResult;
                 let successSurveyRegister = this.reqRegisterSurveyResultToSpring({ memberId, username, gender, age, height, weight, viscera, life });
-                console.log(JSON.stringify(commonSurveyResult));
+                // console.log(JSON.stringify(commonSurveyResult));
                 if(successSurveyRegister) {
                     this.setSurveyResult([commonSurveyResult, visceraSurveyResult, lifeSurveyResult]);
                     this.$router.push({ name: 'SurveyResultPage' });

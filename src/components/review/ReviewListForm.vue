@@ -93,12 +93,12 @@ export default {
           this.$router.push({ name: 'SignInPage'});
         }
       } else {
-        alert(this.productId);
+        // alert(this.productId);
         this.$router.push({ name: 'ReviewRegisterPage', params: {productId: this.productId}});
       }
     },
     async clickCallback(pageNumber) {
-      console.log("clickCallback(): " + pageNumber)
+      // console.log("clickCallback(): " + pageNumber)
       this.syncCurrentPage = pageNumber
       const startIndex = (pageNumber - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -109,7 +109,7 @@ export default {
         this.showReviews = this.reviews
         this.cache[this.currentPage] = this.reviews
       } else {
-        console.log("cache used!!")
+        // console.log("cache used!!")
         this.showReviews = this.cache[pageNumber]
       }
         
@@ -118,16 +118,16 @@ export default {
 
   async created() {
     const productId = Number(this.productId);
-    console.log("created()")
+    // console.log("created()")
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log(startIndex + "/" + endIndex)
+    // console.log(startIndex + "/" + endIndex)
     const payload = {productId: this.productId, startIndex: startIndex, endIndex: endIndex}
     await this.reqReadReviewFromSpring(payload)
     this.showReviews = this.reviews
     this.cache[this.currentPage] = this.reviews
     await this.getStarRateAverage(productId);
-    console.log("starRateAverage: " + this.starRateAverage);
+    // console.log("starRateAverage: " + this.starRateAverage);
   },
   computed: {
     ...mapState(productModule, ["reviews", "starRateAverage", "product"]),

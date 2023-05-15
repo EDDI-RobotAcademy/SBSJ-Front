@@ -204,7 +204,7 @@ export default {
             await this.reqSignOutToSpring(userInfo);
         },
         async Search() {
-            console.log(this.sanitizedQuery.join(','));
+            // console.log(this.sanitizedQuery.join(','));
             const query = { query: this.sanitizedQuery.join(','), startIndex: 0, endIndex: 20}
             this.$store.commit('productModule/SEARCH_QUERY', query);
             await this.requestSearchResultProductListToSpring(query)
